@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:12
+    environment:
+      - POSTGRES_DB=wsu_db
+      - POSTGRES_USER=wsu
+      - POSTGRES_PASSWORD=wsu
+    volumes:
+      - .:/app
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./app:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DJANGO_DB_HOST=db
+      - DJANGO_DB_PORT=5432
+      - DJANGO_DB_NAME=tms_db
+      - DJANGO_DB_USER=tms
+      - DJANGO_DB_PASSWORD=tms
+      - DATABASE_URL=postgresql://wsu:wsu@db/wsu_db
