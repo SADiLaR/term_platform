@@ -7,11 +7,13 @@ list:
 	@echo "stop - Stop the project"
 	@echo "down - Stop and remove the project"
 	@echo "restart - Restart the project"
-	@echo "makemigrations - Create new migrations based on the changes you have made to your models"
+	@echo "make-migrations - Create new migrations based on the changes you have made to your models"
 	@echo "migrate - Apply migrations to your database"
 	@echo "shell - Run the Python shell"
 	@echo "logs - Show logs"
-	@echo "createsuperuser - Create a superuser"
+	@echo "create-super-user - Create a superuser"
+	@echo "docker-stop-all - Stop all running containers"
+
 
 up:
 	clear
@@ -37,7 +39,7 @@ restart:
 	clear
 	@docker-compose restart
 
-makemigrations:
+make-migrations:
 	clear
 	@docker-compose run --rm web python manage.py makemigrations
 
@@ -53,7 +55,7 @@ logs:
 	clear
 	@docker-compose logs -tf
 
-createsuperuser:
+create-super-user:
 	clear
 	@docker-compose run --rm web python manage.py createsuperuser
 

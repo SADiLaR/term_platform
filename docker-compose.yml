@@ -3,14 +3,18 @@ version: '3'
 services:
   db:
     image: postgres:12
+    container_name: nwu-terminology-db
     environment:
       - POSTGRES_DB=wsu_db
       - POSTGRES_USER=wsu
       - POSTGRES_PASSWORD=wsu
     volumes:
       - .:/app
+    ports:
+      - "5432:5432"
   web:
     build: .
+    container_name: nwu-terminology-web
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./app:/app
@@ -21,7 +25,7 @@ services:
     environment:
       - DJANGO_DB_HOST=db
       - DJANGO_DB_PORT=5432
-      - DJANGO_DB_NAME=tms_db
-      - DJANGO_DB_USER=tms
-      - DJANGO_DB_PASSWORD=tms
+      - DJANGO_DB_NAME=wsu_db
+      - DJANGO_DB_USER=wsu
+      - DJANGO_DB_PASSWORD=wsu
       - DATABASE_URL=postgresql://wsu:wsu@db/wsu_db
