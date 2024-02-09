@@ -1,4 +1,4 @@
-**NWU Terminology**
+**Sadilar Terminology**
 
 About the project:
 
