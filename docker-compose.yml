@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:12
+    container_name: sadilar-terminology-db
+    environment:
+      - POSTGRES_DB=term_db
+      - POSTGRES_USER=sadilar
+      - POSTGRES_PASSWORD=sadilar
+    volumes:
+      - .:/app
+    ports:
+      - "5432:5432"
+  web:
+    build: .
+    container_name: sadilar-terminology-web
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./app:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DJANGO_DB_HOST=db
+      - DJANGO_DB_PORT=5432
+      - DJANGO_DB_NAME=term_db
+      - DJANGO_DB_USER=sadilar
+      - DJANGO_DB_PASSWORD=sadilar
+      - DATABASE_URL=postgresql://sadilar:sadilar@db/term_db
