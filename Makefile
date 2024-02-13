@@ -64,3 +64,8 @@ docker-stop-all:
 	docker stop `docker ps -q`
 	docker ps
 
+create-schema:
+	clear
+	@docker-compose run --rm web python manage.py graph_models -a -o schema/schema.png
+
+
