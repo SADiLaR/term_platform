@@ -68,4 +68,7 @@ create-schema:
 	clear
 	@docker-compose run --rm web python manage.py graph_models -a -o schema/schema.png
 
+test:
+	clear
+	@docker-compose run --rm web python manage.py test
 
