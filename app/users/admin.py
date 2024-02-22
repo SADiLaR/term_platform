@@ -1,9 +1,25 @@
 from django.contrib import admin
-from .models import CustomUser
 from django.contrib.auth.admin import UserAdmin
 
+from .models import CustomUser
 
-# admin.site.register(CustomUser,UserAdmin)
-admin.site.register(CustomUser,UserAdmin)
-# Register your models here.
 
+class CustomUserAdmin(UserAdmin):
+	model = CustomUser
+	list_display = [
+		'username',
+		'email',
+		'first_name',
+		'last_name',
+		'is_staff',
+		'is_active',
+	]
+	list_filter = [
+		'username',
+		'email',
+	]
+	fieldsets = UserAdmin.fieldsets + ((None, {'fields': ('institution', 'languages', 'subject')}),)
+	add_fieldsets = UserAdmin.add_fieldsets
+
+
+admin.site.register(CustomUser, CustomUserAdmin)
