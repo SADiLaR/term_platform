@@ -1,0 +1,10 @@
+[tool.ruff]
+line-length = 100
+exclude = ["migrations", ".venv"]
+
+[tool.ruff.lint]
+select = [
+    "DJ",
+    "I",
+    "W"
+]

@@ -72,3 +72,15 @@ test:
 	clear
 	@docker-compose run --rm web python manage.py test
 
+ruff-check:
+	clear
+	@docker-compose run --rm web ruff check .
+
+ruff-format:
+	clear
+	@docker-compose run --rm web ruff format .
+
+ruff-fix:
+	clear
+	@docker-compose run --rm web ruff check --fix .
+

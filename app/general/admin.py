@@ -4,11 +4,11 @@ from .models import ContributingCentre, Institution, Language, Subject
 
 
 class SubjectInline(admin.TabularInline):
-	model = Subject.contributing_centre.through
+    model = Subject.contributing_centre.through
 
 
 class ContributingCentreAdmin(admin.ModelAdmin):
-	inlines = [SubjectInline]
+    inlines = [SubjectInline]
 
 
 admin.site.register(ContributingCentre, ContributingCentreAdmin)
