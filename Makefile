@@ -84,3 +84,7 @@ ruff-fix:
 	clear
 	@docker-compose run --rm web ruff check --fix .
 
+load-fixtures:
+	clear
+	@docker-compose run --rm web python manage.py loaddata fixtures/institution.json
+	@docker-compose run --rm web python manage.py loaddata fixtures/language.json

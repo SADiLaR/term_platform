@@ -1,0 +1,302 @@
+[
+  {
+    "model": "general.Institution",
+    "pk": 1,
+    "fields": {
+      "name": "University of South Africa (UNISA)",
+      "abbreviation": "UNISA",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 2,
+    "fields": {
+      "name": "North-West University",
+      "abbreviation": "NWU",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 3,
+    "fields": {
+      "name": "University of Pretoria",
+      "abbreviation": "UP",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 4,
+    "fields": {
+      "name": "University of Johannesburg",
+      "abbreviation": "UJ",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 5,
+    "fields": {
+      "name": "University of KwaZulu-Natal",
+      "abbreviation": "UKZN",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 5,
+    "fields": {
+      "name": "University of the Free State",
+      "abbreviation": "UFS",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 6,
+    "fields": {
+      "name": "Cape Peninsula University of Technology",
+      "abbreviation": "CPUT",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 7,
+    "fields": {
+      "name": "University of the Witwatersrand",
+      "abbreviation": "WITS",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 8,
+    "fields": {
+      "name": "University of Stellenbosch",
+      "abbreviation": "US",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 9,
+    "fields": {
+      "name": "University of Cape Town",
+      "abbreviation": "UCT",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 10,
+    "fields": {
+      "name": "Nelson Mandela Metropolitan University",
+      "abbreviation": "NMU",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 11,
+    "fields": {
+      "name": "Walter Sisulu University",
+      "abbreviation": "WSU",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 12,
+    "fields": {
+      "name": "Durban University of Technology",
+      "abbreviation": "DUT",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 13,
+    "fields": {
+      "name": "University of Limpopo",
+      "abbreviation": "UL",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+   {
+    "model": "general.Institution",
+    "pk": 14,
+    "fields": {
+      "name": "Vaal University of Technology",
+      "abbreviation": "VUT",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+    {
+    "model": "general.Institution",
+    "pk": 15,
+    "fields": {
+      "name": "University of Zululand",
+      "abbreviation": "UniZulu",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+   {
+    "model": "general.Institution",
+    "pk": 16,
+    "fields": {
+      "name": "University of the Western Cape",
+      "abbreviation": "UWC",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 17,
+    "fields": {
+      "name": "Central University of Technology",
+      "abbreviation": "CUT",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+   {
+    "model": "general.Institution",
+    "pk": 18,
+    "fields": {
+      "name": "University of Fort Hare",
+      "abbreviation": "UFH",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 19,
+    "fields": {
+      "name": "Rhodes University",
+      "abbreviation": "RU",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 20,
+    "fields": {
+      "name": "University of Venda",
+      "abbreviation": "Venda",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+    {
+    "model": "general.Institution",
+    "pk": 21,
+    "fields": {
+      "name": "Mangosuthu University of Technology",
+      "abbreviation": "MUT",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 22,
+    "fields": {
+      "name": "Sefako Makgatho Health Sciences University",
+      "abbreviation": "FMHSU",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+    {
+    "model": "general.Institution",
+    "pk": 23,
+    "fields": {
+      "name": "University of Mpumalanga",
+      "abbreviation": "UMP",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  },
+    {
+    "model": "general.Institution",
+    "pk": 24,
+    "fields": {
+      "name": "Sol Plaatje University",
+      "abbreviation": "SPU",
+      "url": "https://example.dev",
+      "email": "email@example.dev",
+      "logo": "logo",
+      "contributing_centre_id": "1"
+    }
+  }
+]

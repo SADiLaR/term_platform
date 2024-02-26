@@ -1,0 +1,26 @@
+[
+  {
+    "model": "general.Language",
+    "pk": 1,
+    "fields": {
+      "name": "English",
+      "iso_code": "en"
+    }
+  },
+  {
+    "model": "general.Language",
+    "pk": 2,
+    "fields": {
+      "name": "Afrikaans",
+      "iso_code": "af"
+    }
+  },
+  {
+    "model": "general.Language",
+    "pk": 3,
+    "fields": {
+      "name": "Zulu",
+      "iso_code": "zu"
+    }
+  }
+]
