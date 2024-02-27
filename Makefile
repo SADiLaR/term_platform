@@ -88,3 +88,5 @@ load-fixtures:
 	clear
 	@docker-compose run --rm web python manage.py loaddata fixtures/institution.json
 	@docker-compose run --rm web python manage.py loaddata fixtures/language.json
+	@docker-compose run --rm web python manage.py loaddata fixtures/subjects.json
+	@docker-compose run --rm web python manage.py loaddata fixtures/contributing-centre.json

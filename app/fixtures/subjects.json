@@ -1,0 +1,16 @@
+[
+  {
+    "model": "general.Subject",
+    "pk": 1,
+      "fields": {
+      "name": "Science"
+    }
+  },
+  {
+    "model": "general.Subject",
+    "pk": 2,
+    "fields": {
+      "name": "Maths"
+    }
+  }
+]
