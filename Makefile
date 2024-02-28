@@ -90,3 +90,7 @@ load-fixtures:
 	@docker-compose run --rm web python manage.py loaddata fixtures/language.json
 	@docker-compose run --rm web python manage.py loaddata fixtures/subjects.json
 	@docker-compose run --rm web python manage.py loaddata fixtures/contributing-centre.json
+
+pre-commit-all:
+	clear
+	pre-commit run --all-files

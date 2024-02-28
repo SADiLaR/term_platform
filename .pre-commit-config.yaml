@@ -1,5 +1,6 @@
 repos:
--   repo: https://github.com/astral-sh/ruff-pre-commit
+  # Linting and formatting for Python.
+  - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
     rev: v0.2.2
     hooks:
@@ -7,3 +8,18 @@ repos:
       - id: ruff
       # Run the formatter.
       - id: ruff-format
+
+  # Automatically sort python imports
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: [ --profile, black ]
+
+  # Lint: YAML
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+        args: ["-d {extends: relaxed, rules: {line-length: disable}}", "-s"]
+        files: \.(yaml|yml)$
