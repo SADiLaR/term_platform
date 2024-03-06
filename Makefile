@@ -48,6 +48,10 @@ migrate:
 	clear
 	@docker-compose run --rm web python manage.py migrate
 
+collectstatic:
+	clear
+	@docker-compose run --rm web python manage.py collectstatic --noinput
+
 shell:
 	clear
 	@docker-compose run --rm web python manage.py shell
