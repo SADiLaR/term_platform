@@ -22,5 +22,77 @@
       "name": "Zulu",
       "iso_code": "zu"
     }
+  },
+    {
+    "model": "general.Language",
+    "pk": 4,
+    "fields": {
+      "name": "Sepedi",
+      "iso_code": "nso"
+    }
+  },
+  {
+    "model": "general.Language",
+    "pk": 5,
+    "fields": {
+      "name": "Tswana",
+      "iso_code": "tn"
+    }
+  },
+   {
+    "model": "general.Language",
+    "pk": 6,
+    "fields": {
+      "name": "Sesotho",
+      "iso_code": "sot"
+    }
+  },
+    {
+    "model": "general.Language",
+    "pk": 7,
+    "fields": {
+      "name": "Tsonga",
+      "iso_code": "ts"
+    }
+  },
+  {
+    "model": "general.Language",
+    "pk": 8,
+    "fields": {
+      "name": "Swati",
+      "iso_code": "swz"
+    }
+  },
+  {
+    "model": "general.Language",
+    "pk": 8,
+    "fields": {
+      "name": "Swati",
+      "iso_code": "swz"
+    }
+  },
+  {
+    "model": "general.Language",
+    "pk": 9,
+    "fields": {
+      "name": "Venda",
+      "iso_code": "ve"
+    }
+  },
+  {
+    "model": "general.Language",
+    "pk": 10,
+    "fields": {
+      "name": "Ndebele",
+      "iso_code": "nr"
+    }
+  },
+  {
+    "model": "general.Language",
+    "pk": 11,
+    "fields": {
+      "name": "SA Sign Language",
+      "iso_code": "sfs"
+    }
   }
 ]

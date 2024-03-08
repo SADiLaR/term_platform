@@ -13,6 +13,7 @@ list:
 	@echo "logs - Show logs"
 	@echo "create-super-user - Create a superuser"
 	@echo "docker-stop-all - Stop all running containers"
+	@echo "load-fixtures - Load fixtures"
 
 
 up:
