@@ -5,7 +5,7 @@
     "fields": {
       "name": "University of South Africa (UNISA)",
       "abbreviation": "UNISA",
-      "url": "https://example.dev",
+      "url": "https://www.unisa.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -17,7 +17,7 @@
     "fields": {
       "name": "North-West University",
       "abbreviation": "NWU",
-      "url": "https://example.dev",
+      "url": "https://www.nwu.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -29,7 +29,7 @@
     "fields": {
       "name": "University of Pretoria",
       "abbreviation": "UP",
-      "url": "https://example.dev",
+      "url": "https://www.up.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -41,7 +41,7 @@
     "fields": {
       "name": "University of Johannesburg",
       "abbreviation": "UJ",
-      "url": "https://example.dev",
+      "url": "https://www.uj.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -53,7 +53,7 @@
     "fields": {
       "name": "University of KwaZulu-Natal",
       "abbreviation": "UKZN",
-      "url": "https://example.dev",
+      "url": "https://www.ukzn.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -65,7 +65,7 @@
     "fields": {
       "name": "University of the Free State",
       "abbreviation": "UFS",
-      "url": "https://example.dev",
+      "url": "https://www.ufs.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -77,7 +77,7 @@
     "fields": {
       "name": "Cape Peninsula University of Technology",
       "abbreviation": "CPUT",
-      "url": "https://example.dev",
+      "url": "https://www.cput.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -89,7 +89,7 @@
     "fields": {
       "name": "University of the Witwatersrand",
       "abbreviation": "WITS",
-      "url": "https://example.dev",
+      "url": "https://www.wits.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -101,7 +101,7 @@
     "fields": {
       "name": "University of Stellenbosch",
       "abbreviation": "US",
-      "url": "https://example.dev",
+      "url": "http://www.sun.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -113,7 +113,7 @@
     "fields": {
       "name": "University of Cape Town",
       "abbreviation": "UCT",
-      "url": "https://example.dev",
+      "url": "https://uct.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -125,7 +125,7 @@
     "fields": {
       "name": "Nelson Mandela Metropolitan University",
       "abbreviation": "NMU",
-      "url": "https://example.dev",
+      "url": "https://www.mandela.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -137,7 +137,7 @@
     "fields": {
       "name": "Walter Sisulu University",
       "abbreviation": "WSU",
-      "url": "https://example.dev",
+      "url": "https://www.wsu.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -149,7 +149,7 @@
     "fields": {
       "name": "Durban University of Technology",
       "abbreviation": "DUT",
-      "url": "https://example.dev",
+      "url": "https://www.dut.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -161,7 +161,7 @@
     "fields": {
       "name": "University of Limpopo",
       "abbreviation": "UL",
-      "url": "https://example.dev",
+      "url": "https://www.ul.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -173,7 +173,7 @@
     "fields": {
       "name": "Vaal University of Technology",
       "abbreviation": "VUT",
-      "url": "https://example.dev",
+      "url": "https://www.vut.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -185,7 +185,7 @@
     "fields": {
       "name": "University of Zululand",
       "abbreviation": "UniZulu",
-      "url": "https://example.dev",
+      "url": "https://www.unizulu.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -197,7 +197,7 @@
     "fields": {
       "name": "University of the Western Cape",
       "abbreviation": "UWC",
-      "url": "https://example.dev",
+      "url": "https://www.uwc.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -209,7 +209,7 @@
     "fields": {
       "name": "Central University of Technology",
       "abbreviation": "CUT",
-      "url": "https://example.dev",
+      "url": "https://www.cut.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -221,7 +221,7 @@
     "fields": {
       "name": "University of Fort Hare",
       "abbreviation": "UFH",
-      "url": "https://example.dev",
+      "url": "https://www.ufh.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -233,7 +233,7 @@
     "fields": {
       "name": "Rhodes University",
       "abbreviation": "RU",
-      "url": "https://example.dev",
+      "url": "https://www.ru.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -245,7 +245,7 @@
     "fields": {
       "name": "University of Venda",
       "abbreviation": "Venda",
-      "url": "https://example.dev",
+      "url": "https://www.univen.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -257,7 +257,7 @@
     "fields": {
       "name": "Mangosuthu University of Technology",
       "abbreviation": "MUT",
-      "url": "https://example.dev",
+      "url": "https://www.mut.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -269,7 +269,7 @@
     "fields": {
       "name": "Sefako Makgatho Health Sciences University",
       "abbreviation": "FMHSU",
-      "url": "https://example.dev",
+      "url": "https://www.smu.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -281,7 +281,7 @@
     "fields": {
       "name": "University of Mpumalanga",
       "abbreviation": "UMP",
-      "url": "https://example.dev",
+      "url": "https://www.ump.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
@@ -293,7 +293,7 @@
     "fields": {
       "name": "Sol Plaatje University",
       "abbreviation": "SPU",
-      "url": "https://example.dev",
+      "url": "https://www.spu.ac.za/",
       "email": "email@example.dev",
       "logo": "logo",
       "contributing_centre_id": "1"
