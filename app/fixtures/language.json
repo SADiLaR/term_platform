@@ -3,21 +3,93 @@
     "model": "general.Language",
     "pk": 1,
     "fields": {
-      "name": "English",
-      "iso_code": "en"
-    }
-  },
-  {
-    "model": "general.Language",
-    "pk": 2,
-    "fields": {
       "name": "Afrikaans",
       "iso_code": "af"
     }
   },
   {
     "model": "general.Language",
+    "pk": 2,
+    "fields": {
+      "name": "English",
+      "iso_code": "en"
+    }
+  },
+  {
+    "model": "general.Language",
     "pk": 3,
+    "fields": {
+      "name": "Ndebele",
+      "iso_code": "nr"
+    }
+  },
+  {
+    "model": "general.Language",
+    "pk": 4,
+    "fields": {
+      "name": "Pedi",
+      "iso_code": "nso"
+    }
+  },
+  {
+    "model": "general.Language",
+    "pk": 5,
+    "fields": {
+      "name": "Sotho",
+      "iso_code": "sot"
+    }
+  },
+  {
+    "model": "general.Language",
+    "pk": 6,
+    "fields": {
+      "name": "South African Sign Language",
+      "iso_code": "sfs"
+    }
+  },
+  {
+    "model": "general.Language",
+    "pk": 7,
+    "fields": {
+      "name": "Swati",
+      "iso_code": "swz"
+    }
+  },
+  {
+    "model": "general.Language",
+    "pk": 8,
+    "fields": {
+      "name": "Tsonga",
+      "iso_code": "ts"
+    }
+  },
+  {
+    "model": "general.Language",
+    "pk": 9,
+    "fields": {
+      "name": "Tswana",
+      "iso_code": "tn"
+    }
+  },
+  {
+    "model": "general.Language",
+    "pk": 10,
+    "fields": {
+      "name": "Venda",
+      "iso_code": "ve"
+    }
+  },
+  {
+    "model": "general.Language",
+    "pk": 11,
+    "fields": {
+      "name": "Xhosa",
+      "iso_code": "xh"
+    }
+  },
+  {
+    "model": "general.Language",
+    "pk": 12,
     "fields": {
       "name": "Zulu",
       "iso_code": "zu"

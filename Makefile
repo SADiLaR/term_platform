@@ -13,6 +13,7 @@ list:
 	@echo "logs - Show logs"
 	@echo "create-super-user - Create a superuser"
 	@echo "docker-stop-all - Stop all running containers"
+	@echo "load-fixtures - Load fixtures"
 
 
 up:
@@ -86,11 +87,11 @@ ruff-fix:
 
 load-fixtures:
 	clear
+	@docker-compose run --rm web python manage.py loaddata fixtures/contributing-centre.json
 	@docker-compose run --rm web python manage.py loaddata fixtures/institution.json
 	@docker-compose run --rm web python manage.py loaddata fixtures/language.json
 	@docker-compose run --rm web python manage.py loaddata fixtures/subjects.json
-	@docker-compose run --rm web python manage.py loaddata fixtures/contributing-centre.json
 
-pre-commit-all:
+pre-commit-install:
 	clear
-	pre-commit run --all-files
+	pre-commit install
