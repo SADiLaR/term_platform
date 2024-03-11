@@ -1,0 +1,20 @@
+[
+  {
+    "model": "general.ContributingCentre",
+    "pk": 1,
+    "fields": {
+      "name": "Study Centre",
+      "url": "https://example.dev",
+      "logo": "logo.png"
+    }
+  },
+  {
+    "model": "general.ContributingCentre",
+    "pk": 2,
+    "fields": {
+      "name": "Research Centre",
+      "url": "https://example.dev",
+      "logo": "logo.png"
+    }
+  }
+]
