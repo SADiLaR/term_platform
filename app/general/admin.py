@@ -11,7 +11,11 @@ class ContributingCentreAdmin(admin.ModelAdmin):
     inlines = [SubjectInline]
 
 
+@admin.register(Language)
+class LanguageAdmin(admin.ModelAdmin):
+    list_display = ("name", "iso_code")
+
+
 admin.site.register(ContributingCentre, ContributingCentreAdmin)
 admin.site.register(Institution)
-admin.site.register(Language)
 admin.site.register(Subject)

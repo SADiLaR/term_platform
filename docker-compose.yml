@@ -10,8 +10,6 @@ services:
       - POSTGRES_PASSWORD=sadilar
     volumes:
       - .:/app
-    ports:
-      - "5432:5432"
   web:
     build: .
     container_name: sadilar-terminology-web
