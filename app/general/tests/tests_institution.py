@@ -2,14 +2,14 @@ import unittest
 
 from django.test import TestCase
 
-from general.models import ContributingCentre, Institution
+from general.models import Institution, Project
 
 
 class TestInstitution(TestCase):
     def setUp(self):
-        self.contributing_centre = ContributingCentre.objects.create(
+        self.contributing_centre = Project.objects.create(
             name="Test Centre",
-            # add additional fields here as required by the ContributingCentre model
+            # add additional fields here as required by the ProjectsAdmin model
         )
         self.institution = Institution.objects.create(
             name="Test University",

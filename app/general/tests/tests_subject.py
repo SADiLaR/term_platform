@@ -2,7 +2,7 @@ import unittest
 
 from django.test import TestCase
 
-from general.models import ContributingCentre, Subject
+from general.models import Project, Subject
 
 
 class TestSubject(TestCase):
@@ -19,7 +19,7 @@ class TestSubject(TestCase):
         self.assertRaises(Exception, duplicate_subject.save)
 
     def test_contributing_centre_relationship(self):
-        contributing_centre = ContributingCentre(name="Test Centre")
+        contributing_centre = Project(name="Test Centre")
         contributing_centre.save()
         self.subject.contributing_centre.add(contributing_centre)
         self.assertTrue(contributing_centre in self.subject.contributing_centre.all())
