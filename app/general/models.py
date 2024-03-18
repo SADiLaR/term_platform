@@ -2,12 +2,14 @@ from django.db import models
 
 
 class Project(models.Model):
-    name = models.CharField(max_length=200, unique=True)
+    name = models.CharField(max_length=200)
     url = models.URLField(max_length=200)
     logo = models.FileField(upload_to="logos/", blank=True)
-    start_date = models.DateField(blank=True)
-    end_date = models.DateField(blank=True)
-    institution = models.ForeignKey("Institution", on_delete=models.CASCADE, blank=True)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+    Institution = models.ForeignKey(
+        "Institution", on_delete=models.CASCADE, blank=True, verbose_name=("institution")
+    )
 
     def __str__(self):
         return self.name
@@ -19,6 +21,7 @@ class Institution(models.Model):
     url = models.URLField(max_length=200)
     email = models.EmailField(max_length=200)
     logo = models.FileField(upload_to="logos/", blank=True)
+    projects = models.ManyToManyField(Project, blank=True)
 
     def __str__(self):
         return self.name

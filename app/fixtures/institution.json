@@ -153,7 +153,7 @@
       "logo": "logo"
     }
   },
-  {
+   {
     "model": "general.Institution",
     "pk": 14,
     "fields": {
@@ -164,7 +164,7 @@
       "logo": "logo"
     }
   },
-  {
+    {
     "model": "general.Institution",
     "pk": 15,
     "fields": {
@@ -175,7 +175,7 @@
       "logo": "logo"
     }
   },
-  {
+   {
     "model": "general.Institution",
     "pk": 16,
     "fields": {
@@ -197,7 +197,7 @@
       "logo": "logo"
     }
   },
-  {
+   {
     "model": "general.Institution",
     "pk": 18,
     "fields": {
@@ -230,7 +230,7 @@
       "logo": "logo"
     }
   },
-  {
+    {
     "model": "general.Institution",
     "pk": 21,
     "fields": {
@@ -252,7 +252,7 @@
       "logo": "logo"
     }
   },
-  {
+    {
     "model": "general.Institution",
     "pk": 23,
     "fields": {
@@ -263,7 +263,7 @@
       "logo": "logo"
     }
   },
-  {
+    {
     "model": "general.Institution",
     "pk": 24,
     "fields": {

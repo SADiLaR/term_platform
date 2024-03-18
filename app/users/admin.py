@@ -14,10 +14,12 @@ class CustomUserAdmin(UserAdmin):
         "is_staff",
         "is_active",
     ]
+
     list_filter = [
         "username",
         "email",
     ]
+
     fieldsets = UserAdmin.fieldsets + ((None, {"fields": ("institution", "languages", "subject")}),)
     add_fieldsets = UserAdmin.add_fieldsets
 
