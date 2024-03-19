@@ -18,6 +18,7 @@ class TestProjects(TestCase):
         self.project1 = Project.objects.create(
             name="Centre1",
             url="http://example.com",
+            logo="http://test.com/logo.png",
             start_date="2021-01-01",
             end_date="2021-01-01",
             institution=self.institution,
