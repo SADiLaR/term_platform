@@ -14,9 +14,9 @@ class TestSubject(TestCase):
         self.assertEqual(str(self.subject1), "Mathematics")
         self.assertEqual(str(self.subject2), "Science")
 
-    # def test_subject_name_uniqueness(self):
-    #     with self.assertRaises(Exception):
-    #         Subject.objects.create(name='Mathematics')
+    def test_subject_name_uniqueness(self):
+        with self.assertRaises(Exception):
+            Subject.objects.create(name="Mathematics")
 
 
 if __name__ == "__main__":
