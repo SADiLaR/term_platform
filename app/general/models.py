@@ -10,6 +10,7 @@ class Project(models.Model):
     Institution = models.ForeignKey(
         "Institution", on_delete=models.CASCADE, blank=True, verbose_name=("institution")
     )
+    subject = models.ManyToManyField("Subject", blank=True, verbose_name=("subject"))
 
     def __str__(self):
         return self.name
