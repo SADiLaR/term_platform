@@ -1,0 +1,26 @@
+[
+  {
+    "model": "general.Project",
+    "pk": 1,
+    "fields": {
+      "name": "Study Centre",
+      "url": "https://example.dev",
+      "logo": "logo.png",
+      "start_date": "2020-01-01",
+      "end_date": "2020-01-01",
+      "Institution": 1
+    }
+  },
+  {
+    "model": "general.Project",
+    "pk": 2,
+    "fields": {
+      "name": "Research Centre",
+      "url": "https://example.dev",
+      "logo": "logo.png",
+      "start_date": "2020-01-01",
+      "end_date": "2020-01-01",
+      "Institution": 2
+    }
+  }
+]
