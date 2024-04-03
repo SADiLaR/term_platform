@@ -7,8 +7,8 @@ class Project(models.Model):
     logo = models.FileField(upload_to="logos/", blank=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
-    Institution = models.ForeignKey(
-        "Institution", on_delete=models.CASCADE, blank=True, verbose_name=("institution")
+    institution = models.ForeignKey(
+        "Institution", on_delete=models.CASCADE, blank=True, verbose_name="institution"
     )
     subjects = models.ManyToManyField("Subject", blank=True)
 
