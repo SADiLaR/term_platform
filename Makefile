@@ -95,3 +95,10 @@ load-fixtures:
 pre-commit-install:
 	clear
 	pre-commit install
+
+dev-quick-install:
+	clear
+	@make migrate
+	@make load-fixtures
+	echo "Creating superuser"
+	@make create-super-user
