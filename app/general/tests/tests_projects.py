@@ -16,7 +16,7 @@ class TestProjects(TestCase):
             logo="http://test.com/logo.png",
             start_date="2023-01-01",
             end_date="2023-12-31",
-            Institution=self.institution,
+            institution=self.institution,
         )
         self.project.subject.add(self.subject)
 
@@ -28,7 +28,7 @@ class TestProjects(TestCase):
         self.assertEqual(self.project.logo, "http://test.com/logo.png")
         self.assertEqual(self.project.start_date, "2023-01-01")
         self.assertEqual(self.project.end_date, "2023-12-31")
-        self.assertEqual(self.project.Institution, self.institution)
+        self.assertEqual(self.project.institution, self.institution)
         self.assertEqual(self.project.subject, self.project.subject)
 
     def test_project_name(self):
@@ -48,7 +48,7 @@ class TestProjects(TestCase):
         self.assertEqual(end_date.strftime(date_format), "2023-12-31")
 
     def test_project_institution(self):
-        self.assertEqual(self.project.Institution.name, "Test Institution")
+        self.assertEqual(self.project.institution.name, "Test Institution")
 
     def test_project_subject(self):
         self.assertTrue(self.project.subject.filter(name="Test Subject").exists())

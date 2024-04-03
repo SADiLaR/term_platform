@@ -7,10 +7,10 @@ class Project(models.Model):
     logo = models.FileField(upload_to="logos/", blank=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
-    Institution = models.ForeignKey(
-        "Institution", on_delete=models.CASCADE, blank=True, verbose_name=("institution")
+    institution = models.ForeignKey(
+        "Institution", on_delete=models.CASCADE, blank=True, verbose_name="institution"
     )
-    subject = models.ManyToManyField("Subject", blank=True, verbose_name=("subjects"))
+    subject = models.ManyToManyField("Subject", blank=True, verbose_name="subjects")
 
     def __str__(self):
         return self.name
