@@ -27,15 +27,15 @@ class Migration(migrations.Migration):
             name='Language',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, unique=True)),
-                ('iso_code', models.CharField(help_text='Enter the ISO code for the language', max_length=10, unique=True)),
+                ('name', models.CharField(max_length=150, unique=True)),
+                ('iso_code', models.CharField(help_text='Enter the ISO code for the language', max_length=50, unique=True)),
             ],
         ),
         migrations.CreateModel(
             name='Subject',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, unique=True)),
+                ('name', models.CharField(max_length=150, unique=True)),
             ],
         ),
         migrations.CreateModel(
