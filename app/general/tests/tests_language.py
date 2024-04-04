@@ -7,7 +7,6 @@ from general.models import Subject
 
 class TestSubject(TestCase):
     def setUp(self):
-        # pass
         self.subject = Subject.objects.create(name="Maths")
         self.subject2 = Subject.objects.create(name="Science")
 

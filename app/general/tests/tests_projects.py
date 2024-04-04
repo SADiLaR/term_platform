@@ -3,20 +3,22 @@ from datetime import datetime
 
 from django.test import TestCase
 
-from general.models import Institution, Project
+from general.models import Institution, Project, Subject
 
 
 class TestProjects(TestCase):
     def setUp(self):
         self.institution = Institution.objects.create(name="Test Institution")
+        self.subject = Subject.objects.create(name="Test Subject")
         self.project = Project.objects.create(
             name="Test Project",
             url="http://test.com",
             logo="http://test.com/logo.png",
             start_date="2023-01-01",
             end_date="2023-12-31",
-            Institution=self.institution,
+            institution=self.institution,
         )
+        self.project.subjects.add(self.subject)
 
     def test_project_creation(self):
         self.assertTrue(isinstance(self.project, Project))
@@ -26,7 +28,8 @@ class TestProjects(TestCase):
         self.assertEqual(self.project.logo, "http://test.com/logo.png")
         self.assertEqual(self.project.start_date, "2023-01-01")
         self.assertEqual(self.project.end_date, "2023-12-31")
-        self.assertEqual(self.project.Institution, self.institution)
+        self.assertEqual(self.project.institution, self.institution)
+        self.assertIn(self.subject, self.project.subjects.all())
 
     def test_project_name(self):
         self.assertEqual(self.project.name, "Test Project")
@@ -45,7 +48,10 @@ class TestProjects(TestCase):
         self.assertEqual(end_date.strftime(date_format), "2023-12-31")
 
     def test_project_institution(self):
-        self.assertEqual(self.project.Institution.name, "Test Institution")
+        self.assertEqual(self.project.institution.name, "Test Institution")
+
+    def test_project_subject(self):
+        self.assertTrue(self.project.subjects.filter(name="Test Subject").exists())
 
     def test_str(self):
         self.assertEqual(str(self.project), "Test Project")

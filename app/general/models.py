@@ -7,9 +7,10 @@ class Project(models.Model):
     logo = models.FileField(upload_to="logos/", blank=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
-    Institution = models.ForeignKey(
-        "Institution", on_delete=models.CASCADE, blank=True, verbose_name=("institution")
+    institution = models.ForeignKey(
+        "Institution", on_delete=models.CASCADE, blank=True, verbose_name="institution"
     )
+    subjects = models.ManyToManyField("Subject", blank=True)
 
     def __str__(self):
         return self.name
@@ -27,9 +28,9 @@ class Institution(models.Model):
 
 
 class Language(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=150, unique=True)
     iso_code = models.CharField(
-        max_length=10, unique=True, help_text="Enter the ISO code for the language"
+        max_length=50, unique=True, help_text="Enter the ISO code for the language"
     )
 
     def __str__(self):
@@ -37,7 +38,7 @@ class Language(models.Model):
 
 
 class Subject(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=150, unique=True)
 
     def __str__(self):
         return self.name
