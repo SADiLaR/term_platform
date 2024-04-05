@@ -1,0 +1,119 @@
+/* Remember to sync colours with admin CSS. */
+:root {
+    --primary: #1a2f69;
+    --primary-light: #8288bc;
+    --primary-red: #d11f26;
+    --primary-fg: #ffffff;
+    --body-quiet-color: #485d95;
+    --text-color: #000000;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.header-container {
+    display: inline-block;
+}
+
+.nav-menu {
+    float: left;
+    padding: 5px;
+    margin: 10px 10px 10px 10px;
+}
+
+.nav-logo {
+    margin: 3px 10px 10px 10px;
+    float: left;
+}
+
+.nav {
+    background: var(--primary-fg);
+    width: 100%;
+}
+
+.nav > li > a{
+    margin-top: 15px;
+    color: var(--text-color);
+}
+
+.nav > li > .active{
+    margin-top: 15px;
+    background-color: var(--primary) !important;
+    color: var(--primary-fg);
+}
+
+.nav > li > a:hover{
+    margin-top: 15px;
+    background-color: var(--body-quiet-color);
+    color: var(--primary-fg);
+}
+
+.nav > li > a:active{
+    margin-top: 15px;
+    background-color: var(--primary);
+    color: var(--primary);
+}
+
+.btn-primary{
+    margin-top:20px;
+    outline-color: var(--primary);
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-outline-primary{
+    margin-top:20px;
+    background: #2D4481;
+    outline-color: var(--primary);
+}
+
+.btn-primary:hover{
+    margin-top:20px;
+    background: var(--body-quiet-color);
+    outline-color: var(--primary);
+}
+
+.app-footer .footer-title {
+    color: var(--primary);
+}
+
+.card{
+    border-color: var(--primary-red);
+    margin-right: 50px;
+}
+
+.fa-search{
+    margin-right: 30px;
+}
+
+.footer {
+    color: white;
+    background: var(--primary);
+    width: 100%;
+}
+
+.footer > a {
+    color: var(--primary-fg);
+}
+
+.section{
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.input-group{
+    margin: 10px 10px 10px 10px;
+}
+
+.form-group{
+    margin-bottom: 10px;
+}
+
+.main-logo {
+    width: 140px;
+    height: 75px;
+    margin: 10px 10px 10px 10px;
+}
