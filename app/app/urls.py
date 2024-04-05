@@ -20,6 +20,9 @@ from django.urls import path
 
 from . import views
 
+admin.site.index_title = "SADiLaR Administration"
+admin.site.site_title = "SADiLaR Site Admin Portal"
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.home, name="home"),
