@@ -1,0 +1,25 @@
+<!--
+    Django Admin template
+    extended from https://github.com/django/django/blob/main/django/contrib/admin/templates/admin/base.html
+    and https://github.com/django/django/blob/main/django/contrib/admin/templates/admin/base_site.html
+-->
+
+{% extends "admin/base.html" %}
+
+{% load static %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block extrastyle %}
+  <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block branding %}
+        <h1 class="header-title">
+          <img src="{% static 'img/sadilar.png' %}" class="main-logo" alt="SADiLaR">
+        </h1>
+{% if user.is_anonymous %}
+  {% include "admin/color_theme_toggle.html" %}
+{% endif %}
+{% endblock %}
+
