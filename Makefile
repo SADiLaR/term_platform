@@ -14,7 +14,13 @@ list:
 	@echo "create-super-user - Create a superuser"
 	@echo "docker-stop-all - Stop all running containers"
 	@echo "load-fixtures - Load fixtures"
-
+	@echo "create-schema - Create a schema"
+	@echo "test - Run tests"
+	@echo "ruff-check - Run ruff check"
+	@echo "ruff-format - Run ruff format"
+	@echo "ruff-fix - Run ruff check --fix"
+	@echo "pre-commit-install - Install pre-commit"
+	@echo "dev-quick-install - Run all the necessary commands to start the project"
 
 up:
 	clear

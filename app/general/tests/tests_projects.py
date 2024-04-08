@@ -3,13 +3,14 @@ from datetime import datetime
 
 from django.test import TestCase
 
-from general.models import Institution, Project, Subject
+from general.models import Institution, Language, Project, Subject
 
 
 class TestProjects(TestCase):
     def setUp(self):
         self.institution = Institution.objects.create(name="Test Institution")
         self.subject = Subject.objects.create(name="Test Subject")
+        self.language = Language.objects.create(name="Test Language", iso_code="TL")
         self.project = Project.objects.create(
             name="Test Project",
             url="http://test.com",
@@ -19,6 +20,7 @@ class TestProjects(TestCase):
             institution=self.institution,
         )
         self.project.subjects.add(self.subject)
+        self.project.languages.add(self.language)
 
     def test_project_creation(self):
         self.assertTrue(isinstance(self.project, Project))
@@ -52,6 +54,9 @@ class TestProjects(TestCase):
 
     def test_project_subject(self):
         self.assertTrue(self.project.subjects.filter(name="Test Subject").exists())
+
+    def test_project_language(self):
+        self.assertTrue(self.project.languages.filter(name="Test Language").exists())
 
     def test_str(self):
         self.assertEqual(str(self.project), "Test Project")
