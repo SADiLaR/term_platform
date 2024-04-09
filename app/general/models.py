@@ -11,6 +11,7 @@ class Project(models.Model):
         "Institution", on_delete=models.CASCADE, blank=True, verbose_name="institution"
     )
     subjects = models.ManyToManyField("Subject", blank=True)
+    languages = models.ManyToManyField("Language", blank=True)
 
     def __str__(self):
         return self.name
