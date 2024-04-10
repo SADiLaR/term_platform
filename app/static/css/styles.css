@@ -117,6 +117,16 @@ body {
     margin: 20px 10px 10px 10px;
 }
 
+.uni-logo {
+    width: 50px;
+    height: 50px;
+    margin: 10px 0 0 0;
+}
+
+.bi {
+    font-size: 10px;
+}
+
 .page-link {
     background-color: var(--primary) !important;
     color: var(--primary-fg) !important;
@@ -127,38 +137,85 @@ body {
     color: var(--primary-fg) !important;
 }
 
+.row {
+    margin: 10px;
+    padding: 10px;
+}
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-    [class*="col-"] {
+    .all-cards {
         width: 100%;
     }
+    .col-sm-6 {
+        width: 50%;
+    }
     .card {
-        width: 68%;
+        width: 92%;
         font-size: smaller;
 
     }
     .footer {
-        width: 80%;
+        width: 100%;
     }
     .header-container {
-        width: 80%;
+        width: 100%;
     }
     .page {
-        width: 70% !important;
+        width: 100% !important;
         font-size: x-small !important;
     }
 }
 
-/* Small devices (portrait tablets and large phones, 600px and up) */
+/*small devices (tablets, 600px and up) */
 @media only screen and (min-width: 600px) {
+    .all-cards {
+        width: 100%;
+    }
+    .col-sm-6 {
+        width: 50%;
+    }
+    .card {
+        width: 92%;
+        font-size: smaller;
+        height: 250px;
+
+    }
+    .footer {
+        width: 100%;
+    }
+    .header-container {
+        width: 100%;
+    }
+    .page {
+        width: 100% !important;
+        font-size: x-small !important;
+    }
+}
+
+/* Larger screens (desktops, tablets, 768px and up) */
+@media only screen and (min-width: 768px){
+  .institution-card{
+      overflow: hidden;
+  }
+  .all-cards {
+      width: 48%;
+      margin: 10px 10px 10px 10px;
+      float: left;
+      padding-right: 10px;
+
+    }
   .col-sm-6 {
       width: 50%;
   }
-}
 
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
-  .col-sm-6 {
-      width: 50%;
+  .card {
+      margin: 10px;
+      width: 100%;
+      height: 200px;
+      font-size: small;
+  }
+  .section {
+      padding-right: 20px;
   }
 }
