@@ -116,3 +116,12 @@ dev-quick-install:
 	@make load-fixtures
 	echo "Creating superuser"
 	@make create-super-user
+
+prod-up:
+	clear
+	docker-compose -f docker-compose-prod.yml up --remove-orphans
+
+prod-test:
+	clear
+	docker build -t sadilar-terminology-web-prod -f Dockerfile .
+	docker run -d --name sadilar-terminology-web-prod -p 8000:8000 -v $(pwd)/app:/app sadilar-terminology-web-prod

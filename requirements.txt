@@ -2,3 +2,4 @@ django==5.0.2
 psycopg2-binary
 django-extensions
 python-dotenv
+gunicorn

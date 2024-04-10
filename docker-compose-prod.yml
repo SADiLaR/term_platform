@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  sadilar-terminology-db-prod:
+    image: postgres:12
+    container_name: sadilar-terminology-db-prod
+    environment:
+      - POSTGRES_DB=term_db
+      - POSTGRES_USER=sadilar
+      - POSTGRES_PASSWORD=sadilar
+    volumes:
+      - .:/app
+    ports:
+      - "5432:5432"
+  sadilar-terminology-web-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sadilar-terminology-web-prod
+    volumes:
+      - ./app:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - sadilar-terminology-db-prod
+    environment:
+      - DJANGO_DB_HOST=sadilar-terminology-db-prod
+      - DJANGO_DB_PORT=5432
+      - DJANGO_DB_NAME=term_db
+      - DJANGO_DB_USER=sadilar
+      - DJANGO_DB_PASSWORD=sadilar
+      - DATABASE_URL=postgresql://sadilar:sadilar@db/term_db
+#      - DJANGO_DEBUG=True
+#      - DJANGO_SECRET_KEY=django-insecure-w!h85bp^$e8gm%c23r!0%9i7yzd=6w$s&ic+6!%306&kj8@k*5
+  sadilar-terminology-nginx-prod:
+    build: ./nginx
+    volumes:
+      - ./app/static_files:/static
+    ports:
+      - "80:80"
+    depends_on:
+      - sadilar-terminology-web-prod
+
+volumes:
+  static:
