@@ -66,6 +66,10 @@ logs:
 	clear
 	@docker-compose logs -tf
 
+in:
+	clear
+	@docker-compose exec web bash
+
 create-super-user:
 	clear
 	@docker-compose run --rm web python manage.py createsuperuser

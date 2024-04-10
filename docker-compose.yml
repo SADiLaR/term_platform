@@ -13,7 +13,9 @@ services:
     ports:
       - "5432:5432"
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
     container_name: sadilar-terminology-web
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
@@ -29,3 +31,5 @@ services:
       - DJANGO_DB_USER=sadilar
       - DJANGO_DB_PASSWORD=sadilar
       - DATABASE_URL=postgresql://sadilar:sadilar@db/term_db
+      - DJANGO_DEBUG=True
+      - DJANGO_SECRET_KEY=django-insecure-w!h85bp^$e8gm%c23r!0%9i7yzd=6w$s&ic+6!%306&kj8@k*5
