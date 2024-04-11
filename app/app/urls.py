@@ -27,4 +27,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("_health/", views.health, name="health"),
     path("", views.home, name="home"),
+    path("error_page/", views.error_page, name="error_page"),
 ]

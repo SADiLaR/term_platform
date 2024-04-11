@@ -14,3 +14,10 @@ def home(request):
     context = {}
 
     return render(request, template_name=template, context=context)
+
+
+def error_page(request):
+    template = "app/error_page.html"
+    context = {}
+
+    return render(request, template_name=template, context=context)

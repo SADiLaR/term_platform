@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="section mt-3 mb-3">
+    <div class="card text-center error-card">
+        <div class="card-header">
+            Error
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Oops</h5>
+            <p class="card-text">Something went wrong</p>
+            <a href="{% url 'home' %}" class="btn btn-primary">Go to home</a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
