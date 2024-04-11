@@ -8,6 +8,7 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /app
 
 # Install dependencies
+COPY requirements.txt /app/
 COPY requirements-dev.txt /app/
 
 RUN apt-get update
@@ -15,7 +16,7 @@ RUN apt-get install graphviz graphviz-dev -y
 
 # Install dependencies
 RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip install -r requirements-dev.txt
 
 # Copy project
 COPY ./app /app/

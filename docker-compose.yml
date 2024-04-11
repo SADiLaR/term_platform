@@ -30,6 +30,7 @@ services:
       - DJANGO_DB_NAME=term_db
       - DJANGO_DB_USER=sadilar
       - DJANGO_DB_PASSWORD=sadilar
-      - DATABASE_URL=postgresql://sadilar:sadilar@db/term_db
       - DJANGO_DEBUG=True
-      - DJANGO_SECRET_KEY=django-insecure-w!h85bp^$e8gm%c23r!0%9i7yzd=6w$s&ic+6!%306&kj8@k*5
+      - DJANGO_SECRET_KEY='django-insecure-w!h85bp^$e8gm%c23r!0%9i7yzd=6w$s&ic+6!%306&kj8@k*5'
+      - ALLOWED_HOSTS=localhost
+      - CSRF_TRUSTED_ORIGINS="http://*.localhost"

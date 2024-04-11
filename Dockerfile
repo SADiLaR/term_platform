@@ -16,7 +16,6 @@ RUN pip install -r requirements.txt
 
 # Copy project
 COPY ./app /app/
-
 COPY ./entrypoint.sh /
 
 # Run the application

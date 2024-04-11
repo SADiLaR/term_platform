@@ -5,9 +5,9 @@ services:
     image: postgres:12
     container_name: sadilar-terminology-db-prod
     environment:
-      - POSTGRES_DB=term_db
-      - POSTGRES_USER=sadilar
-      - POSTGRES_PASSWORD=sadilar
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - .:/app
     ports:
@@ -24,14 +24,15 @@ services:
     depends_on:
       - sadilar-terminology-db-prod
     environment:
-      - DJANGO_DB_HOST=sadilar-terminology-db-prod
-      - DJANGO_DB_PORT=5432
-      - DJANGO_DB_NAME=term_db
-      - DJANGO_DB_USER=sadilar
-      - DJANGO_DB_PASSWORD=sadilar
-      - DATABASE_URL=postgresql://sadilar:sadilar@db/term_db
-#      - DJANGO_DEBUG=True
-#      - DJANGO_SECRET_KEY=django-insecure-w!h85bp^$e8gm%c23r!0%9i7yzd=6w$s&ic+6!%306&kj8@k*5
+      DJANGO_DB_HOST: ${DJANGO_DB_HOST}
+      DJANGO_DB_PORT: ${DJANGO_DB_PORT}
+      DJANGO_DB_NAME: ${DJANGO_DB_NAME}
+      DJANGO_DB_USER: ${DJANGO_DB_USER}
+      DJANGO_DB_PASSWORD: ${DJANGO_DB_PASSWORD}
+      DJANGO_DEBUG: ${DJANGO_DEBUG}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+      CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
   sadilar-terminology-nginx-prod:
     build: ./nginx
     volumes:

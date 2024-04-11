@@ -1,6 +1,4 @@
-django==5.0.2
-psycopg2-binary
+-r requirements.txt
 ruff
 pygraphviz
 django-extensions
-python-dotenv
