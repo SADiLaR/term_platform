@@ -25,5 +25,6 @@ admin.site.site_title = "SADiLaR Site Admin Portal"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("_health/", views.health, name="health"),
     path("", views.home, name="home"),
 ]
