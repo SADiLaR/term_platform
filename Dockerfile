@@ -10,8 +10,7 @@ WORKDIR /app
 # Install dependencies
 COPY requirements.txt /app/
 
-RUN apt-get update
-RUN apt-get install graphviz graphviz-dev -y
+RUN apt-get update && apt-get -y upgrade
 
 # Install dependencies
 RUN pip install --upgrade pip

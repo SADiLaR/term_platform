@@ -36,10 +36,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django_extensions",
     "users",
     "general",
 ]
+if DEBUG:
+    INSTALLED_APPS += [
+       "django_extensions",
+    ]
 
 AUTH_USER_MODEL = "users.CustomUser"
 
