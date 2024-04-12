@@ -20,8 +20,8 @@ class Project(models.Model):
 class Institution(models.Model):
     name = models.CharField(max_length=200, unique=True)
     abbreviation = models.CharField(max_length=200)
-    url = models.URLField(max_length=200)
-    email = models.EmailField(max_length=200)
+    url = models.URLField(max_length=200, blank=True)
+    email = models.EmailField(max_length=200, blank=True)
     logo = models.FileField(upload_to="logos/", blank=True)
 
     def __str__(self):
