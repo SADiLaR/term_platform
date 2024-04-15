@@ -1,3 +1,5 @@
+# This is is meant for local development, but should give an idea of what you
+# can consider in production.
 version: '3'
 
 services:
@@ -13,7 +15,9 @@ services:
     ports:
       - "5432:5432"
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
     container_name: sadilar-terminology-web
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
@@ -23,9 +27,12 @@ services:
     depends_on:
       - db
     environment:
-      - DJANGO_DB_HOST=db
-      - DJANGO_DB_PORT=5432
-      - DJANGO_DB_NAME=term_db
-      - DJANGO_DB_USER=sadilar
-      - DJANGO_DB_PASSWORD=sadilar
-      - DATABASE_URL=postgresql://sadilar:sadilar@db/term_db
+      # TODO: dollar signs in the KEY are interpolated, therefore escaped here
+      # with double "$$". Maybe move to .env file to simplify?
+      - SECRET_KEY='django-insecure-w!h85bp^$$e8gm%c23r!0%9i7yzd=6w$$s&ic+6!%306&kj8@k*5'
+      - DEBUG=True
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=term_db  # see POSTGRES_DB above
+      - DB_USER=sadilar  # see POSTGRES_USER above
+      - DB_PASSWORD=sadilar  # see POSTGRES_PASSWORD above
