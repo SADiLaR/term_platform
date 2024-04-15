@@ -14,7 +14,13 @@ list:
 	@echo "create-super-user - Create a superuser"
 	@echo "docker-stop-all - Stop all running containers"
 	@echo "load-fixtures - Load fixtures"
-
+	@echo "create-schema - Create a schema"
+	@echo "test - Run tests"
+	@echo "ruff-check - Run ruff check"
+	@echo "ruff-format - Run ruff format"
+	@echo "ruff-fix - Run ruff check --fix"
+	@echo "pre-commit-install - Install pre-commit"
+	@echo "dev-quick-install - Run all the necessary commands to start the project"
 
 up:
 	clear
@@ -47,6 +53,10 @@ make-migrations:
 migrate:
 	clear
 	@docker-compose run --rm web python manage.py migrate
+
+collectstatic:
+	clear
+	@docker-compose run --rm web python manage.py collectstatic --noinput
 
 shell:
 	clear
@@ -87,11 +97,18 @@ ruff-fix:
 
 load-fixtures:
 	clear
-	@docker-compose run --rm web python manage.py loaddata fixtures/contributing-centre.json
 	@docker-compose run --rm web python manage.py loaddata fixtures/institution.json
+	@docker-compose run --rm web python manage.py loaddata fixtures/projects.json
 	@docker-compose run --rm web python manage.py loaddata fixtures/language.json
 	@docker-compose run --rm web python manage.py loaddata fixtures/subjects.json
 
 pre-commit-install:
 	clear
 	pre-commit install
+
+dev-quick-install:
+	clear
+	@make migrate
+	@make load-fixtures
+	echo "Creating superuser"
+	@make create-super-user

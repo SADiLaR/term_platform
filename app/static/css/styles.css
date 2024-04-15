@@ -1,3 +1,4 @@
+/* Remember to sync colours with admin CSS. */
 :root {
     --primary: #1a2f69;
     --primary-light: #8288bc;
@@ -6,6 +7,7 @@
     --body-quiet-color: #485d95;
     --text-color: #000000;
 }
+
 
 /*General*/
 body {

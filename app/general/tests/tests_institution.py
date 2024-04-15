@@ -2,26 +2,22 @@ import unittest
 
 from django.test import TestCase
 
-from general.models import ContributingCentre, Institution
+from general.models import Institution, Project
 
 
 class TestInstitution(TestCase):
     def setUp(self):
-        self.contributing_centre = ContributingCentre.objects.create(
-            name="Test Centre",
-            # add additional fields here as required by the ContributingCentre model
-        )
         self.institution = Institution.objects.create(
             name="Test University",
             abbreviation="tu",
             url="http://www.testuni.com",
             email="info@testuni.dev",
             logo="testuni.png",
-            contributing_centre=self.contributing_centre,
         )
 
     def test_institution_creation(self):
-        self.assertIsInstance(self.institution, Institution)
+        self.assertTrue(isinstance(self.institution, Institution))
+        self.assertEqual(self.institution.__str__(), "Test University")
 
     def test_institution_name(self):
         self.assertEqual(self.institution.name, "Test University")
@@ -37,9 +33,6 @@ class TestInstitution(TestCase):
 
     def test_institution_logo(self):
         self.assertEqual(self.institution.logo, "testuni.png")
-
-    def test_institution_contributing_centre(self):
-        self.assertEqual(self.institution.contributing_centre, self.contributing_centre)
 
 
 if __name__ == "__main__":

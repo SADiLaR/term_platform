@@ -1,5 +1,4 @@
 django==5.0.2
 psycopg2-binary
-ruff
-pygraphviz
-django-extensions
+gunicorn
+whitenoise
