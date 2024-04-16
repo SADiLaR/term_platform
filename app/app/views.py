@@ -25,3 +25,31 @@ def institutions(request):
     context = {"institutions_page": "active", "institutions": institutions}
 
     return render(request, template_name=template, context=context)
+
+
+def error_400(request, exception):
+    template = "400.html"
+    context = {}
+
+    return render(request, template_name=template, context=context)
+
+
+def error_403(request, exception):
+    template = "403.html"
+    context = {}
+
+    return render(request, template_name=template, context=context)
+
+
+def error_404(request, exception):
+    template = "404.html"
+    context = {}
+
+    return render(request, template_name=template, context=context)
+
+
+def error_500(request):
+    template = "500.html"
+    context = {}
+
+    return render(request, template_name=template, context=context)

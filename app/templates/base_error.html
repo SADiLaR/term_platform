@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="section mt-3 mb-3">
+    <div class="card text-center error-card">
+        <div class="card-header">
+            Error
+        </div>
+        <div id="error_content">
+        {% block error_content %}
+
+        {% endblock error_content %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
