@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <div class="institution-card w-100">
+    {% for institution in institutions %}
+    <div class="all-cards section">
+        <div class="card uni-card">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h5 class="card-title">{{ institution.name }}</h5>
+                    <p class="card-text">
+                        {{ institution.abbreviation }}
+                    </p>
+                    <p class="card-text">
+                        4 applicable projects
+                    </p>
+                    <br>
+                </div>
+                <div class="col-sm-6">
+                    <p class="card-text">Profile completion:</p>
+                    <div class="profile-icons">
+                      <i class="bi-star-fill"></i>
+                      <i class="bi-star-fill"></i>
+                      <i class="bi-star-fill"></i>
+                      <i class="bi-star"></i>
+                      <i class="bi-star"></i>
+                    </div>
+                    <br>
+                    <div class="card-logo">
+                        <img src=" {% static 'img/UP_logo.png' %}" class="uni-logo" alt="university logo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+
+{% endblock content %}
