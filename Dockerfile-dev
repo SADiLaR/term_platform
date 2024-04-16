@@ -1,4 +1,5 @@
-# A minimalist image usable as a base for a production deployment.
+# A development image with extras for development.
+# Don't use in production.
 FROM python:3.12
 
 # Set environment variables
@@ -10,13 +11,14 @@ WORKDIR /app
 
 # Install dependencies
 COPY requirements.txt /app/
+COPY requirements-dev.txt /app/
 
-RUN apt-get update
-RUN apt-get install graphviz graphviz-dev -y
+RUN apt-get update && apt-get -y upgrade
+RUN apt-get install --no-install-recommends -y graphviz graphviz-dev
 
 # Install dependencies
 RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip install -r requirements-dev.txt
 
 # Copy project
 COPY ./app /app/
