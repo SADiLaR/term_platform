@@ -1,0 +1,11 @@
+{% extends "base_error.html" %}
+
+{% block error_content %}
+
+    <div class="card-body">
+            <h5 class="card-title">Bad Request (400)</h5>
+            <p class="card-text">The server cannot process the request due to client error.</p>
+            <a href="{% url 'home' %}" class="btn btn-primary">Go to home</a>
+    </div>
+
+{% endblock error_content %}

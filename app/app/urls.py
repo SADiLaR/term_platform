@@ -29,3 +29,8 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("institutions/", views.institutions, name="institutions"),
 ]
+
+handler400 = "app.views.error_400"
+handler403 = "app.views.error_403"
+handler404 = "app.views.error_404"
+handler500 = "app.views.error_500"
