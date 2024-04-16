@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from general.models import Institution
+
 
 def health(request):
     """A very basic (minimal dependency) health endpoint."""
@@ -16,8 +18,10 @@ def home(request):
     return render(request, template_name=template, context=context)
 
 
-def error_page(request):
-    template = "app/error_page.html"
-    context = {}
+def institutions(request):
+    template = "app/institutions.html"
+
+    institutions = Institution.objects.all()
+    context = {"institutions_page": "active", "institutions": institutions}
 
     return render(request, template_name=template, context=context)

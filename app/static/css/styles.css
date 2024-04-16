@@ -8,6 +8,8 @@
     --text-color: #000000;
 }
 
+
+/*General*/
 body {
     margin: 0;
     padding: 0;
@@ -79,15 +81,6 @@ body {
     color: var(--primary);
 }
 
-.card{
-    border-color: var(--primary-red);
-    margin-right: 50px;
-}
-
-.fa-search{
-    margin-right: 30px;
-}
-
 .footer {
     color: white;
     background: var(--primary);
@@ -104,16 +97,154 @@ body {
     margin-bottom: 10px;
 }
 
-.input-group{
-    margin: 10px 10px 10px 10px;
-}
-
-.form-group{
-    margin-bottom: 10px;
-}
-
 .main-logo {
     width: 140px;
     height: 75px;
-    margin: 10px 10px 10px 10px;
+    margin: 20px 10px 10px 10px;
+}
+
+.page-link {
+    background-color: var(--primary) !important;
+    color: var(--primary-fg) !important;
+}
+
+.page-link:hover{
+    background-color: var(--body-quiet-color) !important;
+    color: var(--primary-fg) !important;
+}
+
+.row {
+    margin: 10px;
+    padding: 10px;
+}
+
+/*Home page*/
+.content-card {
+    border-color: var(--primary-red);
+    margin: 0 10px 0 10px;
+    width: 100%;
+}
+
+/*Institutions page*/
+.uni-card {
+    border-color: var(--primary-red);
+    margin: 0 10px 0 10px;
+}
+
+.uni-logo {
+    width: 50px;
+    height: 50px;
+    margin: 10px 0 0 0;
+}
+
+.col-sm-6 {
+    width: 50%;
+}
+
+/*bootstrap icons*/
+.bi {
+    font-size: 10px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    /*General*/
+    .header-container {
+        width: 100%;
+    }
+    .section {
+      padding-right: 30px;
+    }
+
+    /*Institutions page*/
+    .uni-card {
+        width: 100%;
+        font-size: smaller;
+    }
+    .all-cards {
+        width: 98%;
+        padding-right: 30px;
+    }
+
+    /*Home page*/
+    .content-card {
+        font-size: smaller;
+        padding-right: 20px;
+        margin-right: 10px;
+    }
+}
+
+/*small devices (tablets, 600px and up) */
+@media screen and (min-width: 600px) {
+    /*General*/
+    .header-container {
+        width: 100%;
+    }
+    .section {
+      padding-right: 20px;
+    }
+
+    /*Institutions page*/
+    .all-cards {
+        width: 100%;
+        padding-right: 10px;
+    }
+    .uni-card {
+        width: 98%;
+        height: 200px;
+        padding-right: 20px;
+    }
+
+    /*Home page*/
+    .content-card {
+        font-size: smaller;
+    }
+}
+
+/*Medium screens (tablets, between 768px and 1001px)*/
+@media screen and (min-width: 768px) and (max-width: 1001px) {
+    /*General*/
+    .header-container {
+        width: 100%;
+    }
+    .section {
+      padding-right: 20px;
+    }
+
+    /*Institutions page*/
+    .uni-card {
+        width: 98%;
+        font-size: medium;
+        padding-right: 20px;
+        height: 200px;
+    }
+    .all-cards {
+        width: 100%;
+        padding-right: 10px;
+    }
+}
+
+ /*Larger screens (desktops, 1001px and up)*/
+@media screen and (min-width: 1001px){
+  /*General*/
+  .section {
+      padding-right: 20px;
+  }
+
+  /*Institutions page*/
+  .institution-card{
+      overflow: hidden;
+  }
+  .all-cards {
+      width: 48%;
+      margin: 10px 10px 10px 10px;
+      float: left;
+      padding-right: 10px;
+    }
+  .uni-card {
+      margin: 10px;
+      width: 100%;
+      height: 200px;
+      font-size: small;
+  }
 }
