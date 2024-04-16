@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 ]
 if DEBUG:
     INSTALLED_APPS += [
-       "django_extensions",
+        "django_extensions",
     ]
 
 AUTH_USER_MODEL = "users.CustomUser"

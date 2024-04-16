@@ -3,6 +3,7 @@ from django.shortcuts import render
 
 from general.models import Institution
 
+
 def health(request):
     """A very basic (minimal dependency) health endpoint."""
     # If we want/need a health check for DB, cache, files, etc. that should
@@ -12,7 +13,7 @@ def health(request):
 
 def home(request):
     template = "app/home.html"
-    context = {}
+    context = {"home_page": "active"}
 
     return render(request, template_name=template, context=context)
 
