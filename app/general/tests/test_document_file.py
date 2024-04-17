@@ -44,6 +44,10 @@ class DocumentFileTest(TestCase):
     def test_document_available_by_default(self):  # Test default value
         self.assertTrue(self.document.available)
 
+    def tearDown(self):
+        if self.document.uploaded_file:
+            self.document.uploaded_file.delete()
+
 
 if __name__ == "__main__":
     unittest.main()

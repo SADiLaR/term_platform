@@ -24,18 +24,18 @@ class DocumentFileForm(ModelForm):
         cleaned_data = super().clean()
         url = cleaned_data.get("url", "")
         uploaded_file = cleaned_data.get("uploaded_file", "")
-        cleaned_data["mime_type"] = (
-            mimetypes.guess_type(uploaded_file.name)[0] if uploaded_file else ""
-        )
+
+        if cleaned_data["mime_type"] is not None:
+            cleaned_data["mime_type"] = (
+                mimetypes.guess_type(uploaded_file.name)[0] if uploaded_file else ""
+            )
 
         if not url and not uploaded_file:
             self.add_error("url", "Either URL or uploaded file must be provided.")
             self.add_error("uploaded_file", "Either URL or uploaded file must be provided.")
 
         if uploaded_file:
-            print("uploaded_file", uploaded_file.size)
             limit = 10 * 1024 * 1024
-            print("limit", limit)
             if uploaded_file.size and uploaded_file.size > limit:
                 self.add_error("uploaded_file", "File size must not exceed 10MB.")
 
