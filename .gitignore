@@ -32,3 +32,4 @@ env.bak/
 venv.bak/
 app/static_files/
 /app/documents/
+app/media/
