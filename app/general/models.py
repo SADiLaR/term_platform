@@ -26,7 +26,7 @@ class Institution(models.Model):
     logo = models.FileField(upload_to="logos/", blank=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.abbreviation})"
 
 
 class Language(models.Model):
