@@ -16,7 +16,9 @@
 
 {% block branding %}
         <h1 class="header-title">
-          <img src="{% static 'img/sadilar.png' %}" class="main-logo" alt="SADiLaR">
+            <a href="{% url 'admin:index' %}">
+                <img src="{% static 'img/sadilar.png' %}" class="main-logo" alt="SADiLaR">
+            </a>
         </h1>
 {% if user.is_anonymous %}
   {% include "admin/color_theme_toggle.html" %}
