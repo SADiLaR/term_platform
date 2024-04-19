@@ -195,8 +195,11 @@ body {
         width: 100%;
         padding-right: 10px;
     }
-    .col-sm-6 {
-        width: 50%;
+    .left-col {
+        width: 70%;
+    }
+    .right-col {
+        width: 30%;
     }
     .uni-card {
         width: 98%;
@@ -231,8 +234,11 @@ body {
         width: 100%;
         padding-right: 10px;
     }
-    .col-sm-6 {
-        width: 50%;
+    .left-col {
+        width: 70%;
+    }
+    .right-col {
+        width: 30%;
     }
 }
 
@@ -253,9 +259,12 @@ body {
       float: left;
       padding-right: 10px;
     }
-  .col-sm-6 {
-      width: 50%;
-  }
+  .left-col {
+        width: 70%;
+    }
+  .right-col {
+        width: 30%;
+    }
   .uni-card {
       margin: 10px;
       width: 100%;
