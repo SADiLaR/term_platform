@@ -21,7 +21,7 @@ def home(request):
 def institutions(request):
     template = "app/institutions.html"
 
-    institutions = Institution.objects.all()
+    institutions = Institution.objects.all().order_by("name").values()
     context = {"institutions_page": "active", "institutions": institutions}
 
     return render(request, template_name=template, context=context)
