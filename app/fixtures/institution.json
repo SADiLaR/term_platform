@@ -3,7 +3,7 @@
     "model": "general.Institution",
     "pk": 1,
     "fields": {
-      "name": "University of South Africa (UNISA)",
+      "name": "University of South Africa",
       "abbreviation": "UNISA",
       "url": "https://www.unisa.ac.za/",
       "email": "email@example.dev",
