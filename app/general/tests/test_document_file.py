@@ -29,7 +29,7 @@ class DocumentFileTest(TestCase):
             license=self.license,
             mime_type=self.mime_type,
             document_type=self.document_type,
-            Institution=self.institution,
+            institution=self.institution,
         )
         self.document.subjects.add(self.subject)
         self.document.languages.add(self.language)

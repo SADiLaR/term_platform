@@ -19,7 +19,7 @@ class TestDocumentFileForm(unittest.TestCase):
             "license": "MIT",
             "document_type": "Glossary",
             "mime_type": "pdf",
-            "Institution": Institution.objects.create(name="Test Institution"),
+            "institution": Institution.objects.create(name="Test Institution"),
             "url": "",
             "uploaded_file": "",
         }
@@ -37,7 +37,7 @@ class TestDocumentFileForm(unittest.TestCase):
             "license": "MIT",
             "document_type": "Glossary",
             "mime_type": "pdf",
-            "Institution": Institution.objects.create(name="Test Institution 2"),
+            "institution": Institution.objects.create(name="Test Institution 2"),
             "url": "www.example.com",
             "uploaded_file": "",
         }
@@ -51,7 +51,7 @@ class TestDocumentFileForm(unittest.TestCase):
             "license": "MIT",
             "document_type": "Glossary",
             "mime_type": "pdf",
-            "Institution": Institution.objects.create(name="Test Institution 3"),
+            "institution": Institution.objects.create(name="Test Institution 3"),
             "url": "",
             "uploaded_file": self.file_mock,
         }
@@ -68,7 +68,7 @@ class TestDocumentFileForm(unittest.TestCase):
             "license": "MIT",
             "document_type": "Glossary",
             "mime_type": "pdf",
-            "Institution": Institution.objects.create(name="Test Institution 4"),
+            "institution": Institution.objects.create(name="Test Institution 4"),
             "url": "",
             "uploaded_file": self.file_mock,
         }
