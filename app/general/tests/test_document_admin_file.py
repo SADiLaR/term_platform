@@ -34,7 +34,7 @@ class TestDocumentFileForm(unittest.TestCase):
     def test_clean_without_file(self):
         tests_form = {
             "title": "Test",
-            "license": "MIT",
+            "license": "(c)",
             "document_type": "Glossary",
             "mime_type": "pdf",
             "institution": Institution.objects.create(name="Test Institution 2"),
@@ -48,7 +48,7 @@ class TestDocumentFileForm(unittest.TestCase):
     def test_clean_without_url(self):
         tests_form = {
             "title": "Test",
-            "license": "MIT",
+            "license": "CC0",
             "document_type": "Glossary",
             "mime_type": "pdf",
             "institution": Institution.objects.create(name="Test Institution 3"),
