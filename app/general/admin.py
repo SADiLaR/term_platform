@@ -14,7 +14,7 @@ class ProjectAdminInline(admin.TabularInline):
 class DocumentFileForm(ModelForm):
     class Meta:
         model = DocumentFile
-        fields = fields_for_model(DocumentFile)
+        fields = "__all__"  # noqa: DJ007
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
