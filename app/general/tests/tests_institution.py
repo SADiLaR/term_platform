@@ -17,7 +17,7 @@ class TestInstitution(TestCase):
 
     def test_institution_creation(self):
         self.assertTrue(isinstance(self.institution, Institution))
-        self.assertEqual(self.institution.__str__(), "Test University")
+        self.assertEqual(str(self.institution), "Test University (tu)")
 
     def test_institution_name(self):
         self.assertEqual(self.institution.name, "Test University")
