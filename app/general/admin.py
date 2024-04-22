@@ -1,7 +1,7 @@
 import mimetypes
 
 from django.contrib import admin
-from django.forms import ModelForm, fields_for_model
+from django.forms import HiddenInput, ModelForm, fields_for_model
 
 from .models import DocumentFile, Institution, Language, Project, Subject
 
@@ -18,7 +18,12 @@ class DocumentFileForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["mime_type"].widget.attrs["disabled"] = True
+   
+        # If the instance has a mime_type, the field should be disabled
+        if not self.instance.mime_type:
+            self.fields["mime_type"].widget = HiddenInput()
+        else:
+            self.fields["mime_type"].widget.attrs["disabled"] = True
 
     def clean(self):
         cleaned_data = super().clean()
