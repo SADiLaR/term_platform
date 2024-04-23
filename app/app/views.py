@@ -27,6 +27,13 @@ def institutions(request):
     return render(request, template_name=template, context=context)
 
 
+def search(request):
+    template = "app/search.html"
+    context = {"search_page": "active"}
+
+    return render(request, template_name=template, context=context)
+
+
 def error_400(request, exception):
     template = "400.html"
     context = {}

@@ -30,6 +30,7 @@ urlpatterns = [
     path("_health/", views.health, name="health"),
     path("", views.home, name="home"),
     path("institutions/", views.institutions, name="institutions"),
+    path("search/", views.search, name="search"),
 ]
 
 handler400 = "app.views.error_400"
