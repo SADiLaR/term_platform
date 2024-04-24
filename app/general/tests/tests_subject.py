@@ -18,6 +18,10 @@ class TestSubject(TestCase):
         with self.assertRaises(Exception):
             Subject.objects.create(name="Mathematics")
 
+    def test_history_records_creation(self):
+        self.assertEqual(self.subject1.history.count(), 1)
+        self.assertEqual(self.subject1.history.first().name, "Mathematics")
+
 
 if __name__ == "__main__":
     unittest.main()

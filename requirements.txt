@@ -2,3 +2,4 @@ django==5.0.2
 psycopg2-binary
 gunicorn
 whitenoise
+django-simple-history

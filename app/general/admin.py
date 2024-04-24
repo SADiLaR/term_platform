@@ -2,13 +2,9 @@ import mimetypes
 
 from django.contrib import admin
 from django.forms import HiddenInput, ModelForm, fields_for_model
+from simple_history.admin import SimpleHistoryAdmin
 
 from .models import DocumentFile, Institution, Language, Project, Subject
-
-
-class ProjectAdminInline(admin.TabularInline):
-    model = Project
-    extra = 0
 
 
 class DocumentFileForm(ModelForm):
@@ -47,22 +43,45 @@ class DocumentFileForm(ModelForm):
         return cleaned_data
 
 
-class DocumentFileAdmin(admin.ModelAdmin):
+class DocumentFileAdmin(SimpleHistoryAdmin):
     list_display = ["title", "license", "document_type", "available"]
-    ordering = [
-        "license",
-    ]
+    ordering = ["license"]
     search_fields = ["title", "license", "document_type"]
-
     form = DocumentFileForm
+    history_list_display = ["title", "license", "document_type", "available"]
 
 
-class ProjectAdmin(admin.ModelAdmin):
+class SubjectAdmin(SimpleHistoryAdmin):
+    search_fields = ["name"]
+    list_display = ["name"]
+    history_list_display = ["name"]
+
+
+class LanguageAdmin(SimpleHistoryAdmin):
+    history_list_display = ["name", "iso_code"]
+    list_display = ["name", "iso_code"]
+
+
+class ProjectAdminInline(admin.TabularInline):
+    model = Project
+    extra = 0
+
+
+class ProjectAdmin(SimpleHistoryAdmin):
+    search_fields = ["name"]
+    list_display = ["name"]
+    history_list_display = ["name"]
+
+
+class InstitutionAdmin(SimpleHistoryAdmin):
+    search_fields = ["name"]
+    list_display = ["name"]
     inlines = [ProjectAdminInline]
+    history_list_display = ["name", "abbreviation"]
 
 
-admin.site.register(Project)
-admin.site.register(Institution, ProjectAdmin)
-admin.site.register(Language)
-admin.site.register(Subject)
+admin.site.register(Project, ProjectAdmin)
+admin.site.register(Institution, InstitutionAdmin)
+admin.site.register(Language, LanguageAdmin)
+admin.site.register(Subject, SubjectAdmin)
 admin.site.register(DocumentFile, DocumentFileAdmin)
