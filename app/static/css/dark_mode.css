@@ -1,0 +1,91 @@
+/*
+    Django admin styles
+    extended from https://github.com/django/django/blob/main/django/contrib/admin/static/admin/css/dark_mode.css
+    Remember to sync colours with front-end CSS.
+*/
+
+@media (prefers-color-scheme: dark) {
+    :root {
+      --primary: #2d4481;
+      --primary-black: #000000;
+      --primary-white: #fff;
+
+      --link-fg: #121212;
+
+      --selected-row: #2d4481;
+    }
+  }
+
+
+html[data-theme="dark"] {
+    --primary: #1a2f69;
+    --primary-black: #000000;
+    --primary-white: #fff;
+
+    --link-fg: var(--primary-white);
+    --link-hover-color: var(--primary-white);
+
+    --selected-row: #2d4481;
+}
+
+/* THEME SWITCH */
+.theme-toggle {
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    background: transparent;
+    vertical-align: middle;
+    margin-inline-start: 5px;
+    margin-top: -1px;
+}
+
+.theme-toggle svg {
+    vertical-align: middle;
+    height: 1rem;
+    width: 1rem;
+    display: none;
+}
+
+/*
+Fully hide screen reader text so we only show the one matching the current
+theme.
+*/
+.theme-toggle .visually-hidden {
+    display: none;
+}
+
+html[data-theme="auto"] .theme-toggle .theme-label-when-auto {
+    display: block;
+}
+
+html[data-theme="dark"] .theme-toggle .theme-label-when-dark {
+    display: block;
+}
+
+html[data-theme="light"] .theme-toggle .theme-label-when-light {
+    display: block;
+}
+
+/* ICONS */
+.theme-toggle svg.theme-icon-when-auto,
+.theme-toggle svg.theme-icon-when-dark,
+.theme-toggle svg.theme-icon-when-light {
+    fill: var(--primary-black);
+    color: var(--primary-white);
+}
+
+html[data-theme="auto"] .theme-toggle svg.theme-icon-when-auto {
+    display: block;
+}
+
+html[data-theme="dark"] .theme-toggle svg.theme-icon-when-dark {
+    display: block;
+}
+
+html[data-theme="light"] .theme-toggle svg.theme-icon-when-light {
+    display: block;
+}
+
+#header a:link, #header a:visited, #logout-form button {
+    color: var(--primary-black);
+}

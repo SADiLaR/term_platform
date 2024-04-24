@@ -3,12 +3,13 @@
     extended from https://github.com/django/django/blob/main/django/contrib/admin/static/admin/css/base.css
     Remember to sync colours with front-end CSS.
 */
-
 /* VARIABLE DEFINITIONS */
 html[data-theme="light"],
 :root {
     --primary: #1a2f69;
     --primary-light: #8288bc;
+    --primary-black: #000000;
+    --primary-white: #fff;
 
     --header-color: var(--primary-light);
     --header-branding-color: var(--primary-light);
@@ -47,9 +48,11 @@ a.section:link, a.section:visited {
     color: var(--link-fg);
 }
 
-.theme-toggle svg.theme-icon-when-auto, .theme-toggle svg.theme-icon-when-dark, .theme-toggle svg.theme-icon-when-light {
-    fill: var(--link-fg);
-    color: #fff;
+.theme-toggle svg.theme-icon-when-auto,
+.theme-toggle svg.theme-icon-when-dark,
+.theme-toggle svg.theme-icon-when-light {
+    fill: var(--primary-black);
+    color: var(--primary-white);
 }
 
 .header-title {
@@ -60,4 +63,15 @@ a.section:link, a.section:visited {
     margin-left: 1px;
     width: auto;
     height: 70px;
+}
+
+
+.module h2, .module caption, .inline-group h2 {
+    margin: 0;
+    padding: 8px;
+    font-weight: 400;
+    font-size: 0.8125rem;
+    text-align: left;
+    background: var(--header-bg);
+    color: var(--primary-white);
 }
