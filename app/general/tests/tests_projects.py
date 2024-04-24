@@ -61,6 +61,15 @@ class TestProjects(TestCase):
     def test_str(self):
         self.assertEqual(str(self.project), "Test Project")
 
+    def test_history_records_creation(self):
+        self.assertEqual(self.project.history.count(), 1)
+        self.assertEqual(self.project.history.first().name, "Test Project")
+        self.assertEqual(self.project.history.first().url, "http://test.com")
+        self.assertEqual(self.project.history.first().logo, "http://test.com/logo.png")
+        self.assertEqual(self.project.history.first().start_date.strftime("%Y-%m-%d"), "2023-01-01")
+        self.assertEqual(self.project.history.first().end_date.strftime("%Y-%m-%d"), "2023-12-31")
+        self.assertEqual(self.project.history.first().institution, self.institution)
+
 
 if __name__ == "__main__":
     unittest.main()

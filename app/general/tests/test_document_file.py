@@ -44,6 +44,18 @@ class DocumentFileTest(TestCase):
     def test_document_available_by_default(self):  # Test default value
         self.assertTrue(self.document.available)
 
+    def test_history_records_creation(self):
+        self.assertEqual(self.document.history.count(), 1)
+        self.assertEqual(self.document.history.first().title, "Some document")
+        self.assertEqual(self.document.history.first().url, "https://example.com")
+        self.assertEqual(self.document.history.first().uploaded_file, "documents/example.pdf")
+        self.assertEqual(self.document.history.first().license, "MIT")
+        self.assertEqual(self.document.history.first().mime_type, "pdf")
+        self.assertEqual(self.document.history.first().document_type, "Glossary")
+        self.assertEqual(self.document.institution, self.institution)
+        self.assertIn(self.subject, self.document.subjects.all())
+        self.assertIn(self.language, self.document.languages.all())
+
     def tearDown(self):
         if self.document.uploaded_file:
             self.document.uploaded_file.delete()
