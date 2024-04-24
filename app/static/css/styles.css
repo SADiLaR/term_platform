@@ -11,8 +11,24 @@
 
 /*General*/
 body {
-    margin: 0;
     padding: 0;
+    margin-bottom: 60px;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+    padding-bottom: 60px;
+}
+
+.footer {
+    color: white;
+    background: var(--primary);
+    width: 100%;
+
+    position: absolute;
+    height: 60px;
+    bottom: 0;
 }
 
 .header-container {
@@ -79,12 +95,6 @@ body {
 
 .app-footer .footer-title {
     color: var(--primary);
-}
-
-.footer {
-    color: white;
-    background: var(--primary);
-    width: 100%;
 }
 
 .footer > a {
