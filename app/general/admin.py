@@ -18,7 +18,7 @@ class DocumentFileForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-   
+
         # If the instance has a mime_type, the field should be disabled
         if not self.instance.mime_type:
             self.fields["mime_type"].widget = HiddenInput()
