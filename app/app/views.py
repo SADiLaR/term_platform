@@ -13,7 +13,7 @@ def health(request):
 
 def home(request):
     template = "app/home.html"
-    context = {"home_page": "active"}
+    context = {"current_page": "home"}
 
     return render(request, template_name=template, context=context)
 
@@ -22,14 +22,14 @@ def institutions(request):
     template = "app/institutions.html"
 
     institutions = Institution.objects.all().order_by("name").values()
-    context = {"institutions_page": "active", "institutions": institutions}
+    context = {"current_page": "institutions", "institutions": institutions}
 
     return render(request, template_name=template, context=context)
 
 
 def search(request):
     template = "app/search.html"
-    context = {"search_page": "active"}
+    context = {"current_page": "search"}
 
     return render(request, template_name=template, context=context)
 

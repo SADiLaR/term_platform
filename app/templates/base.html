@@ -27,13 +27,22 @@
             <div class="nav-menu">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link {{ home_page }}" aria-current="page" href="{% url 'home' %}">Home</a>
+                        <a
+                                {% if current_page == 'home' %} class="nav-link active" aria-current="page" {% endif %}
+                                class="nav-link" href="{% url 'home' %}">Home
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ search_page }}" aria-current="page" href="{% url 'search' %}">Search</a>
+                        <a
+                                {% if current_page == 'search' %} class="nav-link active" aria-current="page" {% endif %}
+                                class="nav-link" href="{% url 'search' %}">Search
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ institutions_page }}" href="{% url 'institutions' %}">Institutions</a>
+                        <a
+                                {% if current_page == 'institutions' %} class="nav-link active" aria-current="page" {% endif %}
+                                class="nav-link" href="{% url 'institutions' %}">Institutions
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
