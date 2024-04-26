@@ -39,6 +39,9 @@ class Language(models.Model):
         verbose_name="ISO code",
     )
 
+    # added simple historical records to the model
+    history = HistoricalRecords()
+
     def __str__(self):
         return self.name
 
