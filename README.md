@@ -24,8 +24,8 @@ About the project:
 3. Run `make run` to run the docker container
 4. Run `make stop` to stop the docker container
 
+### Plugins installed
 
+#### Django Simple History
 
-
-
-
+https://django-simple-history.readthedocs.io/en/latest/

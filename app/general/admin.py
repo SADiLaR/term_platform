@@ -2,6 +2,7 @@ import mimetypes
 
 from django.contrib import admin
 from django.forms import HiddenInput, ModelForm, fields_for_model
+from simple_history.admin import SimpleHistoryAdmin
 
 from .models import DocumentFile, Institution, Language, Project, Subject
 
@@ -61,8 +62,14 @@ class ProjectAdmin(admin.ModelAdmin):
     inlines = [ProjectAdminInline]
 
 
+class SubjectAdmin(SimpleHistoryAdmin):
+    search_fields = ["name"]
+    list_display = ["name"]
+    history_list_display = ["name"]
+
+
 admin.site.register(Project)
 admin.site.register(Institution, ProjectAdmin)
 admin.site.register(Language)
-admin.site.register(Subject)
+admin.site.register(Subject, SubjectAdmin)
 admin.site.register(DocumentFile, DocumentFileAdmin)

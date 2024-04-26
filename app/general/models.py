@@ -1,5 +1,6 @@
 from django.core.validators import FileExtensionValidator
 from django.db import models
+from simple_history.models import HistoricalRecords
 
 
 class Project(models.Model):
@@ -44,6 +45,9 @@ class Language(models.Model):
 
 class Subject(models.Model):
     name = models.CharField(max_length=150, unique=True)
+
+    # added simple historical records to the model
+    history = HistoricalRecords()
 
     def __str__(self):
         return self.name
