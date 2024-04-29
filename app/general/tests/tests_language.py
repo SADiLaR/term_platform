@@ -2,21 +2,30 @@ import unittest
 
 from django.test import TestCase
 
-from general.models import Subject
+from general.models import Language
 
 
-class TestSubject(TestCase):
+class TestLanguage(TestCase):
     def setUp(self):
-        self.subject = Subject.objects.create(name="Maths")
-        self.subject2 = Subject.objects.create(name="Science")
+        self.language = Language.objects.create(name="English", iso_code="EN")
+        self.language2 = Language.objects.create(name="Afrikaans", iso_code="AF")
 
     def test_subject_creation(self):
-        self.assertEqual(self.subject.name, "Maths")
-        self.assertEqual(self.subject.__str__(), "Maths")
+        self.assertEqual(self.language.name, "English")
+        self.assertEqual(self.language.iso_code, "EN")
+
+        self.assertEqual(self.language2.name, "Afrikaans")
+        self.assertEqual(self.language2.iso_code, "AF")
 
     def test_subject_name_uniqueness(self):
-        duplicate_subject = Subject(name="Maths")
-        self.assertRaises(Exception, duplicate_subject.save)
+        with self.assertRaises(Exception):
+            Language.objects.create(name="English")
+
+    #
+    def test_history_records_creation(self):
+        self.assertEqual(self.language.history.count(), 1)
+        self.assertEqual(self.language.history.first().name, "English")
+        self.assertEqual(self.language.history.first().iso_code, "EN")
 
 
 if __name__ == "__main__":
