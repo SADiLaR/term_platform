@@ -16,8 +16,7 @@ db.sqlite3
 db.sqlite3-journal
 media
 
-# macOS template
-# General
+# General Files
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -30,6 +29,10 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+#folders
 app/static_files/
 /app/documents/
 app/media/
+/app/logging/
+/logging/

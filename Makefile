@@ -112,3 +112,11 @@ dev-quick-install:
 	@make load-fixtures
 	echo "Creating superuser"
 	@make create-super-user
+
+docker-shell:
+	clear
+	docker exec -it sadilar-terminology-web bash
+
+check:
+	clear
+	@docker-compose run --rm web python manage.py check

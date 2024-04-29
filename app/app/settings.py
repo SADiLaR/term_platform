@@ -11,10 +11,16 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import os
+import sys
 from pathlib import Path
+
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -98,6 +104,9 @@ DATABASES = {
     }
 }
 
+if "test" in sys.argv or "test_coverage" in sys.argv:  # Covers regular testing and django-coverage
+    DATABASES["default"]["ENGINE"] = "django.db.backends.sqlite3"
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -154,3 +163,59 @@ STORAGES = {
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGGING_FOLDER_DEFAULT = os.path.abspath(os.path.join("/logging/"))
+
+# Check if the application is under testing
+if "test" in sys.argv:
+    DEBUG = False
+
+if DEBUG:
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+            },
+        },
+        "root": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+        },
+    }
+else:
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+            },
+            "file": {
+                "level": os.environ.get("LOGGING_HANDLERS_LEVEL", "WARNING"),
+                "class": "logging.FileHandler",
+                "filename": os.path.join(
+                    LOGGING_FOLDER_DEFAULT, os.environ.get("LOGGING_FILE", "debug.log")
+                ),
+                "formatter": "verbose",
+            },
+        },
+        "root": {
+            "handlers": ["console", "file"],
+            "level": os.environ.get("LOGGING_LOGGERS_LEVEL", "WARNING"),
+        },
+        "loggers": {
+            "django": {
+                "handlers": ["file"],
+                "level": os.environ.get("LOGGING_LOGGERS_DJANGO_LEVEL", "WARNING"),
+                "propagate": True,
+            },
+        },
+        "formatters": {
+            "verbose": {
+                "format": "{asctime} {levelname}  - {name} {module}.py (line: {lineno:d}). - {message}",
+                "style": "{",
+            },
+        },
+    }

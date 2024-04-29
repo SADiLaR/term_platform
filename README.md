@@ -24,8 +24,24 @@ About the project:
 3. Run `make run` to run the docker container
 4. Run `make stop` to stop the docker container
 
+## Production
 
 ### Plugins installed
+
 #### Django Simple History
 
 https://django-simple-history.readthedocs.io/en/latest/
+
+#### Basic setup for production
+
+### environment variables
+
+please use .env.example as example
+
+
+## Production Information
+
+Docker Volumes for production:
+
+/media
+/logging
