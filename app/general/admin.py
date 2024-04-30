@@ -44,20 +44,22 @@ class DocumentFileForm(ModelForm):
 
 
 class DocumentFileAdmin(SimpleHistoryAdmin):
+    ordering = ["title"]
     list_display = ["title", "license", "document_type", "available"]
-    ordering = ["license"]
     search_fields = ["title", "license", "document_type"]
     form = DocumentFileForm
     history_list_display = ["title", "license", "document_type", "available"]
 
 
 class SubjectAdmin(SimpleHistoryAdmin):
+    ordering = ["name"]
     search_fields = ["name"]
     list_display = ["name"]
     history_list_display = ["name"]
 
 
 class LanguageAdmin(SimpleHistoryAdmin):
+    ordering = ["name"]
     history_list_display = ["name", "iso_code"]
     list_display = ["name", "iso_code"]
 
@@ -68,12 +70,14 @@ class ProjectAdminInline(admin.TabularInline):
 
 
 class ProjectAdmin(SimpleHistoryAdmin):
+    ordering = ["name"]
     search_fields = ["name"]
     list_display = ["name"]
     history_list_display = ["name"]
 
 
 class InstitutionAdmin(SimpleHistoryAdmin):
+    ordering = ["name"]
     search_fields = ["name"]
     list_display = ["name"]
     inlines = [ProjectAdminInline]
