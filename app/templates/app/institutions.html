@@ -14,7 +14,11 @@
                         {{ institution.abbreviation }}
                     </p>
                     <p class="card-text">
-                        4 applicable projects
+                        {% if institution.project_count == 0 %}
+                            no applicable project
+                        {% else %}
+                            {{institution.project_count}} applicable projects
+                        {% endif %}
                     </p>
                     <br>
                 </div>
