@@ -7,6 +7,7 @@ from .models import CustomUser
 
 class CustomUserAdmin(UserAdmin, SimpleHistoryAdmin):
     model = CustomUser
+    ordering = ["username"]
     list_display = [
         "username",
         "email",
