@@ -135,6 +135,13 @@ MEDIA_URL = "media/"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+
+if DEBUG:
+    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+else:
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
@@ -146,7 +153,7 @@ STORAGES = {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": STATICFILES_STORAGE,
     },
 }
 
