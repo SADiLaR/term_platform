@@ -137,9 +137,9 @@ MEDIA_URL = "media/"
 
 
 if DEBUG:
-    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+    _STATICFILES_BACKEND = "django.contrib.staticfiles.storage.StaticFilesStorage"
 else:
-    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+    _STATICFILES_BACKEND = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 STATIC_URL = "/static/"
@@ -153,7 +153,7 @@ STORAGES = {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
     "staticfiles": {
-        "BACKEND": STATICFILES_STORAGE,
+        "BACKEND": _STATICFILES_BACKEND,
     },
 }
 
