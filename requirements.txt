@@ -4,3 +4,4 @@ django-simple-history
 gunicorn
 psycopg2-binary
 whitenoise
+pillow
