@@ -8,7 +8,10 @@
 html[data-theme="light"],
 :root {
     --primary: #1a2f69;
+    --secondary: #b0b4d9;
     --primary-light: #8288bc;
+    --primary-black: #000000;
+    --primary-white: #fff;
 
     --header-color: var(--primary-light);
     --header-branding-color: var(--primary-light);
@@ -47,9 +50,11 @@ a.section:link, a.section:visited {
     color: var(--link-fg);
 }
 
-.theme-toggle svg.theme-icon-when-auto, .theme-toggle svg.theme-icon-when-dark, .theme-toggle svg.theme-icon-when-light {
-    fill: var(--link-fg);
-    color: #fff;
+.theme-toggle svg.theme-icon-when-auto,
+.theme-toggle svg.theme-icon-when-dark,
+.theme-toggle svg.theme-icon-when-light {
+    fill: var(--primary-black);
+    color: var(--primary-white);
 }
 
 .header-title {
@@ -60,4 +65,9 @@ a.section:link, a.section:visited {
     margin-left: 1px;
     width: auto;
     height: 70px;
+}
+
+
+.module h2, .module caption, .inline-group h2 {
+    color: var(--primary-white);
 }
