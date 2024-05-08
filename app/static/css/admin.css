@@ -67,11 +67,5 @@ a.section:link, a.section:visited {
 
 
 .module h2, .module caption, .inline-group h2 {
-    margin: 0;
-    padding: 8px;
-    font-weight: 400;
-    font-size: 0.8125rem;
-    text-align: left;
-    background: var(--header-bg);
     color: var(--primary-white);
 }

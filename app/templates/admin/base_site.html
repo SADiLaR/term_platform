@@ -12,7 +12,7 @@
 
 {% block extrastyle %}
   <link rel="stylesheet" href="{% static 'css/admin.css' %}">
-  <link rel="stylesheet" href="{% static 'css/dark_mode.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dark_mode_override.css' %}">
 {% endblock %}
 
 {% block branding %}
@@ -25,4 +25,3 @@
   {% include "admin/color_theme_toggle.html" %}
 {% endif %}
 {% endblock %}
-
