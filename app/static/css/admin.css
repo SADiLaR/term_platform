@@ -13,12 +13,12 @@ html[data-theme="light"],
     --primary-black: #000000;
     --primary-white: #fff;
 
-    --header-color: var(--primary-light);
+    --header-color: var(--primary-white);
     --header-branding-color: var(--primary-light);
     --header-bg: var(--primary);
     --header-link-color: #000000;
 
-    --breadcrumbs-bg: var(--primary-light);
+    --breadcrumbs-bg: var(--primary);
 
     --link-fg: var(--primary);
     --link-selected-fg: var(--primary);
