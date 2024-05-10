@@ -142,7 +142,7 @@ html {
 }
 
 .uni-logo {
-    width: 50px;
+    width: auto;
     height: 50px;
     margin: 10px 0 0 0;
 }

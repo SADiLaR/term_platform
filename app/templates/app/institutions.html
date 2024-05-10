@@ -33,7 +33,10 @@
                     </div>
                     <br>
                     <div class="card-logo">
-                        <img src=" {% static 'img/UP_logo.png' %}" class="uni-logo" alt="university logo">
+                        {% if institution.logo %}
+                        <img src="{{ institution.logo.url }}" alt="{{ institution.name }} logo"
+                             class="uni-logo">
+                        {% endif %}
                     </div>
                 </div>
             </div>
