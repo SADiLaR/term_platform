@@ -26,7 +26,7 @@ html[data-theme="light"],
     --message-success-bg: #9fadd1;
     --message-warning-bg: var(--primary-light);
 
-    --selected-row: var(--primary-light);
+    --selected-row: var(--secondary);
 
     --button-bg: var(--primary);
     --button-hover-bg: #485D95;
