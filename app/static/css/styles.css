@@ -143,8 +143,9 @@ html {
 
 .uni-logo {
     width: auto;
-    height: 50px;
-    margin: 10px 0 0 0;
+    height: 75px;
+    margin: 10px 0 10px 0;
+    padding: 0 10px 10px 0;
 }
 
 /*Error pages*/
