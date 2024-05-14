@@ -12,6 +12,7 @@
       --primary-white: #fff;
 
       --link-hover-color: var(--primary-white);
+      --link-selected-fg: #6f94c6;
 
       --link-fg: #81d4fa;
 
@@ -28,6 +29,7 @@ html[data-theme="dark"] {
 
     --link-fg: #81d4fa;
     --link-hover-color: var(--primary-white);
+    --link-selected-fg: #6f94c6;
 
     --selected-row: #2d4481;
 }
