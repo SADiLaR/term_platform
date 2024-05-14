@@ -7,12 +7,22 @@
     <div class="section mt-3 mb-3">
         <div class="card content-card">
             <div class="card-body">
-                <h5 class="card-title">About SADiLaR</h5>
+                <h5 class="card-title">Welcome</h5>
                 <p class="card-text">
-                    South African Centre for Digital Language Resources
+                    The South African Centre for Digital Language Resources (SADiLaR) is a national research
+                    infrastructure that aims to ensure a digital future for our official languages.
+                    It supports researchers in the fields of digital humanities and social sciences and also assists
+                    institutions in their language implementation plans.
+                    <a href="https://sadilar.org">Read more about SADiLaR.</a>
                 </p>
                 <p class="card-text">
-                    Terminology Management System
+                    SADiLaR conducted an audit at South African public higher education institutions that highlighted
+                    areas that require attention.
+                    <a href="https://sadilar.org/usaf_report_2023">Read the report.</a>
+                </p>
+                <p class="card-text">
+                    This platform highlights previous and current work at institutions to encourage collaboration and
+                    disseminate resources.
                 </p>
             </div>
         </div>
@@ -24,11 +34,13 @@
                 <div class="card-items">
                     <h5 class="card-title">Search</h5>
                     <p class="card-text">
-                        Terminology Search
+                        This platforms hosts terminology and other useful language resources.
                     </p>
                     <p class="card-text">
-                        Click here to search a term
+                        Search for a term or topic you are interested in.
+                        (Functionality coming soon.)
                     </p>
+                    {# TODO: create the search box right here so that no additional click is required. #}
                     <button type="submit" class="btn btn-primary">Search a term</button>
                 </div>
             </div>
@@ -40,7 +52,7 @@
             <div class="card-body">
                 <h5 class="card-title">Institutions</h5>
                 <p class="card-text">
-                    View Institutions
+                    Browse information by institution.
                 </p>
                 <a href="{% url 'institutions' %}" class="btn btn-primary">
                     View
