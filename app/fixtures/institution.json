@@ -7,7 +7,7 @@
       "abbreviation": "UNISA",
       "url": "https://www.unisa.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
   {
@@ -18,7 +18,7 @@
       "abbreviation": "NWU",
       "url": "https://www.nwu.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
   {
@@ -29,7 +29,7 @@
       "abbreviation": "UP",
       "url": "https://www.up.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
   {
@@ -40,7 +40,7 @@
       "abbreviation": "UJ",
       "url": "https://www.uj.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
   {
@@ -51,7 +51,7 @@
       "abbreviation": "UKZN",
       "url": "https://www.ukzn.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
   {
@@ -62,7 +62,7 @@
       "abbreviation": "UFS",
       "url": "https://www.ufs.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
   {
@@ -73,7 +73,7 @@
       "abbreviation": "CPUT",
       "url": "https://www.cput.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
   {
@@ -84,7 +84,7 @@
       "abbreviation": "WITS",
       "url": "https://www.wits.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
   {
@@ -95,7 +95,7 @@
       "abbreviation": "US",
       "url": "http://www.sun.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
   {
@@ -106,7 +106,7 @@
       "abbreviation": "UCT",
       "url": "https://uct.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
   {
@@ -117,7 +117,7 @@
       "abbreviation": "NMU",
       "url": "https://www.mandela.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
   {
@@ -128,7 +128,7 @@
       "abbreviation": "WSU",
       "url": "https://www.wsu.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
   {
@@ -139,7 +139,7 @@
       "abbreviation": "DUT",
       "url": "https://www.dut.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
   {
@@ -150,7 +150,7 @@
       "abbreviation": "UL",
       "url": "https://www.ul.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
    {
@@ -161,7 +161,7 @@
       "abbreviation": "VUT",
       "url": "https://www.vut.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
     {
@@ -172,7 +172,7 @@
       "abbreviation": "UniZulu",
       "url": "https://www.unizulu.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
    {
@@ -183,7 +183,7 @@
       "abbreviation": "UWC",
       "url": "https://www.uwc.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
   {
@@ -194,7 +194,7 @@
       "abbreviation": "CUT",
       "url": "https://www.cut.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
    {
@@ -205,7 +205,7 @@
       "abbreviation": "UFH",
       "url": "https://www.ufh.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
   {
@@ -216,7 +216,7 @@
       "abbreviation": "RU",
       "url": "https://www.ru.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
   {
@@ -227,7 +227,7 @@
       "abbreviation": "Venda",
       "url": "https://www.univen.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
     {
@@ -238,7 +238,7 @@
       "abbreviation": "MUT",
       "url": "https://www.mut.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
   {
@@ -249,7 +249,7 @@
       "abbreviation": "FMHSU",
       "url": "https://www.smu.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
     {
@@ -260,7 +260,7 @@
       "abbreviation": "UMP",
       "url": "https://www.ump.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   },
     {
@@ -271,7 +271,7 @@
       "abbreviation": "SPU",
       "url": "https://www.spu.ac.za/",
       "email": "email@example.dev",
-      "logo": "logo"
+      "logo": ""
     }
   }
 ]

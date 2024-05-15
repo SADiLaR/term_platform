@@ -6,7 +6,7 @@ from simple_history.models import HistoricalRecords
 class Project(models.Model):
     name = models.CharField(max_length=200)
     url = models.URLField(max_length=200, blank=True, verbose_name="URL")
-    logo = models.FileField(upload_to="logos/", blank=True)
+    logo = models.ImageField(upload_to="projects/logos/", blank=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
     institution = models.ForeignKey(
@@ -27,7 +27,7 @@ class Institution(models.Model):
     abbreviation = models.CharField(max_length=200)
     url = models.URLField(max_length=200, blank=True, verbose_name="URL")
     email = models.EmailField(max_length=200, blank=True)
-    logo = models.FileField(upload_to="logos/", blank=True)
+    logo = models.ImageField(upload_to="institutions/logos/", blank=True)
 
     # added simple historical records to the model
     history = HistoricalRecords()

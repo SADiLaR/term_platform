@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.http import HttpResponse
 from django.shortcuts import render
 
@@ -20,9 +21,13 @@ def home(request):
 
 def institutions(request):
     template = "app/institutions.html"
+    context = {}
 
-    institutions = Institution.objects.all().order_by("name").values()
-    context = {"current_page": "institutions", "institutions": institutions}
+    institutions = Institution.objects.annotate(project_count=Count("project")).order_by("name")
+    context = {
+        "current_page": "institutions",
+        "institutions": institutions,
+    }
 
     return render(request, template_name=template, context=context)
 

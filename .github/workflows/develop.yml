@@ -1,5 +1,5 @@
 # https://docs.docker.com/build/ci/github-actions/push-multi-registries/
-name: docker_push
+name: docker_push_deploy_test
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ on:
       - "develop"
 
 jobs:
-  docker:
+  deploy_test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

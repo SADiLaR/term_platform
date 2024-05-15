@@ -14,9 +14,12 @@
                         {{ institution.abbreviation }}
                     </p>
                     <p class="card-text">
-                        4 applicable projects
+                        {% if institution.project_count == 0 %}
+                            no applicable project
+                        {% else %}
+                            {{institution.project_count}} applicable projects
+                        {% endif %}
                     </p>
-                    <br>
                 </div>
                 <div class="col-sm-6 right-col">
                     <p class="card-text">Profile completion:</p>
@@ -27,9 +30,11 @@
                       <i class="bi-star"></i>
                       <i class="bi-star"></i>
                     </div>
-                    <br>
                     <div class="card-logo">
-                        <img src=" {% static 'img/UP_logo.png' %}" class="uni-logo" alt="university logo">
+                        {% if institution.logo %}
+                        <img src="{{ institution.logo.url }}" alt="{{ institution.name }} logo"
+                             class="uni-logo">
+                        {% endif %}
                     </div>
                 </div>
             </div>

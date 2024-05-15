@@ -1,0 +1,39 @@
+/*
+    Django admin styles
+    extended from https://github.com/django/django/blob/main/django/contrib/admin/static/admin/css/dark_mode.css
+    Remember to sync colours with front-end CSS.
+*/
+
+@media (prefers-color-scheme: dark) {
+    :root {
+      --primary: #1a2f69;
+      --secondary: #485d95;
+      --primary-black: #000000;
+      --primary-white: #fff;
+
+      --link-hover-color: var(--primary-white);
+      --link-selected-fg: #6f94c6;
+
+      --link-fg: #81d4fa;
+
+      --selected-row: #2d4481;
+    }
+  }
+
+
+html[data-theme="dark"] {
+    --primary: #1a2f69;
+    --secondary: #485d95;
+    --primary-black: #000000;
+    --primary-white: #fff;
+
+    --link-fg: #81d4fa;
+    --link-hover-color: var(--primary-white);
+    --link-selected-fg: #6f94c6;
+
+    --selected-row: #2d4481;
+}
+
+#header a:link, #header a:visited, #logout-form button {
+    color: var(--primary-black);
+}
