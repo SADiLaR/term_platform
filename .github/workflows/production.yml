@@ -27,4 +27,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            docker.sadilar.org/term_platform:${{ github.ref_name }}
+            docker.sadilar.org/term_platform:prod
