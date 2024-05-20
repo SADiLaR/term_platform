@@ -12,6 +12,7 @@ WORKDIR /app
 COPY requirements.txt /app/
 
 RUN apt-get update && apt-get -y upgrade
+RUN apt-get install libmagic1 -y
 
 # Install dependencies
 RUN pip install --upgrade pip

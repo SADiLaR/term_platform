@@ -14,6 +14,7 @@ COPY requirements.txt /app/
 COPY requirements-dev.txt /app/
 
 RUN apt-get update && apt-get -y upgrade
+RUN apt-get install libmagic1 -y
 RUN apt-get install --no-install-recommends -y graphviz graphviz-dev
 
 # Install dependencies

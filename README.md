@@ -10,12 +10,16 @@ About the project:
 - Docker-compose
 - Makefile reader installed on device
 
+---
+
 ## Installations guide
 
 ### Using Docker-compose
 
 1. docker-compose up --build
 2. docker-compose down
+
+---
 
 ### Using Makefile
 
@@ -24,13 +28,21 @@ About the project:
 3. Run `make run` to run the docker container
 4. Run `make stop` to stop the docker container
 
-## Production
+---
 
 ### Plugins installed
 
 #### Django Simple History
 
-https://django-simple-history.readthedocs.io/en/latest/
+* https://django-simple-history.readthedocs.io/en/latest/
+
+#### python-magic
+
+* https://pypi.org/project/python-magic/
+
+---
+
+## Production
 
 #### Basic setup for production
 
@@ -38,10 +50,9 @@ https://django-simple-history.readthedocs.io/en/latest/
 
 please use .env.example as example
 
-
 ## Production Information
 
 Docker Volumes for production:
 
-/media
-/logging
+* /media
+* /logging

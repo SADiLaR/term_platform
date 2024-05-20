@@ -1,7 +1,6 @@
-import mimetypes
-
+import magic
 from django.contrib import admin
-from django.forms import HiddenInput, ModelForm, fields_for_model
+from django.forms import HiddenInput, ModelForm
 from simple_history.admin import SimpleHistoryAdmin
 
 from .models import DocumentFile, Institution, Language, Project, Subject
@@ -26,10 +25,14 @@ class DocumentFileForm(ModelForm):
         url = cleaned_data.get("url", "")
         uploaded_file = cleaned_data.get("uploaded_file", "")
 
-        if cleaned_data["mime_type"] is not None:
-            cleaned_data["mime_type"] = (
-                mimetypes.guess_type(uploaded_file.name)[0] if uploaded_file else ""
-            )
+        if uploaded_file:
+            file_type = magic.from_buffer(uploaded_file.read(), mime=True)
+            if file_type != "application/pdf":
+                self.add_error("uploaded_file", "Only PDF files are allowed.")
+
+            cleaned_data["mime_type"] = file_type
+
+            uploaded_file.seek(0)  # Reset file pointer after read
 
         if not url and not uploaded_file:
             self.add_error("url", "Either URL or uploaded file must be provided.")
