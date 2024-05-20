@@ -46,7 +46,8 @@ class DocumentFileForm(ModelForm):
 class DocumentFileAdmin(SimpleHistoryAdmin):
     ordering = ["title"]
     list_display = ["title", "license", "document_type", "available"]
-    search_fields = ["title", "license", "document_type"]
+    search_fields = ["title"]
+    list_filter = ["institution", "license", "document_type"]
     form = DocumentFileForm
     history_list_display = ["title", "license", "document_type", "available"]
 
