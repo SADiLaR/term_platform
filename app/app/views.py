@@ -1,8 +1,17 @@
+import os
+
+from django.contrib.postgres.search import (
+    SearchHeadline,
+    SearchQuery,
+    SearchRank,
+    SearchVector,
+)
+from django.core.paginator import Paginator
 from django.db.models import Count
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from general.models import Institution
+from general.models import DocumentFile, Institution
 
 
 def health(request):
@@ -58,7 +67,39 @@ def institutions(request):
 
 
 def search(request):
+    q = request.GET.get("q")
+
+    if q:
+        vector = SearchVector("title", "document_data")
+        queue = SearchQuery(q)
+        search_headline = SearchHeadline("document_data", queue)
+
+        documents = (
+            DocumentFile.objects.annotate(rank=SearchRank(vector, queue))
+            .annotate(search_headline=search_headline)
+            .order_by("-rank")
+        )
+
+    else:
+        documents = None
+
+    # Create a Paginator instance with the documents and the number of items per page
+    paginator = Paginator(documents, 10) if documents else None  # Show 10 documents per page
+
+    # Get the page number from the request's GET parameters
+    page_number = request.GET.get("page")
+
+    # Use the get_page method to get the Page object for that page number
+    page_obj = paginator.get_page(page_number) if paginator else None
+
+    feature_flag = os.getenv("FEATURE_FLAG", False)
+
     template = "app/search.html"
-    context = {"current_page": "search"}
+    context = {
+        "documents": page_obj,
+        "current_page": "search",
+        "document_count": len(documents) if documents else 0,
+        "feature_flag": feature_flag,
+    }
 
     return render(request, template_name=template, context=context)

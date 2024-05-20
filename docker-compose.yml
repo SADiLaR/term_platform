@@ -38,3 +38,4 @@ services:
       - DB_USER=sadilar  # see POSTGRES_USER above
       - DB_PASSWORD=sadilar  # see POSTGRES_PASSWORD above
       - TESTING_DIR=/app/general/tests/files/
+      - FEATURE_FLAG=search_feature

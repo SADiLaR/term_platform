@@ -8,11 +8,79 @@
         <div class="card content-card">
             <div class="card-body">
                 <h5 class="card-title">Search a term</h5>
-                <p class="card-text text-center">
-                    Functionality of this page coming soon
-                </p>
-            </div>
+                {% if feature_flag == "search_feature" %}
+                    {#  test section start#}
+                    <form>
+                        <div class="input-group mb-3">
+                            <input type="search" class="form-control" name="q" placeholder="Search">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="mb-3">
+                        <span class="mr-5"><b>Results:</b></span>
+                        <span>{{ documents|length }}</span>
+                    </div>
+                    <div>
+                        {% for document in documents %}
+                            <div>
+                                <ul>
+                                    <li>
+                                        <span class="mr-5 text-primary"><b>Title:</b></span>
+                                        <span>{{ document.title }}</span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <span class="mr-5"><b>Institution:</b></span>
+                                        <span>{{ document.institution }}</span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <span class="mr-5"><b>Headline:</b></span>
+                                        <span>{{ document.search_headline|safe }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="mr-5"><b>File:</b></span>
+                                        <span>{{ document.uploaded_file }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="mr-5"><b>License:</b></span>
+                                        <span>{{ document.license }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="mr-5"><b>Mime Type:</b></span>
+                                        <span>{{ document.mime_type }}</span>
+                                    </li>
+                                    <li class="mt-2">
+                                        <span class="mr-5"><b>Rank:</b></span>
+                                        <span><i>{{ document.rank }}</i></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="pagination">
+                        <span class="step-links">
+                            {% if documents.has_previous %}
+                                <a href="?page=1">&laquo; first</a>
+                                <a href="?page={{ documents.previous_page_number }}">previous</a>
+                            {% endif %}
+                            <span class="current">
+                                Page {{ documents.number }} of {{ documents.paginator.num_pages }}.
+                            </span>
+                            {% if documents.has_next %}
+                                <a href="?page={{ documents.next_page_number }}">next</a>
+                                <a href="?page={{ documents.paginator.num_pages }}">last &raquo;</a>
+                            {% endif %}
+                        </span>
+                        <hr>
+                    </div>
+                    </div>
+                    {#  test section end#}
+                {% else %}
+                    <p>Functionality of this page coming soon</p>
+                {% endif %}
         </div>
     </div>
+</div>
 
 {% endblock content %}
