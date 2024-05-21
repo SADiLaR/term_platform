@@ -21,6 +21,8 @@ list:
 	@echo "ruff-fix - Run ruff check --fix"
 	@echo "pre-commit-install - Install pre-commit"
 	@echo "dev-quick-install - Run all the necessary commands to start the project"
+	@echo "make-messages - Run command to ensure translation .po files are created"
+	@echo "compile-messages - Run command to ensure translation .mo files are created"
 
 up:
 	clear
@@ -120,3 +122,11 @@ docker-shell:
 check:
 	clear
 	@docker-compose run --rm web python manage.py check
+
+make-messages:
+	clear
+	@docker-compose run --rm web python manage.py makemessages --all
+
+compile-messages:
+	clear
+	@docker-compose run --rm web python manage.py compilemessages

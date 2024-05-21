@@ -13,6 +13,7 @@ COPY requirements.txt /app/
 
 RUN apt-get update && apt-get -y upgrade
 RUN apt-get install libmagic1 -y
+RUN apt-get install -y gettext
 
 # Install dependencies
 RUN pip install --upgrade pip
