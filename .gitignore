@@ -9,6 +9,7 @@ Thumbs.db
 
 # Django template
 *.pot
+*.mo
 *.pyc
 __pycache__/
 local_settings.py

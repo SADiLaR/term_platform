@@ -65,6 +65,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "simple_history.middleware.HistoryRequestMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
 ]
 
 ROOT_URLCONF = "app.urls"
@@ -172,6 +173,21 @@ STORAGES = {
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGGING_FOLDER_DEFAULT = os.path.abspath(os.path.join("/logging/"))
+
+# Internationalization
+
+USE_I18N = True
+
+LANGUAGES = [
+    ("af", "Afrikaans"),
+    ("en", "English"),
+]
+
+LANGUAGE_CODE = "en"
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, "locale"),
+]
 
 # Check if the application is under testing
 if "test" in sys.argv:
