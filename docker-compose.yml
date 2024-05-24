@@ -1,6 +1,6 @@
 # This is is meant for local development, but should give an idea of what you
 # can consider in production.
-version: '3'
+version: '3.8'
 
 services:
   db:
@@ -37,3 +37,4 @@ services:
       - DB_NAME=term_db  # see POSTGRES_DB above
       - DB_USER=sadilar  # see POSTGRES_USER above
       - DB_PASSWORD=sadilar  # see POSTGRES_PASSWORD above
+      - TESTING_DIR=/app/general/tests/files/

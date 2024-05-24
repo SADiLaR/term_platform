@@ -107,12 +107,13 @@ class DocumentFile(models.Model):
         max_length=200, blank=True, help_text="This input will auto-populate."
     )
     document_type = models.CharField(max_length=200, choices=document_type_choices)
+    document_data = models.TextField(blank=True)
     institution = models.ForeignKey("Institution", on_delete=models.CASCADE)
     subjects = models.ManyToManyField("Subject", blank=True)
     languages = models.ManyToManyField("Language", blank=True)
 
     # added simple historical records to the model
-    history = HistoricalRecords()
+    history = HistoricalRecords(excluded_fields=["document_data"])
 
     def __str__(self):
         return self.title

@@ -1,3 +1,4 @@
+import os
 import unittest
 
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -12,7 +13,11 @@ class TestDocumentFileForm(unittest.TestCase):
         self.form = None
 
     def setUp(self):
-        pdf_file = b"%PDF-1.1 0 obj<</Pages 2 0 R>>endobj2 0 obj<</Kids[3 0 R]/Count 1>>endobj3 0 obj<</Parent 2 0 R>>endobjtrailer <</Root 1 0 R>>"
+        test_dir = os.getenv("TESTING_DIR", "/app/general/tests/files")
+        test_file = test_dir + "/Lorem.pdf"
+
+        with open(test_file, "rb") as f:
+            pdf_file = f.read()
 
         self.file_mock = SimpleUploadedFile("test.pdf", pdf_file, content_type="application/pdf")
 
@@ -43,11 +48,13 @@ class TestDocumentFileForm(unittest.TestCase):
             "institution": Institution.objects.create(name="Test Institution 2"),
             "url": "www.example.com",
             "uploaded_file": "",
+            "document_data": "",
         }
 
         form = DocumentFileForm(tests_form)
         self.assertTrue(form.is_valid())
 
+    #
     def test_clean_without_url(self):
         tests_form = {
             "title": "Test",
@@ -57,6 +64,7 @@ class TestDocumentFileForm(unittest.TestCase):
             "institution": Institution.objects.create(name="Test Institution 3"),
             "url": "",
             "uploaded_file": self.file_mock,
+            "document_data": "",
         }
 
         form = DocumentFileForm(tests_form, files={"uploaded_file": self.file_mock})
