@@ -1,5 +1,4 @@
 list:
-	clear
 	@echo "Available commands:"
 	@echo "up - Start the project"
 	@echo "upd - Start the project in background"
@@ -25,108 +24,83 @@ list:
 	@echo "compile-messages - Run command to ensure translation .mo files are created"
 
 up:
-	clear
 	@docker compose up
 
 upd:
-	clear
 	@docker compose up -d
 
 build:
-	clear
 	@docker compose build
 
 stop:
-	clear
 	@docker compose stop
 
 down:
-	clear
 	@docker compose down
 
 restart:
-	clear
 	@docker compose restart
 
 make-migrations:
-	clear
 	@docker compose run --rm web python manage.py makemigrations
 
 migrate:
-	clear
 	@docker compose run --rm web python manage.py migrate
 
 collectstatic:
-	clear
 	@docker compose run --rm web python manage.py collectstatic --noinput
 
 shell:
-	clear
 	@docker compose run --rm web python manage.py shell
 
 logs:
-	clear
 	@docker compose logs -tf
 
 create-super-user:
-	clear
 	@docker compose run --rm web python manage.py createsuperuser
 
 docker-stop-all:
-	clear
 	docker stop `docker ps -q`
 	docker ps
 
 create-schema:
-	clear
 	@docker compose run --rm web python manage.py graph_models -a -o schema/schema.png
 
 test:
-	clear
 	@docker compose run --rm web python manage.py test
 
 ruff-check:
-	clear
 	@docker compose run --rm web ruff check .
 
 ruff-format:
-	clear
 	@docker compose run --rm web ruff format .
 
 ruff-fix:
-	clear
 	@docker compose run --rm web ruff check --fix .
 
 load-fixtures:
-	clear
 	@docker compose run --rm web python manage.py loaddata fixtures/institution.json
 	@docker compose run --rm web python manage.py loaddata fixtures/projects.json
 	@docker compose run --rm web python manage.py loaddata fixtures/language.json
 	@docker compose run --rm web python manage.py loaddata fixtures/subjects.json
 
 pre-commit-install:
-	clear
 	pre-commit install
 
 dev-quick-install:
-	clear
 	@make migrate
 	@make load-fixtures
 	echo "Creating superuser"
 	@make create-super-user
 
 docker-shell:
-	clear
 	docker exec -it sadilar-terminology-web bash
 
 check:
-	clear
 	@docker compose run --rm web python manage.py check
 
 make-messages:
-	clear
 	@docker compose run --rm web python manage.py makemessages --all
 
 compile-messages:
-	clear
 	@docker compose run --rm web python manage.py compilemessages
