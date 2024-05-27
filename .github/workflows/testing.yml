@@ -18,6 +18,12 @@ jobs:
         run: |
           sudo  mkdir -p /logging
           sudo chown runner:runner /logging
+      - name: Run validate_templates
+        run: |
+          cp .env.testing app/.env
+          cd app/
+          mkdir -p static_files
+          python manage.py validate_templates
       - name: Run Tests
         run: |
           cp .env.testing app/.env
