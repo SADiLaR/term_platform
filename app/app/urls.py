@@ -19,11 +19,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
+from django.utils.translation import gettext_lazy as _
 
 from . import views
 
-admin.site.index_title = "SADiLaR Administration"
-admin.site.site_title = "SADiLaR Site Admin Portal"
+admin.site.index_title = _("SADiLaR Administration")
+admin.site.site_title = _("SADiLaR Site Admin Portal")
 
 urlpatterns = [
     path("admin/", admin.site.urls),
