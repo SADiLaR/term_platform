@@ -58,10 +58,7 @@ def institutions(request):
         institution_dict["project_count"] = institution.project_count
         institutions_array.append(institution_dict)
 
-    context = {
-        "current_page": "institutions",
-        "institutions": institutions_array,
-    }
+    context = {"current_page": "institutions", "institutions": institutions_array}
 
     return render(request, template_name=template, context=context)
 

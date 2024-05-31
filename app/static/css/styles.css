@@ -22,12 +22,14 @@ html {
 }
 
 .footer {
-    color: white;
+    text-align: center;
+    padding: 1rem;
     background: var(--primary);
+    color: white;
     width: 100%;
+    overflow: hidden;
 
     position: absolute;
-    height: 60px;
     bottom: 0;
 }
 
@@ -128,6 +130,35 @@ html {
     padding: 10px;
 }
 
+.footer-class {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    flex-direction: column;
+}
+
+.language-toggle {
+    margin-top: 1rem;
+}
+
+.language-toggle form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.language-toggle select,
+.language-toggle .btn-language {
+    margin-top: 0.5rem;
+}
+
+.btn-language{
+    color: var(--text-color);
+    outline-color: var(--primary-fg);
+    background-color: var(--primary-fg);
+    border-color: var(--primary-fg);
+}
 /*Home page*/
 .content-card {
     border-color: var(--primary-red);
@@ -233,6 +264,28 @@ html {
     .section {
       padding-right: 20px;
     }
+    .footer-class {
+        flex-direction: row;
+        justify-content: center;
+      }
+
+    .language-toggle {
+        margin-top: 0;
+        position: absolute;
+        right: 1rem;
+    }
+
+    .language-toggle form {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .language-toggle select,
+    .language-toggle .btn-language {
+        margin-left: 0.5rem;
+        margin-top: 0;
+    }
 
     /*Institutions page*/
     .uni-card {
@@ -259,7 +312,28 @@ html {
   .section {
       padding-right: 20px;
   }
+  .footer-class {
+      flex-direction: row;
+      justify-content: center;
+    }
 
+  .language-toggle {
+      margin-top: 0;
+      position: absolute;
+      right: 1rem;
+  }
+
+  .language-toggle form {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+  }
+
+  .language-toggle select,
+  .language-toggle .btn-language {
+      margin-left: 0.5rem;
+      margin-top: 0;
+  }
   /*Institutions page*/
   .institution-card{
       overflow: hidden;
