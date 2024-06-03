@@ -48,9 +48,12 @@ INSTALLED_APPS = [
     "general",
     "simple_history",
 ]
+
+# Add django-extensions to the installed apps if DEBUG is True
 if DEBUG:
     INSTALLED_APPS += [
         "django_extensions",
+        "debug_toolbar",
     ]
 
 AUTH_USER_MODEL = "users.CustomUser"
@@ -67,6 +70,10 @@ MIDDLEWARE = [
     "simple_history.middleware.HistoryRequestMiddleware",
     "django.middleware.locale.LocaleMiddleware",
 ]
+
+# Add debug toolbar middleware
+if DEBUG:
+    MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
 ROOT_URLCONF = "app.urls"
 
@@ -104,6 +111,18 @@ DATABASES = {
     }
 }
 
+# toolbar settings
+if DEBUG:
+    DEBUG_TOOLBAR_CONFIG = {
+        "IS_RUNNING_TESTS": False,
+        "SHOW_TOOLBAR_CALLBACK": lambda request: DEBUG,
+    }
+
+    INTERNAL_IPS = [
+        "host.docker.internal",
+    ]
+
+# Check if the application is under testing
 if "test" in sys.argv or "test_coverage" in sys.argv:  # Covers regular testing and django-coverage
     DATABASES["default"]["ENGINE"] = "django.db.backends.sqlite3"
 
@@ -144,12 +163,11 @@ MEDIA_URL = "media/"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-
+# Static files (CSS, JavaScript, Images)
 if DEBUG:
     _STATICFILES_BACKEND = "django.contrib.staticfiles.storage.StaticFilesStorage"
 else:
     _STATICFILES_BACKEND = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
 
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [
@@ -192,6 +210,7 @@ LOCALE_PATHS = [
 if "test" in sys.argv:
     DEBUG = False
 
+# Logging configuration
 if DEBUG:
     LOGGING = {
         "version": 1,
