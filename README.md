@@ -56,3 +56,5 @@ Docker Volumes for production:
 
 * /media
 * /logging
+* /pdf_uploads
+* /pdf_upload_completed

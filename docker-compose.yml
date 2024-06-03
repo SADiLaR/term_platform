@@ -23,6 +23,8 @@ services:
     volumes:
       - ./app:/app
       - ./logging:/logging
+      - ./pdf_uploads:/pdf_uploads
+      - ./pdf_upload_completed:/pdf_upload_completed
     ports:
       - "8000:8000"
     depends_on:

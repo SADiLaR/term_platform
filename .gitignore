@@ -37,3 +37,5 @@ app/static_files/
 app/media/
 /app/logging/
 /logging/
+/pdf_uploads/
+/pdf_upload_completed/

@@ -20,8 +20,11 @@ list:
 	@echo "ruff-fix - Run ruff check --fix"
 	@echo "pre-commit-install - Install pre-commit"
 	@echo "dev-quick-install - Run all the necessary commands to start the project"
+	@echo "dev-mass-pdf-upload - Run command to upload all pdf files in the media folder"
 	@echo "make-messages - Run command to ensure translation .po files are created"
 	@echo "compile-messages - Run command to ensure translation .mo files are created"
+	@echo "docker-shell - Access the container shell"
+	@echo "check - Run the Django check command"
 
 up:
 	@docker compose up
@@ -92,6 +95,9 @@ dev-quick-install:
 	@make load-fixtures
 	echo "Creating superuser"
 	@make create-super-user
+
+dev-mass-pdf-upload:
+	@docker compose run --rm web python manage.py dev_pdf_mass_upload
 
 docker-shell:
 	docker exec -it sadilar-terminology-web bash
