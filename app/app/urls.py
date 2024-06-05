@@ -18,7 +18,7 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from django.utils.translation import gettext_lazy as _
 
 from . import views
@@ -32,6 +32,7 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("institutions/", views.institutions, name="institutions"),
     path("search/", views.search, name="search"),
+    path("i18n/", include("django.conf.urls.i18n")),
 ]
 
 if settings.DEBUG:
