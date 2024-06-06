@@ -70,7 +70,7 @@
         <div class="language-toggle">
             <form action="{% url 'set_language' %}" method="post">
                 {% csrf_token %}
-                <select class=form-select-sm name="language" onchange="this.form.submit()">
+                <select class=form-select-sm name="language">
                     {% get_current_language as LANGUAGE_CODE %}
                     {% get_available_languages as LANGUAGES %}
                     {% for lang in LANGUAGES %}
