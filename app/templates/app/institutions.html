@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 
@@ -14,15 +15,19 @@
                         {{ institution.abbreviation }}
                     </p>
                     <p class="card-text">
-                        {% if institution.project_count == 0 %}
-                            no applicable project
-                        {% else %}
-                            {{institution.project_count}} applicable projects
-                        {% endif %}
+                      {% if institution.project_count == 0 %}
+                        {% blocktrans %}no applicable project{% endblocktrans %}
+                      {% else %}
+                        {% blocktrans count project_count=institution.project_count %}
+                          {{ project_count }} applicable project
+                        {% plural %}
+                          {{ project_count }} applicable projects
+                        {% endblocktrans %}
+                      {% endif %}
                     </p>
                 </div>
                 <div class="col-sm-6 right-col">
-                    <p class="card-text">Profile completion:</p>
+                    <p class="card-text">{% trans "Profile completion:" %}</p>
                     <div class="profile-icons">
                       {% if institution.rating <= 20 %}
                           <i class="bi-star-fill"></i>

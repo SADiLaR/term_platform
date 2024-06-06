@@ -1,11 +1,12 @@
 {% extends "base_error.html" %}
+{% load i18n %}
 
 {% block error_content %}
 
     <div class="card-body">
-            <h5 class="card-title">Forbidden (403)</h5>
-            <p class="card-text">You do not have permission to access on this server.</p>
-            <a href="{% url 'home' %}" class="btn btn-primary">Go to home</a>
+            <h5 class="card-title">{% trans "Forbidden (403)" %}</h5>
+            <p class="card-text">{% trans "You do not have permission to access on this server." %}</p>
+            <a href="{% url 'home' %}" class="btn btn-primary">{% trans "Go to home" %}</a>
         </div>
 
 {% endblock error_content %}
