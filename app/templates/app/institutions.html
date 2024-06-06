@@ -15,14 +15,9 @@
                         {{ institution.abbreviation }}
                     </p>
                     <p class="card-text">
-                      {% if institution.project_count == 0 %}
-                        {% blocktrans %}no applicable project{% endblocktrans %}
+                      {% if institution.project_count == 0 %}{% blocktrans %}no applicable project{% endblocktrans %}
                       {% else %}
-                        {% blocktrans count project_count=institution.project_count %}
-                          {{ project_count }} applicable project
-                        {% plural %}
-                          {{ project_count }} applicable projects
-                        {% endblocktrans %}
+                      {% blocktrans count project_count=institution.project_count %}{{ project_count }} applicable project{% plural %}{{ project_count }} applicable projects{% endblocktrans %}
                       {% endif %}
                     </p>
                 </div>
