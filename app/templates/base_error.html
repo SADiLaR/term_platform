@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 
 <div class="section mt-3 mb-3">
     <div class="card text-center error-card">
         <div class="card-header">
-            Error
+            {% trans "Error" %}
         </div>
         <div id="error_content">
         {% block error_content %}

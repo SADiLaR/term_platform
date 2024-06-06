@@ -4,9 +4,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>SADiLaR</title>
-    <meta name="description" content="SADiLaR">
-    <meta name="keywords" content="South African Centre for Digital Language Resources"/>
+    <title>{% trans "SADiLaR" %}</title>
+    <meta name="description" content="{% trans 'SADiLaR' %}">
+    <meta name="keywords" content="{% trans 'South African Centre for Digital Language Resources' %}"/>
     <meta charset="uft-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -30,23 +30,23 @@
                     <li class="nav-item">
                         <a
                                 {% if current_page == 'home' %} class="nav-link active" aria-current="page" {% endif %}
-                                class="nav-link" href="{% url 'home' %}">Home
+                                class="nav-link" href="{% url 'home' %}">{% trans "Home" %}
                         </a>
                     </li>
                     <li class="nav-item">
                         <a
                                 {% if current_page == 'search' %} class="nav-link active" aria-current="page" {% endif %}
-                                class="nav-link" href="{% url 'search' %}">Search
+                                class="nav-link" href="{% url 'search' %}">{% trans "Search" %}
                         </a>
                     </li>
                     <li class="nav-item">
                         <a
                                 {% if current_page == 'institutions' %} class="nav-link active" aria-current="page" {% endif %}
-                                class="nav-link" href="{% url 'institutions' %}">Institutions
+                                class="nav-link" href="{% url 'institutions' %}">{% trans "Institutions" %}
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+                        <a class="nav-link" href="{% url 'admin:index' %}">{% trans "Admin" %}</a>
                     </li>
                 </ul>
             </div>

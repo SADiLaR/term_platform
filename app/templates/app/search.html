@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 
@@ -7,19 +8,19 @@
     <div class="section mt-3 mb-3">
         <div class="card content-card">
             <div class="card-body">
-                <h5 class="card-title">Search a term</h5>
+                <h5 class="card-title">{% trans "Search a term" %}</h5>
                 {% if feature_flag == "search_feature" %}
                     {#  test section start#}
                     <form>
                         <div class="input-group mb-3">
                             <input type="search" class="form-control" name="q" placeholder="Search">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary">Search</button>
+                                <button class="btn btn-outline-secondary">{% trans "Search" %}</button>
                             </div>
                         </div>
                     </form>
                     <div class="mb-3">
-                        <span class="mr-5"><b>Results:</b></span>
+                        <span class="mr-5"><b>{% trans "Results:" %}</b></span>
                         <span>{{ documents|length }}</span>
                     </div>
                     <div>
@@ -27,31 +28,31 @@
                             <div>
                                 <ul>
                                     <li>
-                                        <span class="mr-5 text-primary"><b>Title:</b></span>
+                                        <span class="mr-5 text-primary"><b>{% trans "Title:" %}</b></span>
                                         <span>{{ document.title }}</span>
                                     </li>
                                     <li class="mb-2">
-                                        <span class="mr-5"><b>Institution:</b></span>
+                                        <span class="mr-5"><b>{% trans "Institution:" %}</b></span>
                                         <span>{{ document.institution }}</span>
                                     </li>
                                     <li class="mb-2">
-                                        <span class="mr-5"><b>Headline:</b></span>
+                                        <span class="mr-5"><b>{% trans "Headline:" %}</b></span>
                                         <span>{{ document.search_headline|safe }}</span>
                                     </li>
                                     <li>
-                                        <span class="mr-5"><b>File:</b></span>
+                                        <span class="mr-5"><b>{% trans "File:" %}</b></span>
                                         <span>{{ document.uploaded_file }}</span>
                                     </li>
                                     <li>
-                                        <span class="mr-5"><b>License:</b></span>
+                                        <span class="mr-5"><b>{% trans "License:" %}</b></span>
                                         <span>{{ document.license }}</span>
                                     </li>
                                     <li>
-                                        <span class="mr-5"><b>Mime Type:</b></span>
+                                        <span class="mr-5"><b>{% trans "Mime Type:" %}</b></span>
                                         <span>{{ document.mime_type }}</span>
                                     </li>
                                     <li class="mt-2">
-                                        <span class="mr-5"><b>Rank:</b></span>
+                                        <span class="mr-5"><b>{% trans "Rank:" %}</b></span>
                                         <span><i>{{ document.rank }}</i></span>
                                     </li>
                                 </ul>
@@ -61,15 +62,15 @@
                     <div class="pagination">
                         <span class="step-links">
                             {% if documents.has_previous %}
-                                <a href="?page=1">&laquo; first</a>
-                                <a href="?page={{ documents.previous_page_number }}">previous</a>
+                                <a href="?page=1">&laquo; {% trans "first" %}</a>
+                                <a href="?page={{ documents.previous_page_number }}">{% trans "previous" }</a>
                             {% endif %}
                             <span class="current">
                                 Page {{ documents.number }} of {{ documents.paginator.num_pages }}.
                             </span>
                             {% if documents.has_next %}
-                                <a href="?page={{ documents.next_page_number }}">next</a>
-                                <a href="?page={{ documents.paginator.num_pages }}">last &raquo;</a>
+                                <a href="?page={{ documents.next_page_number }}">{% trans "next" %}</a>
+                                <a href="?page={{ documents.paginator.num_pages }}">{% trans "last" %} &raquo;</a>
                             {% endif %}
                         </span>
                         <hr>
@@ -77,7 +78,7 @@
                     </div>
                     {#  test section end#}
                 {% else %}
-                    <p>Functionality of this page coming soon</p>
+                    <p>{% trans "Functionality of this page coming soon" %}</p>
                 {% endif %}
         </div>
     </div>
