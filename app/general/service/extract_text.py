@@ -25,3 +25,5 @@ class GetTextFromPDF:
 
             except PdfStreamError:
                 raise GetTextError("The uploaded PDF file is corrupted or not fully downloaded.")
+            except Exception:
+                raise GetTextError("Error during text extraction from PDF file.")
