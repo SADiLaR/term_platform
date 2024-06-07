@@ -29,6 +29,8 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       # TODO: dollar signs in the KEY are interpolated, therefore escaped here
       # with double "$$". Maybe move to .env file to simplify?
