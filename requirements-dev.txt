@@ -2,3 +2,4 @@
 django-extensions
 pygraphviz
 ruff
+faker
