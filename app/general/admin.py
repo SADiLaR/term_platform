@@ -1,9 +1,9 @@
 import magic
 from django.contrib import admin
 from django.forms import HiddenInput, ModelForm
-from pypdf import PdfReader
-from pypdf.errors import PdfStreamError
 from simple_history.admin import SimpleHistoryAdmin
+
+from general.service.extract_text import GetTextError, GetTextFromPDF
 
 from .models import DocumentFile, Institution, Language, Project, Subject
 
@@ -34,8 +34,14 @@ class DocumentFileForm(ModelForm):
             if file_type != "application/pdf":
                 self.add_error("uploaded_file", "Only PDF files are allowed.")
 
-            # Extract text from PDF file
-            cleaned_data["document_data"] = self.pdf_to_text(uploaded_file)
+            try:
+                # Extract text from PDF file
+                cleaned_data["document_data"] = GetTextFromPDF(uploaded_file).to_text()
+
+            except GetTextError:
+                return self.add_error(
+                    "uploaded_file", "The uploaded PDF file is corrupted or not fully downloaded."
+                )
 
             cleaned_data["mime_type"] = file_type
 
@@ -51,25 +57,6 @@ class DocumentFileForm(ModelForm):
                 self.add_error("uploaded_file", "File size must not exceed 10MB.")
 
         return cleaned_data
-
-    def pdf_to_text(self, uploaded_file):
-        if uploaded_file:
-            text_list = []
-            # Read the PDF file and extract text
-            try:
-                reader = PdfReader(uploaded_file)
-                for page in reader.pages:
-                    text_list.append(page.extract_text())
-
-                get_pdf_text = " ".join(text_list)
-
-                return str(get_pdf_text)
-
-            except PdfStreamError:
-                return self.add_error(
-                    "uploaded_file", "The uploaded PDF file is corrupted or not fully downloaded."
-                )
-        return None
 
 
 class DocumentFileAdmin(SimpleHistoryAdmin):
