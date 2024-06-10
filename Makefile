@@ -99,6 +99,9 @@ dev-quick-install:
 dev-mass-pdf-upload:
 	@docker compose run --rm web python manage.py dev_pdf_mass_upload
 
+dev_update_vector_search:
+	@docker compose run --rm web python manage.py dev_update_vector_search
+
 docker-shell:
 	docker exec -it sadilar-terminology-web bash
 

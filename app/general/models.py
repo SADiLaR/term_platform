@@ -1,3 +1,5 @@
+from django.contrib.postgres.indexes import GinIndex
+from django.contrib.postgres.search import SearchVectorField
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -140,12 +142,18 @@ class DocumentFile(models.Model):
     subjects = models.ManyToManyField("Subject", blank=True, verbose_name=_("subjects"))
     languages = models.ManyToManyField("Language", blank=True, verbose_name=_("languages"))
 
+    search_vector = SearchVectorField(null=True, blank=True)
+
     # added simple historical records to the model
-    history = HistoricalRecords(excluded_fields=["document_data"])
+    history = HistoricalRecords(excluded_fields=["document_data", "search_vector"])
 
     class Meta:
         verbose_name = _("Document File")
         verbose_name_plural = _("Document Files")
+
+        indexes = [
+            GinIndex(fields=["search_vector"]),
+        ]
 
     def __str__(self):
         return self.title
