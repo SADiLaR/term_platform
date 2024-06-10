@@ -73,7 +73,7 @@ html {
 .nav > li > a:active{
     margin-top: 15px;
     background-color: var(--primary);
-    color: var(--primary);
+    color: var(--primary-fg);
 }
 
 .btn-primary{
