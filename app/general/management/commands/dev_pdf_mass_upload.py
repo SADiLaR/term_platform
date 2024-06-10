@@ -82,7 +82,12 @@ class Command(BaseCommand):
     def save_data(self, data):
         # Generate a random number for the institution ID
         random_number = random.randint(1, 20)
-        content_file = ContentFile(data["uploaded_file"], name=data["title"])
+
+        # Read the uploaded file data
+        with open(data["uploaded_file"], "rb") as f:
+            get_content_file = f.read()
+
+        content_file = ContentFile(get_content_file, name=data["title"])
 
         try:
             document_data = GetTextFromPDF(data["uploaded_file"]).to_text()
