@@ -31,6 +31,7 @@ urlpatterns = [
     path("_health/", views.health, name="health"),
     path("", views.home, name="home"),
     path("institutions/", views.institutions, name="institutions"),
+    path("projects/", views.projects, name="projects"),
     path("search/", views.search, name="search"),
     path("i18n/", include("django.conf.urls.i18n")),
 ]
