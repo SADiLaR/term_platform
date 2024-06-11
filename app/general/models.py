@@ -12,7 +12,7 @@ class Project(models.Model):
     start_date = models.DateField(blank=True, null=True, verbose_name=_("start date"))
     end_date = models.DateField(blank=True, null=True, verbose_name=_("end date"))
     institution = models.ForeignKey(
-        "Institution", on_delete=models.CASCADE, blank=True, verbose_name=_("institution")
+        "Institution", on_delete=models.CASCADE, blank=False, verbose_name=_("institution")
     )
     subjects = models.ManyToManyField("Subject", blank=True, verbose_name=_("subjects"))
     languages = models.ManyToManyField("Language", blank=True, verbose_name=_("languages"))
