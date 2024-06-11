@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+
+    <div class="filter-class">
+      <form class="filter-form">
+        <label for="filter">Filter:</label>
+
+            <div class="form-group">
+                <select name="subject" class="form-control">
+                    <option value="">Subject</option>
+                    {% for subject in subjects %}
+                      <option value="{{ subject.id }}" {% if request.GET.subject == subject.id|stringformat:"s" %}selected{% endif %}>
+                        {{ subject.name }}
+                      </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <select name="language" class="form-control">
+                    <option value="">Language</option>
+                    {% for language in languages %}
+                      <option value="{{ language.id }}" {% if request.GET.language == language.id|stringformat:"s" %}selected{% endif %}>
+                        {{ language.name }}
+                      </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <select name="institution" class="form-control">
+                    <option value="">Institution</option>
+                    {% for institution in institutions %}
+                      <option value="{{ institution.id }}" {% if request.GET.institution == institution.id|stringformat:"s" %}selected{% endif %}>
+                        {{ institution.name }}
+                      </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <input class="btn btn-apply btn-sm" type="submit" value="{% trans 'Apply' %}">
+            <a href="{% url 'projects' %}" class="btn btn-reset btn-sm">{% trans 'Reset' %}</a>
+
+      </form>
+    </div>
+
+
+    <div class="project-list">
+      {% for project in projects %}
+      <div class="project-header">
+        <div class="row">
+            <div class="col-sm-6 project-left-col">
+                <h3 class="card-title">{{ project.project.name }}</h3>
+            <p class="card-text">
+                <a href="{{ project.project.url }}" target="_blank" class="project-url">{{ project.project.url }}</a>
+            </p>
+            <p class="card-text">
+                {{ project.institution_name }}
+            </p>
+          </div>
+          <div class="col-sm-6 project-right-col">
+            {% if project.logo %}
+            <img src="{{ project.logo.url }}" alt="{{ project.name }} logo"
+                 class="project-logo">
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="project-body">
+        <p class="card-text">
+            {{ project.project.description }}
+        </p>
+        <p class="card-text">
+            {{ project.languages }}
+        </p>
+        <p class="card-text">
+            {{ project.subjects }}
+        </p>
+        <p class="card-text">
+            {{ project.date }}
+        </p>
+
+      </div>
+      {% endfor %}
+    </div>
+
+
+
+{% endblock content %}

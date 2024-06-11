@@ -46,6 +46,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a
+                                {% if current_page == 'projects' %} class="nav-link active" aria-current="page" {% endif %}
+                                class="nav-link" href="{% url 'projects' %}">{% trans "Projects" %}
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'admin:index' %}">{% trans "Admin" %}</a>
                     </li>
                 </ul>

@@ -11,7 +11,7 @@ from django.db.models import Count
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from general.models import DocumentFile, Institution
+from general.models import DocumentFile, Institution, Language, Project, Subject
 
 
 def health(request):
@@ -24,6 +24,93 @@ def health(request):
 def home(request):
     template = "app/home.html"
     context = {"current_page": "home"}
+
+    return render(request, template_name=template, context=context)
+
+
+def get_date_range(start_date, end_date):
+    if (start_date is not None) and (end_date is not None) and (start_date != end_date):
+        date = f"{start_date} - {end_date}"
+    elif (start_date is not None) and (end_date is not None) and (start_date == end_date):
+        date = start_date
+    elif start_date is not None:
+        date = f"Since {start_date}"
+    elif end_date is not None:
+        date = f"Until {end_date}"
+    else:
+        date = None
+    return date
+
+
+def get_logo(project):
+    if project.logo:
+        logo = project.logo
+    elif project.institution.logo:
+        logo = project.institution.logo
+    else:
+        logo = None
+    return logo
+
+
+def projects(request):
+    template = "app/projects.html"
+
+    subject_id = request.GET.get("subject")
+    language_id = request.GET.get("language")
+    institution_id = request.GET.get("institution")
+
+    projects = Project.objects.prefetch_related("subjects", "languages").all()
+
+    if subject_id:
+        projects = projects.filter(subjects__id=subject_id)
+    if language_id:
+        projects = projects.filter(languages__id=language_id)
+    if institution_id:
+        projects = projects.filter(institution__id=institution_id)
+
+    subjects = Subject.objects.all()
+    languages = Language.objects.all()
+    institutions = Institution.objects.all()
+
+    project_data = []
+    for project in projects:
+        project_subjects = project.subjects.all()
+        project_languages = project.languages.all()
+
+        if project_languages.count() < 4:
+            languages_data = ", ".join(sorted(language.name for language in project_languages))
+        else:
+            languages_data = "Multilingual"
+
+        if project_subjects.count() < 4:
+            subjects_data = ", ".join(sorted([subject.name for subject in project_subjects]))
+        else:
+            subjects_data = "Multiple subjects"
+
+        logo = get_logo(project)
+
+        institution_name = project.institution.name
+
+        date = get_date_range(project.start_date.year, project.end_date.year)
+
+        project_data.append(
+            {
+                "project": project,
+                "logo": logo,
+                "subjects": subjects_data,
+                "languages": languages_data,
+                "date": date,
+                "institution_name": institution_name,
+            }
+        )
+
+    context = {
+        "current_page": "projects",
+        "projects": project_data,
+        "subjects": subjects,
+        "languages": languages,
+        "institutions": institutions,
+    }
 
     return render(request, template_name=template, context=context)
 
