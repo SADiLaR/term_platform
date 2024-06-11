@@ -30,6 +30,7 @@ class TestDocumentFileForm(unittest.TestCase):
             "institution": Institution.objects.create(name="Test Institution"),
             "url": "",
             "uploaded_file": "",
+            "description": "Test description",
         }
 
         form = DocumentFileForm(tests_form)
@@ -49,6 +50,7 @@ class TestDocumentFileForm(unittest.TestCase):
             "url": "www.example.com",
             "uploaded_file": "",
             "document_data": "",
+            "description": "",
         }
 
         form = DocumentFileForm(tests_form)
@@ -65,6 +67,7 @@ class TestDocumentFileForm(unittest.TestCase):
             "url": "",
             "uploaded_file": self.file_mock,
             "document_data": "",
+            "description": "Test description",
         }
 
         form = DocumentFileForm(tests_form, files={"uploaded_file": self.file_mock})
@@ -81,6 +84,7 @@ class TestDocumentFileForm(unittest.TestCase):
             "institution": Institution.objects.create(name="Test Institution 4"),
             "url": "",
             "uploaded_file": self.file_mock,
+            "description": "Test description",
         }
 
         form = DocumentFileForm(tests_form, files={"uploaded_file": self.file_mock})
