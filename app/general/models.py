@@ -6,6 +6,7 @@ from simple_history.models import HistoricalRecords
 
 class Project(models.Model):
     name = models.CharField(max_length=200, verbose_name=_("name"))
+    description = models.TextField(blank=True, verbose_name=_("description"))
     url = models.URLField(max_length=200, blank=True, verbose_name=_("URL"))
     logo = models.ImageField(upload_to="projects/logos/", blank=True, verbose_name=_("logo"))
     start_date = models.DateField(blank=True, null=True, verbose_name=_("start date"))
@@ -106,6 +107,7 @@ class DocumentFile(models.Model):
     file_type = "pdf"
 
     title = models.CharField(max_length=200, verbose_name=_("title"))
+    description = models.TextField(blank=True, verbose_name=_("description"))
     url = models.URLField(max_length=200, blank=True, verbose_name=_("URL"))
     uploaded_file = models.FileField(
         upload_to="documents/",
