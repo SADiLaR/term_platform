@@ -108,8 +108,10 @@ DATABASES = {
         "NAME": os.environ.get("DB_NAME"),
         "USER": os.environ.get("DB_USER"),
         "PASSWORD": os.environ.get("DB_PASSWORD"),
+        "TEST": {"NAME": "test_db"},
     }
 }
+
 
 # toolbar settings
 if DEBUG:
@@ -121,10 +123,6 @@ if DEBUG:
     INTERNAL_IPS = [
         "host.docker.internal",
     ]
-
-# Check if the application is under testing
-if "test" in sys.argv or "test_coverage" in sys.argv:  # Covers regular testing and django-coverage
-    DATABASES["default"]["ENGINE"] = "django.db.backends.sqlite3"
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
