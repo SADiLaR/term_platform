@@ -1,4 +1,5 @@
 import os
+import random
 import unittest
 from unittest.mock import MagicMock
 
@@ -44,12 +45,15 @@ class TestHandleFile(unittest.TestCase):
     def test_save_data(self):
         self.command = Command()
         # Create some Institutions instances for testing
-        for _ in range(20):
+        for i in range(1, 30):
+            random_number = random.randint(1, 1000)
+
             Institution.objects.create(
-                name=self.fake.company(),
-                abbreviation=self.fake.company_suffix(),
-                url=self.fake.url(),
-                email=self.fake.company_email(),
+                id=i,
+                name=str(random_number) + "_" + self.fake.company(),
+                abbreviation=str(random_number) + "_" + self.fake.company_suffix(),
+                url=str(random_number) + "_" + self.fake.url(),
+                email=str(random_number) + "_" + self.fake.company_email(),
                 logo="",
             )
 
