@@ -3,6 +3,16 @@ on: [ pull_request, push ] # activates the workflow when there is a push or pull
 jobs:
   test_project:
     runs-on: ubuntu-latest # operating system your code will run on
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: sadilar
+          POSTGRES_PASSWORD: sadilar
+          POSTGRES_DB: test_db_1
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -20,6 +30,7 @@ jobs:
           sudo chown runner:runner /logging
       - name: Run validate_templates
         run: |
+          export DJANGO_TEST_PROCESSES=1
           cp .env.testing app/.env
           cd app/
           mkdir -p static_files
@@ -30,6 +41,9 @@ jobs:
           cd app/
           mkdir -p static_files
           python manage.py test
+        env:
+          DJANGO_SETTINGS_MODULE: app.settings
+          DATABASE_URL: postgres://sadilar:sadilar@localhost:5432/test_db
       - name: Manager Check
         run: |
           cd app/
