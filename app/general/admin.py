@@ -97,7 +97,6 @@ class InstitutionAdmin(SimpleHistoryAdmin):
     ordering = ["name"]
     search_fields = ["name"]
     list_display = ["name"]
-    inlines = [ProjectAdminInline]
     history_list_display = ["name", "abbreviation"]
 
 

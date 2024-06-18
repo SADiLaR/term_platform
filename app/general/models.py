@@ -131,7 +131,7 @@ class DocumentFile(models.Model):
         verbose_name=_("MIME type"),
     )
     document_type = models.CharField(
-        max_length=200, choices=document_type_choices, verbose_name=_("document type")
+        max_length=200, choices=document_type_choices, verbose_name=_("document category")
     )
     document_data = models.TextField(blank=True, verbose_name=_("document data"))
     institution = models.ForeignKey(
@@ -144,8 +144,8 @@ class DocumentFile(models.Model):
     history = HistoricalRecords(excluded_fields=["document_data"])
 
     class Meta:
-        verbose_name = _("Document File")
-        verbose_name_plural = _("Document Files")
+        verbose_name = _("Document")
+        verbose_name_plural = _("Documents")
 
     def __str__(self):
         return self.title
