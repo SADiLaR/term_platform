@@ -17,6 +17,7 @@ class DocumentFileForm(ModelForm):
         super().__init__(*args, **kwargs)
 
         self.fields["document_data"].widget = HiddenInput()
+        self.fields["search_vector"].widget = HiddenInput()
 
         # If the instance has a mime_type, the field should be disabled
         if not self.instance.mime_type:

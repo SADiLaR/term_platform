@@ -1,11 +1,6 @@
 import os
 
-from django.contrib.postgres.search import (
-    SearchHeadline,
-    SearchQuery,
-    SearchRank,
-    SearchVector,
-)
+from django.contrib.postgres.search import SearchHeadline, SearchQuery, SearchRank
 from django.core.paginator import Paginator
 from django.db.models import Count
 from django.http import HttpResponse
@@ -67,13 +62,13 @@ def search(request):
     q = request.GET.get("q")
 
     if q:
-        vector = SearchVector("title", "document_data")
         queue = SearchQuery(q)
         search_headline = SearchHeadline("document_data", queue)
 
         documents = (
-            DocumentFile.objects.annotate(rank=SearchRank(vector, queue))
+            DocumentFile.objects.annotate(rank=SearchRank("search_vector", queue))
             .annotate(search_headline=search_headline)
+            .filter(search_vector=queue)
             .order_by("-rank")
         )
 
