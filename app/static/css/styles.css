@@ -179,6 +179,98 @@ html {
     padding: 0 10px 10px 0;
 }
 
+/*Projects page*/
+.filter-form {
+    display: flex;
+    margin: 30px;
+    font-size: 0.875rem;
+}
+.filter-form label {
+    margin-right: 10px;
+}
+.filter-form .form-group {
+    margin-right: 10px;
+}
+.filter-form .form-control {
+    border: 1px solid #000;
+}
+.filter-form select {
+    padding: 0 10px;
+    width: 230px;
+}
+.btn-apply, .btn-reset{
+    color: var(--primary-fg);
+    outline-color: var(--primary);
+    background-color: var(--primary);
+    border-color: var(--primary);
+    margin-right: 10px;
+}
+.btn-apply:hover, .btn-reset:hover{
+    color: var(--primary-fg);
+    outline-color: var(--primary);
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.project-list {
+    margin: 20px;
+    padding: 0 30px 0 30px;
+}
+
+.card-text-project {
+    font-size: 0.875rem;
+    margin: 3px 0 3px 0;
+}
+
+.project-logo {
+    height: 100px;
+    width: auto;
+
+}
+.project-border {
+    margin: 0 0 5px 0;
+    overflow: hidden;
+    padding: 0 5px 0 0;
+    word-wrap: break-word;
+}
+.project-left-col {
+    width: 70%;
+}
+.project-right-col {
+    width: 30%;
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: flex-end;
+}
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 800px;
+}
+.project-body {
+    width: 100%;
+    max-width: 800px;
+
+}
+.card-text-description {
+    word-wrap: break-word;
+    overflow: hidden;
+    font-size: 0.875rem;
+    margin: 3px 0 3px 0;
+}
+.project-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.project-text {
+    font-size: 1.25rem;
+}
+.icon-text {
+    font-size: 0.95rem;
+}
+
 /*Error pages*/
 .error-card {
     border-color: var(--primary-red);
@@ -189,6 +281,10 @@ html {
 /*bootstrap icons*/
 .bi {
     font-size: 50px;
+}
+.project-icon {
+    font-size: 20px;
+    margin-right: 3px;
 }
 
 /* Extra small devices (phones, 600px and down) */
@@ -213,12 +309,17 @@ html {
     .col-sm-6 {
         width: 50%;
     }
-
     /*Home page*/
     .content-card {
         font-size: smaller;
         padding-right: 20px;
         margin-right: 10px;
+    }
+
+    /*Projects page*/
+    .filter-form select {
+        padding: 0 10px;
+        width: 100px;
     }
 }
 
@@ -252,6 +353,12 @@ html {
     /*Home page*/
     .content-card {
         font-size: smaller;
+    }
+
+    /*Projects page*/
+    .filter-form select {
+        padding: 0 10px;
+        width: 150px;
     }
 }
 
@@ -304,6 +411,12 @@ html {
     .right-col {
         width: 30%;
     }
+
+    /*Projects page*/
+    .filter-form select {
+        padding: 0 10px;
+        width: 200px;
+    }
 }
 
  /*Larger screens (desktops, 1001px and up)*/
@@ -355,5 +468,11 @@ html {
       width: 100%;
       height: 200px;
       font-size: small;
+  }
+
+  /*Projects page*/
+  .filter-form select {
+      padding: 0 10px;
+      width: 230px;
   }
 }
