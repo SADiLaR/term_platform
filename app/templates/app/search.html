@@ -4,27 +4,25 @@
 
 {% block content %}
 
-<div class="body">
-    <div class="section mt-3 mb-3">
-        <div class="card content-card">
-            <div class="card-body">
-                <h5 class="card-title">{% trans "Search a term" %}</h5>
-                {% if feature_flag == "search_feature" %}
-                    {#  test section start#}
-                    <form>
-                        <div class="input-group mb-3">
-                            <input type="search" class="form-control" name="q" placeholder="Search">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary">{% trans "Search" %}</button>
-                            </div>
-                        </div>
+    <div class="body">
+        <div class="section mt-3 mb-3">
+            <div class="card content-card p-2">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans "Search a term" %}</h5>
+                    <form method="get" class="container">
+
+                        <input type="search" name="{{ filter.form.search.name }}" placeholder="{% trans 'Search...' %}"
+                               class="form-control search-input"
+                               value="{{ request.GET.search|default_if_none:'' }}">
+
+                        <br>
+                        <input type="submit" class="btn btn-success float-left"/>
                     </form>
-                    <div class="mb-3">
-                        <span class="mr-5"><b>{% trans "Results:" %}</b></span>
-                        <span>{{ documents|length }}</span>
-                    </div>
-                    <div>
-                        {% for document in documents %}
+                    <br>
+                    <br>
+                    <div class="container">
+                        {% for document in search_results %}
+
                             <div>
                                 <ul>
                                     <li>
@@ -59,29 +57,121 @@
                             </div>
                         {% endfor %}
                     </div>
-                    <div class="pagination">
-                        <span class="step-links">
-                            {% if documents.has_previous %}
-                                <a href="?page=1">&laquo; {% trans "first" %}</a>
-                                <a href="?page={{ documents.previous_page_number }}">{% trans "previous" }</a>
-                            {% endif %}
-                            <span class="current">
-                                Page {{ documents.number }} of {{ documents.paginator.num_pages }}.
-                            </span>
-                            {% if documents.has_next %}
-                                <a href="?page={{ documents.next_page_number }}">{% trans "next" %}</a>
-                                <a href="?page={{ documents.paginator.num_pages }}">{% trans "last" %} &raquo;</a>
-                            {% endif %}
-                        </span>
-                        <hr>
+                </div>
+                <div class="container">
+                    <hr>
+                    <div class="pagination ">
+                        {% if documents.has_previous %}
+                            <a href="?search={{ request.GET.search|default_if_none:'' }}
+                            &document_type={{ request.GET.document_type|default_if_none:'' }}
+                            &institution={{ request.GET.institution|default_if_none:'' }}
+                            &subjects={{ request.GET.subjects|default_if_none:'' }}
+                            &languages={{ request.GET.languages|default_if_none:'' }}&page=1">&laquo; first</a>
+                            <a href="?page={{ documents.previous_page_number }}">&lt; previous</a>
+                        {% endif %}
+                        <span class="current">
+                    Page {{ documents.number }} of {{ documents.paginator.num_pages }}.
+                </span>
+                        {% if documents.has_next %}
+                            <a href="?search={{ request.GET.search|default_if_none:'' }}
+                            &document_type={{ request.GET.document_type|default_if_none:'' }}
+                            &institution={{ request.GET.institution|default_if_none:'' }}
+                            &subjects={{ request.GET.subjects|default_if_none:'' }}
+                            &languages={{ request.GET.languages|default_if_none:'' }}
+                            &page={{ documents.next_page_number }}">next &gt;</a>
+                            <a href="?search=
+                                    {{ request.GET.search|default_if_none:'' }}&page={{ documents.paginator.num_pages }}">last
+                                &raquo;</a>
+                        {% endif %}
                     </div>
+                    <hr>
+                </div>
+                <form method="get" class="container">
+
+                    <input type="search" name="{{ filter.form.search.name }}" placeholder="{% trans 'Search...' %}"
+                           class="form-control search-input"
+                           value="{{ request.GET.search|default_if_none:'' }}">
+
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="id_subjects">Institution</label>
+                                <div class="subjects-checkbox-container">
+                                    {% for checkbox in filter.form.institution %}
+                                        <div class="form-check">
+                                            {{ checkbox.tag }}
+                                            <label class="form-check-label"
+                                                   for="{{ checkbox.id_for_label }}">
+                                                {{ checkbox.choice_label }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="id_subjects">Document Type</label>
+                                <div class="subjects-checkbox-container">
+                                    {% for checkbox in filter.form.document_type %}
+                                        <div class="form-check">
+                                            {{ checkbox.tag }}
+                                            <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                                {{ checkbox.choice_label }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="id_subjects">Subjects</label>
+                                <div class="subjects-checkbox-container">
+                                    {% for checkbox in filter.form.subjects %}
+                                        <div class="form-check">
+                                            {{ checkbox.tag }}
+                                            <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                                {{ checkbox.choice_label }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="id_subjects">Languages</label>
+                                <div class="subjects-checkbox-container">
+                                    {% for checkbox in filter.form.languages %}
+                                        <div class="form-check">
+                                            {{ checkbox.tag }}
+                                            <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                                {{ checkbox.choice_label }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    {#  test section end#}
-                {% else %}
-                    <p>{% trans "Functionality of this page coming soon" %}</p>
-                {% endif %}
+                    <input type="submit" class="btn btn-success float-left"/>
+                    <br>
+                </form>
+
+            </div>
+            <br>
         </div>
     </div>
-</div>
+
+    <script>
+        function resetForm() {
+            // Assuming your form has an id, replace 'formId' with your actual form id
+            {#document.getElementById('formId').reset();#}
+            document.location.href = "/search/"
+        }
+    </script>
 
 {% endblock content %}

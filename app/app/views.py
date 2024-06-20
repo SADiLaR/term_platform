@@ -1,12 +1,11 @@
-import os
-
-from django.contrib.postgres.search import SearchHeadline, SearchQuery, SearchRank
-from django.core.paginator import Paginator
+# from pprint import pprint
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Count
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import gettext as _
 
+from general.filters import DocumentFileFilter
 from general.models import DocumentFile, Institution, Language, Project, Subject
 
 
@@ -230,39 +229,35 @@ def institutions(request):
 
 
 def search(request):
-    q = request.GET.get("q")
-
-    if q:
-        queue = SearchQuery(q)
-        search_headline = SearchHeadline("document_data", queue)
-
-        documents = (
-            DocumentFile.objects.annotate(rank=SearchRank("search_vector", queue))
-            .annotate(search_headline=search_headline)
-            .filter(search_vector=queue)
-            .order_by("-rank")
-        )
-
-    else:
-        documents = None
-
-    # Create a Paginator instance with the documents and the number of items per page
-    paginator = Paginator(documents, 10) if documents else None  # Show 10 documents per page
-
-    # Get the page number from the request's GET parameters
-    page_number = request.GET.get("page")
-
-    # Use the get_page method to get the Page object for that page number
-    page_obj = paginator.get_page(page_number) if paginator else None
-
-    feature_flag = os.getenv("FEATURE_FLAG", False)
+    # f = DocumentFileFilter(request.GET, queryset=DocumentFile.objects.all().defer("document_data"))
+    f = DocumentFileFilter(request.GET, queryset=DocumentFile.objects.all())
 
     template = "app/search.html"
+
+    # print(f.qs)
+
+    paginator = Paginator(f.qs, 5)  # 5 documents per page
+
+    print(paginator)
+
+    page_number = request.GET.get("page")
+
+    try:
+        # Get the page
+        page_obj = paginator.page(page_number)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g., 9999), deliver last page of results
+        page_obj = paginator.page(paginator.num_pages)
+
+        print(page_obj)
+    # Update the context with the page object
     context = {
+        "search_results": paginator.page(page_obj.number),
+        "filter": f,
         "documents": page_obj,
-        "current_page": "search",
-        "document_count": len(documents) if documents else 0,
-        "feature_flag": feature_flag,
     }
 
     return render(request, template_name=template, context=context)

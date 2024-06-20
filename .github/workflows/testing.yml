@@ -41,7 +41,7 @@ jobs:
           cp .env.testing app/.env
           cd app/
           mkdir -p static_files
-          python manage.py validate_templates
+          python manage.py validate_templates --ignore-app django_filters
       - name: Run Tests
         run: |
           cp .env.testing app/.env

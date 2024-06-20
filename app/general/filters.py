@@ -1,0 +1,51 @@
+import django_filters
+from django import forms
+from django.contrib.postgres.search import SearchHeadline, SearchQuery, SearchRank
+from django.db.models import F
+from django_filters import ModelMultipleChoiceFilter, MultipleChoiceFilter
+
+from general.models import DocumentFile, Institution, Language, Subject
+
+
+class DocumentFileFilter(django_filters.FilterSet):
+    search = django_filters.CharFilter(method="filter_search", label="Search")
+    institution = ModelMultipleChoiceFilter(
+        queryset=Institution.objects.all(), widget=forms.CheckboxSelectMultiple
+    )
+    document_type = MultipleChoiceFilter(
+        choices=DocumentFile.document_type_choices, widget=forms.CheckboxSelectMultiple
+    )
+    subjects = ModelMultipleChoiceFilter(
+        queryset=Subject.objects.all(), widget=forms.CheckboxSelectMultiple
+    )
+    languages = ModelMultipleChoiceFilter(
+        queryset=Language.objects.all(), widget=forms.CheckboxSelectMultiple
+    )
+
+    class Meta:
+        model = DocumentFile
+        fields = [
+            "document_type",
+            "institution",
+            "subjects",
+            "languages",
+        ]
+
+    def filter_search(self, queryset, name, value):
+        if value:
+            queue = SearchQuery(value)
+            search_rank = SearchRank(F("search_vector"), queue)
+
+            queryset = (
+                queryset.annotate(
+                    rank=search_rank,
+                )
+                .defer("document_data")
+                .select_related("institution")
+                .filter(search_vector=queue)
+                .order_by("-rank")
+            )
+            return queryset
+
+        else:
+            return ""
