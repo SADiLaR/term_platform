@@ -155,6 +155,8 @@ def institutions(request):
 
 def search(request):
     q = request.GET.get("q")
+    languages = request.GET.getlist("languages")
+    print(languages)
 
     if q:
         queue = SearchQuery(q)
@@ -162,8 +164,10 @@ def search(request):
 
         documents = (
             DocumentFile.objects.annotate(rank=SearchRank("search_vector", queue))
+            .select_related("institution")
             .annotate(search_headline=search_headline)
             .filter(search_vector=queue)
+            # .only('title', 'description', 'institution__name','institution__abbreviation', 'search_headline', 'rank')
             .order_by("-rank")
         )
 

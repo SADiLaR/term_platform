@@ -14,10 +14,24 @@
                     <form>
                         <div class="input-group mb-3">
                             <input type="search" class="form-control" name="q" placeholder="Search">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary">{% trans "Search" %}</button>
-                            </div>
+{#                            <div class="input-group-append">#}
+{#                                <button class="btn btn-outline-secondary">{% trans "Search" %}</button>#}
+{#                            </div>#}
                         </div>
+
+{#                    </form>#}
+                    <hr>
+                    <select multiple="multiple" name="languages">
+                      <option value="java">Java</option>
+                      <option value="python">Python</option>
+                      <option value="javascript">JavaScript</option>
+                      <option value="rust">Rust</option>
+                      <option value="go">Go</option>
+                    </select>
+                    <hr>
+                    <div class="input-group-append">
+                                <button class="btn btn-outline-secondary">{% trans "Search" %}</button>
+                    </div>
                     </form>
                     <div class="mb-3">
                         <span class="mr-5"><b>{% trans "Results:" %}</b></span>
