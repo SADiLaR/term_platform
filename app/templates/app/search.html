@@ -4,76 +4,72 @@
 
 {% block content %}
 
-<div class="body">
-    <div class="section mt-3 mb-3">
-        <div class="card content-card">
-            <div class="card-body">
-                <h5 class="card-title">{% trans "Search a term" %}</h5>
-                {% if feature_flag == "search_feature" %}
-                    {#  test section start#}
-                    <form>
-                        <div class="input-group mb-3">
-                            <input type="search" class="form-control" name="q" placeholder="Search">
-{#                            <div class="input-group-append">#}
-{#                                <button class="btn btn-outline-secondary">{% trans "Search" %}</button>#}
-{#                            </div>#}
-                        </div>
-
-{#                    </form>#}
-                    <hr>
-                    <select multiple="multiple" name="languages">
-                      <option value="java">Java</option>
-                      <option value="python">Python</option>
-                      <option value="javascript">JavaScript</option>
-                      <option value="rust">Rust</option>
-                      <option value="go">Go</option>
-                    </select>
-                    <hr>
-                    <div class="input-group-append">
-                                <button class="btn btn-outline-secondary">{% trans "Search" %}</button>
-                    </div>
-                    </form>
-                    <div class="mb-3">
-                        <span class="mr-5"><b>{% trans "Results:" %}</b></span>
-                        <span>{{ documents|length }}</span>
-                    </div>
-                    <div>
-                        {% for document in documents %}
-                            <div>
-                                <ul>
-                                    <li>
-                                        <span class="mr-5 text-primary"><b>{% trans "Title:" %}</b></span>
-                                        <span>{{ document.title }}</span>
-                                    </li>
-                                    <li class="mb-2">
-                                        <span class="mr-5"><b>{% trans "Institution:" %}</b></span>
-                                        <span>{{ document.institution }}</span>
-                                    </li>
-                                    <li class="mb-2">
-                                        <span class="mr-5"><b>{% trans "Headline:" %}</b></span>
-                                        <span>{{ document.search_headline|safe }}</span>
-                                    </li>
-                                    <li>
-                                        <span class="mr-5"><b>{% trans "File:" %}</b></span>
-                                        <span>{{ document.uploaded_file }}</span>
-                                    </li>
-                                    <li>
-                                        <span class="mr-5"><b>{% trans "License:" %}</b></span>
-                                        <span>{{ document.license }}</span>
-                                    </li>
-                                    <li>
-                                        <span class="mr-5"><b>{% trans "Mime Type:" %}</b></span>
-                                        <span>{{ document.mime_type }}</span>
-                                    </li>
-                                    <li class="mt-2">
-                                        <span class="mr-5"><b>{% trans "Rank:" %}</b></span>
-                                        <span><i>{{ document.rank }}</i></span>
-                                    </li>
-                                </ul>
+    <div class="body">
+        <div class="section mt-3 mb-3">
+            <div class="card content-card">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans "Search a term" %}</h5>
+                    {% if feature_flag == "search_feature" %}
+                        {#  test section start#}
+                        <form method="post" >
+                        {% csrf_token %}
+                            <div class="input-group mb-3">
+                                <input type="search" class="form-control" name="search" placeholder="Search" value="{{ search }}">
                             </div>
-                        {% endfor %}
-                    </div>
-                    <div class="pagination">
+                            <hr>
+
+                            <select multiple="multiple" name="subjects">
+                                {% for project_subject in project_subjects %}
+                                    <option value="{{ project_subject.id }}">{{ project_subject.name }}</option>
+                                {% endfor %}
+
+                            </select>
+                            <hr>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary">{% trans "Search" %}</button>
+                            </div>
+                        </form>
+                        <div class="mb-3">
+                            <span class="mr-5"><b>{% trans "Results:" %}</b></span>
+                            <span>{{ documents|length }}</span>
+                        </div>
+                        <div>
+                            {% for document in documents %}
+                                <div>
+                                    <ul>
+                                        <li>
+                                            <span class="mr-5 text-primary"><b>{% trans "Title:" %}</b></span>
+                                            <span>{{ document.title }}</span>
+                                        </li>
+                                        <li class="mb-2">
+                                            <span class="mr-5"><b>{% trans "Institution:" %}</b></span>
+                                            <span>{{ document.institution }}</span>
+                                        </li>
+                                        <li class="mb-2">
+                                            <span class="mr-5"><b>{% trans "Headline:" %}</b></span>
+                                            <span>{{ document.search_headline|safe }}</span>
+                                        </li>
+                                        <li>
+                                            <span class="mr-5"><b>{% trans "File:" %}</b></span>
+                                            <span>{{ document.uploaded_file }}</span>
+                                        </li>
+                                        <li>
+                                            <span class="mr-5"><b>{% trans "License:" %}</b></span>
+                                            <span>{{ document.license }}</span>
+                                        </li>
+                                        <li>
+                                            <span class="mr-5"><b>{% trans "Mime Type:" %}</b></span>
+                                            <span>{{ document.mime_type }}</span>
+                                        </li>
+                                        <li class="mt-2">
+                                            <span class="mr-5"><b>{% trans "Rank:" %}</b></span>
+                                            <span><i>{{ document.rank }}</i></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="pagination">
                         <span class="step-links">
                             {% if documents.has_previous %}
                                 <a href="?page=1">&laquo; {% trans "first" %}</a>
@@ -87,15 +83,15 @@
                                 <a href="?page={{ documents.paginator.num_pages }}">{% trans "last" %} &raquo;</a>
                             {% endif %}
                         </span>
-                        <hr>
-                    </div>
-                    </div>
-                    {#  test section end#}
-                {% else %}
-                    <p>{% trans "Functionality of this page coming soon" %}</p>
-                {% endif %}
+                            <hr>
+                        </div>
+                        </div>
+                        {#  test section end#}
+                    {% else %}
+                        <p>{% trans "Functionality of this page coming soon" %}</p>
+                    {% endif %}
+            </div>
         </div>
     </div>
-</div>
 
 {% endblock content %}
