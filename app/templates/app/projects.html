@@ -57,7 +57,11 @@
       <div class="project-header">
         <div class="project-row">
             <div class="col-sm-6 project-left-col">
-                <h3 class="card-title">{{ project.project.name }}</h3>
+              <h3>
+                <a class="project-name" href="{% url 'project_detail' project.project.id %}">
+                    {{ project.project.name }}
+                </a>
+              </h3>
             <div class="card-text-project">
                 <a href="{{ project.project.url }}" target="_blank" class="project-url">{{ project.project.url }}</a>
             </div>
@@ -75,7 +79,7 @@
       </div>
       <div class="project-body">
         <div class="card-text-description">
-            {{ project.project.description }}
+            {{ project.description|truncatewords:30 }} <a href="{% url 'project_detail' project.project.id %}">Read more</a>
         </div>
         <div class="card-text-project">
           <span class="icon-text"><i class="project-icon bi-vector-pen"></i></span>

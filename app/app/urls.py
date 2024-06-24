@@ -32,6 +32,10 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("institutions/", views.institutions, name="institutions"),
     path("projects/", views.projects, name="projects"),
+    path("projects/<int:project_id>/", views.project_detail, name="project_detail"),
+    path("institution/<int:pk>/", views.institution_detail, name="institution_detail"),
+    path("language/<int:pk>/", views.language_detail, name="language_detail"),
+    path("subject/<int:pk>/", views.subject_detail, name="subject_detail"),
     path("search/", views.search, name="search"),
     path("i18n/", include("django.conf.urls.i18n")),
 ]
