@@ -3,105 +3,118 @@
 {% load i18n %}
 
 {% block content %}
+<div class="filter-class">
+  <form class="filter-form">
 
-    <div class="filter-class">
-      <form class="filter-form">
-        <label for="filter">{% trans "Filter:" %}</label>
-
-            <div class="form-group">
-                <select name="subject" class="form-control">
-                    <option value="">{% trans "Subject" %}</option>
-                    {% for subject in subjects %}
-                      <option value="{{ subject.id }}" {% if request.GET.subject == subject.id|stringformat:"s" %}selected{% endif %}>
-                        {{ subject.name }}
-                      </option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <div class="form-group">
-                <select name="language" class="form-control">
-                    <option value="">{% trans "Language" %}</option>
-                    {% for language in languages %}
-                      <option value="{{ language.id }}" {% if request.GET.language == language.id|stringformat:"s" %}selected{% endif %}>
-                        {{ language.name }}
-                      </option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <div class="form-group">
-                <select name="institution" class="form-control">
-                    <option value="">{% trans "Institution" %}</option>
-                    {% for institution in institutions %}
-                      <option value="{{ institution.id }}" {% if request.GET.institution == institution.id|stringformat:"s" %}selected{% endif %}>
-                        {{ institution.name }}
-                      </option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <input class="btn btn-apply btn-sm" type="submit" value="{% trans 'Apply' %}">
-            <a href="{% url 'projects' %}" class="btn btn-reset btn-sm">{% trans 'Reset' %}</a>
-
-      </form>
+    <div class="filter-label">
+      <label>{% trans "Filter:" %}</label>
     </div>
 
-    <br />
-    <br />
-
-
-    <div class="project-list">
-      {% for project in projects %}
-      <div class="project-border">
-      <div class="project-header">
-        <div class="project-row">
-            <div class="col-sm-6 project-left-col">
-              <h3>
-                <a class="project-name" href="{% url 'project_detail' project.project.id %}">
-                    {{ project.project.name }}
-                </a>
-              </h3>
-            <div class="card-text-project">
-                <a href="{{ project.project.url }}" target="_blank" class="project-url">{{ project.project.url }}</a>
-            </div>
-            <div class="card-text-project project-text">
-                {{ project.institution_name }}
-            </div>
-          </div>
-          <div class="col-sm-6 project-right-col">
-            {% if project.logo %}
-            <img src="{{ project.logo.url }}" alt="{{ project.name }} logo"
-                 class="project-logo">
-            {% endif %}
-          </div>
-        </div>
-      </div>
-      <div class="project-body">
-        <div class="card-text-description">
-            {{ project.description|truncatewords:30 }} <a href="{% url 'project_detail' project.project.id %}">Read more</a>
-        </div>
-        <div class="card-text-project">
-          <span class="icon-text"><i class="project-icon bi-vector-pen"></i></span>
-          <span class="icon-text">{{ project.languages }}</span>
-        </div>
-        <div class="card-text-project">
-            <span class="icon-text"><i class="project-icon bi-book"></i></span>
-            <span class="icon-text">{{ project.subjects }}</span>
-        </div>
-        <div class="card-text-project">
-          <span class="icon-text"><i class="project-icon bi-calendar3"></i></span>
-          <span class="icon-text">{{ project.date }}</span>
-        </div>
-
-      </div>
-      </div>
-
-      <br />
-      <br />
-      <br />
-      {% endfor %}
+    <div class="form-group">
+        <label for="subject_select">{% trans "Subject" %}</label>
+        <select name="subject" class="form-control form-control-lg" id="subject_select">
+            <option value="">{% trans "All subjects" %}</option>
+            {% for subject in subjects %}
+              <option value="{{ subject.id }}" {% if request.GET.subject == subject.id|stringformat:"s" %}selected{% endif %}>
+                {{ subject.name }}
+              </option>
+            {% endfor %}
+        </select>
     </div>
+
+    <div class="form-group">
+        <label for="language_select">{% trans "Language" %}</label>
+        <select name="language" class="form-control form-control-lg" id="language_select">
+            <option value="">{% trans "All languages" %}</option>
+            {% for language in languages %}
+              <option value="{{ language.id }}" {% if request.GET.language == language.id|stringformat:"s" %}selected{% endif %}>
+                {{ language.name }}
+              </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="institution_select">{% trans "Institution" %}</label>
+        <select name="institution" class="form-control form-control-lg" id="institution_select">
+            <option value="">{% trans "All institutions" %}</option>
+            {% for institution in institutions %}
+              <option value="{{ institution.id }}" {% if request.GET.institution == institution.id|stringformat:"s" %}selected{% endif %}>
+                {{ institution.name }}
+              </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="button-group">
+      <input class="btn btn-apply" type="submit" value="{% trans 'Apply' %}">
+      <a href="{% url 'projects' %}" class="btn btn-reset">{% trans 'Reset' %}</a>
+    </div>
+
+  </form>
+</div>
+
+<br />
+
+<div class="project-list">
+  {% for project in projects %}
+  <div class="project-border">
+  <div class="project-header">
+    <div class="project-row">
+        <div class="project-left-col">
+          <h3>
+            <a class="project-name" href="{% url 'project_detail' project.project.id %}">
+                {{ project.project.name }}
+            </a>
+          </h3>
+        <div class="card-text-project">
+            <a href="{{ project.project.url }}" target="_blank" class="project-url" title="External link">
+                {{ project.project.url }}
+            </a>
+        </div>
+        <div class="card-text-project project-text">
+            {{ project.institution_name }}
+        </div>
+      </div>
+      <div class="project-right-col">
+        {% if project.logo %}
+        <img src="{{ project.logo.url }}" alt="{{ project.name }} logo"
+             class="project-logo">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="project-body">
+    <div class="card-text-description">
+        {{ project.description|truncatewords:30 }} <a href="{% url 'project_detail' project.project.id %}">{% trans "Read more" %}</a>
+    </div>
+    <div class="card-text-project">
+      {% if project.languages %}
+        <span class="icon-text"><i class="project-icon bi-vector-pen"></i></span>
+        <span class="icon-text">{{ project.languages }}</span>
+      {% endif %}
+    </div>
+    <div class="card-text-project">
+      {% if project.subjects %}
+        <span class="icon-text"><i class="project-icon bi-book"></i></span>
+        <span class="icon-text">{{ project.subjects }}</span>
+      {% endif %}
+    </div>
+    <div class="card-text-project">
+      {% if project.date %}
+        <span class="icon-text"><i class="project-icon bi-calendar3"></i></span>
+        <span class="icon-text">{{ project.date }}</span>
+      {% endif %}
+    </div>
+
+  </div>
+  </div>
+
+  <br />
+  <br />
+  <br />
+  {% endfor %}
+</div>
 
 
 

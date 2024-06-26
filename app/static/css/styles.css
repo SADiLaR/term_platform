@@ -33,104 +33,81 @@ html {
     position: absolute;
     bottom: 0;
 }
-
 .header-container {
     display: inline-block;
 }
-
 .nav-menu {
     float: left;
     padding: 5px;
     margin: 10px 10px 10px 10px;
 }
-
 .nav-logo {
     margin: 3px 10px 10px 10px;
     float: left;
 }
-
 .nav {
     background: var(--primary-fg);
     width: 100%;
 }
-
 .nav > li > a{
     margin-top: 15px;
     color: var(--text-color);
 }
-
 .nav > li > .active{
     margin-top: 15px;
     background-color: var(--primary) !important;
     color: var(--primary-fg);
 }
-
 .nav > li > a:hover{
     margin-top: 15px;
     background-color: var(--body-quiet-color);
     color: var(--primary-fg);
 }
-
 .nav > li > a:active{
     margin-top: 15px;
     background-color: var(--primary);
     color: var(--primary-fg);
 }
-
 .btn-primary{
     margin-top:20px;
     outline-color: var(--primary);
     background-color: var(--primary);
     border-color: var(--primary);
 }
-
 .btn-outline-primary{
     margin-top:20px;
     background: #2D4481;
     outline-color: var(--primary);
 }
-
 .btn-primary:hover{
     margin-top:20px;
     background: var(--body-quiet-color);
     outline-color: var(--primary);
 }
-
 .app-footer .footer-title {
     color: var(--primary);
 }
-
 .footer > a {
     color: var(--primary-fg);
 }
-
 .section{
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
 }
-
 .main-logo {
     width: 140px;
     height: 75px;
     margin: 20px 10px 10px 10px;
 }
-
 .page-link {
     background-color: var(--primary) !important;
     color: var(--primary-fg) !important;
 }
-
 .page-link:hover{
     background-color: var(--body-quiet-color) !important;
     color: var(--primary-fg) !important;
 }
-
-.row {
-    margin: 10px;
-    padding: 10px;
-}
-
 .footer-class {
     display: flex;
     justify-content: center;
@@ -138,22 +115,18 @@ html {
     position: relative;
     flex-direction: column;
 }
-
 .language-toggle {
     margin-top: 1rem;
 }
-
 .language-toggle form {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
 .language-toggle select,
 .language-toggle .btn-language {
     margin-top: 0.5rem;
 }
-
 .btn-language{
     color: var(--text-color);
     outline-color: var(--primary-fg);
@@ -172,39 +145,70 @@ html {
     border-color: var(--primary-red);
     margin: 0 10px 0 10px;
 }
-
 .uni-logo {
     width: auto;
     height: 75px;
     margin: 10px 0 10px 0;
     padding: 0 10px 10px 0;
 }
+.institution-row {
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.left-col, .right-col {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
 /*Projects page*/
-.filter-form {
-    display: flex;
+.filter-class label {
+    font-size: 1.15rem;
+}
+.filter-class {
     margin: 30px;
     font-size: 0.875rem;
+}
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    box-sizing: border-box;
+}
+.filter-label {
+    width: 100%;
+    margin-bottom: 10px;
 }
 .filter-form label {
     margin-right: 10px;
 }
 .filter-form .form-group {
-    margin-right: 10px;
+    margin: 0 10px 10px 0;
 }
 .filter-form .form-control {
     border: 1px solid #000;
 }
-.filter-form select {
-    padding: 0 10px;
-    width: 230px;
+.button-group {
+  display: flex;
+  align-items: center;
 }
 .btn-apply, .btn-reset{
     color: var(--primary-fg);
     outline-color: var(--primary);
     background-color: var(--primary);
     border-color: var(--primary);
+    padding: 10px 20px;
     margin-right: 10px;
+    white-space: nowrap;
 }
 .btn-apply:hover, .btn-reset:hover{
     color: var(--primary-fg);
@@ -242,15 +246,6 @@ html {
     padding: 0 5px 0 0;
     word-wrap: break-word;
 }
-.project-left-col {
-    width: 70%;
-}
-.project-right-col {
-    width: 30%;
-    flex: 0 0 auto;
-    display: flex;
-    justify-content: flex-end;
-}
 .project-header {
     display: flex;
     justify-content: space-between;
@@ -270,7 +265,11 @@ html {
 }
 .project-row {
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    box-sizing: border-box;
     width: 100%;
 }
 .project-text {
@@ -280,7 +279,7 @@ html {
     font-size: 0.95rem;
 }
 
-/*Project & Institution detail*/
+/*Projects & Institution detail pages*/
 .detail {
     width: 80%;
     margin: 0 auto;
@@ -304,8 +303,7 @@ html {
 }
 
 .detail-row {
-    display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
     margin-bottom: 20px;
 }
 
@@ -321,7 +319,6 @@ html {
 }
 
 .detail-col {
-    flex: 1;
     border-radius: 5px;
 }
 
@@ -343,19 +340,7 @@ html {
     text-decoration: none;
     color: var(--link-text);
 }
-
-.detail-left-col {
-    width: 50%;
-}
-
-.detail-right-col {
-    width: 50%;
-    flex: 0 0 auto;
-    display: flex;
-    justify-content: left;
-}
 .project-date-row {
-  display: flex;
   font-size: 0.875rem;
 }
 
@@ -396,20 +381,19 @@ html {
         width: 98%;
         padding-right: 30px;
     }
-    .col-sm-6 {
-        width: 50%;
+    .institution-row {
+        flex-direction: column;
+        align-items: flex-start;
     }
+    .left-col, .right-col {
+        width: 100%;
+    }
+
     /*Home page*/
     .content-card {
         font-size: smaller;
         padding-right: 20px;
         margin-right: 10px;
-    }
-
-    /*Projects page*/
-    .filter-form select {
-        padding: 0 10px;
-        width: 100px;
     }
 }
 
@@ -443,12 +427,6 @@ html {
     /*Home page*/
     .content-card {
         font-size: smaller;
-    }
-
-    /*Projects page*/
-    .filter-form select {
-        padding: 0 10px;
-        width: 150px;
     }
 }
 
@@ -507,6 +485,35 @@ html {
         padding: 0 10px;
         width: 200px;
     }
+    .project-row {
+        display: flex;
+        justify-content: space-between;
+    }
+    .project-left-col {
+        width: 70%;
+        flex: 1;
+        min-width: 200px;
+    }
+    .project-right-col {
+        width: 30%;
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /*Projects & Institution detail pages*/
+    .detail-left-col, .detail-right-col {
+      flex: 1;
+      padding: 10px;
+    }
+    .project-date-row {
+      display: flex;
+      font-size: 0.875rem;
+    }
+    .filter-form {
+        display: flex;
+    }
 }
 
  /*Larger screens (desktops, 1001px and up)*/
@@ -564,5 +571,35 @@ html {
   .filter-form select {
       padding: 0 10px;
       width: 230px;
+  }
+  .project-row {
+      display: flex;
+      justify-content: space-between;
+  }
+  .project-left-col {
+      width: 70%;
+      flex: 1;
+      min-width: 200px;
+  }
+  .project-right-col {
+      width: 30%;
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+
+  /*Projects & Institution detail pages*/
+  .detail-right-col {
+      flex: 0 0 auto;
+      display: flex;
+      justify-content: left;
+  }
+  .project-date-row {
+    display: flex;
+    font-size: 0.875rem;
+  }
+  .filter-form {
+      display: flex;
   }
 }

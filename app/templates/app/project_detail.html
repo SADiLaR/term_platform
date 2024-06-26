@@ -7,9 +7,9 @@
 <div class="detail">
   <p><a href="{% url 'projects' %}">{% trans "Projects" %}</a> > {{ project.name }}</p>
 
-  <div class=detail-row>
+  <div class="detail-row row">
 
-    <div class="col-sm-6 detail-left-col">
+    <div class="col-12 {% if logo %}col-md-6{% else %}col-md-12{% endif %} detail-left-col">
       <h1>{{ project.name }}</h1>
       <a href="{{ project.url }}">{{ project.url }}</a>
       <p>
@@ -36,9 +36,9 @@
 
     </div>
 
-    <div class="col-sm-6 detail-right-col">
-      {% if project.logo %}
-      <img src="{{ project.logo.url }}" alt="{% blocktrans with project_name=project.name %}{{ project_name }} logo{% endblocktrans %}"
+    <div class="col-12 col-md-6 detail-right-col">
+      {% if logo %}
+      <img src="{{ logo.url }}" alt="{% blocktrans with project_name=project.name %}{{ project_name }} logo{% endblocktrans %}"
            class="project-logo">
       {% endif %}
     </div>
@@ -46,8 +46,8 @@
   </div>
 
 
-  <div class="detail-row">
-    <div class="col-sm-6 detail-col">
+  <div class="detail-row row">
+    <div class="col-md-6 col-12 detail-col">
       <div>
           <h2>{% trans "Subjects" %}</h2>
           <ul>
@@ -61,7 +61,7 @@
       </div>
     </div>
 
-    <div class="col-sm-6 detail-col">
+    <div class="col-md-6 col-12 detail-col">
       <div>
         <h2>{% trans "Languages" %}</h2>
         <ul>

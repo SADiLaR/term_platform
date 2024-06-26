@@ -8,8 +8,8 @@
     {% for institution in institutions %}
     <div class="all-cards section">
         <div class="card uni-card">
-            <div class="row">
-                <div class="col-sm-6 left-col">
+            <div class="institution-row">
+                <div class="left-col">
                     <h5 class="card-title"><a href="{% url 'institution_detail' institution.id %}">{{ institution.name }}</a></h5>
                     <p class="card-text">
                         {{ institution.abbreviation }}
@@ -21,7 +21,7 @@
                       {% endif %}
                     </p>
                 </div>
-                <div class="col-sm-6 right-col">
+                <div class="right-col">
                     <p class="card-text">{% trans "Profile completion:" %}</p>
                     <div class="profile-icons">
                       {% if institution.rating <= 20 %}
