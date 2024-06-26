@@ -65,11 +65,16 @@ def projects(request):
     )
 
     if subject_id:
-        projects = projects.filter(subjects__id=subject_id)
+        subject = get_object_or_404(Subject, id=subject_id)
+        projects = projects.filter(subjects=subject)
+
     if language_id:
-        projects = projects.filter(languages__id=language_id)
+        language = get_object_or_404(Language, id=language_id)
+        projects = projects.filter(languages=language)
+
     if institution_id:
-        projects = projects.filter(institution__id=institution_id)
+        institution = get_object_or_404(Institution, id=institution_id)
+        projects = projects.filter(institution=institution)
 
     subjects = Subject.objects.all()
     languages = Language.objects.all()

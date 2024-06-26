@@ -1,5 +1,7 @@
 from datetime import date
 
+from django.http import HttpRequest
+from django.shortcuts import get_object_or_404
 from django.test import Client, TestCase
 from django.urls import reverse
 
@@ -69,6 +71,18 @@ class ProjectViewTests(TestCase):
 
         with self.assertNumQueries(6):
             response = self.client.get(self.url)
+
+    def test_projects_view_with_invalid_subject_id(self):
+        response = self.client.get(reverse("projects") + "?subject=99999")
+        self.assertEqual(response.status_code, 404)
+
+    def test_projects_view_with_invalid_language_id(self):
+        response = self.client.get(reverse("projects") + "?language=99999")
+        self.assertEqual(response.status_code, 404)
+
+    def test_projects_view_with_invalid_institution_id(self):
+        response = self.client.get(reverse("projects") + "?institution=99999")
+        self.assertEqual(response.status_code, 404)
 
 
 class GetDateRangeTests(TestCase):
