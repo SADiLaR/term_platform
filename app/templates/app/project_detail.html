@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<br/>
+<div class="project-detail">
+  <p><a href="{% url 'projects' %}">{% trans "Projects" %}</a> > {{ project.name }}</p>
+
+  <div class=project-div-row>
+
+    <div class="col-sm-6 project-detail-left-col">
+      <h1>{{ project.name }}</h1>
+      <a href="{{ project.url }}">{{ project.url }}</a>
+      <p>
+          <a href="{% url 'institution_detail' project.institution.id %}">
+              {{ project.institution.name }}
+          </a>
+      </p>
+
+        <div class=project-date-row>
+          <div class=project-date-left-col>
+            <p>
+              <span class="icon-text"><i class="project-icon bi-calendar3"></i></span>
+              <span class="icon-text">{% trans "Start Date:" %} {{ project.start_date|date:"Y-m-d" }}<span class="icon-text">
+            </p>
+          </div>
+
+          <div class=project-date-right-col>
+            <p>
+              <span class="icon-text"><i class="project-icon bi-calendar3"></i></span>
+              <span class="icon-text">{% trans "End Date:" %} {{ project.end_date|date:"Y-m-d" }}<span class="icon-text">
+            </p>
+          </div>
+        </div>
+
+    </div>
+
+    <div class="col-sm-6 project-detail-right-col">
+      {% if project.logo %}
+      <img src="{{ project.logo.url }}" alt="{% blocktrans with project_name=project.name %}{{ project_name }} logo{% endblocktrans %}"
+           class="project-logo">
+      {% endif %}
+    </div>
+
+  </div>
+
+
+  <div class="project-div-row">
+    <div class="col-sm-6 detail-col">
+      <div>
+          <h2>{% trans "Subjects" %}</h2>
+          <ul>
+              {% for subject in subjects %}
+              <li>
+                <span class="icon-text"><i class="project-icon bi-book"></i></span>
+                <span class="icon-text"><a href="{% url 'subject_detail' subject.id %}">{{ subject.name }}</a></span>
+              </li>
+              {% endfor %}
+          </ul>
+      </div>
+    </div>
+
+    <div class="col-sm-6 detail-col">
+      <div>
+        <h2>{% trans "Languages" %}</h2>
+        <ul>
+            {% for language in languages %}
+            <li>
+              <span class="icon-text"><i class="project-icon bi-vector-pen"></i></span>
+              <span class="icon-text"><a href="{% url 'language_detail' language.id %}">{{ language.name }}</a></span>
+            </li>
+            {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

@@ -4,7 +4,7 @@ from django.contrib.postgres.search import SearchHeadline, SearchQuery, SearchRa
 from django.core.paginator import Paginator
 from django.db.models import Count
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.utils.translation import gettext as _
 
 from general.models import DocumentFile, Institution, Language, Project, Subject
@@ -104,6 +104,7 @@ def projects(request):
                 "languages": languages_data,
                 "date": date,
                 "institution_name": institution_name,
+                "description": project.description,
             }
         )
 
@@ -115,6 +116,60 @@ def projects(request):
         "institutions": institutions,
     }
 
+    return render(request, template_name=template, context=context)
+
+
+def project_detail(request, project_id):
+    template = "app/project_detail.html"
+
+    project = get_object_or_404(
+        Project.objects.select_related("institution").prefetch_related("subjects", "languages"),
+        id=project_id,
+    )
+
+    logo = get_logo(project)
+
+    context = {
+        "current_page": "project_detail",
+        "project": project,
+        "logo": logo,
+        "subjects": project.subjects.all(),
+        "languages": project.languages.all(),
+    }
+    return render(request, template_name=template, context=context)
+
+
+def institution_detail(request, project_id):
+    template = "app/institution_detail.html"
+
+    project = Project.objects.get(id=project_id)
+
+    context = {
+        "current_page": "institution_detail",
+    }
+    return render(request, template_name=template, context=context)
+
+
+def language_detail(request, project_id):
+    template = "app/language_detail.html"
+
+    project = Project.objects.get(id=project_id)
+
+    context = {
+        "current_page": "language_detail",
+    }
+    return render(request, template_name=template, context=context)
+
+
+def subject_detail(request, project_id):
+    template = "app/subject_detail.html"
+
+    project = Project.objects.get(id=project_id)
+
+    context = {
+        "current_page": "subject_detail",
+        "project": project,
+    }
     return render(request, template_name=template, context=context)
 
 

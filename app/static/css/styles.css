@@ -6,6 +6,7 @@
     --primary-fg: #ffffff;
     --body-quiet-color: #485d95;
     --text-color: #000000;
+    --link-text: #2c6bce;
 }
 
 
@@ -217,6 +218,15 @@ html {
     padding: 0 30px 0 30px;
 }
 
+.project-name {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.project-name:hover {
+    text-decoration: underline;
+}
+
 .card-text-project {
     font-size: 0.875rem;
     margin: 3px 0 3px 0;
@@ -269,6 +279,85 @@ html {
 }
 .icon-text {
     font-size: 0.95rem;
+}
+
+/*Project detail*/
+.project-detail {
+    width: 80%;
+    margin: 0 auto;
+    font-size: 0.875rem;
+}
+.project-detail h1 {
+    font-size: 2em;
+}
+.project-detail a {
+    text-decoration: none;
+    color: var(--link-text);
+}
+.project-detail a:hover,
+.detail-col ul li a:hover {
+    text-decoration: underline;
+}
+
+.project-detail {
+    width: 80%;
+    margin-left: 40px;
+}
+
+.project-div-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.project-date-left-col {
+    flex: 1;
+    padding-right: 10px;
+}
+
+.project-date-right-col {
+    flex: 1;
+    display: flex;
+    justify-content: left;
+}
+
+.detail-col {
+    flex: 1;
+    border-radius: 5px;
+}
+
+.detail-col h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.detail-col ul {
+    list-style: none;
+    padding: 0;
+}
+
+.detail-col ul li {
+    margin-bottom: 5px;
+}
+
+.detail-col ul li a {
+    text-decoration: none;
+    color: var(--link-text);
+}
+
+.project-detail-left-col {
+    width: 50%;
+}
+
+.project-detail-right-col {
+    width: 50%;
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: left;
+}
+.project-date-row {
+  display: flex;
+  font-size: 0.875rem;
 }
 
 /*Error pages*/
