@@ -219,7 +219,6 @@ html {
 }
 
 .project-name {
-    color: var(--text-color);
     text-decoration: none;
 }
 
@@ -281,16 +280,16 @@ html {
     font-size: 0.95rem;
 }
 
-/*Project detail*/
-.project-detail {
+/*Project & Institution detail*/
+.detail {
     width: 80%;
     margin: 0 auto;
     font-size: 0.875rem;
 }
-.project-detail h1 {
+.detail h1 {
     font-size: 2em;
 }
-.project-detail a {
+.detail a {
     text-decoration: none;
     color: var(--link-text);
 }
@@ -299,12 +298,12 @@ html {
     text-decoration: underline;
 }
 
-.project-detail {
+.detail {
     width: 80%;
     margin-left: 40px;
 }
 
-.project-div-row {
+.detail-row {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
@@ -345,11 +344,11 @@ html {
     color: var(--link-text);
 }
 
-.project-detail-left-col {
+.detail-left-col {
     width: 50%;
 }
 
-.project-detail-right-col {
+.detail-right-col {
     width: 50%;
     flex: 0 0 auto;
     display: flex;
@@ -359,6 +358,8 @@ html {
   display: flex;
   font-size: 0.875rem;
 }
+
+
 
 /*Error pages*/
 .error-card {
@@ -371,7 +372,7 @@ html {
 .bi {
     font-size: 50px;
 }
-.project-icon {
+.detail-icon {
     font-size: 20px;
     margin-right: 3px;
 }

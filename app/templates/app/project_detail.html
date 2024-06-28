@@ -4,12 +4,12 @@
 
 {% block content %}
 <br/>
-<div class="project-detail">
+<div class="detail">
   <p><a href="{% url 'projects' %}">{% trans "Projects" %}</a> > {{ project.name }}</p>
 
-  <div class=project-div-row>
+  <div class=detail-row>
 
-    <div class="col-sm-6 project-detail-left-col">
+    <div class="col-sm-6 detail-left-col">
       <h1>{{ project.name }}</h1>
       <a href="{{ project.url }}">{{ project.url }}</a>
       <p>
@@ -36,7 +36,7 @@
 
     </div>
 
-    <div class="col-sm-6 project-detail-right-col">
+    <div class="col-sm-6 detail-right-col">
       {% if project.logo %}
       <img src="{{ project.logo.url }}" alt="{% blocktrans with project_name=project.name %}{{ project_name }} logo{% endblocktrans %}"
            class="project-logo">
@@ -46,14 +46,14 @@
   </div>
 
 
-  <div class="project-div-row">
+  <div class="detail-row">
     <div class="col-sm-6 detail-col">
       <div>
           <h2>{% trans "Subjects" %}</h2>
           <ul>
               {% for subject in subjects %}
               <li>
-                <span class="icon-text"><i class="project-icon bi-book"></i></span>
+                <span class="icon-text"><i class="detail-icon bi-book"></i></span>
                 <span class="icon-text"><a href="{% url 'subject_detail' subject.id %}">{{ subject.name }}</a></span>
               </li>
               {% endfor %}
@@ -67,7 +67,7 @@
         <ul>
             {% for language in languages %}
             <li>
-              <span class="icon-text"><i class="project-icon bi-vector-pen"></i></span>
+              <span class="icon-text"><i class="detail-icon bi-vector-pen"></i></span>
               <span class="icon-text"><a href="{% url 'language_detail' language.id %}">{{ language.name }}</a></span>
             </li>
             {% endfor %}

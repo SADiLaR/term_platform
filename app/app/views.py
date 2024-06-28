@@ -139,13 +139,33 @@ def project_detail(request, project_id):
     return render(request, template_name=template, context=context)
 
 
-def institution_detail(request, project_id):
+def institution_detail(request, institution_id):
     template = "app/institution_detail.html"
 
-    project = Project.objects.get(id=project_id)
+    institution = get_object_or_404(Institution, id=institution_id)
+    projects = Project.objects.filter(institution=institution)
+    documents = DocumentFile.objects.filter(institution=institution)
+
+    logo = institution.logo
 
     context = {
         "current_page": "institution_detail",
+        "institution": institution,
+        "projects": projects,
+        "documents": documents,
+        "logo": logo,
+    }
+
+    return render(request, template_name=template, context=context)
+
+
+def document_detail(request, project_id):
+    template = "app/document_detail.html"
+
+    document = DocumentFile.objects.get(id=document_id)
+
+    context = {
+        "current_page": "document_detail",
     }
     return render(request, template_name=template, context=context)
 
@@ -201,6 +221,7 @@ def institutions(request):
         rating = (completed_fields_count / len(institution_dict)) * 100
         institution_dict["rating"] = round(rating)
         institution_dict["project_count"] = institution.project_count
+        institution_dict["id"] = institution.id
         institutions_array.append(institution_dict)
 
     context = {"current_page": "institutions", "institutions": institutions_array}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<br/>
+<div class="detail">
+    <p><a href="{% url 'institutions' %}">{% trans "Institutions" %}</a> > {{ institution.name }}</p>
+
+    <div class="detail-row">
+
+        <div class="col-sm-6 detail-left-col">
+            <h1>{{ institution.name }} ({{ institution.abbreviation }})</h1>
+            {% if institution.url %}
+                <p><a href="{{ institution.url }}">{{ institution.url }}</a></p>
+            {% endif %}
+            {% if institution.email %}
+                <p><a href="mailto:{{ institution.email }}">{{ institution.email }}</a></p>
+            {% endif %}
+        </div>
+
+        <div class="col-sm-6 detail-right-col">
+            {% if institution.logo %}
+                <img src="{{ institution.logo.url }}" alt="{{ institution.name }}" class="project-logo">
+            {% endif %}
+        </div>
+    </div>
+
+    <br/>
+
+    <div class="detail-row">
+        <div class="col-sm-6 detail-col">
+            <h2>{% trans "Projects" %}</h2>
+            {% if projects %}
+            <ul>
+              {% for project in projects %}
+                  <li>
+                    <span class="icon-text"><i class="detail-icon bi-clipboard2"></i></span>
+                    <span class="icon-text"><a href="{% url 'project_detail' project.id %}">{{ project.name }}</a></span>
+                  </li>
+              {% endfor %}
+            </ul>
+            {% else %}
+                <p>{% trans "No projects available for this institution." %}</p>
+            {% endif %}
+        </div>
+        <div class="col-sm-6 detail-col">
+            <h2>{% trans "Documents" %}</h2>
+            {% if documents %}
+            <ul>
+                {% for document in documents %}
+                    <li>
+                      <span class="icon-text"><i class="detail-icon bi-file-earmark"></i></span>
+                      <span class="icon-text"><a href="{% url 'document_detail' document.id %}">{{ document.title }}</a></span>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <p>{% trans "No documents available for this institution." %}</p>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}
