@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "users",
     "general",
     "simple_history",
+    "django_filters",
 ]
 
 # Add django-extensions to the installed apps if DEBUG is True

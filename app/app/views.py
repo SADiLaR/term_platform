@@ -1,12 +1,11 @@
-import os
+from pprint import pprint
 
-from django.contrib.postgres.search import SearchHeadline, SearchQuery, SearchRank
-from django.core.paginator import Paginator
 from django.db.models import Count
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils.translation import gettext as _
 
+from general.filters import DocumentFileFilter
 from general.models import DocumentFile, Institution, Language, Project, Subject
 
 
@@ -154,79 +153,197 @@ def institutions(request):
 
 
 def search(request):
-    # project_subjects = Subject.objects.all()
-    if request.method == "POST":
-        search_request = request.POST.get("search")
-        subjects_request = request.POST.get("subjects")
+    # form = DocumentFileSearchForm(request.GET or None)
+    pprint(request.GET)
+    f = DocumentFileFilter(request.GET, queryset=DocumentFile.objects.all())
 
-        print(search_request)
-        print(subjects_request)
+    context = {
+        "filter": f,
+    }
+    template = "app/search.html"
 
-        project_subjects = Subject.objects.all()
-        documents = DocumentFile.objects.all()
+    return render(request, template_name=template, context=context)
 
-        selected_subjects = []
-        if search_request:
-            queue = SearchQuery(search_request)
-            search_headline = SearchHeadline("document_data", queue)
+    # if form.is_valid():
+    #     query = form.cleaned_data.get('query')
+    #     subjects = form.cleaned_data.get('subjects')
+    #     brands = form.cleaned_data.get('languages')
 
-            documents = (
-                DocumentFile.objects.annotate(rank=SearchRank("search_vector", queue))
-                .select_related("institution")
-                .annotate(search_headline=search_headline)
-                .filter(search_vector=queue)
-                # .only('title', 'description', 'institution__name','institution__abbreviation', 'search_headline', 'rank')
-                .order_by("-rank")
-            )
+    # context = {
+    # #         'form': form,
+    # #         "project_subjects": Subject.objects.all(),
+    # #         "project_languages": Language.objects.all(),
+    # #         "feature_flag": feature_flag,
+    # #     }
 
-        # if subjects_request:
-        #     # Split the subjects_request string into a list of subject IDs
-        #     subject_ids = subjects_request.split(',')
-        #     print(subject_ids)
-        #     # Filter documents by those subject IDs
-        #     documents = documents.filter(subjects__id__in=subject_ids).distinct()
+    # else:
+    #     f = DocumentFileFilter(request.GET, queryset=DocumentFile.objects.all())
+    #
+    #     context = {
+    #         "filter": f.qs,
+    #     }
+    #     template = "app/search.html"
+    #
+    #     return render(request, template_name=template, context=context)
 
-        if subjects_request:
-            subject_ids = subjects_request.split(",")
-            documents = documents.filter(subjects__id__in=subject_ids).distinct()
 
-            # Query the Subject model to get the names of the selected subjects
-            selected_subjects = Subject.objects.filter(id__in=subject_ids).values_list(
-                "name", flat=True
-            )
+# if request.method == "POST":
+#     search_request = request.POST.get("search")
+#     subjects_request = request.POST.getlist("subjects[]")  # Adjusted to handle multiple selections
+#     languages_request = request.POST.getlist("languages[]")  # Adjusted to handle multiple selections
+#
+#     project_subjects = Subject.objects.all()
+#     project_languages = Language.objects.all()
+#     documents = DocumentFile.objects.all()
+#
+#     selected_subjects = []
+#     selected_languages = []
+#
+#     if search_request:
+#         queue = SearchQuery(search_request)
+#         search_headline = SearchHeadline("document_data", queue)
+#
+#         documents = (
+#             DocumentFile.objects.annotate(rank=SearchRank("search_vector", queue))
+#             .select_related("institution")
+#             .annotate(search_headline=search_headline)
+#             .filter(search_vector=queue)
+#             .order_by("-rank")
+#         )
+#
+#     if subjects_request:
+#         subject_ids = subjects_request
+#         documents = documents.filter(subjects__id__in=subject_ids).distinct()
+#
+#         # Query the Subject model to get the names of the selected subjects
+#         selected_subjects = Subject.objects.filter(id__in=subject_ids).values_list("name", flat=True)
+#
+#         print(selected_subjects)
+#
+#     if languages_request:
+#         subject_ids = subjects_request
+#         documents = documents.filter(subjects__id__in=subject_ids).distinct()
+#
+#         # Query the Subject model to get the names of the selected subjects
+#         selected_languages = Subject.objects.filter(id__in=subject_ids).values_list("name", flat=True)
+#
+#         print(selected_languages)
+#
+#     paginator = Paginator(documents, 10) if documents else None
+#     page_number = request.GET.get("page")
+#     page_obj = paginator.get_page(page_number) if paginator else None
+#
+#     feature_flag = os.getenv("FEATURE_FLAG", False)
+#
+#     template = "app/search.html"
+#     context = {
+#         'form': form,
+#         "search": search_request,
+#         "documents": page_obj,
+#         "project_languages": project_languages,
+#         "project_subjects": project_subjects,
+#         "selected_subjects": selected_subjects,
+#         "current_page": "search",
+#         "document_count": len(documents) if documents else 0,
+#         "feature_flag": feature_flag,
+#     }
+#
+#     return render(request, template_name=template, context=context)
+# else:
+#     feature_flag = os.getenv("FEATURE_FLAG", False)
+#     template = "app/search.html"
+#     context = {
+#         'form': form,
+#         "project_subjects": Subject.objects.all(),
+#         "project_languages": Language.objects.all(),
+#         "feature_flag": feature_flag,
+#     }
+#     return render(request, template_name=template, context=context)
 
-        else:
-            documents = None
-
-        # Create a Paginator instance with the documents and the number of items per page
-        paginator = Paginator(documents, 10) if documents else None  # Show 10 documents per page
-
-        # Get the page number from the request's GET parameters
-        page_number = request.GET.get("page")
-
-        # Use the get_page method to get the Page object for that page number
-        page_obj = paginator.get_page(page_number) if paginator else None
-
-        feature_flag = os.getenv("FEATURE_FLAG", False)
-
-        template = "app/search.html"
-        context = {
-            "search": search_request,
-            "documents": page_obj,
-            "project_subjects": project_subjects,
-            "selected_subjects": selected_subjects,
-            "current_page": "search",
-            "document_count": len(documents) if documents else 0,
-            "feature_flag": feature_flag,
-        }
-
-        return render(request, template_name=template, context=context)
-
-    else:
-        feature_flag = os.getenv("FEATURE_FLAG", False)
-        template = "app/search.html"
-        context = {
-            "project_subjects": Subject.objects.all(),
-            "feature_flag": feature_flag,
-        }
-        return render(request, template_name=template, context=context)
+# def search(request):
+#     # project_subjects = Subject.objects.all()
+#     if request.method == "POST":
+#         search_request = request.POST.get("search")
+#         # subjects_request = request.POST.get("subjects")
+#         subjects_request = request.POST.getlist('subjects[]')
+#
+#         # print(search_request)
+#         print(subjects_request)
+#
+#         # breakpoint()
+#
+#         project_subjects = Subject.objects.all()
+#         documents = DocumentFile.objects.all()
+#
+#         selected_subjects = []
+#         if search_request:
+#             queue = SearchQuery(search_request)
+#             search_headline = SearchHeadline("document_data", queue)
+#
+#             documents = (
+#                 DocumentFile.objects.annotate(rank=SearchRank("search_vector", queue))
+#                 .select_related("institution")
+#                 .annotate(search_headline=search_headline)
+#                 .filter(search_vector=queue)
+#                 # .only('title', 'description', 'institution__name','institution__abbreviation', 'search_headline', 'rank')
+#                 .order_by("-rank")
+#             )
+#
+#         # if subjects_request:
+#         #     # Split the subjects_request string into a list of subject IDs
+#         #     subject_ids = subjects_request.split(',')
+#         #     print(subject_ids)
+#         #     # Filter documents by those subject IDs
+#         #     documents = documents.filter(subjects__id__in=subject_ids).distinct()
+#
+#         # if subjects_request:
+#         #     subject_ids = subjects_request.split(",")
+#         #     documents = documents.filter(subjects__id__in=subject_ids).distinct()
+#         #
+#         #     # Query the Subject model to get the names of the selected subjects
+#         #     selected_subjects = Subject.objects.filter(id__in=subject_ids).values_list(
+#         #         "name", flat=True
+#         #     )
+#
+#         if subjects_request:
+#             subject_ids = subjects_request  # Already a list, no need to split
+#             documents = documents.filter(subjects__id__in=subject_ids).distinct()
+#
+#             # Query the Subject model to get the names of the selected subjects
+#             selected_subjects = Subject.objects.filter(id__in=subject_ids).values_list("name", flat=True)
+#
+#         else:
+#             documents = None
+#
+#         # Create a Paginator instance with the documents and the number of items per page
+#         paginator = Paginator(documents, 10) if documents else None  # Show 10 documents per page
+#
+#         # Get the page number from the request's GET parameters
+#         page_number = request.GET.get("page")
+#
+#         # Use the get_page method to get the Page object for that page number
+#         page_obj = paginator.get_page(page_number) if paginator else None
+#
+#         feature_flag = os.getenv("FEATURE_FLAG", False)
+#
+#         template = "app/search.html"
+#         context = {
+#             "search": search_request,
+#             "documents": page_obj,
+#             "project_subjects": project_subjects,
+#             "selected_subjects": selected_subjects,
+#             "current_page": "search",
+#             "document_count": len(documents) if documents else 0,
+#             "feature_flag": feature_flag,
+#         }
+#
+#         return render(request, template_name=template, context=context)
+#
+#     else:
+#         feature_flag = os.getenv("FEATURE_FLAG", False)
+#         template = "app/search.html"
+#         context = {
+#             "project_subjects": Subject.objects.all(),
+#             "feature_flag": feature_flag,
+#         }
+#         return render(request, template_name=template, context=context)
