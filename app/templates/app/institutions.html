@@ -10,7 +10,7 @@
         <div class="card uni-card">
             <div class="row">
                 <div class="col-sm-6 left-col">
-                    <h5 class="card-title">{{ institution.name }}</h5>
+                    <h5 class="card-title"><a href="{% url 'institution_detail' institution.id %}">{{ institution.name }}</a></h5>
                     <p class="card-text">
                         {{ institution.abbreviation }}
                     </p>
