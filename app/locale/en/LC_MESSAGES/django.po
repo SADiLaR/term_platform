@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-21 11:54+0200\n"
+"POT-Creation-Date: 2024-07-01 13:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,439 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: app/urls.py:27
+msgid "SADiLaR Administration"
+msgstr ""
+
+#: app/urls.py:28
+msgid "SADiLaR Site Admin Portal"
+msgstr ""
+
+#: app/views.py:36
+#, python-brace-format
+msgid "Since {year}"
+msgstr ""
+
+#: app/views.py:38
+#, python-brace-format
+msgid "Until {year}"
+msgstr ""
+
+#: app/views.py:86
+msgid "Multilingual"
+msgstr ""
+
+#: app/views.py:91
+msgid "Multiple subjects"
+msgstr ""
+
+#: general/apps.py:8
+msgid "General"
+msgstr ""
+
+#: general/models.py:10 general/models.py:34 general/models.py:52
+#: general/models.py:72
+msgid "name"
+msgstr ""
+
+#: general/models.py:11 general/models.py:112
+msgid "description"
+msgstr ""
+
+#: general/models.py:12 general/models.py:36 general/models.py:113
+msgid "URL"
+msgstr ""
+
+#: general/models.py:13 general/models.py:38
+msgid "logo"
+msgstr ""
+
+#: general/models.py:14
+msgid "start date"
+msgstr ""
+
+#: general/models.py:15
+msgid "end date"
+msgstr ""
+
+#: general/models.py:17 general/models.py:140
+msgid "institution"
+msgstr ""
+
+#: general/models.py:19 general/models.py:142
+msgid "subjects"
+msgstr ""
+
+#: general/models.py:20 general/models.py:143
+msgid "languages"
+msgstr ""
+
+#: general/models.py:26
+msgid "Project"
+msgstr ""
+
+#: general/models.py:27 templates/app/institution_detail.html:33
+#: templates/app/project_detail.html:8 templates/base.html:51
+msgid "Projects"
+msgstr ""
+
+#: general/models.py:35
+msgid "abbreviation"
+msgstr ""
+
+#: general/models.py:37
+msgid "email"
+msgstr ""
+
+#: general/models.py:44 templates/app/projects.html:35
+msgid "Institution"
+msgstr ""
+
+#: general/models.py:45 templates/app/home.html:56
+#: templates/app/institution_detail.html:8 templates/base.html:45
+msgid "Institutions"
+msgstr ""
+
+#: general/models.py:56
+msgid "The 2 or 3 letter code from ISO 639."
+msgstr ""
+
+#: general/models.py:57
+msgid "ISO code"
+msgstr ""
+
+#: general/models.py:64 templates/app/projects.html:24
+msgid "Language"
+msgstr ""
+
+#: general/models.py:65 templates/app/project_detail.html:66
+msgid "Languages"
+msgstr ""
+
+#: general/models.py:78 templates/app/projects.html:13
+msgid "Subject"
+msgstr ""
+
+#: general/models.py:79 templates/app/project_detail.html:52
+msgid "Subjects"
+msgstr ""
+
+#: general/models.py:91
+msgid "All rights reserved"
+msgstr ""
+
+#: general/models.py:92
+msgid "No rights reserved"
+msgstr ""
+
+#: general/models.py:93
+msgid "Creative Commons Attribution"
+msgstr ""
+
+#: general/models.py:94
+msgid "Creative Commons Attribution-ShareAlike"
+msgstr ""
+
+#: general/models.py:95
+msgid "Creative Commons Attribution-NonCommercial"
+msgstr ""
+
+#: general/models.py:96
+msgid "Creative Commons Attribution-NonCommercial-ShareAlike"
+msgstr ""
+
+#: general/models.py:99
+msgid ""
+"<a\n"
+"              href=\"https://creativecommons.org/share-your-work/cclicenses/"
+"\"\n"
+"              rel=\"noreferrer\"\n"
+"              target=\"_blank\"\n"
+"          >\n"
+"          More information about Creative Commons licenses.\n"
+"        </a>"
+msgstr ""
+
+#: general/models.py:107
+msgid "Glossary"
+msgstr ""
+
+#: general/models.py:107
+msgid "Policy"
+msgstr ""
+
+#: general/models.py:111
+msgid "title"
+msgstr ""
+
+#: general/models.py:118
+msgid "PDF files up to 10MB are allowed."
+msgstr ""
+
+#: general/models.py:119
+msgid "uploaded file"
+msgstr ""
+
+#: general/models.py:121
+msgid "available"
+msgstr ""
+
+#: general/models.py:127
+msgid "license"
+msgstr ""
+
+#: general/models.py:132
+msgid "This input will auto-populate."
+msgstr ""
+
+#: general/models.py:133
+msgid "MIME type"
+msgstr ""
+
+#: general/models.py:136
+msgid "document category"
+msgstr ""
+
+#: general/models.py:138
+msgid "document data"
+msgstr ""
+
+#: general/models.py:151
+msgid "Document"
+msgstr ""
+
+#: general/models.py:152 templates/app/institution_detail.html:48
+msgid "Documents"
+msgstr ""
+
+#: templates/400.html:7
+msgid "Bad Request (400)"
+msgstr ""
+
+#: templates/400.html:8
+msgid "The server cannot process the request due to client error."
+msgstr ""
+
+#: templates/400.html:9 templates/403.html:9 templates/404.html:9
+#: templates/500.html:9
+msgid "Go to home"
+msgstr ""
+
+#: templates/403.html:7
+msgid "Forbidden (403)"
+msgstr ""
+
+#: templates/403.html:8
+msgid "You do not have permission to access on this server."
+msgstr ""
+
+#: templates/404.html:7
+msgid "Not Found (404)"
+msgstr ""
+
+#: templates/404.html:8
+msgid "The requested resource was not found on this server."
+msgstr ""
+
+#: templates/500.html:7
+msgid "Internal Server Error (500)"
+msgstr ""
+
+#: templates/500.html:8
+msgid ""
+"The server encountered an unexpected condition that prevented it from "
+"fulfilling the request."
+msgstr ""
+
 #: templates/admin/base_site.html:11
 msgid "Django site admin"
+msgstr ""
+
+#: templates/app/home.html:11
+msgid "Welcome"
+msgstr ""
+
+#: templates/app/home.html:13
+msgid ""
+"The South African Centre for Digital Language Resources (SADiLaR) is a "
+"national research\n"
+"                    infrastructure that aims to ensure a digital future for "
+"our official languages.\n"
+"                    It supports researchers in the fields of digital "
+"humanities and social sciences and also assists\n"
+"                    institutions in their language implementation plans."
+msgstr ""
+
+#: templates/app/home.html:17
+msgid "Read more about SADiLaR."
+msgstr ""
+
+#: templates/app/home.html:20
+msgid ""
+"SADiLaR conducted an audit at South African public higher education "
+"institutions that highlighted\n"
+"                    areas that require attention."
+msgstr ""
+
+#: templates/app/home.html:22
+msgid "Read the report."
+msgstr ""
+
+#: templates/app/home.html:25
+msgid ""
+"This platform highlights previous and current work at institutions to "
+"encourage collaboration and\n"
+"                    disseminate resources."
+msgstr ""
+
+#: templates/app/home.html:36 templates/app/search.html:18
+#: templates/base.html:39
+msgid "Search"
+msgstr ""
+
+#: templates/app/home.html:38
+msgid "This platforms hosts terminology and other useful language resources."
+msgstr ""
+
+#: templates/app/home.html:41
+msgid ""
+"Search for a term or topic you are interested in.\n"
+"                        (Functionality coming soon.)"
+msgstr ""
+
+#: templates/app/home.html:46 templates/app/search.html:11
+msgid "Search a term"
+msgstr ""
+
+#: templates/app/home.html:58
+msgid "Browse information by institution."
+msgstr ""
+
+#: templates/app/home.html:61
+msgid "View"
+msgstr ""
+
+#: templates/app/institution_detail.html:44
+msgid "No projects available for this institution."
+msgstr ""
+
+#: templates/app/institution_detail.html:59
+msgid "No documents available for this institution."
+msgstr ""
+
+#: templates/app/institutions.html:18
+msgid "no applicable project"
+msgstr ""
+
+#: templates/app/institutions.html:20
+#, python-format
+msgid "%(project_count)s applicable project"
+msgid_plural "%(project_count)s applicable projects"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/app/institutions.html:25
+msgid "Profile completion:"
+msgstr ""
+
+#: templates/app/project_detail.html:25
+msgid "Start Date:"
+msgstr ""
+
+#: templates/app/project_detail.html:32
+msgid "End Date:"
+msgstr ""
+
+#: templates/app/project_detail.html:41
+#, python-format
+msgid "%(project_name)s logo"
+msgstr ""
+
+#: templates/app/projects.html:9
+msgid "Filter:"
+msgstr ""
+
+#: templates/app/projects.html:44
+msgid "Apply"
+msgstr ""
+
+#: templates/app/projects.html:45
+msgid "Reset"
+msgstr ""
+
+#: templates/app/search.html:23
+msgid "Results:"
+msgstr ""
+
+#: templates/app/search.html:31
+msgid "Title:"
+msgstr ""
+
+#: templates/app/search.html:35
+msgid "Institution:"
+msgstr ""
+
+#: templates/app/search.html:39
+msgid "Headline:"
+msgstr ""
+
+#: templates/app/search.html:43
+msgid "File:"
+msgstr ""
+
+#: templates/app/search.html:47
+msgid "License:"
+msgstr ""
+
+#: templates/app/search.html:51
+msgid "Mime Type:"
+msgstr ""
+
+#: templates/app/search.html:55
+msgid "Rank:"
+msgstr ""
+
+#: templates/app/search.html:65
+msgid "first"
+msgstr ""
+
+#: templates/app/search.html:72
+msgid "next"
+msgstr ""
+
+#: templates/app/search.html:73
+msgid "last"
+msgstr ""
+
+#: templates/app/search.html:81
+msgid "Functionality of this page coming soon"
+msgstr ""
+
+#: templates/base.html:7 templates/base.html:8
+msgid "SADiLaR"
+msgstr ""
+
+#: templates/base.html:9
+msgid "South African Centre for Digital Language Resources"
+msgstr ""
+
+#: templates/base.html:33
+msgid "Home"
+msgstr ""
+
+#: templates/base.html:55
+msgid "Admin"
+msgstr ""
+
+#: templates/base.html:88
+msgid "Change language"
+msgstr ""
+
+#: templates/base_error.html:9
+msgid "Error"
+msgstr ""
+
+#: users/apps.py:8
+msgid "Users"
 msgstr ""
