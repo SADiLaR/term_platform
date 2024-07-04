@@ -30,6 +30,19 @@ About the project:
 
 ---
 
+### Email Settings in Development
+
+.env file
+
+* EMAIL_HOST='sandbo x.smtp.mailtrap.io' 
+* EMAIL_HOST_USER='*********'
+* EMAIL_HOST_PASSWORD='******'
+* EMAIL_PORT='2525'
+* EMAIL_BACKEND_CONSOLE=True
+
+By default, the email backend is set to console, so you can see the email in the console.
+To send an email, you need to set the EMAIL_BACKEND_CONSOLE to False.
+
 ### Plugins installed
 
 #### Django Simple History
@@ -58,3 +71,8 @@ Docker Volumes for production:
 * /logging
 * /pdf_uploads
 * /pdf_upload_completed
+
+### Email Settings in Production
+
+.env file
+* EMAIL_BACKEND_CONSOLE=False

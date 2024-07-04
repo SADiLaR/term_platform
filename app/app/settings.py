@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "users",
     "general",
     "simple_history",
+    "accounts",
 ]
 
 # Add django-extensions to the installed apps if DEBUG is True
@@ -125,6 +126,20 @@ if DEBUG:
         "host.docker.internal",
     ]
 
+# Email settings
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = os.environ.get("EMAIL_PORT")
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS")
+
+email_backend_env = os.environ.get("EMAIL_BACKEND_CONSOLE", "False").lower() in ["true", "1", "yes"]
+
+if DEBUG and email_backend_env:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

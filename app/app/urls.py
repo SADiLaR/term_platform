@@ -18,6 +18,7 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.urls import include, path
 from django.utils.translation import gettext_lazy as _
 
@@ -39,6 +40,8 @@ urlpatterns = [
     path("subject/<int:pk>/", views.subject_detail, name="subject_detail"),
     path("search/", views.search, name="search"),
     path("i18n/", include("django.conf.urls.i18n")),
+    path("accounts/", include("accounts.urls")),
+    path("accounts/", include("django.contrib.auth.urls")),
 ]
 
 if settings.DEBUG:
