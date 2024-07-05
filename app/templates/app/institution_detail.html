@@ -7,9 +7,8 @@
 <div class="detail">
     <p><a href="{% url 'institutions' %}">{% trans "Institutions" %}</a> > {{ institution.name }}</p>
 
-    <div class="detail-row">
-
-        <div class="col-sm-6 detail-left-col">
+    <div class="detail-row row">
+        <div class="col-12 {% if institution.logo %}col-md-6{% else %}col-md-12{% endif %} detail-left-col">
             <h1>{{ institution.name }} ({{ institution.abbreviation }})</h1>
             {% if institution.url %}
                 <p><a href="{{ institution.url }}">{{ institution.url }}</a></p>
@@ -19,17 +18,15 @@
             {% endif %}
         </div>
 
-        <div class="col-sm-6 detail-right-col">
-            {% if institution.logo %}
-                <img src="{{ institution.logo.url }}" alt="{{ institution.name }}" class="project-logo">
-            {% endif %}
+        {% if institution.logo %}
+        <div class="col-12 col-md-6 detail-right-col">
+            <img src="{{ institution.logo.url }}" alt="{{ institution.name }}" class="project-logo">
         </div>
+        {% endif %}
     </div>
 
-    <br/>
-
-    <div class="detail-row">
-        <div class="col-sm-6 detail-col">
+    <div class="detail-row row">
+        <div class="col-md-6 col-12 detail-col">
             <h2>{% trans "Projects" %}</h2>
             {% if projects %}
             <ul>
@@ -44,7 +41,7 @@
                 <p>{% trans "No projects available for this institution." %}</p>
             {% endif %}
         </div>
-        <div class="col-sm-6 detail-col">
+        <div class="col-md-6 col-12 detail-col">
             <h2>{% trans "Documents" %}</h2>
             {% if documents %}
             <ul>
@@ -60,7 +57,6 @@
             {% endif %}
         </div>
     </div>
-
 </div>
 
 {% endblock content %}

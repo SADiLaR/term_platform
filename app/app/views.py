@@ -61,7 +61,7 @@ def projects(request):
     projects = (
         Project.objects.select_related("institution")
         .prefetch_related("subjects", "languages")
-        .all()
+        .order_by("name")
     )
 
     if subject_id:
@@ -71,9 +71,9 @@ def projects(request):
     if institution_id:
         projects = projects.filter(institution__id=institution_id)
 
-    subjects = Subject.objects.all()
-    languages = Language.objects.all()
-    institutions = Institution.objects.all()
+    subjects = Subject.objects.order_by("name")
+    languages = Language.objects.order_by("name")
+    institutions = Institution.objects.order_by("name")
 
     project_data = []
     for project in projects:
