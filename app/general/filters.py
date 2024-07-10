@@ -34,7 +34,7 @@ class DocumentFileFilter(django_filters.FilterSet):
 
     def filter_search(self, queryset, name, value):
         if value:
-            queue = SearchQuery(value)
+            queue = SearchQuery(value.strip())
             search_rank = SearchRank(F("search_vector"), queue)
             search_headline = SearchHeadline("document_data", queue)
             queryset = (

@@ -1,4 +1,3 @@
-# from pprint import pprint
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Count
 from django.http import HttpResponse
@@ -229,6 +228,10 @@ def institutions(request):
 
 
 def search(request):
+    page_number = request.GET.get("page", "1")
+    if not page_number.isdigit():
+        page_number = "1"
+
     f = DocumentFileFilter(request.GET, queryset=DocumentFile.objects.all())
 
     template = "app/search.html"
@@ -237,8 +240,6 @@ def search(request):
 
     print(paginator)
 
-    page_number = request.GET.get("page")
-
     try:
         page_obj = paginator.page(page_number)
     except PageNotAnInteger:
@@ -246,7 +247,6 @@ def search(request):
     except EmptyPage:
         page_obj = paginator.page(paginator.num_pages)
 
-        print(page_obj)
     # Update the context with the page object
     context = {
         "search_results": paginator.page(page_obj.number),
