@@ -46,9 +46,9 @@ class DocumentFileFilter(django_filters.FilterSet):
                 .defer("document_data")
                 .select_related("institution")
                 .filter(search_vector=queue)
-                .order_by("-rank")
+                .order_by("-rank", "id")
             )
             return queryset
 
         else:
-            return ""
+            return queryset

@@ -236,7 +236,9 @@ def search(request):
 
     template = "app/search.html"
 
-    paginator = Paginator(f.qs, 5)  # 5 documents per page
+    ordered_queryset = f.qs.order_by("id")
+
+    paginator = Paginator(ordered_queryset, 5)  # 5 documents per page
 
     try:
         page_obj = paginator.page(page_number)
