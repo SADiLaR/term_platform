@@ -238,8 +238,6 @@ def search(request):
 
     paginator = Paginator(f.qs, 5)  # 5 documents per page
 
-    print(paginator)
-
     try:
         page_obj = paginator.page(page_number)
     except PageNotAnInteger:
@@ -247,7 +245,6 @@ def search(request):
     except EmptyPage:
         page_obj = paginator.page(paginator.num_pages)
 
-    # Update the context with the page object
     context = {
         "search_results": paginator.page(page_obj.number),
         "filter": f,

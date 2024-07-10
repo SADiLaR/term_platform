@@ -37,6 +37,7 @@ class DocumentFileFilter(django_filters.FilterSet):
             queue = SearchQuery(value.strip())
             search_rank = SearchRank(F("search_vector"), queue)
             search_headline = SearchHeadline("document_data", queue)
+
             queryset = (
                 queryset.annotate(
                     rank=search_rank,
