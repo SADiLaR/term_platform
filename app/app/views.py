@@ -229,12 +229,9 @@ def institutions(request):
 
 
 def search(request):
-    # f = DocumentFileFilter(request.GET, queryset=DocumentFile.objects.all().defer("document_data"))
     f = DocumentFileFilter(request.GET, queryset=DocumentFile.objects.all())
 
     template = "app/search.html"
-
-    # print(f.qs)
 
     paginator = Paginator(f.qs, 5)  # 5 documents per page
 
@@ -243,13 +240,10 @@ def search(request):
     page_number = request.GET.get("page")
 
     try:
-        # Get the page
         page_obj = paginator.page(page_number)
     except PageNotAnInteger:
-        # If page is not an integer, deliver first page
         page_obj = paginator.page(1)
     except EmptyPage:
-        # If page is out of range (e.g., 9999), deliver last page of results
         page_obj = paginator.page(paginator.num_pages)
 
         print(page_obj)

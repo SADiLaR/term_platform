@@ -9,6 +9,7 @@ from general.models import DocumentFile, Institution, Language, Subject
 
 class DocumentFileFilter(django_filters.FilterSet):
     search = django_filters.CharFilter(method="filter_search", label="Search")
+
     institution = ModelMultipleChoiceFilter(
         queryset=Institution.objects.all(), widget=forms.CheckboxSelectMultiple
     )
@@ -35,10 +36,11 @@ class DocumentFileFilter(django_filters.FilterSet):
         if value:
             queue = SearchQuery(value)
             search_rank = SearchRank(F("search_vector"), queue)
-
+            search_headline = SearchHeadline("document_data", queue)
             queryset = (
                 queryset.annotate(
                     rank=search_rank,
+                    search_headline=search_headline,
                 )
                 .defer("document_data")
                 .select_related("institution")
