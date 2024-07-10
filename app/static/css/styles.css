@@ -344,12 +344,20 @@ html {
   font-size: 0.875rem;
 }
 
+/*Accounts*/
+.user-account-body {
+  margin: 30px;
+}
 
+.login-form-group .form-control {
+    width: 100%;
+    max-width: 500px;
+}
 
 /*Error pages*/
-.error-card {
+.body-card {
     border-color: var(--primary-red);
-    margin: 0 10px 0 10px;
+    margin: 10px;
     width: 100%;
 }
 
