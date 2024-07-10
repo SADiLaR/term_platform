@@ -1,22 +1,76 @@
 {% extends "base.html" %}
+{% load static %}
+{% load i18n %}
 
-{% block title %}Log In{% endblock %}
+{% block title %}{% trans "Log In" %}{% endblock %}
 
 {% block content %}
-    <div class="container">
-      <h2>Log In</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit">Log In</button>
-    </form>
+<div class="container">
+    <div class="section mt-3 mb-3">
+        <div class="card body-card">
+            <div class="user-account-body">
+                <h2>{% trans "Log In" %}</h2>
+                <br/>
+                <form method="post" class="text-left">
+                    {% csrf_token %}
 
-    <br>
-    <hr>
-    <form method="post" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button type="submit">logout</button>
-    </form>
+                    <!-- Username Field -->
+                    <div class="form-group login-form-group mb-4">
+                        <label for="id_username">{% trans "Username:" %}</label>
+                        <input type="text" name="username" id="id_username" class="form-control" placeholder="{% trans 'Username' %}" value="{{ form.username.value|default:'' }}">
+                        {% if form.username.help_text %}
+                            <small class="form-text text-muted">{{ form.username.help_text }}</small>
+                        {% endif %}
+                        {% if form.username.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.username.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="form-group login-form-group mb-1">
+                        <label for="id_password">{% trans "Password:" %}</label>
+                        <input type="password" name="password" id="id_password" class="form-control" placeholder="{% trans 'Password' %}" value="{{ form.password.value|default:'' }}">
+                        {% if form.password.help_text %}
+                            <small class="form-text text-muted">{{ form.password.help_text }}</small>
+                        {% endif %}
+                        {% if form.password.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.password.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Log In Button and Forgot Password -->
+                    <div class="form-group">
+                        <a href="{% url 'password_reset' %}" class="d-block mb-2">{% trans "Forgot Password?" %}</a>
+
+                        {% if form.non_field_errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.non_field_errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <button type="submit" class="btn btn-primary">{% trans "Log In" %}</button>
+                    </div>
+                </form>
+
+                <br>
+                <hr>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <p>{% trans "Don't have an account?" %} <a href="{% url 'accounts_register' %}">{% trans "Create one" %}</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
+</div>
 {% endblock %}
