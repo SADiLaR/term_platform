@@ -611,3 +611,12 @@ html {
       display: flex;
   }
 }
+
+/*Search Css*/
+.checkbox-container {
+    cursor: pointer;
+    max-height: 130px; /* Adjust based on your line-height and padding to show only 4 rows */
+    overflow-y: auto; /* Enable vertical scrollbar when content overflows */
+    border: 1px solid #ced4da; /* Bootstrap's form control border color */
+    border-radius: 0.25rem; /* Bootstrap's form control border radius */
+}
