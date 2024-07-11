@@ -7,3 +7,4 @@ whitenoise
 pillow
 python-magic
 pypdf
+django-filter
