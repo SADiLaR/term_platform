@@ -3,84 +3,153 @@
 {% load i18n %}
 
 {% block content %}
-
 <div class="body">
     <div class="section mt-3 mb-3">
-        <div class="card content-card">
+        <div class="card content-card p-2">
             <div class="card-body">
                 <h5 class="card-title">{% trans "Search a term" %}</h5>
-                {% if feature_flag == "search_feature" %}
-                    {#  test section start#}
-                    <form>
-                        <div class="input-group mb-3">
-                            <input type="search" class="form-control" name="q" placeholder="Search">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary">{% trans "Search" %}</button>
+                <form method="get" class="container">
+                    <input type="search" name="{{ filter.form.search.name }}" placeholder="{% trans 'Search...' %}"
+                           class="form-control search-input"
+                           value="{{ request.GET.search|default_if_none:'' }}">
+                    <br>
+                    <input type="submit" class="btn btn-success float-left"/>
+                </form>
+                <br>
+                <br>
+                <div class="container">
+                    {% for document in search_results %}
+                        <div>
+                            <ul>
+                                <li>
+                                    <span class="mr-5 text-primary"><b>{% trans "Title:" %}</b></span>
+                                    <span>{{ document.title }}</span>
+                                </li>
+                                <li class="mb-2">
+                                    <span class="mr-5"><b>{% trans "Institution:" %}</b></span>
+                                    <span>{{ document.institution }}</span>
+                                </li>
+                                <li class="mb-2">
+                                    <span class="mr-5"><b>{% trans "Headline:" %}</b></span>
+                                    <span>{{ document.search_headline|safe }}</span>
+                                </li>
+                                <li>
+                                    <span class="mr-5"><b>{% trans "File:" %}</b></span>
+                                    <span>{{ document.uploaded_file }}</span>
+                                </li>
+                                <li>
+                                    <span class="mr-5"><b>{% trans "License:" %}</b></span>
+                                    <span>{{ document.license }}</span>
+                                </li>
+                                <li>
+                                    <span class="mr-5"><b>{% trans "License:" %}</b></span>
+                                    <span>{{ document.document_type }}</span>
+                                </li>
+                                <li>
+                                    <span class="mr-5"><b>{% trans "Mime Type:" %}</b></span>
+                                    <span>{{ document.mime_type }}</span>
+                                </li>
+                                <li class="mt-2">
+                                    <span class="mr-5"><b>{% trans "Rank:" %}</b></span>
+                                    <span><i>{{ document.rank }}</i></span>
+                                </li>
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="container">
+                <hr>
+                <div class="pagination ">
+                    {% if documents.has_previous %}
+                        <a href="{{ search_params }}&page=1">&laquo; first</a>
+                        <a href="{{ search_params }}&page={{ documents.previous_page_number }}">&lt; previous</a>
+                    {% endif %}
+                    <span class="current">
+                Page {{ documents.number }} of {{ documents.paginator.num_pages }}.
+            </span>
+                    {% if documents.has_next %}
+                        <a href="{{ search_params }}&page={{ documents.next_page_number }}">next &gt;</a>
+                        <a href="{{ search_params }}&page={{ documents.paginator.num_pages }}">last
+                            &raquo;</a>
+                    {% endif %}
+                </div>
+                <hr>
+            </div>
+            <form method="get" class="container">
+                <input type="search" name="{{ filter.form.search.name }}" placeholder="{% trans 'Search...' %}"
+                       class="form-control search-input"
+                       value="{{ request.GET.search|default_if_none:'' }}">
+                <br>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="id_subjects">Institution</label>
+                            <div class="checkbox-container">
+                                {% for checkbox in filter.form.institution %}
+                                    <div class="form-check">
+                                        {{ checkbox.tag }}
+                                        <label class="form-check-label"
+                                               for="{{ checkbox.id_for_label }}">
+                                            {{ checkbox.choice_label }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
                             </div>
                         </div>
-                    </form>
-                    <div class="mb-3">
-                        <span class="mr-5"><b>{% trans "Results:" %}</b></span>
-                        <span>{{ documents|length }}</span>
                     </div>
-                    <div>
-                        {% for document in documents %}
-                            <div>
-                                <ul>
-                                    <li>
-                                        <span class="mr-5 text-primary"><b>{% trans "Title:" %}</b></span>
-                                        <span>{{ document.title }}</span>
-                                    </li>
-                                    <li class="mb-2">
-                                        <span class="mr-5"><b>{% trans "Institution:" %}</b></span>
-                                        <span>{{ document.institution }}</span>
-                                    </li>
-                                    <li class="mb-2">
-                                        <span class="mr-5"><b>{% trans "Headline:" %}</b></span>
-                                        <span>{{ document.search_headline|safe }}</span>
-                                    </li>
-                                    <li>
-                                        <span class="mr-5"><b>{% trans "File:" %}</b></span>
-                                        <span>{{ document.uploaded_file }}</span>
-                                    </li>
-                                    <li>
-                                        <span class="mr-5"><b>{% trans "License:" %}</b></span>
-                                        <span>{{ document.license }}</span>
-                                    </li>
-                                    <li>
-                                        <span class="mr-5"><b>{% trans "Mime Type:" %}</b></span>
-                                        <span>{{ document.mime_type }}</span>
-                                    </li>
-                                    <li class="mt-2">
-                                        <span class="mr-5"><b>{% trans "Rank:" %}</b></span>
-                                        <span><i>{{ document.rank }}</i></span>
-                                    </li>
-                                </ul>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="id_subjects">Document Type</label>
+                            <div class="checkbox-container">
+                                {% for checkbox in filter.form.document_type %}
+                                    <div class="form-check">
+                                        {{ checkbox.tag }}
+                                        <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                            {{ checkbox.choice_label }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
                             </div>
-                        {% endfor %}
+                        </div>
                     </div>
-                    <div class="pagination">
-                        <span class="step-links">
-                            {% if documents.has_previous %}
-                                <a href="?page=1">&laquo; {% trans "first" %}</a>
-                                <a href="?page={{ documents.previous_page_number }}">{% trans "previous" }</a>
-                            {% endif %}
-                            <span class="current">
-                                Page {{ documents.number }} of {{ documents.paginator.num_pages }}.
-                            </span>
-                            {% if documents.has_next %}
-                                <a href="?page={{ documents.next_page_number }}">{% trans "next" %}</a>
-                                <a href="?page={{ documents.paginator.num_pages }}">{% trans "last" %} &raquo;</a>
-                            {% endif %}
-                        </span>
-                        <hr>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="id_subjects">Subjects</label>
+                            <div class="checkbox-container">
+                                {% for checkbox in filter.form.subjects %}
+                                    <div class="form-check">
+                                        {{ checkbox.tag }}
+                                        <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                            {{ checkbox.choice_label }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
                     </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="id_subjects">Languages</label>
+                            <div class="checkbox-container">
+                                {% for checkbox in filter.form.languages %}
+                                    <div class="form-check">
+                                        {{ checkbox.tag }}
+                                        <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                            {{ checkbox.choice_label }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
                     </div>
-                    {#  test section end#}
-                {% else %}
-                    <p>{% trans "Functionality of this page coming soon" %}</p>
-                {% endif %}
+                </div>
+                <br>
+                <input type="submit" class="btn btn-success float-left"/>
+                <br>
+            </form>
         </div>
+        <br>
     </div>
 </div>
 

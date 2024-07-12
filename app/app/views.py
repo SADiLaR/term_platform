@@ -1,12 +1,11 @@
-import os
-
-from django.contrib.postgres.search import SearchHeadline, SearchQuery, SearchRank
-from django.core.paginator import Paginator
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Count
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
+from django.utils.http import urlencode
 from django.utils.translation import gettext as _
 
+from general.filters import DocumentFileFilter
 from general.models import DocumentFile, Institution, Language, Project, Subject
 
 
@@ -230,39 +229,40 @@ def institutions(request):
 
 
 def search(request):
-    q = request.GET.get("q")
+    page_number = request.GET.get("page", "1")
+    if not page_number.isdigit():
+        page_number = "1"
 
-    if q:
-        queue = SearchQuery(q)
-        search_headline = SearchHeadline("document_data", queue)
-
-        documents = (
-            DocumentFile.objects.annotate(rank=SearchRank("search_vector", queue))
-            .annotate(search_headline=search_headline)
-            .filter(search_vector=queue)
-            .order_by("-rank")
-        )
-
-    else:
-        documents = None
-
-    # Create a Paginator instance with the documents and the number of items per page
-    paginator = Paginator(documents, 10) if documents else None  # Show 10 documents per page
-
-    # Get the page number from the request's GET parameters
-    page_number = request.GET.get("page")
-
-    # Use the get_page method to get the Page object for that page number
-    page_obj = paginator.get_page(page_number) if paginator else None
-
-    feature_flag = os.getenv("FEATURE_FLAG", False)
+    f = DocumentFileFilter(request.GET, queryset=DocumentFile.objects.all())
 
     template = "app/search.html"
+
+    paginator = Paginator(f.qs, 5)  # 5 documents per page
+
+    try:
+        page_obj = paginator.page(page_number)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+
     context = {
+        "search_results": paginator.page(page_obj.number),
+        "filter": f,
         "documents": page_obj,
-        "current_page": "search",
-        "document_count": len(documents) if documents else 0,
-        "feature_flag": feature_flag,
+        "search_params": pagination_url(request),
     }
 
     return render(request, template_name=template, context=context)
+
+
+def pagination_url(request):
+    url_params = {
+        "search": request.GET.get("search", ""),
+        "document_type": request.GET.getlist("document_type", []),
+        "institution": request.GET.getlist("institution", []),
+        "subjects": request.GET.getlist("subjects", []),
+        "languages": request.GET.getlist("languages", []),
+    }
+
+    return "?" + urlencode(url_params, doseq=True)
