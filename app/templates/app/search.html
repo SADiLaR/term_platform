@@ -23,6 +23,23 @@
 <!--
                             <ul>
                                 <li>
+                                    <span class="mr-5 text-primary"><b>{% trans "Project Name:" %}</b></span>
+                                    <span>{{ document.name }}</span>
+                                </li>
+                                <li>
+                                    <span class="mr-5 text-primary"><b>{% trans "Project description:" %}</b></span>
+                                    <span>{{ document.description }}</span>
+                                </li>
+                                <li>
+                                    <span>  {% if document.logo %}
+                                        <img src="{{ document.logo.url }}" alt="
+
+                                                {% blocktrans with project_name=document.name %}{{ project_name }} logo{% endblocktrans %}"
+                                             class="project-logo">
+                                    {% endif %}
+                                </span>
+                                </li>
+                                <li>
                                     <span class="mr-5 text-primary"><b>{% trans "Title:" %}</b></span>
                                     <span>{{ document.title }}</span>
                                 </li>
@@ -81,8 +98,8 @@
                         <a href="{{ search_params }}&page={{ documents.previous_page_number }}">&lt; previous</a>
                     {% endif %}
                     <span class="current">
-                Page {{ documents.number }} of {{ documents.paginator.num_pages }}.
-            </span>
+                         Page {{ documents.number }} of {{ documents.paginator.num_pages }}.
+                    </span>
                     {% if documents.has_next %}
                         <a href="{{ search_params }}&page={{ documents.next_page_number }}">next &gt;</a>
                         <a href="{{ search_params }}&page={{ documents.paginator.num_pages }}">last

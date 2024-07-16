@@ -77,13 +77,13 @@ class TestSearchFilter(TestCase):
     def test_search_filter(self):
         data = {"search": "Document"}
         filter = DocumentFileFilter(data=data)
-        self.assertEqual(len(filter.qs), 2)
+        self.assertEqual(len(filter.qs), 4)
         self.assertIn(self.doc1, filter.qs)
         self.assertIn(self.doc2, filter.qs)
 
         data = {"search": "Document 1"}
         filter = DocumentFileFilter(data=data)
-        self.assertEqual(len(filter.qs), 1)
+        self.assertEqual(len(filter.qs), 2)
         self.assertIn(self.doc1, filter.qs)
 
 

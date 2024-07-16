@@ -1,10 +1,15 @@
 import django_filters
 from django import forms
-from django.contrib.postgres.search import SearchHeadline, SearchQuery, SearchRank
+from django.contrib.postgres.search import (
+    SearchHeadline,
+    SearchQuery,
+    SearchRank,
+    SearchVector,
+)
 from django.db.models import F
 from django_filters import ModelMultipleChoiceFilter, MultipleChoiceFilter
 
-from general.models import DocumentFile, Institution, Language, Subject
+from general.models import DocumentFile, Institution, Language, Project, Subject
 
 
 class DocumentFileFilter(django_filters.FilterSet):
@@ -35,8 +40,27 @@ class DocumentFileFilter(django_filters.FilterSet):
     def filter_queryset(self, queryset):
         queryset = super().filter_queryset(queryset)
 
-        search = self.form.cleaned_data.get("search", "")
-        queue = SearchQuery(search.strip())
+        search = self.form.cleaned_data.get("search", "").strip()
+        queue = SearchQuery(search)
+
+        search_document_files = (
+            DocumentFile.objects.annotate(
+                search=SearchVector("title") + SearchVector("description"),
+                search_headline=SearchHeadline("description", queue),
+            )
+            .filter(search=SearchQuery(search))
+            .only("title", "description")
+        )
+
+        project_query = (
+            Project.objects.annotate(
+                search=SearchVector("name") + SearchVector("description"),
+                search_headline=SearchHeadline("description", queue),
+            )
+            .filter(search=SearchQuery(search))
+            .defer("institution_id", "subjects", "languages")
+        )
+
         search_rank = SearchRank(F("search_vector"), queue)
         search_headline = SearchHeadline("document_data", queue)
         queryset = (
@@ -48,7 +72,9 @@ class DocumentFileFilter(django_filters.FilterSet):
             .select_related("institution")
         ).order_by("-rank")
 
-        return queryset
+        combined_results = list(project_query) + list(search_document_files) + list(queryset)
+
+        return combined_results
 
     def filter_search(self, queryset, name, value):
         if value:
