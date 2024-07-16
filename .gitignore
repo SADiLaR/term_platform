@@ -39,3 +39,5 @@ app/media/
 /logging/
 /pdf_uploads/
 /pdf_upload_completed/
+/tmp/
+/tmp/app_punt_env
