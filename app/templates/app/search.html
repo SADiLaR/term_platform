@@ -4,9 +4,241 @@
 
 {% block content %}
 <div class="body">
-    <div class="section mt-3 mb-3">
-        <div class="card content-card p-2">
-            <div class="card-body">
+  <div class="section mt-3 mb-3">
+    <div class="card content-card p-2">
+
+        <div class="card-body">
+          <div class="row">
+              <div class="col-md-2">
+                <!-- Content start for the first column -->
+                  <form method="get">
+                    <!-- <p>This is the first column.</p> -->
+                    <!-- side filter start -->
+                    <div class="row d-sm-none d-md-block">
+                      <div class="form-group">
+                          <label for="id_subjects">Institution</label>
+                          <div class="checkbox-container">
+                              {% for checkbox in filter.form.institution %}
+                                  <div class="form-check">
+                                      {{ checkbox.tag }}
+                                      <label class="form-check-label"
+                                             for="{{ checkbox.id_for_label }}">
+                                          {{ checkbox.choice_label }}
+                                      </label>
+                                  </div>
+                              {% endfor %}
+                          </div>
+                      </div>
+
+                      <br/>
+                      <hr>
+                      <br/>
+
+                      <div class="form-group">
+                          <label for="id_subjects">Document Type</label>
+                          <div class="checkbox-container">
+                              {% for checkbox in filter.form.document_type %}
+                                  <div class="form-check">
+                                      {{ checkbox.tag }}
+                                      <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                          {{ checkbox.choice_label }}
+                                      </label>
+                                  </div>
+                              {% endfor %}
+                          </div>
+                      </div>
+
+                      <br/>
+                      <hr>
+                      <br/>
+
+                      <div class="form-group">
+                          <label for="id_subjects">Subjects</label>
+                          <div class="checkbox-container">
+                              {% for checkbox in filter.form.subjects %}
+                                  <div class="form-check">
+                                      {{ checkbox.tag }}
+                                      <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                          {{ checkbox.choice_label }}
+                                      </label>
+                                  </div>
+                              {% endfor %}
+                          </div>
+                      </div>
+
+                      <br/>
+                      <hr>
+                      <br/>
+
+                      <div class="form-group">
+                          <label for="id_subjects">Languages</label>
+                          <div class="checkbox-container">
+                              {% for checkbox in filter.form.languages %}
+                                  <div class="form-check">
+                                      {{ checkbox.tag }}
+                                      <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                          {{ checkbox.choice_label }}
+                                      </label>
+                                  </div>
+                              {% endfor %}
+                          </div>
+                      </div>
+
+                      <br/>
+                      <hr>
+                      <br/>
+                  </div>
+                  <!-- side filter end -->
+                  <!-- Content end for the first column -->
+              </div>
+
+              <div class="col-md-8">
+                <!-- search start -->
+                <input type="search" name="{{ filter.form.search.name }}" placeholder="{% trans 'Search...' %}"
+                       class="form-control search-input"
+                       value="{{ request.GET.search|default_if_none:'' }}">
+                <br>
+                <input type="submit" class="btn btn-primary float-left"/>
+                <!-- search end -->
+                <br/>
+                <br/>
+                <!-- search content start -->
+                <div class="container">
+                    {% for document in search_results %}
+                        <div>
+                            <ul>
+                                <li>
+                                    <span class="mr-5 text-primary"><b>{% trans "Title:" %}</b></span>
+                                    <span>{{ document.title }}</span>
+                                </li>
+                                <li class="mb-2">
+                                    <span class="mr-5"><b>{% trans "Institution:" %}</b></span>
+                                    <span>{{ document.institution }}</span>
+                                </li>
+                                <li class="mb-2">
+                                    <span class="mr-5"><b>{% trans "Headline:" %}</b></span>
+                                    <span>{{ document.search_headline|safe }}</span>
+                                </li>
+                                <li>
+                                    <span class="mr-5"><b>{% trans "File:" %}</b></span>
+                                    <span>{{ document.uploaded_file }}</span>
+                                </li>
+                                <li>
+                                    <span class="mr-5"><b>{% trans "License:" %}</b></span>
+                                    <span>{{ document.license }}</span>
+                                </li>
+                                <li>
+                                    <span class="mr-5"><b>{% trans "License:" %}</b></span>
+                                    <span>{{ document.document_type }}</span>
+                                </li>
+                                <li>
+                                    <span class="mr-5"><b>{% trans "Mime Type:" %}</b></span>
+                                    <span>{{ document.mime_type }}</span>
+                                </li>
+                                <li class="mt-2">
+                                    <span class="mr-5"><b>{% trans "Rank:" %}</b></span>
+                                    <span><i>{{ document.rank }}</i></span>
+                                </li>
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- search content end -->
+
+                <!-- mobile search start -->
+                <div class="d-md-none">
+                <form method="get">
+                    <input type="search" name="{{ filter.form.search.name }}" placeholder="{% trans 'Search...' %}"
+                           class="form-control search-input"
+                           value="{{ request.GET.search|default_if_none:'' }}">
+                    <br>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="id_subjects" class="mt-3 mb-2 bold-label">Institution</label>
+                                <div class="checkbox-container">
+                                    {% for checkbox in filter.form.institution %}
+                                    <div class="test-checkbox">
+                                        <div>
+                                            {{ checkbox.tag }}
+                                            <label
+                                                   for="{{ checkbox.id_for_label }}">
+                                                {{ checkbox.choice_label }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="id_subjects" class="mt-3 mb-2 bold-label">Document Type</label>
+                                <div class="checkbox-container">
+                                    {% for checkbox in filter.form.document_type %}
+                                        <div class="form-check">
+                                            {{ checkbox.tag }}
+                                            <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                                {{ checkbox.choice_label }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="id_subjects" class="mt-3 mb-2 bold-label">Subjects</label>
+                                <div class="checkbox-container">
+                                    {% for checkbox in filter.form.subjects %}
+                                        <div class="form-check">
+                                            {{ checkbox.tag }}
+                                            <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                                {{ checkbox.choice_label }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="id_subjects" class="mt-3 mb-2 bold-label">Languages</label>
+                                <div class="checkbox-container">
+                                    {% for checkbox in filter.form.languages %}
+                                        <div class="form-check">
+                                            {{ checkbox.tag }}
+                                            <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                                {{ checkbox.choice_label }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <input type="submit" class="btn btn-primary float-left"/>
+                    <br>
+                </form>
+                </div>
+
+                <!-- mobile search end -->
+
+                  <!-- Content for the second column -->
+                  <!-- <p>This is the second column.</p> -->
+          <!-- </form> -->
+              </div>
+          </div>
+        </div>
+
+
+
+
+
+                <br/>
+                <hr>
+                <br/>
                 <h5 class="card-title">{% trans "Search a term" %}</h5>
                 <form method="get" class="container">
                     <input type="search" name="{{ filter.form.search.name }}" placeholder="{% trans 'Search...' %}"

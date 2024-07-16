@@ -279,6 +279,34 @@ html {
     font-size: 0.95rem;
 }
 
+/*Search*/
+.bold-label {
+    font-weight: bold;
+}
+.checkbox-container {
+
+    max-height: 130px; /* Adjust based on your line-height and padding to show only 4 rows */
+    overflow-y: auto; /* Enable vertical scrollbar when content overflows */
+    border: 1px solid #ced4da; /* Bootstrap's form control border color */
+    /*border-radius: 0.25rem;  Bootstrap's form control border radius */
+}
+.checkbox-container input[type="checkbox"] {
+    cursor: pointer;
+    margin-top: 0;
+}
+.test-checkbox {
+    /* word-wrap: break-word;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    width: 100%;
+    padding: 20px; */
+
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
 /*Projects & Institution detail pages*/
 .detail {
     width: 80%;
@@ -610,13 +638,4 @@ html {
   .filter-form {
       display: flex;
   }
-}
-
-/*Search Css*/
-.checkbox-container {
-    cursor: pointer;
-    max-height: 130px; /* Adjust based on your line-height and padding to show only 4 rows */
-    overflow-y: auto; /* Enable vertical scrollbar when content overflows */
-    border: 1px solid #ced4da; /* Bootstrap's form control border color */
-    border-radius: 0.25rem; /* Bootstrap's form control border radius */
 }
