@@ -74,6 +74,9 @@ html {
     background-color: var(--primary);
     border-color: var(--primary);
 }
+.btn-secondary{
+    margin-top:20px;
+}
 .btn-outline-primary{
     margin-top:20px;
     background: #2D4481;
@@ -358,13 +361,63 @@ html {
 .filter-label {
   font-weight: bold;
 }
-.checkbox-container {
+/* .checkbox-container {
+    max-height: 130px;
+    overflow-y: auto;
+    border: 1px solid;
+    border-radius: 1rem;
+    border-color: var(--primary);
+    padding: 1rem;
+    margin: 0 auto;
+} */
+/* .checkbox-container input[type="checkbox"] {
     cursor: pointer;
-    max-height: 130px; /* Adjust based on your line-height and padding to show only 4 rows */
-    overflow-y: auto; /* Enable vertical scrollbar when content overflows */
-    border: 1px solid #ced4da; /* Bootstrap's form control border color */
-    border-radius: 0.25rem; /* Bootstrap's form control border radius */
+    margin-top: 0;
+} */
+.filter-checkbox {
+    /* word-wrap: break-word;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    width: 100%;
+    padding: 20px; */
+
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
 }
+.single-checkbox {
+    display: inline-block;
+    vertical-align: top;
+    white-space: nowrap;
+    word-break: keep-all;
+    width: 20px; /* Set to the width of your checkbox */
+}
+
+.checkbox-label {
+    display: inline-block;
+    vertical-align: top;
+    word-break: break-word; /* will break words to prevent overflow */
+    width: calc(100% - 25px); /* This will take up remaining space, subtract width of checkbox and a margin */
+}
+
+.checkbox-container {
+    max-height: 90px; /* Adjust this value as needed */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Enables smooth scrolling on iOS */
+    border: 1px solid; /* Optional: add a border */
+    box-sizing: border-box; /* Ensures padding and border are included in the height */
+    border-radius: 0.3rem;
+    border-color: var(--primary);
+    padding: 1rem;
+}
+
+/* Ensures checkboxes are styled properly */
+.checkbox-container input[type="checkbox"] {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
 
 /*Error pages*/
 .body-card {
