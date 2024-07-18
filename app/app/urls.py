@@ -32,6 +32,7 @@ urlpatterns = [
     path("_health/", views.health, name="health"),
     path("", views.home, name="home"),
     path("institutions/", views.institutions, name="institutions"),
+    path("documents/", views.documents, name="documents"),
     path("projects/", views.projects, name="projects"),
     path("projects/<int:project_id>/", views.project_detail, name="project_detail"),
     path("institution/<int:institution_id>/", views.institution_detail, name="institution_detail"),

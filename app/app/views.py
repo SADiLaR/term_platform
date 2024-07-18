@@ -1,5 +1,5 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.db.models import Count
+from django.db.models import Count, Prefetch
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.utils.http import urlencode
@@ -158,13 +158,29 @@ def institution_detail(request, institution_id):
     return render(request, template_name=template, context=context)
 
 
-def document_detail(request, project_id):
+def documents(request):
+    template = "app/documents.html"
+
+    context = {
+        "current_page": "documents",
+    }
+    return render(request, template_name=template, context=context)
+
+
+def document_detail(request, document_id):
     template = "app/document_detail.html"
 
-    document = DocumentFile.objects.get(id=document_id)
+    document = get_object_or_404(
+        DocumentFile.objects.select_related("institution").prefetch_related(
+            Prefetch("subjects", queryset=Subject.objects.order_by("name")),
+            Prefetch("languages", queryset=Language.objects.order_by("name")),
+        ),
+        id=document_id,
+    )
 
     context = {
         "current_page": "document_detail",
+        "document": document,
     }
     return render(request, template_name=template, context=context)
 
