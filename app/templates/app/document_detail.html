@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<br/>
+<div class="detail">
+  <p><a href="{% url 'documents' %}">{% trans "Documents" %}</a> > {{ document.title }}</p>
+
+  <div class="detail-row row">
+      <h1>{{ document.title }}</h1>
+
+      <a href="{{ document.url }}" target="_blank" class="document-url text-decoration-underline float-left" title="External link">
+          {{ document.url }}
+      </a>
+
+      <div class="mb-3">
+        <a href="{{ document.uploaded_file.url }}" download>
+        <button class="btn btn-primary btn-sm" type="submit">
+          <i class="detail-icon bi-file-earmark-arrow-down-fill"></i> {% trans "Download File" %}
+        </button>
+        </a>
+      </div>
+
+      <div class="project-body">
+        <p>{{ document.description }}</p>
+      </div>
+
+      <p>
+          <a href="{% url 'institution_detail' document.institution.id %}" class="text-decoration-underline">
+              {{ document.institution.name }}
+          </a>
+      </p>
+
+      <p><strong>{% trans "License:" %}</strong> {{ document.license }}</p>
+      <p><strong>{% trans "Category:" %}</strong> {{ document.document_type }}</p>
+  </div>
+
+
+  <div class="detail-row row">
+    <div class="col-md-6 col-12 detail-col">
+      <div>
+          <h2>{% trans "Subjects" %}</h2>
+          <ul>
+              {% for subject in document.subjects.all %}
+              <li>
+                <span class="icon-text"><i class="detail-icon bi-book"></i></span>
+                <span class="icon-text"><a href="{% url 'subject_detail' subject.id %}">{{ subject.name }}</a></span>
+              </li>
+              {% endfor %}
+          </ul>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-12 detail-col">
+      <div>
+        <h2>{% trans "Languages" %}</h2>
+        <ul>
+            {% for language in document.languages.all %}
+            <li>
+              <span class="icon-text"><i class="detail-icon bi-vector-pen"></i></span>
+              <span class="icon-text"><a href="{% url 'language_detail' language.id %}">{{ language.name }}</a></span>
+            </li>
+            {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
