@@ -19,6 +19,11 @@
                 <br>
                 <div class="container">
                     {% for result in search_results %}
+                   <hr>
+                       {{  result }}
+                    <hr>
+                       
+                        
                         <div>
                             <h2><a href="{% url result.view result.id %}">{{ result.heading }}</a></h2>
                             <p>{{ result.description | truncatewords:10 }}</p>
