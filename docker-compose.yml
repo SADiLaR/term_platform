@@ -1,6 +1,5 @@
 # This is is meant for local development, but should give an idea of what you
 # can consider in production.
-version: '3.8'
 
 services:
   db:
