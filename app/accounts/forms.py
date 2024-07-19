@@ -1,5 +1,10 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import (
+    AuthenticationForm,
+    PasswordResetForm,
+    UserCreationForm,
+)
 from django.utils.translation import gettext_lazy as _
 
 from users.models import CustomUser
@@ -40,3 +45,18 @@ class CustomAuthenticationForm(AuthenticationForm):
         super(CustomAuthenticationForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs.update({"class": "form-control"})
+
+
+class CustomPasswordResetForm(PasswordResetForm):
+    def clean_email(self):
+        User = get_user_model()
+        email = self.cleaned_data["email"]
+        users = User.objects.filter(email=email)
+        if not users.exists():
+            raise forms.ValidationError("No user is associated with this email address.")
+
+        for user in users:
+            if not user.is_active or not user.is_staff:
+                raise forms.ValidationError("This account is inactive or not a staff account.")
+
+        return email

@@ -48,7 +48,7 @@
 
                     <!-- Log In Button and Forgot Password -->
                     <div class="form-group">
-                        <a href="{% url 'password_reset' %}" class="d-block mb-2">{% trans "Forgot Password?" %}</a>
+                        <a href="{% url 'accounts:password_reset' %}" class="d-block mb-2">{% trans "Forgot Password?" %}</a>
 
                         {% if form.non_field_errors %}
                             <div class="invalid-feedback d-block">
@@ -66,7 +66,7 @@
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-10">
-                        <p>{% trans "Don't have an account?" %} <a href="{% url 'accounts_register' %}">{% trans "Create one" %}</a></p>
+                        <p>{% trans "Don't have an account?" %} <a href="{% url 'accounts:accounts_register' %}">{% trans "Create one" %}</a></p>
                     </div>
                 </div>
             </div>

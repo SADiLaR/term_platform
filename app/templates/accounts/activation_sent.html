@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Activation Email Sent" %}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="section mt-3 mb-3">
+            <div class="card body-card">
+                <div class="user-account-body">
+                    <h2>Activation Email Sent</h2>
+                    <p>Thank you for registering. An activation email has been sent to your email address.</p>
+                    <p>Please check your email and click on the activation link to activate your account.</p>
+                    <p>If you did not receive the email, please check your spam folder or
+                        <a href="{% url 'accounts:resend_activation' %}">resend the activation email</a>.</p>
+                    <a href="{% url 'accounts:login' %}">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
