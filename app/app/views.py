@@ -142,8 +142,8 @@ def institution_detail(request, institution_id):
     template = "app/institution_detail.html"
 
     institution = get_object_or_404(Institution, id=institution_id)
-    projects = Project.objects.filter(institution=institution)
-    documents = DocumentFile.objects.filter(institution=institution)
+    projects = Project.objects.filter(institution=institution).order_by("name")
+    documents = DocumentFile.objects.filter(institution=institution).order_by("title")
 
     logo = institution.logo
 
