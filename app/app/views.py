@@ -50,6 +50,22 @@ def get_logo(project):
     return logo
 
 
+def get_languages(languages):
+    if languages.count() < 4:
+        languages_data = ", ".join(sorted(language.name for language in languages))
+    else:
+        languages_data = _("Multilingual")
+    return languages_data
+
+
+def get_subjects(subjects):
+    if subjects.count() < 4:
+        subjects_data = ", ".join(sorted([subject.name for subject in subjects]))
+    else:
+        subjects_data = _("Multiple subjects")
+    return subjects_data
+
+
 def projects(request):
     template = "app/projects.html"
 
@@ -79,15 +95,8 @@ def projects(request):
         project_subjects = project.subjects.all()
         project_languages = project.languages.all()
 
-        if project_languages.count() < 4:
-            languages_data = ", ".join(sorted(language.name for language in project_languages))
-        else:
-            languages_data = _("Multilingual")
-
-        if project_subjects.count() < 4:
-            subjects_data = ", ".join(sorted([subject.name for subject in project_subjects]))
-        else:
-            subjects_data = _("Multiple subjects")
+        languages_data = get_languages(project_languages)
+        subjects_data = get_subjects(project_subjects)
 
         logo = get_logo(project)
 
@@ -161,8 +170,59 @@ def institution_detail(request, institution_id):
 def documents(request):
     template = "app/documents.html"
 
+    subject_id = request.GET.get("subject")
+    language_id = request.GET.get("language")
+    institution_id = request.GET.get("institution")
+
+    documents = (
+        DocumentFile.objects.select_related("institution")
+        .prefetch_related("subjects", "languages")
+        .order_by("title")
+    )
+
+    if subject_id:
+        documents = documents.filter(subjects__id=subject_id)
+    if language_id:
+        documents = documents.filter(languages__id=language_id)
+    if institution_id:
+        documents = documents.filter(institution__id=institution_id)
+
+    paginator = Paginator(documents, 10)
+
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    subjects = Subject.objects.order_by("name")
+    languages = Language.objects.order_by("name")
+    institutions = Institution.objects.order_by("name")
+
+    document_data = []
+    for document in page_obj:
+        document_subjects = document.subjects.all()
+        document_languages = document.languages.all()
+
+        languages_data = get_languages(document_languages)
+        subjects_data = get_subjects(document_subjects)
+
+        document_data.append(
+            {
+                "document": document,
+                "subjects": subjects_data,
+                "languages": languages_data,
+                "institution_name": document.institution.name,
+                "description": document.description,
+                "url": document.url,
+                "category": document.document_type,
+            }
+        )
+
     context = {
         "current_page": "documents",
+        "page_obj": page_obj,
+        "documents": document_data,
+        "subjects": subjects,
+        "languages": languages,
+        "institutions": institutions,
     }
     return render(request, template_name=template, context=context)
 
