@@ -13,6 +13,9 @@
       <h1>{{ project.name }}</h1>
       <a href="{{ project.url }}">{{ project.url }}</a>
       <p>
+        {{ project.description | linebreaks }}
+      </p>
+      <p>
           <a href="{% url 'institution_detail' project.institution.id %}">
               {{ project.institution.name }}
           </a>
