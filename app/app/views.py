@@ -170,6 +170,7 @@ def institution_detail(request, institution_id):
 def documents(request):
     template = "app/documents.html"
 
+    url_params = {}
     subject_id = request.GET.get("subject")
     language_id = request.GET.get("language")
     institution_id = request.GET.get("institution")
@@ -182,10 +183,13 @@ def documents(request):
 
     if subject_id:
         documents = documents.filter(subjects__id=subject_id)
+        url_params["subject"] = subject_id
     if language_id:
         documents = documents.filter(languages__id=language_id)
+        url_params["language"] = language_id
     if institution_id:
         documents = documents.filter(institution__id=institution_id)
+        url_params["institution"] = institution_id
 
     paginator = Paginator(documents, 10)
 
@@ -220,6 +224,7 @@ def documents(request):
         "current_page": "documents",
         "page_obj": page_obj,
         "documents": document_data,
+        "url_params": urlencode(url_params),
         "subjects": subjects,
         "languages": languages,
         "institutions": institutions,
