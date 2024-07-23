@@ -45,7 +45,7 @@
               {% for subject in document.subjects.all %}
               <li>
                 <span class="icon-text"><i class="detail-icon bi-book"></i></span>
-                <span class="icon-text"><a href="{% url 'subject_detail' subject.id %}">{{ subject.name }}</a></span>
+                <span class="icon-text">{{ subject.name }}</span>
               </li>
               {% endfor %}
           </ul>
@@ -59,7 +59,7 @@
             {% for language in document.languages.all %}
             <li>
               <span class="icon-text"><i class="detail-icon bi-vector-pen"></i></span>
-              <span class="icon-text"><a href="{% url 'language_detail' language.id %}">{{ language.name }}</a></span>
+              <span class="icon-text">{{ language.name }}</span>
             </li>
             {% endfor %}
         </ul>
