@@ -250,19 +250,46 @@ def document_detail(request, document_id):
     return render(request, template_name=template, context=context)
 
 
-def language_detail(request, project_id):
-    template = "app/language_detail.html"
+def languages(request):
+    template = "app/languages.html"
 
-    project = Project.objects.get(id=project_id)
+    languages = (
+        Language.objects.all()
+        .prefetch_related(
+            Prefetch(
+                "documentfile_set",
+                queryset=DocumentFile.objects.only("id", "title", "languages").order_by("title"),
+            ),
+            Prefetch(
+                "project_set",
+                queryset=Project.objects.only("id", "name", "languages").order_by("name"),
+            ),
+        )
+        .order_by("name")
+    )
+
+    language_data = []
+
+    for language in languages:
+        documents = language.documentfile_set.all()
+        projects = language.project_set.all()
+        language_data.append(
+            {
+                "language": language,
+                "documents": documents,
+                "projects": projects,
+            }
+        )
 
     context = {
-        "current_page": "language_detail",
+        "current_page": "languages",
+        "language_data": language_data,
     }
     return render(request, template_name=template, context=context)
 
 
-def subject_detail(request, project_id):
-    template = "app/subject_detail.html"
+def subjects(request):
+    template = "app/subjects.html"
 
     project = Project.objects.get(id=project_id)
 

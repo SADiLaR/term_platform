@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<br/>
+<div class="detail">
+  <h2>{% trans "Languages" %}</h2>
+  <br>
+    <div class="detail-row row">
+        {% for item in language_data %}
+          <h5>{{ item.language.name }}</h5>
+          <div class="col-md-6 col-12 detail-col">
+            <h6>{% trans "Documents" %}</h6>
+            {% if item.documents.exists %}
+                <div class="documents">
+                    <ul>
+                        {% for document in item.documents %}
+                        <li>
+                          <span class="icon-text"><i class="detail-icon bi-file-earmark"></i></span>
+                          <span class="icon-text"><a href="{% url 'document_detail' document.id %}">{{ document.title }}</a></span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% else %}
+                <p>{% trans "No documents available for this language." %}</p>
+            {% endif %}
+          </div>
+          <div class="col-md-6 col-12 detail-col">
+              <h6>{% trans "Projects" %}</h6>
+              {% if item.projects.exists %}
+                  <div class="projects">
+                      <ul>
+                          {% for project in item.projects %}
+                          <li>
+                            <span class="icon-text"><i class="detail-icon bi-clipboard2"></i></span>
+                            <span class="icon-text"><a href="{% url 'project_detail' project.id %}">{{ project.name }}</a></span>
+                          </li>
+                          {% endfor %}
+                      </ul>
+                  </div>
+              {% else %}
+                  <p>{% trans "No projects available for this language." %}</p>
+              {% endif %}
+          </div>
+          <br>
+          <hr>
+          <br>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}
