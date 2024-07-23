@@ -7,7 +7,7 @@ from django.contrib.postgres.search import (
     SearchVector,
 )
 from django.db.models import F, Value
-from django.db.models.functions import Left
+from django.db.models.functions import Greatest, Left
 from django_filters import ModelMultipleChoiceFilter, MultipleChoiceFilter
 
 from general.models import DocumentFile, Institution, Language, Project, Subject
@@ -39,6 +39,8 @@ class DocumentFileFilter(django_filters.FilterSet):
         ]
 
     def filter_queryset(self, queryset):
+        # More information about weighting and normalization in postgres:
+        # https://www.postgresql.org/docs/current/textsearch-controls.html#TEXTSEARCH-RANKING
         queryset = super().filter_queryset(queryset)
 
         search = self.form.cleaned_data.get("search", "").strip()
@@ -50,13 +52,15 @@ class DocumentFileFilter(django_filters.FilterSet):
 
         # In the queries below, any differences between models must be fixed
         # through e.g. `Value` or `F` annotations.
-        project_search_vector = SearchVector("name") + SearchVector("description")
+        project_search_vector = SearchVector("name", weight="A") + SearchVector(
+            "description", weight="B"
+        )
         project_query = (
             Project.objects.annotate(
                 heading=F("name"),
                 view=Value("project_detail"),
                 search_headline=SearchHeadline("description", query),
-                rank=SearchRank(project_search_vector, query),
+                rank=SearchRank(project_search_vector, query, normalization=16),
                 search=project_search_vector,
             )
             .filter(search=SearchQuery(search))
@@ -66,11 +70,19 @@ class DocumentFileFilter(django_filters.FilterSet):
         # We limit the headline to limit the performance impact. On very large
         # documents, this slows things down if unconstrained.
         search_headline = SearchHeadline(Left("document_data", 200_000), query)
-        search_rank = SearchRank(F("search_vector"), query)
+        doc_search_rank = SearchRank(F("search_vector"), query)
+        # While the search_vector field doesn't provide weighted vectors, we
+        # work around that to ensure that hits in the title or description are
+        # still ranked high. See `doc_rank` and `rank` below.
+        extra_search_vector = SearchVector("title", weight="A") + SearchVector(
+            "description", weight="B"
+        )
+        search_rank = SearchRank(extra_search_vector, query, normalization=16)
         queryset = queryset.annotate(
             heading=F("title"),
             view=Value("document_detail"),
-            rank=search_rank,
+            doc_rank=doc_search_rank,
+            rank=Greatest(F("doc_rank"), search_rank),
             search_headline=search_headline,
         ).values(*fields)
         return queryset.union(project_query).order_by("-rank")
