@@ -21,6 +21,20 @@ About the project:
 
 ---
 
+### How to setup SECRET_KEY in Development
+
+.env file
+
+SECRET_KEY=''
+
+To generate a new secret key, you can use the following command:
+
+1. python3 manage.py shell
+2. from django.core.management.utils import get_random_secret_key
+3. print(get_random_secret_key())
+
+---
+
 ### Using Makefile
 
 1. Clone the repository
@@ -34,7 +48,7 @@ About the project:
 
 .env file
 
-* EMAIL_HOST='sandbo x.smtp.mailtrap.io' 
+* EMAIL_HOST='sandbo x.smtp.mailtrap.io'
 * EMAIL_HOST_USER='*********'
 * EMAIL_HOST_PASSWORD='******'
 * EMAIL_PORT='2525'
@@ -75,4 +89,5 @@ Docker Volumes for production:
 ### Email Settings in Production
 
 .env file
+
 * EMAIL_BACKEND_CONSOLE=False
