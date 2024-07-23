@@ -6,7 +6,8 @@ from django.contrib.postgres.search import (
     SearchRank,
     SearchVector,
 )
-from django.db.models import F
+from django.db.models import F, Value
+from django.db.models.functions import Left
 from django_filters import ModelMultipleChoiceFilter, MultipleChoiceFilter
 
 from general.models import DocumentFile, Institution, Language, Project, Subject
@@ -41,40 +42,38 @@ class DocumentFileFilter(django_filters.FilterSet):
         queryset = super().filter_queryset(queryset)
 
         search = self.form.cleaned_data.get("search", "").strip()
-        queue = SearchQuery(search)
+        query = SearchQuery(search)
 
-        search_document_files = (
-            DocumentFile.objects.annotate(
-                search=SearchVector("title") + SearchVector("description"),
-                search_headline=SearchHeadline("description", queue),
-            )
-            .filter(search=SearchQuery(search))
-            .only("title", "description")
-        )
+        # A fixed list of identical fields are required to join queries of
+        # different classes with `.union()`:
+        fields = ("id", "heading", "description", "rank", "search_headline", "view")
 
+        # In the queries below, any differences between models must be fixed
+        # through e.g. `Value` or `F` annotations.
+        project_search_vector = SearchVector("name") + SearchVector("description")
         project_query = (
             Project.objects.annotate(
-                search=SearchVector("name") + SearchVector("description"),
-                search_headline=SearchHeadline("description", queue),
+                heading=F("name"),
+                view=Value("project_detail"),
+                search_headline=SearchHeadline("description", query),
+                rank=SearchRank(project_search_vector, query),
+                search=project_search_vector,
             )
             .filter(search=SearchQuery(search))
-            .defer("institution_id", "subjects", "languages")
+            .values(*fields)
         )
 
-        search_rank = SearchRank(F("search_vector"), queue)
-        search_headline = SearchHeadline("document_data", queue)
-        queryset = (
-            queryset.annotate(
-                rank=search_rank,
-                search_headline=search_headline,
-            )
-            .defer("document_data")
-            .select_related("institution")
-        ).order_by("-rank")
-
-        combined_results = list(project_query) + list(search_document_files) + list(queryset)
-
-        return combined_results
+        # We limit the headline to limit the performance impact. On very large
+        # documents, this slows things down if unconstrained.
+        search_headline = SearchHeadline(Left("document_data", 200_000), query)
+        search_rank = SearchRank(F("search_vector"), query)
+        queryset = queryset.annotate(
+            heading=F("title"),
+            view=Value("document_detail"),
+            rank=search_rank,
+            search_headline=search_headline,
+        ).values(*fields)
+        return queryset.union(project_query).order_by("-rank")
 
     def filter_search(self, queryset, name, value):
         if value:

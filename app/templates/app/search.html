@@ -18,74 +18,17 @@
                 <br>
                 <br>
                 <div class="container">
-                    {% for document in search_results %}
+                    {% for result in search_results %}
                         <div>
-<!--
-                            <ul>
-                                <li>
-                                    <span class="mr-5 text-primary"><b>{% trans "Project Name:" %}</b></span>
-                                    <span>{{ document.name }}</span>
-                                </li>
-                                <li>
-                                    <span class="mr-5 text-primary"><b>{% trans "Project description:" %}</b></span>
-                                    <span>{{ document.description }}</span>
-                                </li>
-                                <li>
-                                    <span>  {% if document.logo %}
-                                        <img src="{{ document.logo.url }}" alt="
-
-                                                {% blocktrans with project_name=document.name %}{{ project_name }} logo{% endblocktrans %}"
-                                             class="project-logo">
-                                    {% endif %}
-                                </span>
-                                </li>
-                                <li>
-                                    <span class="mr-5 text-primary"><b>{% trans "Title:" %}</b></span>
-                                    <span>{{ document.title }}</span>
-                                </li>
-                                <li class="mb-2">
-                                    <span class="mr-5"><b>{% trans "Institution:" %}</b></span>
-                                    <span>{{ document.institution }}</span>
-                                </li>
-                                <li class="mb-2">
-                                    <span class="mr-5"><b>{% trans "Headline:" %}</b></span>
-                                    <span>{{ document.search_headline|safe }}</span>
-                                </li>
-                                <li>
-                                    <span class="mr-5"><b>{% trans "License:" %}</b></span>
-                                    <span>{{ document.license }}</span>
-                                </li>
-                                <li>
-                                    <span class="mr-5"><b>{% trans "License:" %}</b></span>
-                                    <span>{{ document.document_type }}</span>
-                                </li>
-                                <li>
-                                    <span class="mr-5"><b>{% trans "Mime Type:" %}</b></span>
-                                    <span>{{ document.mime_type }}</span>
-                                </li>
-                                <li class="mt-2">
-                                    <span class="mr-5"><b>{% trans "Rank:" %}</b></span>
-                                    <span><i>{{ document.rank }}</i></span>
-                                </li>
-                            </ul>
--->
-                                        <h2><a href="{% url 'document_detail' document.id %}">{{ document.title }}</a></h2>
-                                        <span><a href="{% url 'institution_detail' document.institution.id %}">{{ document.institution }}</a></span>
-<div>
-                                        <span class="mr-5"><b>{% trans "Excerpt:" %}</b></span>
-                                        <span>… {{ document.search_headline|safe }} …</span>
-</div>
-<div>
-                                        <span class="mr-5"><b>{% trans "License:" %}</b></span>
-                                        <span>{{ document.license }}</span>
-</div>
-<div>
-<span>{{ document.languages.all |join:", " }}</span>
-</div>
-<div>
-<span>{{ document.subjects.all |join:", " }}</span>
-</div>
-<br>
+                            <h3><a href="{% url result.view result.id %}">{{ result.heading }}</a></h2>
+                            <p>{{ result.description | truncatewords:10 }}</p>
+                            <p>
+                                <span class="mr-5"><b>{% trans "Excerpt:" %}</b></span>
+                                <span>{{ result.search_headline|safe }}</span>
+                            </p>
+                            <p>
+			        <span><i>{{ result.rank }}</i></span>
+                            </p>
                         </div>
                     {% endfor %}
                 </div>
