@@ -15,11 +15,13 @@
       </a>
 
       <div class="mb-3">
-        <a href="{{ document.uploaded_file.url }}" download>
-        <button class="btn btn-primary btn-sm" type="submit">
-          <i class="detail-icon bi-file-earmark-arrow-down-fill"></i> {% trans "Download File" %}
-        </button>
-        </a>
+        {% if document.uploaded_file %}
+          <a href="{{ document.uploaded_file.url }}" download>
+          <button class="btn btn-primary btn-sm" type="submit">
+            <i class="detail-icon bi-file-earmark-arrow-down-fill"></i> {% trans "Download File" %}
+          </button>
+          </a>
+        {% endif %}
       </div>
 
       <div class="project-body">
