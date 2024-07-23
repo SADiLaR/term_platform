@@ -133,6 +133,41 @@ html {
     background-color: var(--primary-fg);
     border-color: var(--primary-fg);
 }
+.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+.pagination .page-item {
+    margin: 0;
+    border-left: 1px solid #000;
+}
+.pagination .page-item:first-child {
+    border-left: none;
+}
+.pagination .page-link {
+    padding: 5px 10px;
+    text-decoration: none;
+    color: var(--text-color);
+}
+.pagination .page-item.active .page-link {
+    background-color: var(--primary);
+    color: var(--primary-fg);
+}
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+}
+.button-spacing {
+    margin-right: 10px;
+}
+
 /*Home page*/
 .content-card {
     border-color: var(--primary-red);
@@ -343,6 +378,10 @@ html {
 .project-date-row {
   font-size: 0.875rem;
 }
+.gap-2 > * {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
 
 /*Accounts*/
 .user-account-body {
@@ -403,6 +442,13 @@ html {
         padding-right: 20px;
         margin-right: 10px;
     }
+    .form-group.col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .gap-2 > * {
+        margin-right: 0;
+    }
 }
 
 /*small devices (tablets, 600px and up) */
@@ -435,6 +481,13 @@ html {
     /*Home page*/
     .content-card {
         font-size: smaller;
+    }
+    .form-group.col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .gap-2 > * {
+        margin-right: 0;
     }
 }
 
@@ -610,13 +663,4 @@ html {
   .filter-form {
       display: flex;
   }
-}
-
-/*Search Css*/
-.checkbox-container {
-    cursor: pointer;
-    max-height: 130px; /* Adjust based on your line-height and padding to show only 4 rows */
-    overflow-y: auto; /* Enable vertical scrollbar when content overflows */
-    border: 1px solid #ced4da; /* Bootstrap's form control border color */
-    border-radius: 0.25rem; /* Bootstrap's form control border radius */
 }
