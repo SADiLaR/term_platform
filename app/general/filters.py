@@ -63,7 +63,7 @@ class DocumentFileFilter(django_filters.FilterSet):
                 rank=SearchRank(project_search_vector, query, normalization=16),
                 search=project_search_vector,
             )
-            .filter(search=SearchQuery(search))
+            .filter(search=query)
             .values(*fields)
         )
 
@@ -89,8 +89,8 @@ class DocumentFileFilter(django_filters.FilterSet):
 
     def filter_search(self, queryset, name, value):
         if value:
-            queue = SearchQuery(value.strip())
-            return queryset.filter(search_vector=queue)
+            query = SearchQuery(value.strip())
+            return queryset.filter(search_vector=query)
 
         else:
             return queryset
