@@ -70,19 +70,11 @@ class DocumentFileFilter(django_filters.FilterSet):
         # We limit the headline to limit the performance impact. On very large
         # documents, this slows things down if unconstrained.
         search_headline = SearchHeadline(Left("document_data", 200_000), query)
-        doc_search_rank = SearchRank(F("search_vector"), query)
-        # While the search_vector field doesn't provide weighted vectors, we
-        # work around that to ensure that hits in the title or description are
-        # still ranked high. See `doc_rank` and `rank` below.
-        extra_search_vector = SearchVector("title", weight="A") + SearchVector(
-            "description", weight="B"
-        )
-        search_rank = SearchRank(extra_search_vector, query, normalization=16)
+        search_rank = SearchRank(F("search_vector"), query, normalization=16)
         queryset = queryset.annotate(
             heading=F("title"),
             view=Value("document_detail"),
-            doc_rank=doc_search_rank,
-            rank=Greatest(F("doc_rank"), search_rank),
+            rank=search_rank,
             search_headline=search_headline,
         ).values(*fields)
         return queryset.union(project_query).order_by("-rank")
