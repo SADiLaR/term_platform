@@ -291,11 +291,44 @@ def languages(request):
 def subjects(request):
     template = "app/subjects.html"
 
-    project = Project.objects.get(id=project_id)
+    subjects = (
+        Subject.objects.all()
+        .prefetch_related(
+            Prefetch(
+                "documentfile_set",
+                queryset=DocumentFile.objects.only("id", "title", "subjects").order_by("title"),
+            ),
+            Prefetch(
+                "project_set",
+                queryset=Project.objects.only("id", "name", "subjects").order_by("name"),
+            ),
+        )
+        .order_by("name")
+    )
+
+    subject_data = []
+
+    for subject in subjects:
+        documents = subject.documentfile_set.all()
+        projects = subject.project_set.all()
+        if documents or projects:
+            subject_data.append(
+                {
+                    "subject": subject,
+                    "documents": documents,
+                    "projects": projects,
+                }
+            )
+
+    paginator = Paginator(subject_data, 10)
+
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
 
     context = {
-        "current_page": "subject_detail",
-        "project": project,
+        "current_page": "subjects",
+        "subject_data": page_obj.object_list,
+        "page_obj": page_obj,
     }
     return render(request, template_name=template, context=context)
 
