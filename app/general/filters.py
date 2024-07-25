@@ -48,7 +48,15 @@ class DocumentFileFilter(django_filters.FilterSet):
 
         # A fixed list of identical fields are required to join queries of
         # different classes with `.union()`:
-        fields = ("id", "heading", "description", "rank", "search_headline", "view")
+        fields = (
+            "id",
+            "heading",
+            "description",
+            "rank",
+            "search_headline",
+            "view",
+            "logo_url",
+        )
 
         # In the queries below, any differences between models must be fixed
         # through e.g. `Value` or `F` annotations.
@@ -59,6 +67,7 @@ class DocumentFileFilter(django_filters.FilterSet):
             Project.objects.annotate(
                 heading=F("name"),
                 view=Value("project_detail"),
+                logo_url=F("logo"),
                 search_headline=SearchHeadline("description", query, max_words=15, min_words=10),
                 rank=SearchRank(project_search_vector, query, normalization=16),
                 search=project_search_vector,
@@ -76,6 +85,7 @@ class DocumentFileFilter(django_filters.FilterSet):
         queryset = queryset.annotate(
             heading=F("title"),
             view=Value("document_detail"),
+            logo_url=Value(""),
             rank=search_rank,
             search_headline=search_headline,
         ).values(*fields)

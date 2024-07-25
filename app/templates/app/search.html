@@ -20,11 +20,17 @@
                 <div class="container">
                     {% for result in search_results %}
                         <div>
-                            <h3><a href="{% url result.view result.id %}">{{ result.heading }}</a></h2>
+                            <h2><a href="{% url result.view result.id %}">{{ result.heading }}</a></h2>
                             <p>{{ result.description | truncatewords:10 }}</p>
                             <p>
                                 <span class="mr-5"><b>{% trans "Excerpt:" %}</b></span>
                                 <span>{{ result.search_headline|safe }}</span>
+                            </p>
+                            <p>
+                                {% if result.logo_url %}
+                                    <img src="/media/{{ result.logo_url }}" alt="{{ result.name }} logo"
+                                         class="project-logo">
+                                {% endif %}
                             </p>
                             <p>
 			        <span><i>{{ result.rank }}</i></span>
