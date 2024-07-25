@@ -48,7 +48,7 @@ class SearchViewTest(TestCase):
         client = Client()
         response = client.get(reverse("search"), {"search": "Document 1"})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["documents"][0].title, "Document 1")
+        self.assertEqual(response.context["documents"][0]["heading"], "Document 1")
 
     def test_invalid_page_number(self):
         client = Client()

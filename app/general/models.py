@@ -1,5 +1,5 @@
 from django.contrib.postgres.indexes import GinIndex
-from django.contrib.postgres.search import SearchVectorField
+from django.contrib.postgres.search import SearchVector, SearchVectorField
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -142,7 +142,19 @@ class DocumentFile(models.Model):
     subjects = models.ManyToManyField("Subject", blank=True, verbose_name=_("subjects"))
     languages = models.ManyToManyField("Language", blank=True, verbose_name=_("languages"))
 
-    search_vector = SearchVectorField(null=True, blank=True)
+    # `config="english"` is required to ensure that the `expression` is
+    # immutable, otherwise the migration to the GeneratedField fails.
+    search_vector = models.GeneratedField(
+        expression=(
+            SearchVector("title", config="english", weight="A")
+            + SearchVector("description", config="english", weight="B")
+            + SearchVector("document_data", config="english", weight="C")
+        ),
+        output_field=SearchVectorField(),
+        db_persist=True,
+        null=True,
+        blank=True,
+    )
 
     # added simple historical records to the model
     history = HistoricalRecords(excluded_fields=["document_data", "search_vector"])
