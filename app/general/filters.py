@@ -59,7 +59,7 @@ class DocumentFileFilter(django_filters.FilterSet):
             Project.objects.annotate(
                 heading=F("name"),
                 view=Value("project_detail"),
-                search_headline=SearchHeadline("description", query),
+                search_headline=SearchHeadline("description", query, max_words=15, min_words=10),
                 rank=SearchRank(project_search_vector, query, normalization=16),
                 search=project_search_vector,
             )
@@ -69,7 +69,9 @@ class DocumentFileFilter(django_filters.FilterSet):
 
         # We limit the headline to limit the performance impact. On very large
         # documents, this slows things down if unconstrained.
-        search_headline = SearchHeadline(Left("document_data", 200_000), query)
+        search_headline = SearchHeadline(
+            Left("document_data", 20_000), query, max_words=15, min_words=10
+        )
         search_rank = SearchRank(F("search_vector"), query, normalization=16)
         queryset = queryset.annotate(
             heading=F("title"),
@@ -77,7 +79,7 @@ class DocumentFileFilter(django_filters.FilterSet):
             rank=search_rank,
             search_headline=search_headline,
         ).values(*fields)
-        return queryset.union(project_query).order_by("-rank")
+        return queryset.union(project_query, all=True).order_by("-rank")
 
     def filter_search(self, queryset, name, value):
         if value:
