@@ -79,7 +79,7 @@
 {% endblock app_header %}
 <!--end of header-->
 
-<div id="content">
+<div class="content">
     {% block content %}
 
     {% endblock content %}
@@ -89,8 +89,13 @@
 <footer class="footer text-white p-3">
     <div class="footer-class">
         <div class="text-center footer-text">
-            Developed by <a class="text-white" href="https://sadilar.org">SADiLaR</a>
+            <p>{% trans "Developed by" %} <a class="text-white" href="https://sadilar.org">SADiLaR</a></p>
+            <div class="row">
+              <a class="text-white" href="{% url 'legal_notices' %}">{% trans "Legal Notices" %}</a>
+              <a class="text-white" href="{% url 'contact' %}">{% trans "Contact Us" %}</a>
+            </div>
         </div>
+
         <div class="language-toggle">
             <form action="{% url 'set_language' %}" method="post">
                 {% csrf_token %}

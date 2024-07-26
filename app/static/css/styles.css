@@ -13,13 +13,17 @@
 /*General*/
 body {
     padding: 0;
-    margin-bottom: 60px;
+    margin: 0;
 }
 
 html {
     position: relative;
     min-height: 100%;
-    padding-bottom: 60px;
+}
+
+.content {
+    overflow: hidden;
+    padding-bottom: 130px;
 }
 
 .footer {
@@ -449,6 +453,9 @@ html {
     .gap-2 > * {
         margin-right: 0;
     }
+    .content {
+        padding-bottom: 200px;
+    }
 }
 
 /*small devices (tablets, 600px and up) */
@@ -488,6 +495,9 @@ html {
     }
     .gap-2 > * {
         margin-right: 0;
+    }
+    .content {
+        padding-bottom: 200px;
     }
 }
 

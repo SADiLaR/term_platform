@@ -31,6 +31,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("_health/", views.health, name="health"),
     path("", views.home, name="home"),
+    path("contact/", views.contact, name="contact"),
+    path("legal_notices/", views.legal_notices, name="legal_notices"),
     path("institutions/", views.institutions, name="institutions"),
     path("documents/", views.documents, name="documents"),
     path("projects/", views.projects, name="projects"),
