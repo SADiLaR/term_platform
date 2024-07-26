@@ -23,6 +23,20 @@ def home(request):
     return render(request, template_name=template, context=context)
 
 
+def contact(request):
+    template = "app/contact.html"
+    context = {"current_page": "contact"}
+
+    return render(request, template_name=template, context=context)
+
+
+def legal_notices(request):
+    template = "app/legal_notices.html"
+    context = {"current_page": "legal_notices"}
+
+    return render(request, template_name=template, context=context)
+
+
 def get_date_range(project):
     start_date = project.start_date
     end_date = project.end_date
