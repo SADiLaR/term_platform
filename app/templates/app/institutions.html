@@ -22,40 +22,6 @@
                     </p>
                 </div>
                 <div class="right-col">
-                    <p class="card-text">{% trans "Profile completion:" %}</p>
-                    <div class="profile-icons">
-                      {% if institution.rating <= 20 %}
-                          <i class="bi-star-fill"></i>
-                          <i class="bi-star"></i>
-                          <i class="bi-star"></i>
-                          <i class="bi-star"></i>
-                          <i class="bi-star"></i>
-                      {% elif institution.rating <= 40 %}
-                          <i class="bi-star-fill"></i>
-                          <i class="bi-star-fill"></i>
-                          <i class="bi-star"></i>
-                          <i class="bi-star"></i>
-                          <i class="bi-star"></i>
-                      {% elif institution.rating <= 60 %}
-                          <i class="bi-star-fill"></i>
-                          <i class="bi-star-fill"></i>
-                          <i class="bi-star-fill"></i>
-                          <i class="bi-star"></i>
-                          <i class="bi-star"></i>
-                      {% elif institution.rating <= 80 %}
-                          <i class="bi-star-fill"></i>
-                          <i class="bi-star-fill"></i>
-                          <i class="bi-star-fill"></i>
-                          <i class="bi-star-fill"></i>
-                          <i class="bi-star"></i>
-                      {% else %}
-                          <i class="bi-star-fill"></i>
-                          <i class="bi-star-fill"></i>
-                          <i class="bi-star-fill"></i>
-                          <i class="bi-star-fill"></i>
-                          <i class="bi-star-fill"></i>
-                      {% endif %}
-                    </div>
                     <div class="card-logo">
                         {% if institution.logo %}
                         <img src="{{ institution.logo.url }}" alt="{{ institution.name }} logo"
