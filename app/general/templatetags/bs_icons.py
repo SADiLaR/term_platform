@@ -15,7 +15,31 @@ register = template.Library()
 icon_name_re = re.compile(r"[a-z0-9\-]+")
 
 
-@register.simple_tag
-def bs_icon(name):
+def _bs_icon(name):
     assert icon_name_re.fullmatch(name)
     return mark_safe(f'<i class="project-icon bi-{name}"></i>')
+
+
+@register.simple_tag
+def bs_icon(name):
+    """Any of the Bootstrap icons"""
+    return _bs_icon(name)
+
+
+# a mapping from project types to Bootstrap icon names:
+_icons = {
+    "date": "calendar3",
+    "document": "file-earmark",
+    "language": "vector-pen",
+    "project": "clipboard2",
+    "subject": "book",
+}
+
+
+@register.simple_tag
+def icon(name):
+    """An "official" project-specific icon for the common cases"""
+    if not (bs_name := _icons.get(name)):
+        raise template.TemplateSyntaxError(f"'icon' requires a registered icon name (got {name!r})")
+
+    return _bs_icon(bs_name)

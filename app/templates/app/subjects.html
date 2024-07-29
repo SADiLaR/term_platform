@@ -16,7 +16,7 @@
                 <ul class="list-unstyled">
                     {% for document in item.documents %}
                     <li class="mb-2">
-                        {% bs_icon "file-earmark" %}
+                        {% icon "document" %}
                         <a href="{% url 'document_detail' document.id %}">
                             {{ document.title }}
                         </a>
@@ -35,10 +35,10 @@
                 <ul class="list-unstyled">
                     {% for project in item.projects %}
                     <li class="mb-2">
-                       {% bs_icon "file-clipboard2" %}
-                       <a href="{% url 'project_detail' project.id %}">
-                           {{ project.name }}
-                       </a>
+                        {% icon "project" %}
+                        <a href="{% url 'project_detail' project.id %}">
+                            {{ project.name }}
+                        </a>
                     </li>
                     {% endfor %}
                 </ul>

@@ -32,12 +32,12 @@
 
         <div class="row">
           <p class="col-lg-6">
-              {% bs_icon "calendar3" %}
+              {% icon "date" %}
               {% trans "Start Date:" %} {{ project.start_date|date:"Y-m-d" }}
           </p>
 
           <p class="col-lg-6">
-              {% bs_icon "calendar3" %}
+              {% icon "date" %}
               {% trans "End Date:" %} {{ project.end_date|date:"Y-m-d" }}
           </p>
         </div>
@@ -60,7 +60,7 @@
             <h2>{% trans "Subjects" %}</h2>
             <ul class="list-unstyled">
                 {% for subject in subjects %}
-                <li>{% bs_icon "book" %}{{ subject.name }}</li>
+                <li class="mb-2">{% icon "subject" %}{{ subject.name }}</li>
                 {% endfor %}
             </ul>
         </div>
@@ -71,7 +71,7 @@
             <h2>{% trans "Languages" %}</h2>
             <ul class="list-unstyled">
                 {% for language in languages %}
-                <li>{% bs_icon "vector-pen" %}{{ language.name }}</li>
+                <li class="mb-2">{% icon "language" %}{{ language.name }}</li>
                 {% endfor %}
             </ul>
         </div>
