@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load i18n %}
+{% load bs_icons %}
 
 {% block content %}
 <div class="w-100 overflow-hidden row row-cols-1 row-cols-lg-2 m-0 p-2">{# row has unwanted margin #}
@@ -15,6 +16,7 @@
                     <p>{{ institution.abbreviation }}</p>
                     {% if institution.project_count %}
                     <p>
+                        {% icon "project" %}
                         {% blocktrans count project_count=institution.project_count trimmed %}
                             {{ project_count }} project
                         {% plural %}
@@ -24,6 +26,7 @@
                     {% endif %}
                     {% if institution.document_count %}
                     <p>
+                        {% icon "document" %}
                         {% blocktrans count document_count=institution.document_count trimmed %}
                             {{ document_count }} document
                         {% plural %}
