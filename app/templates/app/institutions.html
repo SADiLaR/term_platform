@@ -22,6 +22,15 @@
                         {% endblocktrans %}
                     </p>
                     {% endif %}
+                    {% if institution.document_count %}
+                    <p>
+                        {% blocktrans count document_count=institution.document_count trimmed %}
+                            {{ document_count }} document
+                        {% plural %}
+                            {{ document_count }} documents
+                        {% endblocktrans %}
+                    </p>
+                    {% endif %}
                 </div>
 		{% if institution.logo %}
                 <div class="col">

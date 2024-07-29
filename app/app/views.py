@@ -1,5 +1,5 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.db.models import Count, Prefetch
+from django.db.models import Count, F, Func, OuterRef, Prefetch, Subquery, Value
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.utils.http import urlencode
@@ -351,7 +351,17 @@ def institutions(request):
     template = "app/institutions.html"
     context = {}
 
-    institutions = Institution.objects.annotate(project_count=Count("project")).order_by("name")
+    # https://docs.djangoproject.com/en/stable/topics/db/aggregation/#combining-multiple-aggregations
+    subquery = (
+        DocumentFile.objects.filter(institution=OuterRef("id"))
+        .order_by()
+        .annotate(count=Func(F("id"), function="Count"))
+    )
+
+    institutions = Institution.objects.annotate(
+        project_count=Count("project"),
+        document_count=Subquery(subquery.values("count")),
+    ).order_by("name")
 
     institutions_array = []
 
@@ -375,6 +385,7 @@ def institutions(request):
         rating = (completed_fields_count / len(institution_dict)) * 100
         institution_dict["rating"] = round(rating)
         institution_dict["project_count"] = institution.project_count
+        institution_dict["document_count"] = institution.document_count
         institution_dict["id"] = institution.id
         institutions_array.append(institution_dict)
 
