@@ -13,7 +13,7 @@
     <div class="container-fluid mt-4 mb-5 p-0">{# container adds unwanted padding #}
 
         <div class="row" style="max-width: 1024px;">
-          <div class="col-lg-8">{# "wrong" indent simplifies comparison with documents.html #}
+          <div class="col-md-8">{# "wrong" indent simplifies comparison with documents.html #}
             <h2>
                 <a href="{% url 'project_detail' item.project.id %}" class="text-decoration-none">
                     {{ item.project.name }}
@@ -32,9 +32,9 @@
             </div>
 
           </div>
-          <div class="col-lg-4">
+          <div class="col-md-4">
               {% if item.logo %}
-              <img src="{{ item.logo.url }}" class="project-logo" height="100px"
+              <img src="{{ item.logo.url }}" class="logo100"
                    alt="{{ item.project.name }} logo"
               >
               {% endif %}
