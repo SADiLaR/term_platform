@@ -1,12 +1,5 @@
 {% extends "base_error.html" %}
 {% load i18n %}
 
-{% block error_content %}
-
-    <div class="card-body">
-            <h5 class="card-title">{% trans "Not Found (404)" %}</h5>
-            <p class="card-text">{% trans "The requested resource was not found on this server." %}</p>
-            <a href="{% url 'home' %}" class="btn btn-primary">{% trans "Go to home" %}</a>
-        </div>
-
-{% endblock error_content %}
+{% block error_title %}{% trans "Not found (404)" %}{% endblock %}
+{% block error_message %}{% trans "The requested page was not found on this server." %}{% endblock %}

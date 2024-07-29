@@ -1,18 +1,17 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block title %}{% trans "Error" %}{% endblock %}
 {% block content %}
 
-<div class="section mt-3 mb-3">
-    <div class="card text-center body-card">
-        <div class="card-header">
-            {% trans "Error" %}
-        </div>
-        <div id="error_content">
-        {% block error_content %}
-
-        {% endblock error_content %}
-        </div>
+<div class="m-3 card text-center body-card">
+    <div class="card-header">
+        {% trans "Error" %}
+    </div>
+    <div class="card-body">
+        <h1 class="card-title">{% block error_title %}Error{% endblock %}</h1>
+        <p class="card-text">{% block error_message %}An error occured{% endblock %}</p>
+        <a href="{% url 'home' %}" class="btn btn-primary">{% trans "Go to home" %}</a>
     </div>
 </div>
 
