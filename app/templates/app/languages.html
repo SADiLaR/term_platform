@@ -1,54 +1,56 @@
 {% extends "base.html" %}
 {% load static %}
 {% load i18n %}
+{% load bs_icons %}
 
 {% block content %}
-<br/>
-<div class="project-list">
-  <h2>{% trans "Languages" %}</h2>
-  <br>
+<div class="m-4 text-decoration-none">
+    <h1>{% trans "Information by language" %}</h1>
     <div class="row">
         {% for item in language_data %}
-          <h5>{{ item.language.name }}</h5>
-          <div class="col-md-6 col-12 detail-col">
-            <h6>{% trans "Documents" %}</h6>
+        <h2>{{ item.language.name }}</h2>
+        <div class="col-md-6">
+            <h3>{% trans "Documents" %}</h3>
             {% if item.documents.exists %}
-                <div class="documents">
-                    <ul>
-                        {% for document in item.documents %}
-                        <li>
-                          <span class="icon-text"><i class="detail-icon bi-file-earmark"></i></span>
-                          <span class="icon-text"><a href="{% url 'document_detail' document.id %}">{{ document.title }}</a></span>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
+            <div class="documents">
+                <ul class="list-unstyled">
+                    {% for document in item.documents %}
+                    <li class="mb-2">
+                        {% bs_icon "file-earmark" %}
+                        <a href="{% url 'document_detail' document.id %}">
+                            {{ document.title }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
             {% else %}
                 <p>{% trans "No documents available for this language." %}</p>
             {% endif %}
-          </div>
-          <div class="col-md-6 col-12 detail-col">
-              <h6>{% trans "Projects" %}</h6>
-              {% if item.projects.exists %}
-                  <div class="projects">
-                      <ul>
-                          {% for project in item.projects %}
-                          <li>
-                            <span class="icon-text"><i class="detail-icon bi-clipboard2"></i></span>
-                            <span class="icon-text"><a href="{% url 'project_detail' project.id %}">{{ project.name }}</a></span>
-                          </li>
-                          {% endfor %}
-                      </ul>
-                  </div>
-              {% else %}
-                  <p>{% trans "No projects available for this language." %}</p>
-              {% endif %}
-          </div>
-          <br>
-          <hr>
-          <br>
+        </div>
+        <div class="col-md-6">
+            <h3>{% trans "Projects" %}</h3>
+            {% if item.projects.exists %}
+            <div class="projects">
+                <ul class="list-unstyled">
+                    {% for project in item.projects %}
+                    <li class="mb-2">
+                        {% bs_icon "clipboard2" %}
+                        <a href="{% url 'project_detail' project.id %}">
+                            {{ project.name }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% else %}
+                <p>{% trans "No projects available for this language." %}</p>
+            {% endif %}
+        </div>
+        <hr>
         {% endfor %}
     </div>
+
 </div>
 
 {% endblock content %}

@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% load static %}
 {% load i18n %}
+{% load bs_icons %}
 
 {% block title %}{{ institution.name }}{% endblock %}
 {% block content %}
-<br/>
-<div class="detail">
+<div class="m-4">
     <p><a href="{% url 'institutions' %}">{% trans "Institutions" %}</a> > {{ institution.name }}</p>
 
-    <div class="detail-row row">
-        <div class="col-12 {% if institution.logo %}col-md-6{% else %}col-md-12{% endif %} detail-left-col">
+    <div class="mb-3 row">
+        <div class="{% if institution.logo %}col-md-6{% else %}col-md-12{% endif %}">
             <h1>{{ institution.name }} ({{ institution.abbreviation }})</h1>
             {% if institution.url %}
                 <p><a href="{{ institution.url }}">{{ institution.url }}</a></p>
@@ -20,21 +20,21 @@
         </div>
 
         {% if institution.logo %}
-        <div class="col-12 col-md-6 detail-right-col">
+        <div class="col-md-6">
             <img src="{{ institution.logo.url }}" alt="{{ institution.name }}" class="project-logo">
         </div>
         {% endif %}
     </div>
 
-    <div class="detail-row row">
-        <div class="col-md-6 col-12 detail-col">
+    <div class="mb-3 row">
+        <div class="col-md-6">
             <h2>{% trans "Projects" %}</h2>
             {% if projects %}
-            <ul>
+            <ul class="list-unstyled">
               {% for project in projects %}
-                  <li>
-                    <span class="icon-text"><i class="detail-icon bi-clipboard2"></i></span>
-                    <span class="icon-text"><a href="{% url 'project_detail' project.id %}">{{ project.name }}</a></span>
+                  <li class="mb-2">
+                      {% bs_icon "book" %}
+                      <a href="{% url 'project_detail' project.id %}">{{ project.name }}</a>
                   </li>
               {% endfor %}
             </ul>
@@ -42,14 +42,14 @@
                 <p>{% trans "No projects available for this institution." %}</p>
             {% endif %}
         </div>
-        <div class="col-md-6 col-12 detail-col">
+        <div class="col-md-6">
             <h2>{% trans "Documents" %}</h2>
             {% if documents %}
-            <ul>
+            <ul class="list-unstyled">
                 {% for document in documents %}
-                    <li>
-                      <span class="icon-text"><i class="detail-icon bi-file-earmark"></i></span>
-                      <span class="icon-text"><a href="{% url 'document_detail' document.id %}">{{ document.title }}</a></span>
+                    <li class="mb-2">
+                        {% bs_icon "book" %}
+                        <a href="{% url 'document_detail' document.id %}">{{ document.title }}</a>
                     </li>
                 {% endfor %}
             </ul>

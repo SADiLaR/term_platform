@@ -3,36 +3,34 @@
 {% load i18n %}
 
 {% block content %}
-
-    <div class="institution-card w-100">
+<div class="w-100 overflow-hidden row row-cols-1 row-cols-lg-2 m-0 p-2">{# row has unwanted margin #}
     {% for institution in institutions %}
-    <div class="all-cards section">
-        <div class="card uni-card">
-            <div class="institution-row">
-                <div class="left-col">
-                    <h5 class="card-title"><a href="{% url 'institution_detail' institution.id %}">{{ institution.name }}</a></h5>
-                    <p class="card-text">
-                        {{ institution.abbreviation }}
+    <div class="all-cards col p-2">
+        <div class="card">
+            <div class="row row-cols-auto row-cols-md-2 p-3" style="min-height: 160px;">
+                <div class="col">
+                    <h2 class="fs-5">
+                        <a href="{% url 'institution_detail' institution.id %}">{{ institution.name }}</a>
+                    </h2>
+                    <p>{{ institution.abbreviation }}</p>
+                    {% if institution.project_count %}
+                    <p>
+                        {% blocktrans count project_count=institution.project_count trimmed %}
+                            {{ project_count }} project
+                        {% plural %}
+                            {{ project_count }} projects
+                        {% endblocktrans %}
                     </p>
-                    <p class="card-text">
-                      {% if institution.project_count == 0 %}{% blocktrans %}no applicable project{% endblocktrans %}
-                      {% else %}
-                      {% blocktrans count project_count=institution.project_count %}{{ project_count }} applicable project{% plural %}{{ project_count }} applicable projects{% endblocktrans %}
-                      {% endif %}
-                    </p>
+                    {% endif %}
                 </div>
-                <div class="right-col">
-                    <div class="card-logo">
-                        {% if institution.logo %}
-                        <img src="{{ institution.logo.url }}" alt="{{ institution.name }} logo"
-                             class="uni-logo">
-                        {% endif %}
-                    </div>
+		{% if institution.logo %}
+                <div class="col">
+                    <img src="{{ institution.logo.url }}" alt="{{ institution.name }} logo" height="65px">
                 </div>
+	        {% endif %}
             </div>
         </div>
     </div>
     {% endfor %}
-    </div>
-
+</div>
 {% endblock content %}

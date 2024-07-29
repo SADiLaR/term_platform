@@ -1,84 +1,84 @@
 {% extends "base.html" %}
 {% load static %}
 {% load i18n %}
+{% load bs_icons %}
 
 {% block title %}{{ project.name }}{% endblock %}
 {% block content %}
-<br/>
-<div class="detail">
-  <p><a href="{% url 'projects' %}">{% trans "Projects" %}</a> > {{ project.name }}</p>
+<div class="m-4">
+    <p><a href="{% url 'projects' %}">{% trans "Projects" %}</a> > {{ project.name }}</p>
 
-  <div class="detail-row row">
-
-    <div class="col-12 {% if logo %}col-md-6{% else %}col-md-12{% endif %} detail-left-col">
-      <h1>{{ project.name }}</h1>
-      <a href="{{ project.url }}">{{ project.url }}</a>
-      <p>
-        {{ project.description | linebreaks }}
-      </p>
-      <p>
-          <a href="{% url 'institution_detail' project.institution.id %}">
-              {{ project.institution.name }}
-          </a>
-      </p>
-
-        <div class=project-date-row>
-          <div class=project-date-left-col>
-            <p>
-              <span class="icon-text"><i class="project-icon bi-calendar3"></i></span>
-              <span class="icon-text">{% trans "Start Date:" %} {{ project.start_date|date:"Y-m-d" }}<span class="icon-text">
-            </p>
-          </div>
-
-          <div class=project-date-right-col>
-            <p>
-              <span class="icon-text"><i class="project-icon bi-calendar3"></i></span>
-              <span class="icon-text">{% trans "End Date:" %} {{ project.end_date|date:"Y-m-d" }}<span class="icon-text">
-            </p>
-          </div>
+    <div class="mb-3 row">
+      {# incorrect indent fascilitates comparison with document_detail.html #}
+      <div class="{% if logo %}col-md-6{% else %}col-md-12{% endif %}">
+        <h1>{{ project.name }}</h1>
+        {% if project.url %}
+        <div class="mb-2">
+            <a href="{{ project.url }}" target="_blank"
+               title="{% trans 'External link' %}">
+                {{ project.url }}
+            </a>
+        </div>
+        {% endif %}
+        <div class="limit-text-width">
+          {{ project.description | linebreaks }}
         </div>
 
-    </div>
+        <p>
+            <a href="{% url 'institution_detail' project.institution.id %}">
+                {{ project.institution.name }}
+            </a>
+        </p>
 
-    <div class="col-12 col-md-6 detail-right-col">
-      {% if logo %}
-      <img src="{{ logo.url }}" alt="{% blocktrans with project_name=project.name %}{{ project_name }} logo{% endblocktrans %}"
-           class="project-logo">
-      {% endif %}
-    </div>
+        <div class="row">
+          <p class="col-lg-6">
+              {% bs_icon "calendar3" %}
+              {% trans "Start Date:" %} {{ project.start_date|date:"Y-m-d" }}
+          </p>
 
-  </div>
+          <p class="col-lg-6">
+              {% bs_icon "calendar3" %}
+              {% trans "End Date:" %} {{ project.end_date|date:"Y-m-d" }}
+          </p>
+        </div>
 
-
-  <div class="detail-row row">
-    <div class="col-md-6 col-12 detail-col">
-      <div>
-          <h2>{% trans "Subjects" %}</h2>
-          <ul>
-              {% for subject in subjects %}
-              <li>
-                <span class="icon-text"><i class="detail-icon bi-book"></i></span>
-                <span class="icon-text">{{ subject.name }}</span>
-              </li>
-              {% endfor %}
-          </ul>
       </div>
+
+      <div class="col-md-6">
+        {% if logo %}
+        <img src="{{ logo.url }}" class="project-logo"
+             alt="{% blocktrans with project_name=project.name %}{{ project_name }} logo{% endblocktrans %}"
+        >
+        {% endif %}
+      </div>
+
     </div>
 
-    <div class="col-md-6 col-12 detail-col">
-      <div>
-        <h2>{% trans "Languages" %}</h2>
-        <ul>
-            {% for language in languages %}
-            <li>
-              <span class="icon-text"><i class="detail-icon bi-vector-pen"></i></span>
-              <span class="icon-text">{{ language.name }}</span>
-            </li>
-            {% endfor %}
-        </ul>
-      </div>
+    <div class="row">
+        {% if subjects %}
+        <div class="col-md-6">
+            <h2>{% trans "Subjects" %}</h2>
+            <ul class="list-unstyled">
+                {% for subject in subjects %}
+                <li>{% bs_icon "book" %}{{ subject.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if languages %}
+        <div class="col-md-6">
+            <h2>{% trans "Languages" %}</h2>
+            <ul class="list-unstyled">
+                {% for language in languages %}
+                <li>{% bs_icon "vector-pen" %}{{ language.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
     </div>
-  </div>
+
 </div>
 
 {% endblock content %}

@@ -36,7 +36,9 @@
        <div class="card-items">
            <h5 class="card-title">{% trans "Search" %}</h5>
            <p>
-               {% blocktrans %}This platforms hosts terminology and other useful language resources.{% endblocktrans %}
+               {% blocktrans trimmed %}
+                   This platforms hosts terminology and other useful language resources.
+               {% endblocktrans %}
            </p>
            <p>
            <form method="get" action="{% url 'search' %}">

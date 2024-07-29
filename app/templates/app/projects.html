@@ -1,72 +1,68 @@
 {% extends "base.html" %}
 {% load static %}
 {% load i18n %}
+{% load bs_icons %}
 
 {% block content %}
+<div class="m-4">
+    <h1>{%trans "Projects" %}</h1>
 
     {% include "app/_subj_lang_institution_filter.html" %}
-<br />
 
-<div class="project-list">
-  {% for project in projects %}
-  <div class="project-border">
-  <div class="project-header">
-    <div class="project-row">
-        <div class="project-left-col">
-          <h3>
-            <a class="project-name" href="{% url 'project_detail' project.project.id %}">
-                {{ project.project.name }}
-            </a>
-          </h3>
-        <div class="card-text-project">
-            <a href="{{ project.project.url }}" target="_blank" class="project-url" title="External link">
-                {{ project.project.url }}
-            </a>
+    {% for item in projects %}
+    <div class="container-fluid mt-4 mb-5 p-0">{# container adds unwanted padding #}
+
+        <div class="row" style="max-width: 1024px;">
+          <div class="col-lg-8">{# "wrong" indent simplifies comparison with documents.html #}
+            <h2>
+                <a href="{% url 'project_detail' item.project.id %}" class="text-decoration-none">
+                    {{ item.project.name }}
+                </a>
+            </h2>
+            {% if item.project.url %}
+            <div>
+                <a href="{{ item.project.url }}" target="_blank"
+                   title="{% trans 'External link' %}">
+                    {{ item.project.url }}
+                </a>
+            </div>
+            {% endif %}
+            <div class="fs-5">
+                {{ item.institution_name }}
+            </div>
+
+          </div>
+          <div class="col-lg-4">
+              {% if item.logo %}
+              <img src="{{ item.logo.url }}" class="project-logo" height="100px"
+                   alt="{{ item.project.name }} logo"
+              >
+              {% endif %}
+          </div>
         </div>
-        <div class="card-text-project project-text">
-            {{ project.institution_name }}
+
+        <div>
+            <p class="limit-text-width">
+                {{ item.description|truncatewords:30 }}
+                <a href="{% url 'project_detail' item.project.id %}">{% trans "Read more" %}</a>
+            </p>
+
+            {% if item.languages %}
+                <div>{% bs_icon "vector-pen" %} {{ item.languages }}</div>
+            {% endif %}
+
+            {% if item.subjects %}
+                <div>{% bs_icon "book" %} {{ item.subjects }}</div>
+            {% endif %}
+
+            {% if item.date %}
+                <div>{% bs_icon "calendar3" %} {{ item.date }}</div>
+            {% endif %}
+
         </div>
-      </div>
-      <div class="project-right-col">
-        {% if project.logo %}
-        <img src="{{ project.logo.url }}" alt="{{ project.name }} logo"
-             class="project-logo">
-        {% endif %}
-      </div>
-    </div>
-  </div>
-  <div class="project-body">
-    <div class="card-text-description">
-        {{ project.description|truncatewords:30 }} <a href="{% url 'project_detail' project.project.id %}">{% trans "Read more" %}</a>
-    </div>
-    <div class="card-text-project">
-      {% if project.languages %}
-        <span class="icon-text"><i class="project-icon bi-vector-pen"></i></span>
-        <span class="icon-text">{{ project.languages }}</span>
-      {% endif %}
-    </div>
-    <div class="card-text-project">
-      {% if project.subjects %}
-        <span class="icon-text"><i class="project-icon bi-book"></i></span>
-        <span class="icon-text">{{ project.subjects }}</span>
-      {% endif %}
-    </div>
-    <div class="card-text-project">
-      {% if project.date %}
-        <span class="icon-text"><i class="project-icon bi-calendar3"></i></span>
-        <span class="icon-text">{{ project.date }}</span>
-      {% endif %}
-    </div>
 
-  </div>
-  </div>
+    </div>
+    {% endfor %}
 
-  <br />
-  <br />
-  <br />
-  {% endfor %}
 </div>
-
-
-
 {% endblock content %}
