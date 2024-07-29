@@ -16,68 +16,34 @@
 </head>
 
 <body>
-<!--header-->
-{% block app_header %}
 <header>
-    <div class="header-container">
-            <div class="nav-logo">
-                <a href="{% url 'home' %}">
-                    <img src=" {% static 'img/sadilar.png' %}" class="main-logo" alt="SADiLaR">
-                </a>
-            </div>
-            <div class="nav-menu">
-                <ul class="nav nav-pills">
-                    <li class="nav-item">
-                        <a
-                                {% if current_page == 'home' %} class="nav-link active" aria-current="page" {% endif %}
-                                class="nav-link" href="{% url 'home' %}">{% trans "Home" %}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a
-                                {% if current_page == 'search' %} class="nav-link active" aria-current="page" {% endif %}
-                                class="nav-link" href="{% url 'search' %}">{% trans "Search" %}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a
-                                {% if current_page == 'institutions' %} class="nav-link active" aria-current="page" {% endif %}
-                                class="nav-link" href="{% url 'institutions' %}">{% trans "Institutions" %}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a
-                                {% if current_page == 'projects' %} class="nav-link active" aria-current="page" {% endif %}
-                                class="nav-link" href="{% url 'projects' %}">{% trans "Projects" %}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a
-                                {% if current_page == 'documents' %} class="nav-link active" aria-current="page" {% endif %}
-                                class="nav-link" href="{% url 'documents' %}">{% trans "Documents" %}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a
-                                {% if current_page == 'languages' %} class="nav-link active" aria-current="page" {% endif %}
-                                class="nav-link" href="{% url 'languages' %}">{% trans "Languages" %}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a
-                                {% if current_page == 'subjects' %} class="nav-link active" aria-current="page" {% endif %}
-                                class="nav-link" href="{% url 'subjects' %}">{% trans "Subjects" %}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'admin:index' %}">{% trans "Admin" %}</a>
-                    </li>
+{% block header %}
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a href="{% url 'home' %}" class="navbar-brand">
+                <img src="{% static 'img/sadilar.png' %}" class="main-logo" width="140" height="auto" alt="SADiLaR">
+            </a>
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#navbarPills"
+                    aria-controls="navbarPills" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarPills">
+                <ul class="nav-pills navbar-nav me-auto mb-2 mb-lg-0">
+                    {% include "app/_nav_item.html" with view="home" label=_("Home") %}
+                    {% include "app/_nav_item.html" with view="search" label=_("Search") %}
+                    {% include "app/_nav_item.html" with view="institutions" label=_("Institutions") %}
+                    {% include "app/_nav_item.html" with view="projects" label=_("Projects") %}
+                    {% include "app/_nav_item.html" with view="documents" label=_("Documents") %}
+                    {% include "app/_nav_item.html" with view="languages" label=_("Languages") %}
+                    {% include "app/_nav_item.html" with view="subjects" label=_("Subjects") %}
+                    {% include "app/_nav_item.html" with view="admin:index" label=_("Admin") %}
                 </ul>
             </div>
-    </div>
+        </div>
+    </nav>
+{% endblock header %}
 </header>
-{% endblock app_header %}
-<!--end of header-->
 
 <div class="content">
     {% block content %}
