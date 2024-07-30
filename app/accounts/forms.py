@@ -69,14 +69,16 @@ class CustomPasswordResetForm(PasswordResetForm):
         The "clean_email" method is overridden to ensure that only active staff members can reset their passwords. This is done to prevent unauthorized users from resetting their passwords and gaining access to the system.
         and prevent users getting an email to reset their password if they are not active or staff members.
         """
+
         User = get_user_model()
         email = self.cleaned_data["email"]
-        users = User.objects.filter(email=email)
-        if not users.exists():
-            raise forms.ValidationError("There is a error please contact the administrator.")
 
-        for user in users:
-            if not user.is_active or not user.is_staff:
-                raise forms.ValidationError("There is a error please contact the administrator.")
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            raise forms.ValidationError("There is an error please contact the administrator.")
+
+        if not user.is_active or not user.is_staff:
+            raise forms.ValidationError("There is an error please contact the administrator.")
 
         return email
