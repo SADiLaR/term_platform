@@ -9,15 +9,15 @@
         <div class="section mt-3 mb-3">
             <div class="card body-card">
                 <div class="user-account-body">
-                    <h2>Resend Activation Email</h2>
+                    <h2>{% trans "Resend Activation Email" %}</h2>
                     <form method="post">
                         {% csrf_token %}
-                        <p>Please enter your email address to resend the activation email.</p>
+                        <p>{% trans "Please enter your email address to resend the activation email." %]</p>
                         <div class="form-group">
                             <input class="form-control" type="email" name="email" required placeholder="Email">
                         </div>
                         <div class="submit-row">
-                            <button type="submit" class="btn btn-primary">Resend</button>
+                            <button type="submit" class="btn btn-primary">{% trans "Resend" %}</button>
                         </div>
                         <br>
                         {% if error %}
@@ -29,4 +29,3 @@
         </div>
     </div>
 {% endblock %}
-

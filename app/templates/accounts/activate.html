@@ -6,8 +6,14 @@
 
 {% block content %}
     <div class="container">
-        <h1>Account Activated</h1>
-        <p>Your account has been successfully activated. You can now log in using your credentials.</p>
-        <a href="{% url 'accounts:login' %}">Login</a>
+      <div class="section mt-3 mb-3">
+          <div class="card body-card">
+              <div class="user-account-body">
+                <h1>{% trans "Account Activated " %}</h1>
+                <p>{% trans "Your account has been successfully activated. You can now log in using your credentials. "%}</p>
+                <a href="{% url 'accounts:login' %}">{% trans "Login" %}</a>
+              </div>
+          </div>
+      </div>
     </div>
 {% endblock %}
