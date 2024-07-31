@@ -10,8 +10,8 @@
         {% for item in subject_data %}
         <h2>{{ item.subject.name }}</h2>
         <div class="col-md-6">
-            <h3>{% trans "Documents" %}</h3>
             {% if item.documents.exists %}
+            <h3>{% trans "Documents" %}</h3>
             <div class="documents">
                 <ul class="list-unstyled">
                     {% for document in item.documents %}
@@ -25,12 +25,16 @@
                 </ul>
             </div>
             {% else %}
-                <p>{% trans "No documents available for this subject." %}</p>
+                {# Only show this in two-column mode to ensure consistent layout and placement #}
+                <div class="d-none d-md-block">
+                    <h3>{% trans "Documents" %}</h3>
+                    <p>{% trans "No documents available for this subject." %}</p>
+                </div>
             {% endif %}
         </div>
         <div class="col-md-6">
-            <h3>{% trans "Projects" %}</h3>
             {% if item.projects.exists %}
+            <h3>{% trans "Projects" %}</h3>
             <div class="projects">
                 <ul class="list-unstyled">
                     {% for project in item.projects %}
@@ -44,7 +48,11 @@
                 </ul>
             </div>
             {% else %}
-                <p>{% trans "No projects available for this subject." %}</p>
+                {# Only show this in two-column mode to ensure consistent layout and placement #}
+                <div class="d-none d-md-block">
+                    <h3">{% trans "Projects" %}</h3>
+                    <p>{% trans "No projects available for this subject." %}</p>
+                </div>
             {% endif %}
         </div>
         <hr>
