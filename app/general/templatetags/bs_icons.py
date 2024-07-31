@@ -17,7 +17,7 @@ icon_name_re = re.compile(r"[a-z0-9\-]+")
 
 def _bs_icon(name):
     assert icon_name_re.fullmatch(name)
-    return mark_safe(f'<i class="project-icon bi-{name}"></i> ')
+    return mark_safe(f'<i class="bi-{name}"></i> ')
     # The trailing space is intentional: Since this is an inline element
     # usually followed by text, the absence/presence of a space is significant,
     # and usually wanted for layout. That's too hard to remember, so we always
