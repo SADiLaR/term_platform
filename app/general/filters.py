@@ -56,6 +56,7 @@ class DocumentFileFilter(django_filters.FilterSet):
             "search_headline",
             "view",
             "logo_url",
+            "associated_url",
         )
 
         # In the queries below, any differences between models must be fixed
@@ -68,6 +69,7 @@ class DocumentFileFilter(django_filters.FilterSet):
                 heading=F("name"),
                 view=Value("project_detail"),
                 logo_url=F("logo"),
+                associated_url=F("url"),
                 search_headline=SearchHeadline("description", query, max_words=15, min_words=10),
                 rank=SearchRank(project_search_vector, query, normalization=16),
                 search=project_search_vector,
@@ -86,6 +88,7 @@ class DocumentFileFilter(django_filters.FilterSet):
             heading=F("title"),
             view=Value("document_detail"),
             logo_url=Value(""),
+            associated_url=F("url"),
             rank=search_rank,
             search_headline=search_headline,
         ).values(*fields)
