@@ -23,7 +23,7 @@
         <div class="mb-3">
             <a href="{{ document.uploaded_file.url }}" download>
             <button class="btn btn-primary" type="submit">
-                {% bs_icon "file-earmark-arrow-down-fill" %} {% trans "Download File" %}
+                {% bs_icon "file-earmark-arrow-down-fill" %}{% trans "Download File" %}
             </button>
             </a>
         </div>
@@ -50,7 +50,7 @@
             <h2>{% trans "Subjects" %}</h2>
             <ul class="list-unstyled">
                 {% for subject in document.subjects.all %}
-                <li class="mb-2">{% icon "subject" %}{{ subject.name }}</li>
+                <li class="m-2">{% icon "subject" %}{{ subject.name }}</li>
                 {% endfor %}
             </ul>
         </div>
@@ -61,7 +61,7 @@
             <h2>{% trans "Languages" %}</h2>
             <ul class="list-unstyled">
                 {% for language in document.languages.all %}
-                <li class="mb-2">{% icon "language" %}{{ language.name }}</li>
+                <li class="m-2">{% icon "language" %}{{ language.name }}</li>
                 {% endfor %}
             </ul>
         </div>

@@ -17,7 +17,14 @@ icon_name_re = re.compile(r"[a-z0-9\-]+")
 
 def _bs_icon(name):
     assert icon_name_re.fullmatch(name)
-    return mark_safe(f'<i class="project-icon bi-{name}"></i>')
+    return mark_safe(f'<i class="project-icon bi-{name}"></i> ')
+    # The trailing space is intentional: Since this is an inline element
+    # usually followed by text, the absence/presence of a space is significant,
+    # and usually wanted for layout. That's too hard to remember, so we always
+    # add it. Multiple spaces are equal to one. That way the exact layout of
+    # code in the templates doesn't matter. Beware of using {% spaceless %}
+    # which will negate this. A pure CSS solution escaped me thus far, since a
+    # space will take additional space in addition to a margin.
 
 
 @register.simple_tag
