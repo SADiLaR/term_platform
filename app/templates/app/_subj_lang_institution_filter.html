@@ -33,7 +33,7 @@
                 {% for institution in institutions %}
                     <option value="{{ institution.id }}"
                             {% if request.GET.institution == institution.id|stringformat:"s" %}selected{% endif %}>
-                        {{ institution.name }}
+                        {{ institution }}
                     </option>
                 {% endfor %}
             </select>
