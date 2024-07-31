@@ -33,7 +33,7 @@
                                 {% endif %}
                             </p>
                             <p>
-			        <span><i>{{ result.rank }}</i></span>
+                                <span><i>{{ result.rank }}</i></span>
                             </p>
                         </div>
                     {% endfor %}
@@ -47,8 +47,8 @@
                         <a href="{{ search_params }}&page={{ documents.previous_page_number }}">&lt; previous</a>
                     {% endif %}
                     <span class="current">
-                         Page {{ documents.number }} of {{ documents.paginator.num_pages }}.
-                    </span>
+                     Page {{ documents.number }} of {{ documents.paginator.num_pages }}.
+                </span>
                     {% if documents.has_next %}
                         <a href="{{ search_params }}&page={{ documents.next_page_number }}">next &gt;</a>
                         <a href="{{ search_params }}&page={{ documents.paginator.num_pages }}">last

@@ -1,0 +1,17 @@
+{% extends "email_base.html" %}
+
+{% block title %}Activate Your Account{% endblock %}
+
+{% block content %}
+<h1>Activate Your Account</h1>
+<p>Hi {{ user.username }},</p>
+<p>Thank you for signing up for our service. Please click the link below to activate your account:</p>
+<p>
+    <a href="http://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token %}" class="button">
+        Activate your account
+    </a>
+</p>
+<p>If you did not sign up for this account, please ignore this email.</p>
+<p>Thank you,</p>
+<p>The Team</p>
+{% endblock %}
