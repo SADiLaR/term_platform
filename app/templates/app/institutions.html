@@ -3,6 +3,8 @@
 {% load i18n %}
 {% load bs_icons %}
 
+{% block title %}{% trans "Institutions" %}{% endblock %}
+
 {% block content %}
 <div class="w-100 overflow-hidden row row-cols-1 row-cols-lg-2 m-0 p-2">{# row has unwanted margin #}
     {% for institution in institutions %}

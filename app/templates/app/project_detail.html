@@ -4,6 +4,7 @@
 {% load bs_icons %}
 
 {% block title %}{{ project.name }}{% endblock %}
+
 {% block content %}
 <div class="m-4">
     <p><a href="{% url 'projects' %}">{% trans "Projects" %}</a> > {{ project.name }}</p>

@@ -3,9 +3,11 @@
 {% load i18n %}
 {% load bs_icons %}
 
+{% block title %}{% trans "Projects" %}{% endblock %}
+
 {% block content %}
 <div class="m-4">
-    <h1>{%trans "Projects" %}</h1>
+    <h1>{% trans "Projects" %}</h1>
 
     {% include "app/_subj_lang_institution_filter.html" %}
 
