@@ -413,6 +413,7 @@ def search(request):
         page_obj = paginator.page(paginator.num_pages)
 
     context = {
+        "current_page": "search",
         "search_results": paginator.page(page_obj.number),
         "filter": f,
         "documents": page_obj,
