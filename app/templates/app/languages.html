@@ -13,7 +13,7 @@
         <h2>{{ item.language.name }}</h2>
         <div class="col-md-6">
             {% if item.documents.exists %}
-            <h3>{% trans "Documents" %}</h3>
+            <h3 class="fs-4">{% trans "Documents" %}</h3>
             <div class="documents">
                 <ul class="list-unstyled">
                     {% for document in item.documents %}
@@ -29,14 +29,14 @@
             {% else %}
                 {# Only show this in two-column mode to ensure consistent layout and placement #}
                 <div class="d-none d-md-block">
-                    <h3>{% trans "Documents" %}</h3>
+                    <h3 class="fs-4">{% trans "Documents" %}</h3>
                     <p>{% trans "No documents available for this language." %}</p>
                 </div>
             {% endif %}
         </div>
         <div class="col-md-6">
             {% if item.projects.exists %}
-            <h3>{% trans "Projects" %}</h3>
+            <h3 class="fs-4">{% trans "Projects" %}</h3>
             <div class="projects">
                 <ul class="list-unstyled">
                     {% for project in item.projects %}
@@ -52,7 +52,7 @@
             {% else %}
                 {# Only show this in two-column mode to ensure consistent layout and placement #}
                 <div class="d-none d-md-block">
-                    <h3>{% trans "Projects" %}</h3>
+                    <h3 class="fs-4">{% trans "Projects" %}</h3>
                     <p>{% trans "No projects available for this language." %}</p>
                 </div>
             {% endif %}
