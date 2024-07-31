@@ -1,9 +1,6 @@
 import unittest
 from datetime import datetime
 
-import six
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
-
 from accounts.tokens import AccountActivationTokenGenerator
 
 
@@ -22,17 +19,13 @@ class TestAccountActivationTokenGenerator(unittest.TestCase):
     def test_make_hash_value_active_user(self):
         user = User(1, True)
         hash_val = self.generator._make_hash_value(user, self.timestamp)
-        expected_val = (
-            six.text_type(user.pk) + six.text_type(self.timestamp) + six.text_type(user.is_active)
-        )
+        expected_val = f"{user.pk}{self.timestamp}{user.is_active}"
         self.assertEqual(hash_val, expected_val)
 
     def test_make_hash_value_inactive_user(self):
         user = User(1, False)
         hash_val = self.generator._make_hash_value(user, self.timestamp)
-        expected_val = (
-            six.text_type(user.pk) + six.text_type(self.timestamp) + six.text_type(user.is_active)
-        )
+        expected_val = f"{user.pk}{self.timestamp}{user.is_active}"
         self.assertEqual(hash_val, expected_val)
 
 

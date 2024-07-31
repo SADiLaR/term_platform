@@ -13,7 +13,7 @@ class AccountActivationTokenGenerator(PasswordResetTokenGenerator):
         calculated by concatenating the user's primary key, timestamp, and active
         status.
 
-        DO NOT MODIFY THIS METHOD. UNLESS YOU GET PERMISSION FROM THE PROJECT OWNER.
+        DO NOT MODIFY THIS METHOD, UNLESS YOU GET PERMISSION FROM THE PROJECT OWNER.
 
     """
 
