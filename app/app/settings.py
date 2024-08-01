@@ -68,13 +68,13 @@ MIDDLEWARE = [
     # DebugToolbarMiddleware should go here if enabled. Done below. See
     # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#add-the-middleware
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "simple_history.middleware.HistoryRequestMiddleware",
-    "django.middleware.locale.LocaleMiddleware",
 ]
 
 # Add debug toolbar middleware
