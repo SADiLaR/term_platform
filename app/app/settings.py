@@ -236,7 +236,7 @@ STORAGES = {
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGGING_FOLDER_DEFAULT = os.path.abspath(os.path.join("/logging/"))
+LOGGING_DIR = Path("/logging")
 
 # Internationalization
 
@@ -283,9 +283,7 @@ else:
             "file": {
                 "level": os.environ.get("LOGGING_HANDLERS_LEVEL", "WARNING"),
                 "class": "logging.FileHandler",
-                "filename": os.path.join(
-                    LOGGING_FOLDER_DEFAULT, os.environ.get("LOGGING_FILE", "debug.log")
-                ),
+                "filename": LOGGING_DIR / os.environ.get("LOGGING_FILE", "debug.log"),
                 "formatter": "verbose",
             },
         },

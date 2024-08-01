@@ -1,15 +1,14 @@
 import logging
 import os
-import sys
 
 from django.test import TestCase
 
 
 class LoggingTest(TestCase):
     def setUp(self):
-        LOGGING_FOLDER_DEFAULT = os.path.abspath(os.path.join("/logging/"))
+        LOGGING_DIR = "/logging"
         self.logger = logging.getLogger("django")
-        self.log_file = os.path.join(LOGGING_FOLDER_DEFAULT, "debug.log")
+        self.log_file = os.path.join(LOGGING_DIR, "debug.log")
 
     def test_log_file_created(self):
         """Test if the log file is created."""
