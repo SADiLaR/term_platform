@@ -29,6 +29,7 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.getenv("DEBUG", ""))
+DEBUG_TOOLBAR = DEBUG  # to toggle separately if we want to
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split()
 USE_X_FORWARDED_HOST = bool(os.getenv("USE_X_FORWARDED_HOST", ""))
@@ -50,13 +51,14 @@ INSTALLED_APPS = [
     "accounts",
     "django_filters",
 ]
-
-# Add django-extensions to the installed apps if DEBUG is True
 if DEBUG:
     INSTALLED_APPS += [
         "django_extensions",
-        "debug_toolbar",
     ]
+    if DEBUG_TOOLBAR:
+        INSTALLED_APPS += [
+            "debug_toolbar",
+        ]
 
 AUTH_USER_MODEL = "users.CustomUser"
 
@@ -74,7 +76,7 @@ MIDDLEWARE = [
 ]
 
 # Add debug toolbar middleware
-if DEBUG:
+if DEBUG and DEBUG_TOOLBAR:
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
 ROOT_URLCONF = "app.urls"
