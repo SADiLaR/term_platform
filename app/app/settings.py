@@ -29,6 +29,7 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.getenv("DEBUG", ""))
+DEBUG_TOOLBAR = DEBUG  # to toggle separately if we want to
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split()
 USE_X_FORWARDED_HOST = bool(os.getenv("USE_X_FORWARDED_HOST", ""))
@@ -50,32 +51,35 @@ INSTALLED_APPS = [
     "accounts",
     "django_filters",
 ]
-
-# Add django-extensions to the installed apps if DEBUG is True
 if DEBUG:
     INSTALLED_APPS += [
         "django_extensions",
-        "debug_toolbar",
     ]
+    if DEBUG_TOOLBAR:
+        INSTALLED_APPS += [
+            "debug_toolbar",
+        ]
 
 AUTH_USER_MODEL = "users.CustomUser"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    # DebugToolbarMiddleware should go here if enabled. Done below. See
+    # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#add-the-middleware
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "simple_history.middleware.HistoryRequestMiddleware",
-    "django.middleware.locale.LocaleMiddleware",
 ]
 
 # Add debug toolbar middleware
-if DEBUG:
-    MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
+if DEBUG and DEBUG_TOOLBAR:
+    MIDDLEWARE.insert(2, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
 ROOT_URLCONF = "app.urls"
 
@@ -116,16 +120,43 @@ DATABASES = {
     }
 }
 
-# toolbar settings
 if DEBUG:
-    DEBUG_TOOLBAR_CONFIG = {
-        "IS_RUNNING_TESTS": False,
-        "SHOW_TOOLBAR_CALLBACK": lambda request: DEBUG,
-    }
+    # Some things rely on the setting INTERNAL_IPS:
+    #  - debug_toolbar.middleware.show_toolbar
+    #  - django.template.context_processors.debug
+    # See https://docs.djangoproject.com/en/stable/ref/settings/#internal-ips
+    # Inside a docker container, it isn't trivial to get the IP address of the
+    # Docker host that will appear in REMOTE_ADDR. The following seems to work
+    # for now to add support for a range of IP addresses without having to put
+    # a huge list in INTERNAL_IPS, e.g. with
+    #    map(str, ipaddress.ip_network('172.0.0.0/24'))
+    # If this can't resolve the name "host.docker.internal", we assume that the
+    # browser will contact localhost.
+    import socket
 
-    INTERNAL_IPS = [
-        "host.docker.internal",
-    ]
+    try:
+        host_ip = socket.gethostbyname("host.docker.internal")
+    except socket.gaierror:
+        # presumably not in docker
+        host_ip = None
+
+    import ipaddress
+
+    # Based on https://code.djangoproject.com/ticket/3237#comment:12
+    class CIDRList(list):
+        def __init__(self, addresses):
+            """Create a new ip_network object for each address range provided."""
+            self.networks = [ipaddress.ip_network(address, strict=False) for address in addresses]
+
+        def __contains__(self, address):
+            """Check if the given address is contained in any of the networks."""
+            return any([ipaddress.ip_address(address) in network for network in self.networks])
+
+    if host_ip:
+        INTERNAL_IPS = CIDRList([f"{host_ip}/8"])
+    else:
+        INTERNAL_IPS = ["127.0.0.1"]
+
 
 # Email settings
 EMAIL_HOST = os.environ.get("EMAIL_HOST")
@@ -205,7 +236,7 @@ STORAGES = {
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGGING_FOLDER_DEFAULT = os.path.abspath(os.path.join("/logging/"))
+LOGGING_DIR = Path("/logging")
 
 # Internationalization
 
@@ -252,9 +283,7 @@ else:
             "file": {
                 "level": os.environ.get("LOGGING_HANDLERS_LEVEL", "WARNING"),
                 "class": "logging.FileHandler",
-                "filename": os.path.join(
-                    LOGGING_FOLDER_DEFAULT, os.environ.get("LOGGING_FILE", "debug.log")
-                ),
+                "filename": LOGGING_DIR / os.environ.get("LOGGING_FILE", "debug.log"),
                 "formatter": "verbose",
             },
         },
