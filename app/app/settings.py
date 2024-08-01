@@ -118,16 +118,43 @@ DATABASES = {
     }
 }
 
-# toolbar settings
 if DEBUG:
-    DEBUG_TOOLBAR_CONFIG = {
-        "IS_RUNNING_TESTS": False,
-        "SHOW_TOOLBAR_CALLBACK": lambda request: DEBUG,
-    }
+    # Some things rely on the setting INTERNAL_IPS:
+    #  - debug_toolbar.middleware.show_toolbar
+    #  - django.template.context_processors.debug
+    # See https://docs.djangoproject.com/en/stable/ref/settings/#internal-ips
+    # Inside a docker container, it isn't trivial to get the IP address of the
+    # Docker host that will appear in REMOTE_ADDR. The following seems to work
+    # for now to add support for a range of IP addresses without having to put
+    # a huge list in INTERNAL_IPS, e.g. with
+    #    map(str, ipaddress.ip_network('172.0.0.0/24'))
+    # If this can't resolve the name "host.docker.internal", we assume that the
+    # browser will contact localhost.
+    import socket
 
-    INTERNAL_IPS = [
-        "host.docker.internal",
-    ]
+    try:
+        host_ip = socket.gethostbyname("host.docker.internal")
+    except socket.gaierror:
+        # presumably not in docker
+        host_ip = None
+
+    import ipaddress
+
+    # Based on https://code.djangoproject.com/ticket/3237#comment:12
+    class CIDRList(list):
+        def __init__(self, addresses):
+            """Create a new ip_network object for each address range provided."""
+            self.networks = [ipaddress.ip_network(address, strict=False) for address in addresses]
+
+        def __contains__(self, address):
+            """Check if the given address is contained in any of the networks."""
+            return any([ipaddress.ip_address(address) in network for network in self.networks])
+
+    if host_ip:
+        INTERNAL_IPS = CIDRList([f"{host_ip}/8"])
+    else:
+        INTERNAL_IPS = ["127.0.0.1"]
+
 
 # Email settings
 EMAIL_HOST = os.environ.get("EMAIL_HOST")
