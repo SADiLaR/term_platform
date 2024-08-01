@@ -65,6 +65,8 @@ AUTH_USER_MODEL = "users.CustomUser"
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    # DebugToolbarMiddleware should go here if enabled. Done below. See
+    # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#add-the-middleware
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -77,7 +79,7 @@ MIDDLEWARE = [
 
 # Add debug toolbar middleware
 if DEBUG and DEBUG_TOOLBAR:
-    MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
+    MIDDLEWARE.insert(2, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
 ROOT_URLCONF = "app.urls"
 
