@@ -60,13 +60,6 @@ class TestSearchFilter(TestCase):
         self.assertEqual(len(qs), 1)
         self.assertEqual(qs[0]["id"], self.doc1.id)
 
-    def test_document_type_filter(self):
-        data = {"document_type": ["glossary"]}
-        filter = DocumentFileFilter(data=data)
-        qs = filter.qs
-        self.assertEqual(len(qs), 2)
-        self.assertCountEqual([qs[0]["id"], qs[1]["id"]], [self.doc1.id, self.doc2.id])
-
     def test_subjects_filter(self):
         data = {"subjects": [self.subject1.id]}
         filter = DocumentFileFilter(data=data)
@@ -84,7 +77,6 @@ class TestSearchFilter(TestCase):
     def test_combined_filters(self):
         data = {
             "institution": [self.institution1.id],
-            "document_type": ["glossary"],
             "subjects": [self.subject1.id],
             "languages": [self.language1.id],
         }

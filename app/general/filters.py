@@ -19,9 +19,6 @@ class DocumentFileFilter(django_filters.FilterSet):
     institution = ModelMultipleChoiceFilter(
         queryset=Institution.objects.all(), widget=forms.CheckboxSelectMultiple
     )
-    document_type = MultipleChoiceFilter(
-        choices=DocumentFile.document_type_choices, widget=forms.CheckboxSelectMultiple
-    )
     subjects = ModelMultipleChoiceFilter(
         queryset=Subject.objects.all(), widget=forms.CheckboxSelectMultiple
     )
@@ -32,7 +29,6 @@ class DocumentFileFilter(django_filters.FilterSet):
     class Meta:
         model = DocumentFile
         fields = [
-            "document_type",
             "institution",
             "subjects",
             "languages",
