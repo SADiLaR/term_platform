@@ -50,14 +50,8 @@ class TestSearchFilter(TestCase):
         data = {"institution": [self.institution1.id]}
         filter = DocumentFileFilter(data=data)
         qs = filter.qs
-        self.assertEqual(len(qs), 1)
-        self.assertEqual(qs[0]["id"], self.doc1.id)
-
-    def test_institution_filter(self):
-        data = {"institution": [self.institution1.id]}
-        filter = DocumentFileFilter(data=data)
-        qs = filter.qs
-        self.assertEqual(len(qs), 1)
+        self.assertEqual(len(qs), 2)
+        # TODO: ordering between documents and projects are not yet defined
         self.assertEqual(qs[0]["id"], self.doc1.id)
 
     def test_subjects_filter(self):
