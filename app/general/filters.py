@@ -14,13 +14,10 @@ from general.models import DocumentFile, Institution, Language, Project, Subject
 
 
 class DocumentFileFilter(django_filters.FilterSet):
-    search = django_filters.CharFilter(method="filter_search", label="Search")
+    search = django_filters.CharFilter(method="ignore", label="Search")
 
     institution = ModelMultipleChoiceFilter(
         queryset=Institution.objects.all(), widget=forms.CheckboxSelectMultiple
-    )
-    document_type = MultipleChoiceFilter(
-        choices=DocumentFile.document_type_choices, widget=forms.CheckboxSelectMultiple
     )
     subjects = ModelMultipleChoiceFilter(
         queryset=Subject.objects.all(), widget=forms.CheckboxSelectMultiple
@@ -32,7 +29,6 @@ class DocumentFileFilter(django_filters.FilterSet):
     class Meta:
         model = DocumentFile
         fields = [
-            "document_type",
             "institution",
             "subjects",
             "languages",
@@ -41,7 +37,6 @@ class DocumentFileFilter(django_filters.FilterSet):
     def filter_queryset(self, queryset):
         # More information about weighting and normalization in postgres:
         # https://www.postgresql.org/docs/current/textsearch-controls.html#TEXTSEARCH-RANKING
-        queryset = super().filter_queryset(queryset)
 
         search = self.form.cleaned_data.get("search", "").strip()
         query = SearchQuery(search)
@@ -64,19 +59,17 @@ class DocumentFileFilter(django_filters.FilterSet):
         project_search_vector = SearchVector("name", weight="A") + SearchVector(
             "description", weight="B"
         )
-        project_query = (
-            Project.objects.annotate(
-                heading=F("name"),
-                view=Value("project_detail"),
-                logo_url=F("logo"),
-                associated_url=F("url"),
-                search_headline=SearchHeadline("description", query, max_words=15, min_words=10),
-                rank=SearchRank(project_search_vector, query, normalization=16),
-                search=project_search_vector,
-            )
-            .filter(search=query)
-            .values(*fields)
+        project_query = Project.objects.annotate(
+            heading=F("name"),
+            view=Value("project_detail"),
+            logo_url=F("logo"),
+            associated_url=F("url"),
+            search_headline=SearchHeadline("description", query, max_words=15, min_words=10),
+            rank=SearchRank(project_search_vector, query, normalization=16),
         )
+
+        queryset = super().filter_queryset(queryset)
+        project_query = super().filter_queryset(project_query)
 
         # We limit the headline to limit the performance impact. On very large
         # documents, this slows things down if unconstrained.
@@ -91,13 +84,18 @@ class DocumentFileFilter(django_filters.FilterSet):
             associated_url=F("url"),
             rank=search_rank,
             search_headline=search_headline,
-        ).values(*fields)
+        )
+        if search:
+            # An empty search on Project filters out everything.
+            queryset = queryset.filter(search_vector=query)
+            project_query = project_query.annotate(search=project_search_vector).filter(
+                search=query
+            )
+
+        queryset = queryset.values(*fields)
+        project_query = project_query.values(*fields)
         return queryset.union(project_query, all=True).order_by("-rank")
 
-    def filter_search(self, queryset, name, value):
-        if value:
-            query = SearchQuery(value.strip())
-            return queryset.filter(search_vector=query)
-
-        else:
-            return queryset
+    def ignore(self, queryset, name, value):
+        # All fields are handled in `.filter_queryset()`
+        return queryset
