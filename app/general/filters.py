@@ -8,22 +8,29 @@ from django.contrib.postgres.search import (
 )
 from django.db.models import F, Value
 from django.db.models.functions import Greatest, Left
+from django.utils.translation import gettext_lazy as _
 from django_filters import ModelMultipleChoiceFilter, MultipleChoiceFilter
 
 from general.models import DocumentFile, Institution, Language, Project, Subject
 
 
 class DocumentFileFilter(django_filters.FilterSet):
-    search = django_filters.CharFilter(method="ignore", label="Search")
+    search = django_filters.CharFilter(method="ignore", label=_("Search"))
 
     institution = ModelMultipleChoiceFilter(
-        queryset=Institution.objects.all(), widget=forms.CheckboxSelectMultiple
+        label=_("Institution"),
+        queryset=Institution.objects.all().order_by("name"),
+        widget=forms.CheckboxSelectMultiple(attrs={"class": "form-check-input"}),
     )
     subjects = ModelMultipleChoiceFilter(
-        queryset=Subject.objects.all(), widget=forms.CheckboxSelectMultiple
+        label=_("Subjects"),
+        queryset=Subject.objects.all().order_by("name"),
+        widget=forms.CheckboxSelectMultiple(attrs={"class": "form-check-input"}),
     )
     languages = ModelMultipleChoiceFilter(
-        queryset=Language.objects.all(), widget=forms.CheckboxSelectMultiple
+        label=_("Languages"),
+        queryset=Language.objects.all().order_by("name"),
+        widget=forms.CheckboxSelectMultiple(attrs={"class": "form-check-input"}),
     )
 
     class Meta:

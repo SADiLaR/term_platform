@@ -35,11 +35,11 @@ class SearchViewTest(TestCase):
         client = Client()
         response = client.get(reverse("search"), {"page": "1"})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.context["documents"]), 5)
+        self.assertEqual(len(response.context["page_obj"]), 5)
 
         response = client.get(reverse("search"), {"page": "2"})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.context["documents"]), 5)
+        self.assertEqual(len(response.context["page_obj"]), 5)
 
         response = client.get(reverse("search"), {"page": "3"})
         self.assertEqual(response.status_code, 200)
@@ -48,13 +48,13 @@ class SearchViewTest(TestCase):
         client = Client()
         response = client.get(reverse("search"), {"search": "Document 1"})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["documents"][0]["heading"], "Document 1")
+        self.assertEqual(response.context["page_obj"][0]["heading"], "Document 1")
 
     def test_invalid_page_number(self):
         client = Client()
         response = client.get(reverse("search"), {"page": "invalid"})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.context["documents"]), 5)
+        self.assertEqual(len(response.context["page_obj"]), 5)
 
     def test_combined_filters(self):
         client = Client()
@@ -68,7 +68,7 @@ class SearchViewTest(TestCase):
             },
         )
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.context["documents"]), 5)
+        self.assertEqual(len(response.context["page_obj"]), 5)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,13 @@
+{% spaceless %}
+<h3 class="fs-6 mt-3 mb-2">{{ field.label }}</h3>
+<div class="checkbox-container form-control">
+    {% for checkbox in field %}
+    <div class="form-check">
+        <label class="form-check-label">
+        {{ checkbox.tag }}
+            {{ checkbox.choice_label }}
+        </label>
+    </div>
+    {% endfor %}
+</div>
+{% endspaceless %}

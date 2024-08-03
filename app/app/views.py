@@ -414,10 +414,9 @@ def search(request):
 
     context = {
         "current_page": "search",
-        "search_results": paginator.page(page_obj.number),
         "filter": f,
-        "documents": page_obj,
-        "search_params": pagination_url(request),
+        "page_obj": page_obj,
+        "url_params": pagination_url(request),
     }
 
     return render(request, template_name=template, context=context)
@@ -432,4 +431,4 @@ def pagination_url(request):
         "languages": request.GET.getlist("languages", []),
     }
 
-    return "?" + urlencode(url_params, doseq=True)
+    return urlencode(url_params, doseq=True)
