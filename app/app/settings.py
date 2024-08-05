@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "simple_history",
     "accounts",
     "django_filters",
+    "django_htmx",
 ]
 if DEBUG:
     INSTALLED_APPS += [
@@ -75,9 +76,9 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "simple_history.middleware.HistoryRequestMiddleware",
+    "django_htmx.middleware.HtmxMiddleware",
 ]
 
-# Add debug toolbar middleware
 if DEBUG and DEBUG_TOOLBAR:
     MIDDLEWARE.insert(2, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
@@ -121,6 +122,11 @@ DATABASES = {
 }
 
 if DEBUG:
+    DEBUG_TOOLBAR_CONFIG = {
+        "ROOT_TAG_EXTRA_ATTRS": "hx-preserve",
+        "UPDATE_ON_FETCH": True,
+    }
+
     # Some things rely on the setting INTERNAL_IPS:
     #  - debug_toolbar.middleware.show_toolbar
     #  - django.template.context_processors.debug

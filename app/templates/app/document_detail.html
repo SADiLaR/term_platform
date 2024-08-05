@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends BASE_TEMPLATE %}
 {% load static %}
 {% load i18n %}
 {% load bs_icons %}
@@ -22,7 +22,7 @@
 
         {% if document.uploaded_file %}
         <div class="mb-3">
-            <a href="{{ document.uploaded_file.url }}" download>
+            <a href="{{ document.uploaded_file.url }}" target="_blank" download>
             <button class="btn btn-primary" type="submit">
                 {% bs_icon "file-earmark-arrow-down-fill" %}{% trans "Download File" %}
             </button>

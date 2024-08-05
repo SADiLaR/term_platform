@@ -13,7 +13,7 @@
     <style>{% include "app/css/local.css" %}</style>
 </head>
 
-<body>
+<body hx-boost="true" hx-target="#main" hx-select="#main" hx-swap="outerHTML show:window:top">
 <header>
 {% block header %}
     <nav class="navbar navbar-expand-lg navbar-light">
@@ -44,7 +44,7 @@
 </header>
 {% endspaceless %}
 
-<main>
+<main id="main">
 {% block content %}
 {% endblock content %}
 </main>
@@ -85,4 +85,14 @@
 {% endspaceless %}
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.1/dist/htmx.min.js" integrity="sha256-bUqqSw0+i0yR+Nl7kqNhoZsb1FRN6j9mj9w+YqY5ld8=" crossorigin="anonymous"></script>
+{% if debug %}
+    {% load django_htmx %}
+    {% django_htmx_script %}
+{% endif %}
+{% if debug_toolbar %}
+<script>
+    {% include "app/js/debug-toolbar-handler.js" %}
+</script>
+{% endif %}
 </body>
