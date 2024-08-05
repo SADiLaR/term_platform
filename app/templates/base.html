@@ -96,16 +96,18 @@ footer {
 </main>
 
 {% spaceless %}
-<footer class="footer text-bg-primary py-3 link-light" style="--bs-link-color-rgb: 255, 255, 255">
-    <div class="container-fluid">
-        <div class="row text-center">
-            <div class="col col-sm-8 col-md-6 offset-md-3">
-              <p>{% trans "Developed by " %} <a href="https://sadilar.org">SADiLaR</a></p>
-              <div class="d-md-flex justify-content-center">
-                 <div class="px-2 py-1"><a href="{% url 'legal_notices' %}">{% trans "Legal Notices" %}</a></div>
-                 <div class="px-2 py-1"><a href="{% url 'contact' %}">{% trans "Contact Us" %}</a></div>
-              </div>
-            </div>
+<footer class="footer container-fluid text-bg-primary py-3 link-light"
+        style="--bs-link-color-rgb: 255, 255, 255">
+    <div class="row text-center">
+
+        <div class="col col-sm-8 col-md-6 offset-md-3">
+          <p>{% trans "Developed by " %} <a href="https://sadilar.org">SADiLaR</a></p>
+          <div class="d-md-flex justify-content-center">
+             <div class="px-2 py-1"><a href="{% url 'legal_notices' %}">{% trans "Legal Notices" %}</a></div>
+             <div class="px-2 py-1"><a href="{% url 'contact' %}">{% trans "Contact Us" %}</a></div>
+             <div class="px-2 py-1"><a href="/gebreek">{% trans " - gebreekte skakel -" %}</a></div>
+          </div>
+        </div>
 
         <div class="col col-sm-4 col-md-3 pt-2">
             <form action="{% url 'set_language' %}" method="post">
@@ -124,7 +126,6 @@ footer {
             </form>
         </div>
 
-        </div>
     </div>
 </footer>
 {% endspaceless %}
