@@ -10,53 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" integrity="sha256-9kPW/n5nn53j4WMRYAxe9c1rCY96Oogo/MKSVdKzPmI=" crossorigin="anonymous">
-    <style>
-:root {
-   --primary: #1a2f69;
-   --sdlr-red: #d11f26;
-   --bs-primary: var(--primary);
-   --bs-primary-rgb: 26, 47, 105; {# identical to --primary #}
-   --bs-blue: var(--primary);
-}
-.btn-primary {
-    --bs-btn-bg: var(--primary);
-    --bs-btn-border-color: var(--primary);
-    --bs-btn-disabled-bg: var(--primary);
-}
-.card {
-   --bs-card-border-color: var(--sdlr-red);
-}
-.nav-pills {
-    --bs-nav-pills-link-active-bg: var(--bs-primary);
-    --bs-navbar-active-color: #fff;
-}
-
-.limit-text-width {
-    max-width: 44rem;
-}
-
-.logo100 {
-    max-height: 100px;
-    max-width: 100%;
-    aspect-ratio: auto;
-}
-
-.checkbox-container {
-    max-height: 150px;
-    max-width: 600px;
-    overflow-y: auto;
-}
-
-{# The following two are needed for correct footer placement #}
-body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-footer {
-    margin-top: auto;
-}
-    </style>
+    <style>{% include "app/css/local.css" %}</style>
 </head>
 
 <body>

@@ -1,0 +1,52 @@
+{% comment %}
+NOTE: this is a Django template that renders a CSS file that is inlined
+in the base template. This way it can easily be edited as a CSS file, and keeps
+the base template simple.
+
+Django template comments are used to reduce the payload.
+{% endcomment %}
+:root {
+   --primary: #1a2f69;
+   --sdlr-red: #d11f26;
+   --bs-primary: var(--primary);
+   --bs-primary-rgb: 26, 47, 105; {# identical to --primary #}
+   --bs-blue: var(--primary);
+}
+.btn-primary {
+    --bs-btn-bg: var(--primary);
+    --bs-btn-border-color: var(--primary);
+    --bs-btn-disabled-bg: var(--primary);
+}
+.card {
+   --bs-card-border-color: var(--sdlr-red);
+}
+.nav-pills {
+    --bs-nav-pills-link-active-bg: var(--bs-primary);
+    --bs-navbar-active-color: #fff;
+}
+
+.limit-text-width {
+    max-width: 44rem;
+}
+
+.logo100 {
+    max-height: 100px;
+    max-width: 100%;
+    aspect-ratio: auto;
+}
+
+.checkbox-container {
+    max-height: 150px;
+    max-width: 600px;
+    overflow-y: auto;
+}
+
+{# The following two are needed for correct footer placement #}
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+footer {
+    margin-top: auto;
+}
