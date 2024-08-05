@@ -4,6 +4,10 @@
 <head>
     <title>{% block title %}{% trans "SADiLaR" %}{% endblock %}</title></head>
 </head>
+
+{# The marking of the active/current page is done outside <main>, so we repeat it here: #}
+{% include "app/_navbar_items.html" %}
+
 {% endspaceless %}
 <main id="main">{% block content %}{% endblock content %}</main>
 {% spaceless %}

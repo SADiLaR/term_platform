@@ -1,6 +1,6 @@
 {% load i18n %}
 {% spaceless %}
-<div class="collapse navbar-collapse" id="navbarPills">
+<div class="collapse navbar-collapse" id="navbarPills" hx-swap-oob="true">
     <ul class="nav-pills navbar-nav me-auto mb-2 mb-lg-0">
         {% include "app/_nav_item.html" with view="home" label=_("Home") %}
         {% include "app/_nav_item.html" with view="search" label=_("Search") %}
