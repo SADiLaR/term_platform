@@ -1,0 +1,17 @@
+{% load i18n %}
+{% spaceless %}
+<html lang="en">{# Required for HTMX title swapping to work #}
+<head>
+    <title>{% block title %}{% trans "SADiLaR" %}{% endblock %}</title></head>
+</head>
+{% endspaceless %}
+<main id="main">{% block content %}{% endblock content %}</main>
+{% spaceless %}
+
+{% if debug_toolbar %}
+<script>
+    {% include "app/js/debug-toolbar-handler.js" %}
+</script>
+{% endif %}
+
+{% endspaceless %}
