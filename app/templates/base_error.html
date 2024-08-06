@@ -4,17 +4,8 @@
 
 {% block title %}{% trans "Error" %}{% endblock %}
 
-{% block content %}
-
-<div id="error-page" class="m-3 card text-center body-card">
-    <div class="card-header">
-        {% trans "Error" %}
-    </div>
-    <div class="card-body">
-        <h1 class="card-title">{% block error_title %}Error{% endblock %}</h1>
-        <p class="card-text">{% block error_message %}An error occured{% endblock %}</p>
-        <a href="{% url 'home' %}" class="btn btn-primary">{% trans "Go to home" %}</a>
-    </div>
-</div>
-
-{% endblock content %}
+{% block error %}
+{% with show_error=True%}
+    {{ block.super }}
+{% endwith %}
+{% endblock %}

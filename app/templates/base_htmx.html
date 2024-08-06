@@ -5,8 +5,21 @@
     <title>{% block title %}{% trans "SADiLaR" %}{% endblock %}</title></head>
 </head>
 
-{# The marking of the active/current page is done outside <main>, so we repeat it here: #}
+{% comment %}
+Some elements outside of <main> might need to be updated.
+ - Navbar with indication of active/current page.
+ - Error messages
+These use hx-swap-oob so that they are swapped in from the HTMX response.
+{% endcomment %}
+
 {% include "app/_navbar_items.html" %}
+
+{% block error %}
+    {% if show_error %}
+        <h1 id="error-title" class="card-title" hx-swap-oob="true">{% block error_title %}{% endblock %}</h1>
+        <p id="error-message" class="card-text" hx-swap-oob="true">{% block error_message %}{% endblock %}</p>
+    {% endif %}
+{% endblock %}
 
 {% endspaceless %}
 <main id="main">{% block content %}{% endblock content %}</main>
