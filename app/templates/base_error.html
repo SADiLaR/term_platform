@@ -1,11 +1,12 @@
-{% extends BASE_TEMPLATE %}
+{% extends BASE_TEMPLATE|default:"base.html" %}
+{# BASE_TEMPLATE can be undefined in certain error conditions, therefore `default` #}
 {% load i18n %}
 
 {% block title %}{% trans "Error" %}{% endblock %}
 
 {% block content %}
 
-<div class="m-3 card text-center body-card">
+<div id="error-page" class="m-3 card text-center body-card">
     <div class="card-header">
         {% trans "Error" %}
     </div>
