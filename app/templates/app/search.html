@@ -51,11 +51,17 @@ structure.
                                 {{ result.heading }}
                             </a>
                         </h3>
+
+                        {% if result.associated_url %}
                         <a href="{{ result.associated_url }}" target="_blank"
                            title="{% trans 'External link' %}">
                             {{ result.associated_url }}
                         </a>
+                        {% endif %}
+
+                        {% if result.description %}
                         <p>{{ result.description|truncatewords:20 }}</p>
+                        {% endif %}
 {% endspaceless %}
                         {% if result.search_headline.strip %}
                         <blockquote aria-label="{% trans "Excerpt" %}" class="text-secondary mx-lg-5">
