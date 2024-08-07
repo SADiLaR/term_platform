@@ -45,6 +45,27 @@ Django template comments are used to reduce the payload.
     max-width: 600px;
     overflow-y: auto;
 }
+/*{# start after 40%/3s: quick responses will be done already #}*/
+.htmx-indicator{
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    width: 100%;
+    height: 5px;
+    background:
+        linear-gradient(90deg,
+            #fff0 40%,
+            rgba(var(--bs-primary-rgb), 0.06) 55%,
+            rgba(var(--bs-primary-rgb), 0.3) 70%,
+            rgba(var(--bs-primary-rgb), 0.06) 85%
+	)
+        #fff;
+    background-size: 300% 100%;
+    animation: l1 3s infinite linear;
+}
+@keyframes l1 {
+  0% {background-position: right}
+}
 
 /*{# The following two are needed for correct footer placement #}*/
 body {
