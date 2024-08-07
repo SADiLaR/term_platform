@@ -34,6 +34,11 @@ Django template comments are used to reduce the payload.
     max-width: 100%;
     aspect-ratio: auto;
 }
+{# Avoids content shift when icon comes late: #}
+.icon {
+    width: 1em;
+    display: inline-block;
+}
 
 .checkbox-container {
     max-height: 150px;
