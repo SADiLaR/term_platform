@@ -59,8 +59,8 @@ structure.
                         </a>
                         {% endif %}
 
-                        {% if result.description %}
-                        <p>{{ result.description|truncatewords:20 }}</p>
+                        {% if result.extra %}
+                        <p>{{ result.extra|truncatewords:20 }}</p>
                         {% endif %}
 {% endspaceless %}
                         {% if result.search_headline.strip %}

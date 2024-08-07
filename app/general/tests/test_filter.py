@@ -52,7 +52,7 @@ class TestSearchFilter(TestCase):
         qs = filter.qs
         self.assertEqual(len(qs), 2)
         # TODO: ordering between documents and projects are not yet defined
-        self.assertEqual(qs[0]["id"], self.doc1.id)
+        self.assertEqual(qs[0]["id"], self.project1.id)
 
     def test_subjects_filter(self):
         data = {"subjects": [self.subject1.id]}
