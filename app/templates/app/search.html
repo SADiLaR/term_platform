@@ -14,11 +14,11 @@ structure.
 {% block content %}
 {% spaceless %}
 <div class="card m-3 p-2">
-    <form action="{% url 'search' %}" class="card-body row">
-        <div class="col-md-8">
+    <form action="{% url 'search' %}" class="card-body row" hx-target="#search-main" hx-select="#search-main">
+        <div id="search-main" class="col-md-8">
 
             {# Search #}
-            <div class="limit-text-width mb-3">
+            <div class="limit-text-width mb-3" hx-target="#search-main" hx-select="#search-main">
                 <div id="search" class="col-auto">{# Target for link at bottom #}
                     <h2 class="fs-5 card-title mt-2">{% trans "Search a term" %}</h2>
                 </div>
@@ -30,7 +30,7 @@ structure.
                 </div>
                 <div class="col-auto">
                     <input type="submit" class="btn btn-primary me-4"/>
-                    <a href="{% url 'search' %}" class="btn btn-secondary">{% trans 'Reset' %}</a>
+                    <a href="{% url 'search' %}" hx-target="#main" hx-select="#main" class="btn btn-secondary">{% trans 'Reset' %}</a>
                 </div>
                 {% if page_obj.paginator.num_pages > 1 %}
                 <div class="mt-2">
@@ -41,7 +41,7 @@ structure.
 {% endspaceless %}
 
             {# Results #}
-            <section aria-label="{% trans 'Search results' %}">
+            <section aria-label="{% trans 'Search results' %}" hx-target="#main" hx-select="#main">
                 {% for result in page_obj %}
 {% spaceless %}
                 <div class="row">
@@ -85,6 +85,7 @@ structure.
 
         {# Filters #}
 {% spaceless %}
+        {% if request.htmx.target != "search-main" %}
         <section id="filters" class="col-md-4 ps-md-4">{# target for link at the top #}
             <h2 class="fs-5 card-title">{% trans "Filter results" %}</h2>
             <div class="row mb-2">
@@ -96,8 +97,9 @@ structure.
                 </div>
             </div>
             <input type="submit" class="btn btn-primary me-4"/>
-            <a href="{% url 'search' %}" class="btn btn-secondary">{% trans 'Reset' %}</a>
+            <a href="{% url 'search' %}" hx-target="#main" hx-select="#main" class="btn btn-secondary">{% trans 'Reset' %}</a>
         </section>
+        {% endif %}
 
     </form>
 </div>
