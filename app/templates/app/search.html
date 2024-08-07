@@ -1,4 +1,13 @@
 {% extends BASE_TEMPLATE %}
+{% comment %}
+
+This page is bigger due to forms, etc. "{% spaceless %}" reduces unnecessary
+spaces in a few places, but there are places where it can't be used. The spaces
+in the headline can be relevant, e.g. <b>term1</b> <b>term2</b>.
+
+The spaceless tags are kept on the left since they don't take part in the HTML
+structure.
+{% endcomment %}
 {% load static %}
 {% load i18n %}
 
@@ -29,10 +38,12 @@
                 </div>
                 {% endif %}
             </div>
+{% endspaceless %}
 
             {# Results #}
             <section aria-label="{% trans 'Search results' %}">
                 {% for result in page_obj %}
+{% spaceless %}
                 <div class="row">
                     <div class="col limit-text-width">
                         <h3>
@@ -45,6 +56,7 @@
                             {{ result.associated_url }}
                         </a>
                         <p>{{ result.description|truncatewords:20 }}</p>
+{% endspaceless %}
                         {% if result.search_headline.strip %}
                         <blockquote aria-label="{% trans "Excerpt" %}" class="text-secondary mx-lg-5">
                             <p>…&nbsp;{{ result.search_headline|safe }}&nbsp;…</p>
@@ -72,6 +84,7 @@
         </div>
 
         {# Filters #}
+{% spaceless %}
         <section id="filters" class="col-md-4 ps-md-4">{# target for link at the top #}
             <h2 class="fs-5 card-title">{% trans "Filter results" %}</h2>
             <div class="row mb-2">

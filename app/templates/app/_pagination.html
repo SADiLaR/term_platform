@@ -1,4 +1,5 @@
 {% load i18n %}
+{% spaceless %}
 {% if page_obj.has_previous or page_obj.has_next %}
 <nav aria-label="{% trans 'Pages' %}" class="my-3">
     {# TODO: ideal accessibility combination of aria-label and h4? #}
@@ -59,3 +60,4 @@ Notes:
     {% endwith %}
 </nav>
 {% endif %}
+{% endspaceless %}
