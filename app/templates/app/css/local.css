@@ -1,10 +1,10 @@
-{% comment %}
+/*{% comment %}
 NOTE: this is a Django template that renders a CSS file that is inlined
 in the base template. This way it can easily be edited as a CSS file, and keeps
 the base template simple.
 
 Django template comments are used to reduce the payload.
-{% endcomment %}
+{% endcomment %}*/
 :root {
    --primary: #1a2f69;
    --sdlr-red: #d11f26;
@@ -34,7 +34,7 @@ Django template comments are used to reduce the payload.
     max-width: 100%;
     aspect-ratio: auto;
 }
-{# Avoids content shift when icon comes late: #}
+/*{# Avoids content shift when icon comes late: #}*/
 .icon {
     width: 1em;
     display: inline-block;
@@ -46,7 +46,7 @@ Django template comments are used to reduce the payload.
     overflow-y: auto;
 }
 
-{# The following two are needed for correct footer placement #}
+/*{# The following two are needed for correct footer placement #}*/
 body {
     min-height: 100vh;
     display: flex;
