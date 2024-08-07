@@ -8,6 +8,7 @@ from django.contrib.postgres.search import (
 )
 from django.db.models import F, Value
 from django.db.models.functions import Greatest, Left
+from django.db.models.query import EmptyQuerySet
 from django.utils.translation import gettext_lazy as _
 from django_filters import ModelMultipleChoiceFilter, MultipleChoiceFilter
 
@@ -70,6 +71,26 @@ class DocumentFileFilter(django_filters.FilterSet):
 
         # In the queries below, any differences between models must be fixed
         # through e.g. `Value` or `F` annotations.
+        institution_search_vector = SearchVector("name", weight="A") + SearchVector(
+            "abbreviation", weight="A"
+        )
+        institution_query = Institution.objects.annotate(
+            heading=F("name"),
+            extra=F("abbreviation"),
+            view=Value("institution_detail"),
+            logo_url=F("logo"),
+            associated_url=F("url"),
+            rank=Value(0.02),
+        )
+
+        for _filter in ("institution", "languages", "subjects"):
+            if not isinstance(self.form.cleaned_data[_filter], EmptyQuerySet):
+                # We exclude institutions if any filter is active. Not sure
+                # what it would mean to filter the institutions by subject,
+                # unless our schema changes.
+                institution_query = institution_query.none()
+                break
+
         project_search_vector = SearchVector("name", weight="A") + SearchVector(
             "description", weight="B"
         )
@@ -121,10 +142,19 @@ class DocumentFileFilter(django_filters.FilterSet):
                     rank=SearchRank(project_search_vector, query, normalization=16),
                 )
             )
+            institution_query = (
+                institution_query.annotate(search=institution_search_vector)
+                .filter(search=query)
+                .annotate(
+                    search_headline=Value(""),
+                    rank=SearchRank(institution_search_vector, query, normalization=16),
+                )
+            )
 
         queryset = queryset.values(*fields)
         project_query = project_query.values(*fields)
-        return queryset.union(project_query, all=True).order_by("-rank")
+        institution_query = institution_query.values(*fields)
+        return queryset.union(project_query, institution_query, all=True).order_by("-rank")
 
     def ignore(self, queryset, name, value):
         # All fields are handled in `.filter_queryset()`
