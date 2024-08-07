@@ -80,7 +80,8 @@ class DocumentFileFilter(django_filters.FilterSet):
             view=Value("institution_detail"),
             logo_url=F("logo"),
             associated_url=F("url"),
-            rank=Value(0.02),
+            boost=Value(0.02),
+            rank=F("boost"),
         )
 
         for _filter in ("institution", "languages", "subjects"):
@@ -100,7 +101,8 @@ class DocumentFileFilter(django_filters.FilterSet):
             view=Value("project_detail"),
             logo_url=F("logo"),
             associated_url=F("url"),
-            rank=Value(0.05),
+            boost=Value(0.05),
+            rank=F("boost"),
         )
 
         queryset = super().filter_queryset(queryset)
@@ -117,7 +119,8 @@ class DocumentFileFilter(django_filters.FilterSet):
             view=Value("document_detail"),
             logo_url=Value(""),
             associated_url=F("url"),
-            rank=Value(0.01),
+            boost=Value(0.01),
+            rank=F("boost"),
         )
         if search:
             # We only annotate with search related things if needed. The ranking
@@ -129,7 +132,7 @@ class DocumentFileFilter(django_filters.FilterSet):
 
             search_rank = SearchRank(F("search_vector"), query, normalization=16)
             queryset = queryset.filter(search_vector=query).annotate(
-                rank=search_rank,
+                rank=search_rank + F("boost"),
                 search_headline=search_headline,
             )
             project_query = (
@@ -139,7 +142,7 @@ class DocumentFileFilter(django_filters.FilterSet):
                     search_headline=SearchHeadline(
                         "description", query, max_words=15, min_words=10
                     ),
-                    rank=SearchRank(project_search_vector, query, normalization=16),
+                    rank=SearchRank(project_search_vector, query, normalization=16) + F("boost"),
                 )
             )
             institution_query = (
@@ -147,7 +150,8 @@ class DocumentFileFilter(django_filters.FilterSet):
                 .filter(search=query)
                 .annotate(
                     search_headline=Value(""),
-                    rank=SearchRank(institution_search_vector, query, normalization=16),
+                    rank=SearchRank(institution_search_vector, query, normalization=16)
+                    + F("boost"),
                 )
             )
 
