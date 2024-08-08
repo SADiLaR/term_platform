@@ -145,7 +145,10 @@ def project_detail(request, project_id):
     template = "app/project_detail.html"
 
     project = get_object_or_404(
-        Project.objects.select_related("institution").prefetch_related("subjects", "languages"),
+        Project.objects.select_related("institution").prefetch_related(
+            Prefetch("subjects", queryset=Subject.objects.order_by("name")),
+            Prefetch("languages", queryset=Language.objects.order_by("name")),
+        ),
         id=project_id,
     )
 
@@ -411,6 +414,12 @@ def search(request):
         page_obj = paginator.page(1)
     except EmptyPage:
         page_obj = paginator.page(paginator.num_pages)
+
+    for result in page_obj:
+        # Remove headline that is identical to description
+        if headline := result.get("search_headline", ""):
+            if result["extra"].startswith(headline):
+                del result["search_headline"]
 
     context = {
         "current_page": "search",

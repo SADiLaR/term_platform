@@ -13,7 +13,7 @@
 
     {% for item in documents %}
         <div class="mt-4">{# additional indent simplifies comparison with projects.html #}
-            <h2>
+            <h2 class="overflow-hidden" style="text-overflow: ellipsis;">
                 <a href="{% url 'document_detail' item.document.id %}" class="text-decoration-none">
                     {{ item.document.title }}
                 </a>

@@ -14,7 +14,7 @@
       <div class="{% if logo %}col-md-6{% else %}col-md-12{% endif %}">
         <h1>{{ project.name }}</h1>
         {% if project.url %}
-        <div class="mb-2">
+        <div class="overflow-x-hidden mb-2">
             <a href="{{ project.url }}" target="_blank"
                title="{% trans 'External link' %}">
                 {{ project.url }}
