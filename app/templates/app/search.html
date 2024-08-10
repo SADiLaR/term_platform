@@ -98,9 +98,11 @@ structure.
         <section id="filters" class="col-md-4 ps-md-4">{# target for link at the top #}
             <h2 class="fs-5 card-title">{% trans "Filter results" %}</h2>
             <div class="row mb-2">
-                {% include "app/_search_filter.html" with field=filter.form.institution %}
-                {% include "app/_search_filter.html" with field=filter.form.subjects %}
-                {% include "app/_search_filter.html" with field=filter.form.languages %}
+                {% with form=filter.form %}
+                {% include "app/_search_filter.html" with field=form.institution summary=_("Filter by institution") %}
+                {% include "app/_search_filter.html" with field=form.subjects summary=_("Filter by subject") %}
+                {% include "app/_search_filter.html" with field=form.languages summary=_("Filter by language") %}
+                {% endwith %}
                 <div class="mt-2">
                     <a href="#search" class="d-md-none">{% trans "Alter search terms above" %}</a>
                 </div>

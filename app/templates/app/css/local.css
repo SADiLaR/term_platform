@@ -41,7 +41,7 @@ Django template comments are used to reduce the payload.
 }
 
 .checkbox-container {
-    max-height: 150px;
+    max-height: 250px;
     max-width: 600px;
     overflow-y: auto;
 }
