@@ -42,7 +42,9 @@ structure.
 {% endspaceless %}
 
             {# Results #}
-            <section aria-label="{% trans 'Search results' %}" hx-target="#main" hx-select="#main">
+            <section aria-label="{% trans 'Search results' %}" hx-target="#main" hx-select="#main"
+                {% if request.htmx.target == 'search-main' %}tabindex="-1" autofocus{% endif %}
+            >
                 {% for result in page_obj %}
 {% spaceless %}
                 <div class="row">
