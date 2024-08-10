@@ -18,6 +18,7 @@ class InstitutionDetailViewTests(TestCase):
     def test_institution_detail_view_with_valid_id(self):
         response = self.client.get(reverse("institution_detail", args=[self.institution.id]))
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'id="main-heading"')
         self.assertContains(response, self.institution.name)
 
     def test_institution_detail_view_with_invalid_id(self):

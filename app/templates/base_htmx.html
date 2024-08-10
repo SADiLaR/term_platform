@@ -22,7 +22,9 @@ These use hx-swap-oob so that they are swapped in from the HTMX response.
 {% endblock %}
 
 {% endspaceless %}
-<main id="main">{% block content %}{% endblock content %}</main>
+<main id="main" aria-labelledby="main-heading">
+{% block content %}{# See notes in base.html #}{% endblock content %}
+</main>
 {% spaceless %}
 
 {% if debug_toolbar %}

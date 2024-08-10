@@ -36,3 +36,4 @@ class LanguagesViewTest(TestCase):
         with self.assertNumQueries(3):
             response = self.client.get(reverse("languages"))
             self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'id="main-heading"')

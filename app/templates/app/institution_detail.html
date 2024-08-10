@@ -12,7 +12,7 @@
 
     <div class="mb-3 row">
         <div class="{% if institution.logo %}col-md-6{% else %}col-md-12{% endif %}">
-            <h1>{{ institution.name }} ({{ institution.abbreviation }})</h1>
+            <h1 id="main-heading">{{ institution.name }} ({{ institution.abbreviation }})</h1>
             {% if institution.url %}
                 <p><a href="{{ institution.url }}">{{ institution.url }}</a></p>
             {% endif %}

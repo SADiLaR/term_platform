@@ -13,7 +13,7 @@
     <div class="mb-3 row">
       {# incorrect indent fascilitates comparison with document_detail.html #}
       <div class="{% if logo %}col-md-6{% else %}col-md-12{% endif %}">
-        <h1>{{ project.name }}</h1>
+        <h1 id="main-heading">{{ project.name }}</h1>
         {% if project.url %}
         <div class="overflow-x-hidden mb-2">
             <a href="{{ project.url }}" target="_blank"

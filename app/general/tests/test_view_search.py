@@ -31,6 +31,11 @@ class SearchViewTest(TestCase):
             doc.subjects.add(self.subject1 if i % 2 == 0 else self.subject2)
             doc.languages.add(self.language1 if i % 2 == 0 else self.language2)
 
+    def test_view_basics(self):
+        response = self.client.get(reverse("search"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'id="main-heading"')
+
     def test_search_pagination(self):
         client = Client()
         response = client.get(reverse("search"), {"page": "1"})

@@ -27,6 +27,7 @@ class InstitutionsViewTestCase(TestCase):
     def test_institutions_view_correct_template_used(self):
         response = self.client.get(self.url)
 
+        self.assertContains(response, 'id="main-heading"')
         self.assertTemplateUsed(response, "app/institutions.html")
 
     def test_institutions_view_correct_context_returned(self):

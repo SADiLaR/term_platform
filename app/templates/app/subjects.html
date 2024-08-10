@@ -8,7 +8,7 @@
 {% block content %}
 {% spaceless %}
 <div class="m-4 text-decoration-none">
-    <h1>{% trans "Information by subject" %}</h1>
+    <h1 id="main-heading">{% trans "Information by subject" %}</h1>
     <div class="row">
         {% for item in subject_data %}
         <h2>{{ item.subject.name }}</h2>

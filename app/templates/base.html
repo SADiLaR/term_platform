@@ -53,8 +53,13 @@
 
 {% endspaceless %}
 
-<main id="main">
+<main id="main" aria-labelledby="main-heading">
 {% block content %}
+    {% comment %}
+    The content block should probably be overridden by all pages.
+    The `aria-labelledby` means this base template expects some element with
+    id="main-heading" in the child template, otherwise this is invalid HTML.
+    {% endcomment %}
 {% endblock content %}
 </main>
 

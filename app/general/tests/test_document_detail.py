@@ -35,6 +35,7 @@ class DocumentDetailViewTest(TestCase):
         with self.assertNumQueries(3):
             response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'id="main-heading"')
         self.assertContains(response, self.document.title)
         self.assertContains(response, self.institution.name)
         self.assertContains(response, self.subject1.name)
