@@ -24,9 +24,10 @@ class InstitutionsViewTestCase(TestCase):
 
         self.url = reverse("institutions")
 
-    def test_institutions_view_correct_template_used(self):
-        response = self.client.get(self.url)
-
+    def test_view_basics(self):
+        with self.assertNumQueries(1):
+            response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'id="main-heading"')
         self.assertTemplateUsed(response, "app/institutions.html")
 
@@ -42,21 +43,12 @@ class InstitutionsViewTestCase(TestCase):
 
         institutions = response.context["institutions"]
 
-        self.assertEqual(response.status_code, 200)
         self.assertEqual(len(institutions), 2)
         self.assertTrue(all("project_count" in inst for inst in institutions))
         self.assertEqual(institutions[0]["project_count"], 0)
         self.assertEqual(institutions[1]["project_count"], 2)
         self.assertEqual(institutions[0]["document_count"], 0)
         self.assertEqual(institutions[1]["document_count"], 2)
-
-    def test_institutions_view_queries(self):
-        response = self.client.get(self.url)
-
-        with self.assertNumQueries(1):
-            response = self.client.get(self.url)
-
-        self.assertEqual(response.status_code, 200)
 
     def test_institution_ratings(self):
         response = self.client.get(self.url)

@@ -32,38 +32,35 @@ class SearchViewTest(TestCase):
             doc.languages.add(self.language1 if i % 2 == 0 else self.language2)
 
     def test_view_basics(self):
-        response = self.client.get(reverse("search"))
+        with self.assertNumQueries(5):
+            response = self.client.get(reverse("search"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'id="main-heading"')
 
     def test_search_pagination(self):
-        client = Client()
-        response = client.get(reverse("search"), {"page": "1"})
+        response = self.client.get(reverse("search"), {"page": "1"})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context["page_obj"]), 5)
 
-        response = client.get(reverse("search"), {"page": "2"})
+        response = self.client.get(reverse("search"), {"page": "2"})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context["page_obj"]), 5)
 
-        response = client.get(reverse("search"), {"page": "3"})
+        response = self.client.get(reverse("search"), {"page": "3"})
         self.assertEqual(response.status_code, 200)
 
     def test_search_filtering(self):
-        client = Client()
-        response = client.get(reverse("search"), {"search": "Document 1"})
+        response = self.client.get(reverse("search"), {"search": "Document 1"})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["page_obj"][0]["heading"], "Document 1")
 
     def test_invalid_page_number(self):
-        client = Client()
-        response = client.get(reverse("search"), {"page": "invalid"})
+        response = self.client.get(reverse("search"), {"page": "invalid"})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context["page_obj"]), 5)
 
     def test_combined_filters(self):
-        client = Client()
-        response = client.get(
+        response = self.client.get(
             reverse("search"),
             {
                 "institution": self.institution1.id,

@@ -102,9 +102,10 @@ class TestSearchFilter(TestCase):
     def test_search_filter_combined(self):
         data = {"search": "1"}
         filter = DocumentFileFilter(data=data)
-        qs = filter.qs
-        self.assertEqual(len(qs), 3)
-        self.assertCountEqual([qs[0]["id"], qs[1]["id"]], [self.doc1.id, self.project1.id])
+        qs_ids = [x["id"] for x in filter.qs]
+        expected_ids = [self.doc1.id, self.project1.id, self.institution1.id]
+        self.assertCountEqual(qs_ids, expected_ids)
+        # TODO: test properly instead of relying on randomly agreeing IDs
 
 
 if __name__ == "__main__":
