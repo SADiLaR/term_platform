@@ -3,6 +3,7 @@
 {% load i18n %}
 
 {% block content %}
+{% spaceless %}
 <div class="m-4">
     <div class="card p-3">
         <h1 class="card-title">{% trans "Contact us" %}</h1>
@@ -55,4 +56,5 @@
         </div>
     </div>
 </div>
+{% endspaceless %}
 {% endblock content %}

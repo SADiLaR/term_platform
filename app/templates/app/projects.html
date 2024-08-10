@@ -6,6 +6,7 @@
 {% block title %}{% trans "Projects" %}{% endblock %}
 
 {% block content %}
+{% spaceless %}
 <div class="m-4">
     <h1>{% trans "Projects" %}</h1>
 
@@ -67,4 +68,5 @@
     {% endfor %}
 
 </div>
+{% endspaceless %}
 {% endblock content %}

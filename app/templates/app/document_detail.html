@@ -6,6 +6,7 @@
 {% block title %}{{ document.title }}{% endblock %}
 
 {% block content %}
+{% spaceless %}
 <div class="m-4">
     <p><a href="{% url 'documents' %}">{% trans "Documents" %}</a> > {{ document.title }}</p>
 
@@ -72,4 +73,5 @@
 
 </div>
 
+{% endspaceless %}
 {% endblock content %}

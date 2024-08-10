@@ -6,6 +6,7 @@
 {% block title %}{% trans "Subjects" %}{% endblock %}
 
 {% block content %}
+{% spaceless %}
 <div class="m-4 text-decoration-none">
     <h1>{% trans "Information by subject" %}</h1>
     <div class="row">
@@ -60,4 +61,5 @@
     {% include "app/_pagination.html" %}
 
 </div>
+{% endspaceless %}
 {% endblock content %}

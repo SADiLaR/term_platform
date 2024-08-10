@@ -6,6 +6,7 @@
 {% block title %}{{ institution.name }}{% endblock %}
 
 {% block content %}
+{% spaceless %}
 <div class="m-4">
     <p><a href="{% url 'institutions' %}">{% trans "Institutions" %}</a> > {{ institution.name }}</p>
 
@@ -57,4 +58,5 @@
     </div>
 </div>
 
+{% endspaceless %}
 {% endblock content %}

@@ -6,6 +6,7 @@
 {% block title %}{% trans "Institutions" %}{% endblock %}
 
 {% block content %}
+{% spaceless %}
 <div class="w-100 overflow-hidden row row-cols-1 row-cols-lg-2 m-0 p-2">{# row has unwanted margin #}
     {% for institution in institutions %}
     <div class="all-cards col p-2">
@@ -49,4 +50,5 @@
     </div>
     {% endfor %}
 </div>
+{% endspaceless %}
 {% endblock content %}
