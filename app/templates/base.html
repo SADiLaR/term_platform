@@ -20,7 +20,7 @@
 <body hx-boost="true" hx-target="#main" hx-select="#main" hx-swap="outerHTML show:window:top" hx-push-url="true" hx-indicator="#loader">
 <header>
 {% block header %}
-    <div id="loader" class="htmx-indicator" role="status" ><span class="visually-hidden">{% trans "Loading..."%}</span></div>
+    <div id="loader" class="htmx-indicator" role="status" ><span id="loader-text" class="visually-hidden"></span></div>
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
             <a href="{% url 'home' %}" class="navbar-brand">
