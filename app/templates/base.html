@@ -39,16 +39,15 @@
 
 {% block error %}
 {# Render the error block hidden, so that it can be updated on the front-end. #}
-<div id="error-block" class="m-3 card text-center body-card" hx-swap-oob="true" {% if not show_error %}hidden{% endif %}>
-    <div class="card-header">
-        {% trans "Error" %}
-    </div>
+<section id="error-block" role="alert" aria-labelledby="error-title"
+         class="m-3 card text-center body-card" hx-swap-oob="true"
+         {% if not show_error %}hidden{% endif %}
+>
     <div class="card-body">
         <h1 id="error-title" class="card-title">{% block error_title %}Error{% endblock %}</h1>
-        <p id="error-message" class="card-text">{% block error_message %}An error occured{% endblock %}</p>
-        <a href="{% url 'home' %}" class="btn btn-primary">{% trans "Go to home" %}</a>
+        <p id="error-message" class="card-text">{% block error_message %}An error occurred{% endblock %}</p>
     </div>
-</div>
+</section>
 {% endblock error %}
 
 {% endspaceless %}
