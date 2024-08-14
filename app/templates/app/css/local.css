@@ -36,7 +36,7 @@ Django template comments are used to reduce the payload.
 }
 /*{# Avoids content shift when icon comes late: #}*/
 .icon {
-    width: 1em;
+    width: 1.5em;
     display: inline-block;
 }
 
