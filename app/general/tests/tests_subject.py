@@ -49,6 +49,7 @@ class TestSubjects(TestCase):
             response = self.client.get(reverse("subjects"))
 
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'id="main-heading"')
         self.assertTemplateUsed(response, "app/subjects.html")
         self.assertTrue("subject_data" in response.context)
         self.assertTrue("page_obj" in response.context)

@@ -1,112 +1,53 @@
-{% extends "base.html" %}
+{% extends BASE_TEMPLATE %}
 {% load static %}
 {% load i18n %}
+{% load bs_icons %}
+
+{% block title %}{% trans "Documents" %}{% endblock %}
 
 {% block content %}
-<div class="filter-class">
-  <form method="GET" action="">
-      <div class="d-flex flex-wrap gap-2">
-          <div class="form-group flex-fill mb-2">
-              <label for="subject">{% trans "Subject" %}</label>
-              <select id="subject" name="subject" class="form-control">
-                  <option value="">{% trans "All Subjects" %}</option>
-                  {% for subject in subjects %}
-                      <option value="{{ subject.id }}" {% if request.GET.subject == subject.id|stringformat:"s" %}selected{% endif %}>{{ subject.name }}</option>
-                  {% endfor %}
-              </select>
-          </div>
-          <div class="form-group flex-fill mb-2">
-              <label for="language">{% trans "Language" %}</label>
-              <select id="language" name="language" class="form-control">
-                  <option value="">{% trans "All Languages" %}</option>
-                  {% for language in languages %}
-                      <option value="{{ language.id }}" {% if request.GET.language == language.id|stringformat:"s" %}selected{% endif %}>{{ language.name }}</option>
-                  {% endfor %}
-              </select>
-          </div>
-          <div class="form-group flex-fill mb-2">
-              <label for="institution">{% trans "Institution" %}</label>
-              <select id="institution" name="institution" class="form-control">
-                  <option value="">{% trans "All Institutions" %}</option>
-                  {% for institution in institutions %}
-                      <option value="{{ institution.id }}" {% if request.GET.institution == institution.id|stringformat:"s" %}selected{% endif %}>{{ institution.name }}</option>
-                  {% endfor %}
-              </select>
-          </div>
-      </div>
-      <div class="d-flex flex-wrap">
-        <button type="submit" class="btn btn-primary mt-2 button-spacing">{% trans "Filter" %}</button>
-        <a href="{% url 'documents' %}" class="btn btn-secondary mt-2 button-spacing">{% trans "Reset" %}</a>
-      </div>
-  </form>
-</div>
+{% spaceless %}
+<div class="text-break m-4">
+    <h1 id="main-heading">{% trans "Documents" %}</h1>
 
-<br />
+    {% include "app/_subj_lang_institution_filter.html" %}
 
-<div class="project-list">
-  {% for document in documents %}
-  <div class="project-border">
-    <div class="row">
-          <h3>
-                {{ document.document.title }}
-          </h3>
-        <div class="card-text-project">
-            <a href="{{ document.document.url }}" target="_blank" class="project-url" title="External link">
-                {{ document.document.url }}
-            </a>
-        </div>
-        <div class="card-text-project project-text">
-            {{ document.institution_name }}
-        </div>
-  </div>
-  <div class="project-body">
-    <div class="card-text-description">
-        {{ document.description|truncatewords:30 }} <a href="{% url 'document_detail' document.document.id %}">{% trans "Read more" %}</a>
-    </div>
-    <div class="card-text-project">
-      {% if document.languages %}
-        <span class="icon-text"><i class="project-icon bi-vector-pen"></i></span>
-        <span class="icon-text">{{ document.languages }}</span>
-      {% endif %}
-    </div>
-    <div class="card-text-project">
-      {% if document.subjects %}
-        <span class="icon-text"><i class="project-icon bi-book"></i></span>
-        <span class="icon-text">{{ document.subjects }}</span>
-      {% endif %}
-    </div>
-  </div>
-  </div>
-
-  <br />
-  {% endfor %}
-</div>
-
-<div class="pagination-wrapper">
-    <ul class="pagination">
-        {% if page_obj.has_previous %}
-            <li class="page-item"><a class="page-link" href="?{{ url_params }}&page=1">&laquo; {% trans "First" %}</a></li>
-            <li class="page-item"><a class="page-link" href="?{{ url_params }}&page={{ page_obj.previous_page_number }}">&lsaquo; {% trans "Previous" %}</a></li>
-        {% else %}
-            <li class="page-item disabled"><a class="page-link" href="#">&laquo; {% trans "First" %}</a></li>
-            <li class="page-item disabled"><a class="page-link" href="#">&lsaquo; {% trans "Previous" %}</a></li>
-        {% endif %}
-
-        {% for num in page_obj.paginator.page_range %}
-            {% if page_obj.number == num %}
-                <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
-            {% elif num > page_obj.number|add:-3 and num < page_obj.number|add:3 %}
-                <li class="page-item"><a class="page-link" href="?{{ url_params }}&page={{ num }}">{{ num }}</a></li>
+    {% for item in documents %}
+        <div class="mt-4">{# additional indent simplifies comparison with projects.html #}
+            <h2>
+                <a href="{% url 'document_detail' item.document.id %}" class="text-decoration-none">
+                    {{ item.document.title }}
+                </a>
+            </h2>
+            {% if item.document.url %}
+            <div>
+                <a href="{{ item.document.url }}" target="_blank"
+                   title="{% trans 'External link' %}">
+                    {{ item.document.url }}
+                </a>
+            </div>
             {% endif %}
-        {% endfor %}
+            <div class="fs-5">
+                {{ item.institution_name }}
+            </div>
+            <p class="limit-text-width">
+                {{ item.description|truncatewords:30 }}
+                <a href="{% url 'document_detail' item.document.id %}">{% trans "Read more" %}</a>
+            </p>
 
-        {% if page_obj.has_next %}
-            <li class="page-item"><a class="page-link" href="?{{ url_params }}&page={{ page_obj.next_page_number }}">{% trans "Next" %} &rsaquo;</a></li>
-            <li class="page-item"><a class="page-link" href="?{{ url_params }}&page={{ page_obj.paginator.num_pages }}">{% trans "Last" %} &raquo;</a></li>
-        {% else %}
-            <li class="page-item disabled"><a class="page-link" href="#">{% trans "Next" %} &rsaquo;</a></li>
-            <li class="page-item disabled"><a class="page-link" href="#">{% trans "Last" %} &raquo;</a></li>
-        {% endif %}
-    </ul>
+            {% if item.languages %}
+                <div>{% icon "language" %} {{ item.languages }}</div>
+            {% endif %}
+
+            {% if item.subjects %}
+                <div>{% icon "subject" %} {{ item.subjects }}</div>
+            {% endif %}
+        </div>
+    <hr>
+    {% endfor %}
+
+    {% include "app/_pagination.html" %}
+
 </div>
+{% endspaceless %}
 {% endblock content %}

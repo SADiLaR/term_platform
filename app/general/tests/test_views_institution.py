@@ -1,12 +1,12 @@
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from general.models import Institution, Project
+from general.models import DocumentFile, Institution, Project
 
 
 class InstitutionsViewTestCase(TestCase):
     def setUp(self):
-        Institution.objects.create(
+        inst1 = Institution.objects.create(
             name="Institution Banana",
             abbreviation="UniB",
             url="unibanana.co.za",
@@ -17,15 +17,18 @@ class InstitutionsViewTestCase(TestCase):
             name="Institution Apple", abbreviation="UniA", url="uniapple.co.za"
         )
 
-        inst1 = Institution.objects.get(name="Institution Banana")
         Project.objects.create(name="Test Project 1", institution=inst1)
         Project.objects.create(name="Test Project 2", institution=inst1)
+        DocumentFile.objects.create(title="Test document 1", institution=inst1)
+        DocumentFile.objects.create(title="Test document 2", institution=inst1)
 
         self.url = reverse("institutions")
 
-    def test_institutions_view_correct_template_used(self):
-        response = self.client.get(self.url)
-
+    def test_view_basics(self):
+        with self.assertNumQueries(1):
+            response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'id="main-heading"')
         self.assertTemplateUsed(response, "app/institutions.html")
 
     def test_institutions_view_correct_context_returned(self):
@@ -40,19 +43,12 @@ class InstitutionsViewTestCase(TestCase):
 
         institutions = response.context["institutions"]
 
-        self.assertEqual(response.status_code, 200)
         self.assertEqual(len(institutions), 2)
         self.assertTrue(all("project_count" in inst for inst in institutions))
         self.assertEqual(institutions[0]["project_count"], 0)
         self.assertEqual(institutions[1]["project_count"], 2)
-
-    def test_institutions_view_queries(self):
-        response = self.client.get(self.url)
-
-        with self.assertNumQueries(1):
-            response = self.client.get(self.url)
-
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(institutions[0]["document_count"], 0)
+        self.assertEqual(institutions[1]["document_count"], 2)
 
     def test_institution_ratings(self):
         response = self.client.get(self.url)

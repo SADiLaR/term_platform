@@ -109,7 +109,7 @@ check:
 	@docker compose run --rm web python manage.py check
 
 make-messages:
-	@docker compose run --rm web python manage.py makemessages --all
+	@docker compose run --rm web python manage.py makemessages --all -e html,txt,py,js
 
 compile-messages:
 	@docker compose run --rm web python manage.py compilemessages

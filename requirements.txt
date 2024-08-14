@@ -1,5 +1,6 @@
 django==5.0.6
 django-environ
+django-htmx
 django-simple-history
 gunicorn
 psycopg2-binary

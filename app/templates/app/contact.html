@@ -1,53 +1,60 @@
-{% extends "base.html" %}
+{% extends BASE_TEMPLATE %}
 {% load static %}
 {% load i18n %}
 
 {% block content %}
+{% spaceless %}
+<div class="m-4">
+    <div class="card p-3">
+        <h1 id="main-heading" class="card-title">{% trans "Contact us" %}</h1>
+        <div class="row">
+            <div class="col-md-4 contact-info">
+                <h2 class="fs-4">{% trans "Contact details for more information" %}</h2>
+                <p>
+                    {% blocktrans trimmed %}
+                        Juan Steyn<br>
+                        South African Centre for Digital Language Resources (SADiLaR)<br>
+                        North-West University<br>
+                        South Africa
+                    {% endblocktrans %}
+                </p>
+                <p>+27 18 285 2750</p>
+                <p><a href="mailto:info@sadilar.org">info@sadilar.org</a></p>
+            </div>
 
-<div class="body">
-    <div class="section mt-3 mb-3">
-        <div class="card content-card">
-            <div class="card-body">
-                <h3 class="card-title">{% trans "Contact us" %}</h3>
-                    <div class="row">
-                      <div class="col-md-4 contact-info">
-                          <h6>{% trans "Contact details for more information: "%}</h6>
-                          <p>{% blocktrans %}Juan Steyn<br>
-                          South African Centre for Digital Language Resources (SADiLaR)<br>
-                          North-West University<br>
-                          South Africa{% endblocktrans %}</p>
-                          <p>+27 18 285 2750</p>
-                          <p><a href="mailto:info@sadilar.org">info@sadilar.org</a></p>
-                      </div>
+            <div class="col-md-4 contact-info">
+                <h2 class="fs-4">{% trans "Physical address" %}</h2>
+                <address>
+                    {% blocktrans trimmed %}
+                        Buildings F16 C & F16 D<br>
+                        North-West University<br>
+                        Potchefstroom Campus<br>
+                        Potchefstroom<br>
+                        South Africa
+                    {% endblocktrans %}
+                </address>
+                <p>
+                    <a href="https://www.google.com/maps/place/26%C2%B041'13.8%22S+27%C2%B005'41.4%22E/@-26.687157,27.094845,17z/data=!3m1!4b1!4m4!3m3!8m2!3d-26.687157!4d27.094845?entry=ttu">
+                        {% trans "Directions" %}
+                    </a>
+                </p>
+            </div>
 
-                      <div class="col-md-4 contact-info">
-                          <h6>{% trans "Physical address:" %}</h6>
-                          <address>{% blocktrans %}
-                              Buildings F16 C & F16 D<br>
-                              North-West University<br>
-                              Potchefstroom Campus<br>
-                              Potchefstroom<br>
-                              South Africa{% endblocktrans %}
-                          </address>
-                          <p>
-                            <a href="https://www.google.com/maps/place/26%C2%B041'13.8%22S+27%C2%B005'41.4%22E/@-26.687157,27.094845,17z/data=!3m1!4b1!4m4!3m3!8m2!3d-26.687157!4d27.094845?entry=ttu">Directions</a>
-                          </p>
-                      </div>
-
-                      <div class="col-md-4 contact-info">
-                          <h6>{% trans "Postal address:" %}</h6>
-                          <address>{% blocktrans %}
-                              SADiLaR<br>
-                              Internal Box 340<br>
-                              Private bag X6001<br>
-                              Potchefstroom<br>
-                              South Africa<br>
-                              2520{% endblocktrans %}
-                          </address>
-                      </div>
-                </div>
+            <div class="col-md-4 contact-info">
+                <h2 class="fs-4">{% trans "Postal address" %}</h2>
+                <address>
+                    {% blocktrans trimmed %}
+                        SADiLaR<br>
+                        Internal Box 340<br>
+                        Private bag X6001<br>
+                        Potchefstroom<br>
+                        South Africa<br>
+                        2520
+                    {% endblocktrans %}
+                </address>
             </div>
         </div>
     </div>
 </div>
+{% endspaceless %}
 {% endblock content %}

@@ -32,7 +32,8 @@ class LanguagesViewTest(TestCase):
         self.project2 = Project.objects.create(name="Project 2", institution=self.institution)
         self.project2.languages.add(self.language2)
 
-    def test_languages_view_num_queries(self):
+    def test_view_basics(self):
         with self.assertNumQueries(3):
             response = self.client.get(reverse("languages"))
-            self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'id="main-heading"')

@@ -30,6 +30,7 @@ class ProjectDetailViewTests(TestCase):
     def test_project_detail_view(self):
         response = self.client.get(reverse("project_detail", args=[self.project.id]))
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'id="main-heading"')
         self.assertContains(response, self.project.name)
         self.assertContains(response, self.project.url)
         self.assertContains(response, self.institution.name)

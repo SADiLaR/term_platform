@@ -20,7 +20,6 @@ class Command(BaseCommand):
         self.dir_error = "/pdf_upload_completed/error/"
 
     def handle(self, *args, **options):
-        os.system("clear")
         print("Mass file uploader for testing purposes.")
 
         self.create_directory(self.dir_completed)
@@ -72,11 +71,9 @@ class Command(BaseCommand):
             )
 
     def print_pdf_file(self, file):
-        print("\n")
         print("\033[92m" + file + "\033[0m")
 
     def print_error(self):
-        print("\n")
         print("\033[91m" + "Only PDF files are allowed" + "\033[0m")
 
     def save_data(self, data):

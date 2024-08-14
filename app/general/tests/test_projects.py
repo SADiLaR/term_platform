@@ -45,8 +45,10 @@ class ProjectViewTests(TestCase):
         self.url = reverse("projects")
 
     def test_projects_view(self):
-        response = self.client.get(reverse("projects"))
+        with self.assertNumQueries(6):
+            response = self.client.get(reverse("projects"))
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'id="main-heading"')
         self.assertIn("projects", response.context)
         self.assertEqual(len(response.context["projects"]), 2)
         self.assertEqual(response.context["projects"][0]["project"].name, "Project 1")
@@ -63,12 +65,6 @@ class ProjectViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         projects = response.context["projects"]
         self.assertEqual(projects[1]["languages"], "Multilingual")
-
-    def test_projects_view_queries(self):
-        response = self.client.get(self.url)
-
-        with self.assertNumQueries(6):
-            response = self.client.get(self.url)
 
 
 class GetDateRangeTests(TestCase):

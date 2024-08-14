@@ -6,8 +6,10 @@ repos:
     hooks:
       # Run the linter.
       - id: ruff
+        args: [ --diff ]
       # Run the formatter.
       - id: ruff-format
+        args: [ --diff ]
 
   # Automatically sort python imports
   - repo: https://github.com/PyCQA/isort

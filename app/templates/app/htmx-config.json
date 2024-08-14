@@ -1,0 +1,17 @@
+{% comment %}
+NOTE: this is a Django template that renders a JSON file that is inlined
+in the base template. This way it can easily be edited as a JSON file, and keeps
+the base template simple.
+
+This stores the HTMX configuration. See
+https://htmx.org/reference/#config
+
+Django template comments are used to reduce the payload.
+
+Consider e.g. `"timeout": 2000` for testing network error handling
+{% endcomment %}{
+  "responseHandling": [{# https://htmx.org/docs/#requests #}
+    {"code":"[23]..", "swap": true},
+    {"code":"[45]..", "swap": true, "error":true}{# swap so that error pages show #}
+  ]
+}

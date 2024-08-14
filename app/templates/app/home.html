@@ -1,67 +1,93 @@
-{% extends "base.html" %}
+{% extends BASE_TEMPLATE %}
 {% load static %}
 {% load i18n %}
 
 {% block content %}
+{% spaceless %}
+<h1 id="main-heading" class="visually-hidden">{% trans "Home page" %}</h1>
+<section class="m-3 card">
+   <div class="card-body limit-text-width">
+       <h2 class="fs-3 card-title">{% trans "Welcome" %}</h2>
+       <p>
+           {% blocktrans trimmed %}
+               The South African Centre for Digital Language Resources (SADiLaR) is a national research
+               infrastructure that aims to ensure a digital future for our official languages.
+               It supports researchers in the fields of digital humanities and social sciences and also
+               assists institutions in their language implementation plans.
+           {% endblocktrans %}
+           <a href="https://sadilar.org">{% blocktrans %}Read more about SADiLaR.{% endblocktrans %}</a>
+       </p>
+       <p>
+           {% blocktrans trimmed %}
+               SADiLaR conducted an audit at South African public higher education institutions that highlighted
+               areas that require attention.
+           {% endblocktrans %}
+           <a href="https://sadilar.org/usaf_report_2023">{% blocktrans %}Read the report.{% endblocktrans %}</a>
+       </p>
+       <p>
+           {% blocktrans trimmed %}
+               This platform highlights previous and current work at institutions to encourage collaboration and
+               disseminate resources.
+           {% endblocktrans %}
+       </p>
+   </div>
+</section>
 
-<div class="body">
-    <div class="section mt-3 mb-3">
-        <div class="card content-card">
-            <div class="card-body">
-                <h5 class="card-title">{% trans "Welcome" %}</h5>
-                <p class="card-text">
-                    {% blocktrans %}The South African Centre for Digital Language Resources (SADiLaR) is a national research
-                    infrastructure that aims to ensure a digital future for our official languages.
-                    It supports researchers in the fields of digital humanities and social sciences and also assists
-                    institutions in their language implementation plans.{% endblocktrans %}
-                    <a href="https://sadilar.org">{% blocktrans %}Read more about SADiLaR.{% endblocktrans %}</a>
-                </p>
-                <p class="card-text">
-                    {% blocktrans %}SADiLaR conducted an audit at South African public higher education institutions that highlighted
-                    areas that require attention.{% endblocktrans %}
-                    <a href="https://sadilar.org/usaf_report_2023">{% blocktrans %}Read the report.{% endblocktrans %}</a>
-                </p>
-                <p class="card-text">
-                    {% blocktrans %}This platform highlights previous and current work at institutions to encourage collaboration and
-                    disseminate resources.{% endblocktrans %}
-                </p>
-            </div>
-        </div>
-    </div>
+<section class="m-3 card">
+   <div class="card-body d-flex justify-content-between align-items-end">
+       <div class="card-items">
+           <h2 class="fs-3 card-title">{% trans "Search" %}</h2>
+           <p>
+               {% blocktrans trimmed %}
+                   This platforms hosts terminology and other useful language resources.
+               {% endblocktrans %}
+           </p>
+           <p>
+           <form method="get" action="{% url 'search' %}">
+               <input type="search" name="search" placeholder="{% trans 'Search term...' %}"
+                      class="form-control search-input">
+               <input type="submit" value="{% trans 'Search' %}" class="btn btn-primary mt-2"/>
+           </form>
+           </p>
+       </div>
+   </div>
+</section>
 
-    <div class="section mt-3 mb-3">
-        <div class="card content-card">
-            <div class="card-body d-flex justify-content-between align-items-end">
-                <div class="card-items">
-                    <h5 class="card-title">{% trans "Search" %}</h5>
-                    <p class="card-text">
-                        {% blocktrans %}This platforms hosts terminology and other useful language resources.{% endblocktrans %}
-                    </p>
-                    <p class="card-text">
-                    <form method="get" action="{% url 'search' %}" class="container">
-                        <input type="search" name="search" placeholder="{% trans 'Search term...' %}"
-                               class="form-control search-input">
-                        <input type="submit" value="{% trans 'Search' %}" class="btn btn-primary float-left"/>
-                    </form>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section mt-3 mb-3">
-        <div class="card content-card">
-            <div class="card-body">
-                <h5 class="card-title">{% trans "Institutions" %}</h5>
-                <p class="card-text">
-                    {% trans "Browse information by institution." %}
-                </p>
-                <a href="{% url 'institutions' %}" class="btn btn-primary">
-                    {% trans "View" %}
+<section class="m-3 card">
+    <div class="card-body">
+        <h2 class="fs-3 card-title">{% trans "Explore" %}</h2>
+        <p>
+            {% trans "Browse through the available information by one of the following categories:" %}
+        </p>
+        <ul class="list-unstyled d-md-flex flex-md-row">
+            <li class="m-2">
+                <a href="{% url 'institutions' %}" class="btn btn-secondary">
+                    {% trans "Institutions" %}
                 </a>
-            </div>
-        </div>
-    </div>
-</div>
+            </li>
+            <li class="m-2">
+                <a href="{% url 'projects' %}" class="btn btn-secondary">
+                    {% trans "Projects" %}
+                </a>
+            </li>
+            <li class="m-2">
+                <a href="{% url 'documents' %}" class="btn btn-secondary">
+                    {% trans "Documents" %}
+                </a>
+            </li>
+            <li class="m-2">
+                <a href="{% url 'languages' %}" class="btn btn-secondary">
+                    {% trans "Languages" %}
+                </a>
+            </li>
+            <li class="m-2">
+                <a href="{% url 'subjects' %}" class="btn btn-secondary">
+                    {% trans "Subject fields" %}
+                </a>
+            </li>
+       </ul>
+   </div>
+</section>
 
+{% endspaceless %}
 {% endblock content %}

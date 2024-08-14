@@ -1,71 +1,85 @@
-{% extends "base.html" %}
+{% extends BASE_TEMPLATE %}
 {% load static %}
 {% load i18n %}
 
 {% block content %}
-
-<div class="body">
-    <div class="section mt-3 mb-3">
-        <div class="card content-card">
-            <div class="card-body">
-                <h3 class="card-title">{% trans "Terms of use" %}</h3>
-                <p class="card-text">
-                  <a href="https://sadilar.org/en/terms-of-use/">{% trans "The terms of use statement for the SADiLaR website and services" %}</a>
-                </p>
-                <br>
-                <h3 class="card-title">{% trans "Copyright" %}</h3>
-                <p class="card-text">
-                    {% blocktrans %}Intellectual property rights concerning the materials shared via this website and the website
-                    as such belong to the original creator or to SADiLaR. Where exceptions apply, the license
-                    agreement governing a particular resource will be explicitly listed.
-                    Content included in the website is shared under the Creative Commons License Attribution
-                    2.0, unless indicated otherwise for specific materials. This license agreement does not allow
-                    the inclusion of any elements contained in the website (such as images, logos, videos and
-                    other resources) in a frame-set or an in-line link to another web page without giving due
-                    credit to the origin of the material.{% endblocktrans %}
-                </p>
-                <h6 class="card-title">{% trans "Disclaimer" %}</h6>
-                <p class="card-text">
-                    {% blocktrans %}SADiLaR and its partners make a conscious effort to obtain copyright clearance for any
-                    materials shared on or used in creation of the website before publication. Should you notice
-                    any potential infringement on your own or anyone else’s intellectual property rights, we ask
-                    that you inform us directly so that we may remove the material and/or clear any outstanding
-                    copyright matters with the rightful owner immediately.{% endblocktrans %}
-                </p>
-                <br>
-                <h3 class="card-title">{% trans "Privacy Policy and Privacy Statement" %}</h3>
-                <p class="card-text">
-                    {% blocktrans %}Please find the privacy policy and privacy statement for the SADiLaR website and services
-                    here.{% endblocktrans %}
-                </p>
-                <h6 class="card-title">{% trans "Protection of Personal Information" %}</h6>
-                <p class="card-text">
-                    {% blocktrans %}The purpose of the South African Protection of Personal Information Act 4 of 2013 (POPIA)
-                    is to ensure responsible handling of an individual’s personal information and to hold all South
-                    African institutions accountable should they not safeguard the collection, storing or sharing
-                    of such information against possible abuse in any way. SADiLaR is strongly committed to
-                    protecting personal information/data and strives to adhere to the {% endblocktrans %}<a href="https://www.nwu.ac.za/POPIA_Policy_NWU">{% trans "guidelines" %}</a>
-                    {% blocktrans %} as set out by the host institution for the Centre, the North-West University.{% endblocktrans %}
-                </p>
-                <h6 class="card-title">{% trans "Use of cookies" %}</h6>
-                <p class="card-text">
-                    {% blocktrans %}Cookies are data saved on the device with which you access this website to customise your
-                    experience or provide essential functions of the website such as enabling you to log in to
-                    secure areas, e.g. the Repository. You can learn more about the different types of cookies
-                    and how to disable non-essential cookies {% endblocktrans %}<a href="https://www.nwu.ac.za/POPIA_Policy_NWU">{% trans "here." %}</a>
-                </p>
-                <p class="card-text">
-                    {% blocktrans %}By using the SADiLaR website, you consent to our use of cookies and storage thereof on
-                    your device. Should you not accept our use of cookies (or your browser is set to block all
-                    cookies), your ability to access all functions on this website might be impaired.{% endblocktrans %}
-                </p>
-                <h6 class="card-title">{% trans "User support" %}</h6>
-                <p class="card-text">
-                    {% blocktrans %}Any questions concerning the website or services offered via the website can be addressed
-                    to SADiLaR via email to {% endblocktrans %}<a href="mailto:nfo@sadilar.org">info@sadilar.org</a>
-                </p>
-            </div>
-        </div>
-    </div>
-
+{% spaceless %}
+<div class="m-4">
+    <div class="card p-3"><div class="limit-text-width">
+        <h1 id="main-heading">{% trans "Legal Notices" %}</h1>
+        <h2 class="card-title">{% trans "Terms of use" %}</h2>
+        <p>
+            <a href="https://sadilar.org/en/terms-of-use/">
+                {% trans "The terms of use statement for the SADiLaR website and services" %}
+            </a>
+        </p>
+        <h2 class="card-title">{% trans "Copyright" %}</h2>
+        <p>
+            {% blocktrans trimmed %}
+                Intellectual property rights concerning the materials shared via this website and the website
+                as such belong to the original creator or to SADiLaR. Where exceptions apply, the license
+                agreement governing a particular resource will be explicitly listed.
+            {% endblocktrans %}
+            {% blocktrans trimmed %}
+                Content included in the website is shared under the Creative Commons License Attribution
+                2.0, unless indicated otherwise for specific materials. This license agreement does not allow
+                the inclusion of any elements contained in the website (such as images, logos, videos and
+                other resources) in a frame-set or an in-line link to another web page without giving due
+                credit to the origin of the material.
+            {% endblocktrans %}
+        </p>
+        <h3 class="card-title">{% trans "Disclaimer" %}</h3>
+        <p>
+            {% blocktrans trimmed %}
+                SADiLaR and its partners make a conscious effort to obtain copyright clearance for any
+                materials shared on or used in creation of the website before publication. Should you notice
+                any potential infringement on your own or anyone else’s intellectual property rights, we ask
+                that you inform us directly so that we may remove the material and/or clear any outstanding
+                copyright matters with the rightful owner immediately.
+            {% endblocktrans %}
+        </p>
+        <h2 class="card-title">{% trans "Privacy Policy and Privacy Statement" %}</h2>
+        <p>
+            {% blocktrans trimmed %}
+                Please find the privacy policy and privacy statement for the SADiLaR website and services here.
+            {% endblocktrans %}
+        </p>
+        <h3 class="card-title">{% trans "Protection of Personal Information" %}</h3>
+        <p>
+            {% blocktrans with url="https://www.nwu.ac.za/POPIA_Policy_NWU" trimmed %}
+                The purpose of the South African Protection of Personal Information Act 4 of 2013 (POPIA)
+                is to ensure responsible handling of an individual’s personal information and to hold all South
+                African institutions accountable should they not safeguard the collection, storing or sharing
+                of such information against possible abuse in any way. SADiLaR is strongly committed to
+                protecting personal information/data and strives to adhere to the
+                <a href="{{ url }}">guidelines</a>
+                as set out by the host institution for the Centre, the North-West University.
+             {% endblocktrans %}
+        </p>
+        <h3 class="card-title">{% trans "Use of cookies" %}</h3>
+        <p>
+            {% blocktrans with url="https://www.nwu.ac.za/POPIA_Policy_NWU" trimmed %}
+                Cookies are data saved on the device with which you access this website to customise your
+                experience or provide essential functions of the website such as enabling you to log in to
+                secure areas, e.g. the Repository. You can learn more about the different types of cookies
+                and how to disable non-essential cookies <a href="{{ url }}">here</a>.
+             {% endblocktrans %}
+        </p>
+        <p>
+            {% blocktrans trimmed %}
+                By using the SADiLaR website, you consent to our use of cookies and storage thereof on
+                your device. Should you not accept our use of cookies (or your browser is set to block all
+                cookies), your ability to access all functions on this website might be impaired.
+            {% endblocktrans %}
+        </p>
+        <h3 class="card-title">{% trans "User support" %}</h3>
+        <p>
+            {% blocktrans with address="info@sadilar.org" trimmed %}
+                Any questions concerning the website or services offered via the website can be addressed
+                to SADiLaR via email to <a href="mailto:{{ address }}">{{ address }}</a>.
+            {% endblocktrans %}
+        </p>
+    </div></div>
+</div>
+{% endspaceless %}
 {% endblock content %}
