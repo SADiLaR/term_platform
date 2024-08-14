@@ -27,16 +27,11 @@ def _bs_icon(name):
     # space will take additional space in addition to a margin.
 
 
-@register.simple_tag
-def bs_icon(name):
-    """Any of the Bootstrap icons"""
-    return _bs_icon(name)
-
-
 # a mapping from project types to Bootstrap icon names:
 _icons = {
     "date": "calendar3",
     "document": "file-earmark",
+    "download": "file-earmark-arrow-down-fill",
     "language": "vector-pen",
     "project": "clipboard2",
     "subject": "book",
