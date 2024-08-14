@@ -1,5 +1,5 @@
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.db.models import Count, F, Func, OuterRef, Prefetch, Subquery, Value
+from django.core.paginator import Paginator
+from django.db.models import Count, F, Func, OuterRef, Prefetch, Subquery
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.utils.http import urlencode
@@ -41,13 +41,14 @@ def get_date_range(project):
     start_date = project.start_date
     end_date = project.end_date
 
-    if (start_date is not None) and (end_date is not None) and (start_date.year != end_date.year):
-        date = f"{start_date.year} – {end_date.year}"
-    elif (start_date is not None) and (end_date is not None) and (start_date.year == end_date.year):
-        date = start_date.year
-    elif start_date is not None:
+    if start_date and end_date:
+        if start_date.year != end_date.year:
+            date = f"{start_date.year} – {end_date.year}"
+        else:
+            date = start_date.year
+    elif start_date:
         date = _("Since {year}").format(year=start_date.year)
-    elif end_date is not None:
+    elif end_date:
         date = _("Until {year}").format(year=end_date.year)
     else:
         date = None
@@ -83,21 +84,17 @@ def get_subjects(subjects):
 def projects(request):
     template = "app/projects.html"
 
-    subject_id = request.GET.get("subject")
-    language_id = request.GET.get("language")
-    institution_id = request.GET.get("institution")
-
     projects = (
         Project.objects.select_related("institution")
         .prefetch_related("subjects", "languages")
         .order_by("name")
     )
 
-    if subject_id:
+    if subject_id := request.GET.get("subject"):
         projects = projects.filter(subjects__id=subject_id)
-    if language_id:
+    if language_id := request.GET.get("language"):
         projects = projects.filter(languages__id=language_id)
-    if institution_id:
+    if institution_id := request.GET.get("institution"):
         projects = projects.filter(institution__id=institution_id)
 
     subjects = Subject.objects.order_by("name")
@@ -108,24 +105,14 @@ def projects(request):
     for project in projects:
         project_subjects = project.subjects.all()
         project_languages = project.languages.all()
-
-        languages_data = get_languages(project_languages)
-        subjects_data = get_subjects(project_subjects)
-
-        logo = get_logo(project)
-
-        institution_name = project.institution.name
-
-        date = get_date_range(project)
-
         project_data.append(
             {
                 "project": project,
-                "logo": logo,
-                "subjects": subjects_data,
-                "languages": languages_data,
-                "date": date,
-                "institution_name": institution_name,
+                "logo": get_logo(project),
+                "subjects": get_subjects(project_subjects),
+                "languages": get_languages(project_languages),
+                "date": get_date_range(project),
+                "institution_name": project.institution.name,
                 "description": project.description,
             }
         )
@@ -152,12 +139,10 @@ def project_detail(request, project_id):
         id=project_id,
     )
 
-    logo = get_logo(project)
-
     context = {
         "current_page": "project_detail",
         "project": project,
-        "logo": logo,
+        "logo": get_logo(project),
         "subjects": project.subjects.all(),
         "languages": project.languages.all(),
     }
@@ -171,14 +156,12 @@ def institution_detail(request, institution_id):
     projects = Project.objects.filter(institution=institution).order_by("name")
     documents = DocumentFile.objects.filter(institution=institution).order_by("title")
 
-    logo = institution.logo
-
     context = {
         "current_page": "institution_detail",
         "institution": institution,
         "projects": projects,
         "documents": documents,
-        "logo": logo,
+        "logo": institution.logo,
     }
 
     return render(request, template_name=template, context=context)
@@ -187,29 +170,24 @@ def institution_detail(request, institution_id):
 def documents(request):
     template = "app/documents.html"
 
-    url_params = {}
-    subject_id = request.GET.get("subject")
-    language_id = request.GET.get("language")
-    institution_id = request.GET.get("institution")
-
     documents = (
         DocumentFile.objects.select_related("institution")
         .prefetch_related("subjects", "languages")
         .order_by("title")
     )
 
-    if subject_id:
+    url_params = {}
+    if subject_id := request.GET.get("subject"):
         documents = documents.filter(subjects__id=subject_id)
         url_params["subject"] = subject_id
-    if language_id:
+    if language_id := request.GET.get("language_id"):
         documents = documents.filter(languages__id=language_id)
         url_params["language"] = language_id
-    if institution_id:
+    if institution_id := request.GET.get("institution"):
         documents = documents.filter(institution__id=institution_id)
         url_params["institution"] = institution_id
 
     paginator = Paginator(documents, 10)
-
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
@@ -221,15 +199,11 @@ def documents(request):
     for document in page_obj:
         document_subjects = document.subjects.all()
         document_languages = document.languages.all()
-
-        languages_data = get_languages(document_languages)
-        subjects_data = get_subjects(document_subjects)
-
         document_data.append(
             {
                 "document": document,
-                "subjects": subjects_data,
-                "languages": languages_data,
+                "subjects": get_subjects(document_subjects),
+                "languages": get_languages(document_languages),
                 "institution_name": document.institution.name,
                 "description": document.description,
                 "url": document.url,
@@ -286,7 +260,6 @@ def languages(request):
     )
 
     language_data = []
-
     for language in languages:
         documents = language.documentfile_set.all()
         projects = language.project_set.all()
@@ -398,22 +371,13 @@ def institutions(request):
 
 
 def search(request):
-    page_number = request.GET.get("page", "1")
-    if not page_number.isdigit():
-        page_number = "1"
-
     f = DocumentFileFilter(request.GET, queryset=DocumentFile.objects.all())
 
     template = "app/search.html"
 
     paginator = Paginator(f.qs, 5)  # 5 documents per page
-
-    try:
-        page_obj = paginator.page(page_number)
-    except PageNotAnInteger:
-        page_obj = paginator.page(1)
-    except EmptyPage:
-        page_obj = paginator.page(paginator.num_pages)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
 
     for result in page_obj:
         # Remove headline that is identical to description
