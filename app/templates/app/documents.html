@@ -7,14 +7,14 @@
 
 {% block content %}
 {% spaceless %}
-<div class="m-4">
+<div class="text-break m-4">
     <h1 id="main-heading">{% trans "Documents" %}</h1>
 
     {% include "app/_subj_lang_institution_filter.html" %}
 
     {% for item in documents %}
         <div class="mt-4">{# additional indent simplifies comparison with projects.html #}
-            <h2 class="overflow-hidden" style="text-overflow: ellipsis;">
+            <h2>
                 <a href="{% url 'document_detail' item.document.id %}" class="text-decoration-none">
                     {{ item.document.title }}
                 </a>

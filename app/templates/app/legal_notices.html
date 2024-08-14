@@ -5,7 +5,7 @@
 {% block content %}
 {% spaceless %}
 <div class="m-4">
-    <div class="card p-3">
+    <div class="card p-3"><div class="limit-text-width">
         <h1 id="main-heading">{% trans "Legal Notices" %}</h1>
         <h2 class="card-title">{% trans "Terms of use" %}</h2>
         <p>
@@ -79,7 +79,7 @@
                 to SADiLaR via email to <a href="mailto:{{ address }}">{{ address }}</a>.
             {% endblocktrans %}
         </p>
-    </div>
+    </div></div>
 </div>
 {% endspaceless %}
 {% endblock content %}

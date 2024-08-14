@@ -7,7 +7,7 @@
 
 {% block content %}
 {% spaceless %}
-<div class="m-4">
+<div class="text-break m-4">
     <p><a href="{% url 'projects' %}">{% trans "Projects" %}</a> > {{ project.name }}</p>
 
     <div class="mb-3 row">
@@ -15,7 +15,7 @@
       <div class="{% if logo %}col-md-6{% else %}col-md-12{% endif %}">
         <h1 id="main-heading">{{ project.name }}</h1>
         {% if project.url %}
-        <div class="overflow-x-hidden mb-2">
+        <div class="mb-2">
             <a href="{{ project.url }}" target="_blank"
                title="{% trans 'External link' %}">
                 {{ project.url }}
