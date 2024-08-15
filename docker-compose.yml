@@ -3,7 +3,7 @@
 
 services:
   db:
-    image: postgres:12
+    image: postgres:16
     container_name: sadilar-terminology-db
     environment:
       - POSTGRES_DB=term_db

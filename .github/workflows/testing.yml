@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest # operating system your code will run on
     services:
       postgres:
-        image: postgres:13
+        image: postgres:16
         env:
           POSTGRES_USER: sadilar
           POSTGRES_PASSWORD: sadilar
