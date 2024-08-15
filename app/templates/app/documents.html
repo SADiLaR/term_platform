@@ -10,7 +10,7 @@
 <div class="text-break m-4">
     <h1 id="main-heading">{% trans "Documents" %}</h1>
 
-    {% include "app/_subj_lang_institution_filter.html" %}
+    {% include "app/_subj_lang_institution_filter.html" with view="documents"%}
 
     {% for item in documents %}
         <div class="mt-4">{# additional indent simplifies comparison with projects.html #}

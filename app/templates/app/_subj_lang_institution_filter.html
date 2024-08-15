@@ -1,6 +1,6 @@
 {% load i18n %}
 {% spaceless %}
-<form method="GET" action="" class="mb-3">
+<form method="GET" action="{% url view %}" class="mb-3">
     <div class="d-flex flex-wrap gap-2">
         <div class="form-group flex-fill mb-2">
             <label for="subject">{% trans "Subject" %}</label>
@@ -41,7 +41,7 @@
     </div>
     <div class="d-flex flex-wrap">
         <button type="submit" class="btn btn-primary mt-2 me-2">{% trans "Filter" %}</button>
-        <a href="{% url 'documents' %}" class="btn btn-secondary mt-2">{% trans "Reset" %}</a>
+        <a href="{% url view %}" class="btn btn-secondary mt-2">{% trans "Reset" %}</a>
     </div>
 </form>
 {% endspaceless %}

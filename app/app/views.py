@@ -180,7 +180,7 @@ def documents(request):
     if subject_id := request.GET.get("subject"):
         documents = documents.filter(subjects__id=subject_id)
         url_params["subject"] = subject_id
-    if language_id := request.GET.get("language_id"):
+    if language_id := request.GET.get("language"):
         documents = documents.filter(languages__id=language_id)
         url_params["language"] = language_id
     if institution_id := request.GET.get("institution"):
