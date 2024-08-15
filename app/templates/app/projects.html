@@ -10,7 +10,7 @@
 <div class="text-break m-4">
     <h1 id="main-heading">{% trans "Projects" %}</h1>
 
-    {% include "app/_subj_lang_institution_filter.html" %}
+    {% include "app/_subj_lang_institution_filter.html" with view="projects" %}
 
     {% for item in projects %}
     <div class="container-fluid mt-4 mb-5 p-0">{# container adds unwanted padding #}

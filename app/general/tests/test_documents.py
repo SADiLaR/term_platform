@@ -40,3 +40,9 @@ class DocumentViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'id="main-heading"')
         self.assertIn("documents", response.context)
+
+    def test_with_filters(self):
+        response = self.client.get(reverse("documents"), {"language": self.language3.id})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context["documents"]), 1)
+        self.assertEqual(response.context["documents"][0]["document"].title, "Document 6")
