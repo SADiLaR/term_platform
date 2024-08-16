@@ -1,10 +1,15 @@
-<!--
-    Django Admin template
-    extended from https://github.com/django/django/blob/main/django/contrib/admin/templates/admin/base.html
-    and https://github.com/django/django/blob/main/django/contrib/admin/templates/admin/base_site.html
--->
-
 {% extends "admin/base.html" %}
+{% comment %}
+Django Admin template
+extended from:
+https://github.com/django/django/blob/stable/5.0.x/django/contrib/admin/templates/admin/base.html
+and
+https://github.com/django/django/blob/stable/5.0.x/django/contrib/admin/templates/admin/base_site.html
+
+When upgrading Django, compare the changes in the above, to work out what
+should be incorporated here, and update the links above that serve as the point
+of comparison.
+{% endcomment %}
 
 {% load static %}
 
