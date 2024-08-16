@@ -12,6 +12,7 @@ of comparison.
 {% endcomment %}
 
 {% load static %}
+{% load i18n %}
 
 {% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
 
@@ -24,7 +25,7 @@ of comparison.
 {% block branding %}
         <h1 class="header-title">
             <a href="{% url 'home' %}">
-                <img src="{% static 'img/sadilar.png' %}" class="main-logo" alt=_("SADiLaR")>
+                <img src="{% static 'img/sadilar.png' %}" class="main-logo" alt="{% trans 'SADiLaR' %}">
             </a>
         </h1>
 {% if user.is_anonymous %}
