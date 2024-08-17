@@ -1,7 +1,7 @@
 import os
 import random
 import unittest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 from faker import Faker
 
@@ -12,58 +12,46 @@ from general.models import DocumentFile, Institution
 class TestHandleFile(unittest.TestCase):
     def setUp(self):
         self.command = Command()
-        self.command.check_file_type = MagicMock()
-        self.command.move_file = MagicMock()
-        self.command.print_error = MagicMock()
-        self.command.print_pdf_file = MagicMock()
         self.command.save_data = MagicMock()
         self.test_dir = os.getenv("TESTING_DIR", "/app/general/tests/files")
         self.test_file = self.test_dir + "Lorem.pdf"
+        self.name = "Test file"
         self.fake = Faker()
 
+    def tearDown(self):
+        try:
+            document_file = DocumentFile.objects.get(title=self.name)
+            path = document_file.uploaded_file.path
+            if os.path.isfile(path):
+                os.remove(path)
+        except DocumentFile.DoesNotExist:
+            pass
+
     def test_handle_file_pdf(self):
-        self.command.check_file_type.return_value = self.test_dir
         self.command.handle_file(self.test_file, self.test_file)
-        self.command.check_file_type.assert_called_once()
-        self.command.move_file.assert_called_once()
         self.command.save_data.assert_called_once()
-        self.command.print_pdf_file.assert_called_once()
-        self.command.print_error.assert_not_called()
 
     def test_handle_file_non_pdf(self):
-        self.command.check_file_type.return_value = None
-        self.command.handle_file(self.test_file, self.test_file)
-        self.command.check_file_type.assert_called_once()
-        self.command.move_file.assert_called_once()
+        with patch("magic.from_file") as from_file:
+            from_file.return_value = None
+            self.command.handle_file(self.test_file, self.test_file)
         self.command.save_data.assert_not_called()
-        self.command.print_pdf_file.assert_called_once()
-        self.command.print_error.assert_called_once()
-
-    def test_check_file_type_pdf(self):
-        self.assertNotEqual(self.command.check_file_type("application/pdf"), self.test_dir)
 
     def test_save_data(self):
-        self.command = Command()
+        command = Command()
         # Create some Institutions instances for testing
-        for i in range(1, 30):
-            random_number = random.randint(1, 1000)
-
+        for i in range(1, 21):
+            id = random.randint(1, 1000)
             Institution.objects.create(
                 id=i,
-                name=str(random_number) + "_" + self.fake.company(),
-                abbreviation=str(random_number) + "_" + self.fake.company_suffix(),
-                url=str(random_number) + "_" + self.fake.url(),
-                email=str(random_number) + "_" + self.fake.company_email(),
+                name=f"{id}_{self.fake.company()}",
+                abbreviation=f"{id}_{self.fake.company_suffix()}",
+                url=f"{id}_{self.fake.url()}",
+                email=f"{id}_{self.fake.company_email()}",
                 logo="",
             )
 
-        data = {
-            "title": "Test file",
-            "file": "Test file",
-            "uploaded_file": self.test_file,
-        }
-
-        self.command.save_data(data)
-
-        document_file = DocumentFile.objects.get(title="Test file")
-        self.assertEqual(document_file.title, "Test file")
+        command.save_data(self.test_file, self.name)
+        document_file = DocumentFile.objects.get(title=self.name)
+        self.assertEqual(document_file.title, self.name)
+        self.assertIn("Lorem ipsum dolor", document_file.document_data)
