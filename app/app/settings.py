@@ -77,6 +77,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "simple_history.middleware.HistoryRequestMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
+    "general.middleware.ExtraVaryMiddleware",
 ]
 
 if DEBUG and DEBUG_TOOLBAR:
