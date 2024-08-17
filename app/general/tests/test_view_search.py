@@ -3,7 +3,7 @@ import unittest
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from general.models import DocumentFile, Institution, Language, Subject
+from general.models import Document, Institution, Language, Subject
 
 
 class SearchViewTest(TestCase):
@@ -20,9 +20,9 @@ class SearchViewTest(TestCase):
         self.subject1 = Subject.objects.create(name="Science")
         self.subject2 = Subject.objects.create(name="Math")
 
-        # Create DocumentFiles
+        # Create documents
         for i in range(10):
-            doc = DocumentFile.objects.create(
+            doc = Document.objects.create(
                 title=f"Document {i + 1}",
                 institution=self.institution1 if i % 2 == 0 else self.institution2,
                 document_type="report" if i % 2 == 0 else "article",

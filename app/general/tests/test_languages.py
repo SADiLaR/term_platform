@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from general.models import DocumentFile, Institution, Language, Project
+from general.models import Document, Institution, Language, Project
 
 
 class LanguagesViewTest(TestCase):
@@ -16,12 +16,12 @@ class LanguagesViewTest(TestCase):
         self.language1 = Language.objects.create(name="English", iso_code="lang1")
         self.language2 = Language.objects.create(name="Spanish", iso_code="lang2")
 
-        self.document1 = DocumentFile.objects.create(
+        self.document1 = Document.objects.create(
             title="Document 1", institution=self.institution, document_type="report"
         )
         self.document1.languages.add(self.language1)
 
-        self.document2 = DocumentFile.objects.create(
+        self.document2 = Document.objects.create(
             title="Document 2", institution=self.institution, document_type="report"
         )
         self.document2.languages.add(self.language2)

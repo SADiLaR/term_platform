@@ -12,10 +12,10 @@ from django.db.models.query import EmptyQuerySet
 from django.utils.translation import gettext_lazy as _
 from django_filters import ModelMultipleChoiceFilter, MultipleChoiceFilter
 
-from general.models import DocumentFile, Institution, Language, Project, Subject
+from general.models import Document, Institution, Language, Project, Subject
 
 
-class DocumentFileFilter(django_filters.FilterSet):
+class DocumentFilter(django_filters.FilterSet):
     search = django_filters.CharFilter(method="ignore", label=_("Search"))
 
     institution = ModelMultipleChoiceFilter(
@@ -35,7 +35,7 @@ class DocumentFileFilter(django_filters.FilterSet):
     )
 
     class Meta:
-        model = DocumentFile
+        model = Document
         fields = [
             "institution",
             "subjects",

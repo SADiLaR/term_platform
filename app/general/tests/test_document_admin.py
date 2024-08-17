@@ -3,11 +3,11 @@ import unittest
 
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-from general.admin import DocumentFileForm
+from general.admin import DocumentForm
 from general.models import Institution
 
 
-class TestDocumentFileForm(unittest.TestCase):
+class TestDocumentForm(unittest.TestCase):
     def __init__(self, methodName: str = "runTest"):
         super().__init__(methodName)
         self.form = None
@@ -33,7 +33,7 @@ class TestDocumentFileForm(unittest.TestCase):
             "description": "Test description",
         }
 
-        form = DocumentFileForm(tests_form)
+        form = DocumentForm(tests_form)
         self.assertFalse(form.is_valid())
         self.assertEqual(form.errors["url"], ["Either URL or uploaded file must be provided."])
         self.assertEqual(
@@ -53,7 +53,7 @@ class TestDocumentFileForm(unittest.TestCase):
             "description": "",
         }
 
-        form = DocumentFileForm(tests_form)
+        form = DocumentForm(tests_form)
         self.assertTrue(form.is_valid())
 
     #
@@ -70,7 +70,7 @@ class TestDocumentFileForm(unittest.TestCase):
             "description": "Test description",
         }
 
-        form = DocumentFileForm(tests_form, files={"uploaded_file": self.file_mock})
+        form = DocumentForm(tests_form, files={"uploaded_file": self.file_mock})
         self.assertTrue(form.is_valid())
 
     def test_clean_with_large_file(self):
@@ -87,7 +87,7 @@ class TestDocumentFileForm(unittest.TestCase):
             "description": "Test description",
         }
 
-        form = DocumentFileForm(tests_form, files={"uploaded_file": self.file_mock})
+        form = DocumentForm(tests_form, files={"uploaded_file": self.file_mock})
         self.assertFalse(form.is_valid())
         self.assertIn("uploaded_file", form.errors)
         self.assertEqual(form.errors["uploaded_file"], ["File size must not exceed 10MB."])

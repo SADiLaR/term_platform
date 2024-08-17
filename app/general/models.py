@@ -82,7 +82,7 @@ class Subject(models.Model):
         return self.name
 
 
-class DocumentFile(models.Model):
+class Document(models.Model):
     file_validators = [FileExtensionValidator(["pdf"])]
 
     # names and abbreviations based on

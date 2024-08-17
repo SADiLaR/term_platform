@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from general.models import DocumentFile, Institution, Language, Subject
+from general.models import Document, Institution, Language, Subject
 
 
 class DocumentViewTests(TestCase):
@@ -16,14 +16,14 @@ class DocumentViewTests(TestCase):
             name="Institution", logo="institution_logo.png"
         )
 
-        self.document5 = DocumentFile.objects.create(
+        self.document5 = Document.objects.create(
             title="Document 5",
             institution=self.institution,
         )
         self.document5.subjects.add(self.subject1)
         self.document5.languages.add(self.language1)
 
-        self.document6 = DocumentFile.objects.create(
+        self.document6 = Document.objects.create(
             title="Document 6",
             institution=self.institution,
         )

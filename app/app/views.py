@@ -5,8 +5,8 @@ from django.shortcuts import get_object_or_404, render
 from django.utils.http import urlencode
 from django.utils.translation import gettext as _
 
-from general.filters import DocumentFileFilter
-from general.models import DocumentFile, Institution, Language, Project, Subject
+from general.filters import DocumentFilter
+from general.models import Document, Institution, Language, Project, Subject
 
 
 def health(request):
@@ -154,7 +154,7 @@ def institution_detail(request, institution_id):
 
     institution = get_object_or_404(Institution, id=institution_id)
     projects = Project.objects.filter(institution=institution).order_by("name")
-    documents = DocumentFile.objects.filter(institution=institution).order_by("title")
+    documents = Document.objects.filter(institution=institution).order_by("title")
 
     context = {
         "current_page": "institution_detail",
@@ -171,7 +171,7 @@ def documents(request):
     template = "app/documents.html"
 
     documents = (
-        DocumentFile.objects.select_related("institution")
+        Document.objects.select_related("institution")
         .prefetch_related("subjects", "languages")
         .order_by("title")
     )
@@ -227,7 +227,7 @@ def document_detail(request, document_id):
     template = "app/document_detail.html"
 
     document = get_object_or_404(
-        DocumentFile.objects.select_related("institution").prefetch_related(
+        Document.objects.select_related("institution").prefetch_related(
             Prefetch("subjects", queryset=Subject.objects.order_by("name")),
             Prefetch("languages", queryset=Language.objects.order_by("name")),
         ),
@@ -248,8 +248,8 @@ def languages(request):
         Language.objects.all()
         .prefetch_related(
             Prefetch(
-                "documentfile_set",
-                queryset=DocumentFile.objects.only("id", "title", "languages").order_by("title"),
+                "document_set",
+                queryset=Document.objects.only("id", "title", "languages").order_by("title"),
             ),
             Prefetch(
                 "project_set",
@@ -261,7 +261,7 @@ def languages(request):
 
     language_data = []
     for language in languages:
-        documents = language.documentfile_set.all()
+        documents = language.document_set.all()
         projects = language.project_set.all()
         language_data.append(
             {
@@ -285,8 +285,8 @@ def subjects(request):
         Subject.objects.all()
         .prefetch_related(
             Prefetch(
-                "documentfile_set",
-                queryset=DocumentFile.objects.only("id", "title", "subjects").order_by("title"),
+                "document_set",
+                queryset=Document.objects.only("id", "title", "subjects").order_by("title"),
             ),
             Prefetch(
                 "project_set",
@@ -299,7 +299,7 @@ def subjects(request):
     subject_data = []
 
     for subject in subjects:
-        documents = subject.documentfile_set.all()
+        documents = subject.document_set.all()
         projects = subject.project_set.all()
         if documents or projects:
             subject_data.append(
@@ -311,7 +311,6 @@ def subjects(request):
             )
 
     paginator = Paginator(subject_data, 10)
-
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
@@ -329,7 +328,7 @@ def institutions(request):
 
     # https://docs.djangoproject.com/en/stable/topics/db/aggregation/#combining-multiple-aggregations
     subquery = (
-        DocumentFile.objects.filter(institution=OuterRef("id"))
+        Document.objects.filter(institution=OuterRef("id"))
         .order_by()
         .annotate(count=Func(F("id"), function="Count"))
     )
@@ -371,7 +370,7 @@ def institutions(request):
 
 
 def search(request):
-    f = DocumentFileFilter(request.GET, queryset=DocumentFile.objects.all())
+    f = DocumentFilter(request.GET, queryset=Document.objects.all())
 
     template = "app/search.html"
 

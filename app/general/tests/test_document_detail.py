@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from general.models import DocumentFile, Institution, Language, Project, Subject
+from general.models import Document, Institution, Language, Project, Subject
 
 
 class DocumentDetailViewTest(TestCase):
@@ -14,7 +14,7 @@ class DocumentDetailViewTest(TestCase):
         self.language1 = Language.objects.create(name="Afrikaans", iso_code="af")
         self.language2 = Language.objects.create(name="English", iso_code="en")
 
-        self.document = DocumentFile.objects.create(
+        self.document = Document.objects.create(
             title="Afrikaans_HL_P1_Feb-March_2011",
             description="This is a description of the document.",
             url="https://externaldocumentrepository.com/document1",

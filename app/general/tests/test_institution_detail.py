@@ -1,8 +1,7 @@
-from django.http import Http404
 from django.test import TestCase
 from django.urls import reverse
 
-from general.models import DocumentFile, Institution, Project
+from general.models import Institution
 
 
 class InstitutionDetailViewTests(TestCase):

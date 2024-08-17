@@ -1,7 +1,7 @@
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from general.models import DocumentFile, Institution, Project
+from general.models import Document, Institution, Project
 
 
 class InstitutionsViewTestCase(TestCase):
@@ -19,8 +19,8 @@ class InstitutionsViewTestCase(TestCase):
 
         Project.objects.create(name="Test Project 1", institution=inst1)
         Project.objects.create(name="Test Project 2", institution=inst1)
-        DocumentFile.objects.create(title="Test document 1", institution=inst1)
-        DocumentFile.objects.create(title="Test document 2", institution=inst1)
+        Document.objects.create(title="Test document 1", institution=inst1)
+        Document.objects.create(title="Test document 2", institution=inst1)
 
         self.url = reverse("institutions")
 
