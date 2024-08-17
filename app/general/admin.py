@@ -4,7 +4,7 @@ from django.forms import HiddenInput, ModelForm
 from django.utils.translation import gettext as _
 from simple_history.admin import SimpleHistoryAdmin
 
-from general.service.extract_text import GetTextError, GetTextFromPDF
+from general.service.extract_text import GetTextError, pdf_to_text
 
 from .models import DocumentFile, Institution, Language, Project, Subject
 
@@ -34,28 +34,25 @@ class DocumentFileForm(ModelForm):
             file_type = magic.from_buffer(uploaded_file.read(), mime=True)
             if file_type != "application/pdf":
                 self.add_error("uploaded_file", _("Only PDF files are allowed."))
-
-            try:
-                # Extract text from PDF file
-                cleaned_data["document_data"] = GetTextFromPDF(uploaded_file).to_text()
-
-            except GetTextError:
-                return self.add_error(
-                    "uploaded_file", _("The uploaded file is corrupted or not fully downloaded.")
-                )
-
             cleaned_data["mime_type"] = file_type
 
-            uploaded_file.seek(0)  # Reset file pointer after read
+            limit = 10 * 1024 * 1024
+            if uploaded_file.size and uploaded_file.size > limit:
+                self.add_error("uploaded_file", _("File size must not exceed 10MB."))
+            if not self.has_error("uploaded_file"):
+                # Don't parse if validation above failed
+                try:
+                    cleaned_data["document_data"] = pdf_to_text(uploaded_file)
+                except GetTextError:
+                    return self.add_error(
+                        "uploaded_file",
+                        _("The uploaded file is corrupted or not fully downloaded."),
+                    )
+                uploaded_file.seek(0)  # Reset file pointer after read
 
         if not url and not uploaded_file:
             self.add_error("url", _("Either URL or uploaded file must be provided."))
             self.add_error("uploaded_file", _("Either URL or uploaded file must be provided."))
-
-        if uploaded_file:
-            limit = 10 * 1024 * 1024
-            if uploaded_file.size and uploaded_file.size > limit:
-                self.add_error("uploaded_file", _("File size must not exceed 10MB."))
 
         return cleaned_data
 
