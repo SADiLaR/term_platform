@@ -5,7 +5,7 @@ from unittest.mock import MagicMock, patch
 
 from faker import Faker
 
-from general.management.commands.dev_pdf_mass_upload import Command
+from general.management.commands.import_documents import Command
 from general.models import DocumentFile, Institution
 
 
