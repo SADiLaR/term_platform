@@ -1,6 +1,7 @@
 import magic
 from django.contrib import admin
 from django.forms import HiddenInput, ModelForm
+from django.utils.translation import gettext as _
 from simple_history.admin import SimpleHistoryAdmin
 
 from general.service.extract_text import GetTextError, GetTextFromPDF
@@ -32,7 +33,7 @@ class DocumentFileForm(ModelForm):
         if uploaded_file:
             file_type = magic.from_buffer(uploaded_file.read(), mime=True)
             if file_type != "application/pdf":
-                self.add_error("uploaded_file", "Only PDF files are allowed.")
+                self.add_error("uploaded_file", _("Only PDF files are allowed."))
 
             try:
                 # Extract text from PDF file
@@ -40,7 +41,7 @@ class DocumentFileForm(ModelForm):
 
             except GetTextError:
                 return self.add_error(
-                    "uploaded_file", "The uploaded PDF file is corrupted or not fully downloaded."
+                    "uploaded_file", _("The uploaded file is corrupted or not fully downloaded.")
                 )
 
             cleaned_data["mime_type"] = file_type
@@ -48,13 +49,13 @@ class DocumentFileForm(ModelForm):
             uploaded_file.seek(0)  # Reset file pointer after read
 
         if not url and not uploaded_file:
-            self.add_error("url", "Either URL or uploaded file must be provided.")
-            self.add_error("uploaded_file", "Either URL or uploaded file must be provided.")
+            self.add_error("url", _("Either URL or uploaded file must be provided."))
+            self.add_error("uploaded_file", _("Either URL or uploaded file must be provided."))
 
         if uploaded_file:
             limit = 10 * 1024 * 1024
             if uploaded_file.size and uploaded_file.size > limit:
-                self.add_error("uploaded_file", "File size must not exceed 10MB.")
+                self.add_error("uploaded_file", _("File size must not exceed 10MB."))
 
         return cleaned_data
 

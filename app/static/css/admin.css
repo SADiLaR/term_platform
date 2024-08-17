@@ -58,13 +58,12 @@ a.section:link, a.section:visited {
 }
 
 .header-title {
-    margin: 10px;
+    margin: 10px 2px;
 }
 
 .main-logo {
-    margin-left: 1px;
-    width: auto;
-    height: 70px;
+    width: 140px;;
+    height: 73px;
 }
 
 
