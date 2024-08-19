@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, patch
 from faker import Faker
 
 from general.management.commands.import_documents import Command
-from general.models import DocumentFile, Institution
+from general.models import Document, Institution
 
 
 class TestHandleFile(unittest.TestCase):
@@ -20,11 +20,11 @@ class TestHandleFile(unittest.TestCase):
 
     def tearDown(self):
         try:
-            document_file = DocumentFile.objects.get(title=self.name)
+            document_file = Document.objects.get(title=self.name)
             path = document_file.uploaded_file.path
             if os.path.isfile(path):
                 os.remove(path)
-        except DocumentFile.DoesNotExist:
+        except Document.DoesNotExist:
             pass
 
     def test_handle_file_pdf(self):
@@ -52,6 +52,6 @@ class TestHandleFile(unittest.TestCase):
             )
 
         command.save_data(self.test_file, self.name)
-        document_file = DocumentFile.objects.get(title=self.name)
+        document_file = Document.objects.get(title=self.name)
         self.assertEqual(document_file.title, self.name)
         self.assertIn("Lorem ipsum dolor", document_file.document_data)

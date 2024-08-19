@@ -3,10 +3,10 @@ import unittest
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 
-from general.models import DocumentFile, Institution, Language, Subject
+from general.models import Document, Institution, Language, Subject
 
 
-class DocumentFileTest(TestCase):
+class DocumentTest(TestCase):
     def setUp(self):
         self.subject = Subject.objects.create(name="Test Subject")
         self.language = Language.objects.create(name="Test Language", iso_code="TL")
@@ -22,7 +22,7 @@ class DocumentFileTest(TestCase):
         self.document_type = "Glossary"
         self.institution = self.institution
 
-        self.document = DocumentFile.objects.create(
+        self.document = Document.objects.create(
             title=self.title,
             url=self.url,
             uploaded_file=self.uploaded_file,
@@ -35,8 +35,8 @@ class DocumentFileTest(TestCase):
         self.document.languages.add(self.language)
 
     def test_document_creation(self):
-        self.assertEqual(DocumentFile.objects.count(), 1)
-        self.assertEqual(DocumentFile.objects.get().title, self.title)
+        self.assertEqual(Document.objects.count(), 1)
+        self.assertEqual(Document.objects.get().title, self.title)
 
     def test_document_str_representation(self):  # Test __str__ method
         self.assertEqual(str(self.document), self.title)

@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from general.models import DocumentFile, Institution, Project, Subject
+from general.models import Document, Institution, Project, Subject
 
 
 class TestSubjects(TestCase):
@@ -16,12 +16,12 @@ class TestSubjects(TestCase):
         self.subject1 = Subject.objects.create(name="Mathematics")
         self.subject2 = Subject.objects.create(name="Science")
 
-        self.document1 = DocumentFile.objects.create(
+        self.document1 = Document.objects.create(
             title="Document 1", institution=self.institution, document_type="report"
         )
         self.document1.subjects.add(self.subject1)
 
-        self.document2 = DocumentFile.objects.create(
+        self.document2 = Document.objects.create(
             title="Document 2", institution=self.institution, document_type="report"
         )
         self.document2.subjects.add(self.subject2)

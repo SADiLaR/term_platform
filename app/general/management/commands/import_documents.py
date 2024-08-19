@@ -11,7 +11,7 @@ import magic
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
 
-from general.models import DocumentFile
+from general.models import Document
 from general.service.extract_text import GetTextError, pdf_to_text
 
 
@@ -42,7 +42,7 @@ class Command(BaseCommand):
             content_file = ContentFile(f.read(), name=file_name)
 
         try:
-            instance = DocumentFile(
+            instance = Document(
                 title=file_name,
                 document_data=pdf_to_text(file_path),
                 uploaded_file=content_file,

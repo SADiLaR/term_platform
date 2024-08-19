@@ -6,12 +6,12 @@ from simple_history.admin import SimpleHistoryAdmin
 
 from general.service.extract_text import GetTextError, pdf_to_text
 
-from .models import DocumentFile, Institution, Language, Project, Subject
+from .models import Document, Institution, Language, Project, Subject
 
 
-class DocumentFileForm(ModelForm):
+class DocumentForm(ModelForm):
     class Meta:
-        model = DocumentFile
+        model = Document
         fields = "__all__"  # noqa: DJ007
 
     def __init__(self, *args, **kwargs):
@@ -57,12 +57,12 @@ class DocumentFileForm(ModelForm):
         return cleaned_data
 
 
-class DocumentFileAdmin(SimpleHistoryAdmin):
+class DocumentAdmin(SimpleHistoryAdmin):
     ordering = ["title"]
     list_display = ["title", "license", "document_type", "available"]
     search_fields = ["title"]
     list_filter = ["institution", "license", "document_type"]
-    form = DocumentFileForm
+    form = DocumentForm
     history_list_display = ["title", "license", "document_type", "available"]
 
 
@@ -102,4 +102,4 @@ admin.site.register(Project, ProjectAdmin)
 admin.site.register(Institution, InstitutionAdmin)
 admin.site.register(Language, LanguageAdmin)
 admin.site.register(Subject, SubjectAdmin)
-admin.site.register(DocumentFile, DocumentFileAdmin)
+admin.site.register(Document, DocumentAdmin)
