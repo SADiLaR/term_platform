@@ -175,7 +175,9 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "webmaster@localhost")
 SERVER_EMAIL = os.environ.get("SERVER_EMAIL", "root@localhost")
 EMAIL_SUBJECT_PREFIX = os.environ.get("EMAIL_SUBJECT_PREFIX", "[Django] ")
-ADMINS = os.environ.get("ADMINS", "").split()
+# Format as: Name Surname address@example.com, Name Surname address@example.com
+if _admins := os.environ.get("ADMINS", ""):
+    ADMINS = [a.strip().rsplit(maxsplit=1) for a in _admins.split(",")]
 
 email_backend_env = os.environ.get("EMAIL_BACKEND_CONSOLE", "False").lower() in ["true", "1", "yes"]
 
