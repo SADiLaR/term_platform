@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
+    "django.forms",
     "users",
     "general",
     "simple_history",
@@ -103,6 +104,10 @@ TEMPLATES = [
         },
     },
 ]
+
+# Enable using `TEMPLATE` setting above to render forms as well. This is needed
+# to override some form rendering details. See app/django/forms/.
+FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 
 WSGI_APPLICATION = "app.wsgi.application"
 

@@ -5,6 +5,17 @@ from django.utils.translation import gettext_lazy as _
 from users.models import CustomUser
 
 
+class BoostrapFormMixin:
+    """Customise form for Bootstrap styling."""
+
+    error_css_class = "alert alert-danger"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs["class"] = "form-control"
+
+
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(
         required=True,
