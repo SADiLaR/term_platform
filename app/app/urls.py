@@ -44,7 +44,6 @@ urlpatterns = [
     path("search/", views.search, name="search"),
     path("i18n/", include("django.conf.urls.i18n")),
     path("accounts/", include("accounts.urls")),
-    path("accounts/", include("django.contrib.auth.urls")),
 ]
 
 if settings.DEBUG:

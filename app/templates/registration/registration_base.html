@@ -1,0 +1,14 @@
+{% extends BASE_TEMPLATE %}
+
+{% spaceless %}
+{% block content %}
+<div class="container limit-text-width">
+    <div class="card">
+        <div class="card-body">
+            {% block account_content%}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% endspaceless %}
