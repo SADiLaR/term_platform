@@ -1,4 +1,4 @@
-<li class="nav-item me-1"{% if 'admin:' in view %} hx-disable{% endif %}>
+<li class="nav-item me-1">
     <a href="{% url view %}"
             {% if current_page == view %} class="nav-link active px-3" aria-current="page"
             {% else %} class="nav-link px-3"

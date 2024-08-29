@@ -2,10 +2,10 @@ import unittest
 
 from django.test import TestCase
 
-from accounts.forms import CustomUserCreationForm
+from accounts.forms import UserCreationForm
 
 
-class CustomUserCreationFormTest(TestCase):
+class UserCreationFormTest(TestCase):
     def setUp(self):
         self.username = "testuser"
         self.email = "testuser@gmail.com"
@@ -15,7 +15,7 @@ class CustomUserCreationFormTest(TestCase):
         self.password2 = "sadilar2024"
 
     def test_valid_data(self):
-        form = CustomUserCreationForm(
+        form = UserCreationForm(
             {
                 "username": self.username,
                 "email": self.email,
@@ -29,7 +29,7 @@ class CustomUserCreationFormTest(TestCase):
         self.assertTrue(form.is_valid())
 
     def test_blank_data(self):
-        form = CustomUserCreationForm({})
+        form = UserCreationForm({})
         self.assertFalse(form.is_valid())
 
         self.assertEqual(
@@ -45,7 +45,7 @@ class CustomUserCreationFormTest(TestCase):
         )
 
     def test_invalid_email(self):
-        form = CustomUserCreationForm(
+        form = UserCreationForm(
             {
                 "username": self.username,
                 "email": "not a valid email",
@@ -64,7 +64,7 @@ class CustomUserCreationFormTest(TestCase):
         )
 
     def test_passwords_do_not_match(self):
-        form = CustomUserCreationForm(
+        form = UserCreationForm(
             {
                 "username": self.username,
                 "email": self.email,

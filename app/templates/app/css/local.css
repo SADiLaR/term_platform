@@ -45,6 +45,13 @@ Django template comments are used to reduce the payload.
     max-width: 600px;
     overflow-y: auto;
 }
+/*{# Bootstrap 5.3's .invalid-feedback named for Django form error messages #}*/
+.errorlist {
+  width: 100%;
+  margin-top: .25rem;
+  font-size: .875em;
+  color: var(--bs-form-invalid-color);
+}
 /*{# start after 40%/3s: quick responses will be done already #}*/
 .htmx-indicator{
     display: none;

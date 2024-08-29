@@ -65,16 +65,38 @@
 
 {% spaceless %}
 <footer class="footer container-fluid text-bg-primary py-3 link-light"
-        style="--bs-link-color-rgb: 255, 255, 255">
+        style="--bs-link-color-rgb: 255, 255, 255; --bs-link-color:#fff; --bs-btn-color:#fff;">
     <div class="row text-center">
 
         <div class="col col-sm-8 col-md-6 offset-md-3">
-          <p><a href="https://sadilar.org" title="{% trans 'External link'%}">{% trans "Developed by SADiLaR" %}</a></p>
-          <div class="d-md-flex justify-content-center">
-             <div class="px-2 py-1"><a href="{% url 'legal_notices' %}">{% trans "Legal Notices" %}</a></div>
-             <div class="px-2 py-1"><a href="{% url 'contact' %}">{% trans "Contact Us" %}</a></div>
-             <div class="px-2 py-1"><a href="/gebreek">{% trans " - gebreekte skakel -" %}</a></div>
-          </div>
+            <p>
+                <a href="https://sadilar.org" title="{% trans 'External link'%}">
+                    {% trans "Developed by SADiLaR" %}
+                </a>
+            </p>
+            <div class="d-md-flex justify-content-center">
+                <div class="px-2">
+                    <a href="{% url 'legal_notices' %}" class="btn btn-link p-0">{% trans "Legal Notices" %}</a>
+                </div>
+                <div class="px-2">
+                    <a href="{% url 'contact' %}" class="btn btn-link p-0">{% trans "Contact Us" %}</a>
+                </div>
+                {% if user.is_authenticated %}
+                    <div class="px-2" hx-disable>
+                        <a href="{% url 'admin:index' %}" class="btn btn-link p-0">{% trans "Admin" %}</a>
+                    </div>
+                    <div class="px-2" hx-disable>
+                        <form id="logout-form" method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-link p-0">{% trans "Logout" %}</button>
+                        </form>
+                    </div>
+                {% else %}
+                    <div class="px-2" hx-disable>
+                        <a href="{% url 'login' %}" class="btn btn-link p-0">{% trans "Login" %}</a>
+                    </div>
+                {% endif %}
+            </div>
         </div>
 
         <div class="col col-sm-4 col-md-3 pt-2">
