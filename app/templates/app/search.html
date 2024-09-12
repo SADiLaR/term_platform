@@ -34,7 +34,7 @@ structure.
                            value="{{ request.GET.search }}">
                 </div>
                 <div class="col-auto">
-                    <input type="submit" class="btn btn-primary me-4"/>
+                    <input type="submit" class="btn btn-primary me-4">
                     <a href="{% url 'search' %}" hx-target="#main" hx-select="#main" class="btn btn-secondary">{% trans 'Reset' %}</a>
                 </div>
                 {% if page_obj.paginator.num_pages > 1 %}
@@ -111,7 +111,7 @@ structure.
                     <a href="#search" class="d-md-none">{% trans "Alter search terms above" %}</a>
                 </div>
             </div>
-            <input type="submit" class="btn btn-primary me-4"/>
+            <input type="submit" class="btn btn-primary me-4">
             <a href="{% url 'search' %}" hx-target="#main" hx-select="#main" class="btn btn-secondary">{% trans 'Reset' %}</a>
         </section>
         {% endif %}
