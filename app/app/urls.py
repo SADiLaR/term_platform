@@ -24,8 +24,8 @@ from django.utils.translation import gettext_lazy as _
 
 from . import views
 
-admin.site.index_title = _("SADiLaR Administration")
-admin.site.site_title = _("SADiLaR Site Admin Portal")
+admin.site.index_title = _("Site administration")
+admin.site.site_title = _("LwimiLinks administration ")
 
 urlpatterns = [
     path("admin/", admin.site.urls),

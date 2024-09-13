@@ -1,6 +1,12 @@
-**Sadilar Terminology**
+**LwimiLinks**
 
-About the project:
+This project implements a platform for hosting multilingual terminology, and
+enriching data with metadata and links between relevant role players.
+
+"Lwimi" refers to language in the Nguni languages, and "Links" emphasises the
+goal of linking relevant pieces of information.
+
+The software is implemented in Python on the Django framework.
 
 ---
 
