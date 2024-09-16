@@ -1,0 +1,288 @@
+[
+  {
+    "model": "general.Institution",
+    "pk": 1,
+    "fields": {
+      "name": "University of South Africa",
+      "abbreviation": "UNISA",
+      "url": "https://www.unisa.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 2,
+    "fields": {
+      "name": "North-West University",
+      "abbreviation": "NWU",
+      "url": "https://www.nwu.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 3,
+    "fields": {
+      "name": "University of Pretoria",
+      "abbreviation": "UP",
+      "url": "https://www.up.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 4,
+    "fields": {
+      "name": "Tshwane University of Technology",
+      "abbreviation": "TUT",
+      "url": "https://tut.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 5,
+    "fields": {
+      "name": "University of Johannesburg",
+      "abbreviation": "UJ",
+      "url": "https://www.uj.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 6,
+    "fields": {
+      "name": "University of KwaZulu-Natal",
+      "abbreviation": "UKZN",
+      "url": "https://www.ukzn.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 7,
+    "fields": {
+      "name": "University of the Free State",
+      "abbreviation": "UFS",
+      "url": "https://www.ufs.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 8,
+    "fields": {
+      "name": "Cape Peninsula University of Technology",
+      "abbreviation": "CPUT",
+      "url": "https://www.cput.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 9,
+    "fields": {
+      "name": "University of the Witwatersrand",
+      "abbreviation": "WITS",
+      "url": "https://www.wits.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 10,
+    "fields": {
+      "name": "University of Stellenbosch",
+      "abbreviation": "US",
+      "url": "http://www.sun.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 11,
+    "fields": {
+      "name": "University of Cape Town",
+      "abbreviation": "UCT",
+      "url": "https://uct.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 12,
+    "fields": {
+      "name": "Nelson Mandela Metropolitan University",
+      "abbreviation": "NMU",
+      "url": "https://www.mandela.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 13,
+    "fields": {
+      "name": "Walter Sisulu University",
+      "abbreviation": "WSU",
+      "url": "https://www.wsu.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 14,
+    "fields": {
+      "name": "Durban University of Technology",
+      "abbreviation": "DUT",
+      "url": "https://www.dut.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 15,
+    "fields": {
+      "name": "University of Limpopo",
+      "abbreviation": "UL",
+      "url": "https://www.ul.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+   {
+    "model": "general.Institution",
+    "pk": 16,
+    "fields": {
+      "name": "Vaal University of Technology",
+      "abbreviation": "VUT",
+      "url": "https://www.vut.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+    {
+    "model": "general.Institution",
+    "pk": 17,
+    "fields": {
+      "name": "University of Zululand",
+      "abbreviation": "UniZulu",
+      "url": "https://www.unizulu.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+   {
+    "model": "general.Institution",
+    "pk": 18,
+    "fields": {
+      "name": "University of the Western Cape",
+      "abbreviation": "UWC",
+      "url": "https://www.uwc.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 19,
+    "fields": {
+      "name": "Central University of Technology",
+      "abbreviation": "CUT",
+      "url": "https://www.cut.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+   {
+    "model": "general.Institution",
+    "pk": 20,
+    "fields": {
+      "name": "University of Fort Hare",
+      "abbreviation": "UFH",
+      "url": "https://www.ufh.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 21,
+    "fields": {
+      "name": "Rhodes University",
+      "abbreviation": "RU",
+      "url": "https://www.ru.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 22,
+    "fields": {
+      "name": "University of Venda",
+      "abbreviation": "Venda",
+      "url": "https://www.univen.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+    {
+    "model": "general.Institution",
+    "pk": 23,
+    "fields": {
+      "name": "Mangosuthu University of Technology",
+      "abbreviation": "MUT",
+      "url": "https://www.mut.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+  {
+    "model": "general.Institution",
+    "pk": 24,
+    "fields": {
+      "name": "Sefako Makgatho Health Sciences University",
+      "abbreviation": "FMHSU",
+      "url": "https://www.smu.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+    {
+    "model": "general.Institution",
+    "pk": 25,
+    "fields": {
+      "name": "University of Mpumalanga",
+      "abbreviation": "UMP",
+      "url": "https://www.ump.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  },
+    {
+    "model": "general.Institution",
+    "pk": 26,
+    "fields": {
+      "name": "Sol Plaatje University",
+      "abbreviation": "SPU",
+      "url": "https://www.spu.ac.za/",
+      "email": "",
+      "logo": ""
+    }
+  }
+]

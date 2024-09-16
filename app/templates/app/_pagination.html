@@ -1,0 +1,69 @@
+{% load i18n %}
+{% spaceless %}
+{% if page_obj.has_previous or page_obj.has_next %}
+<nav aria-label="{% trans 'Pages' %}" class="my-3">
+    {# TODO: ideal accessibility combination of aria-label and h4? #}
+    <h4 class="d-sm-none">{% trans "Pages" %}</h4>
+{% comment %}
+Notes:
+  * Below small or with long translations, there is likely not enough
+    horisontal space.
+  * ul.flex-wrap avoids horisontal overflow at small sizes by letting the
+    right-most <li>s wrap if needed.
+  * At x-small size, we start with a vertical list-group which uses substantial
+    width and we use "d-none d-sm-block" to hide the (somewhat bulky)
+    full-width blocks from sm upwards and use the usual pagination styling.
+  * The CSS is to remove the border radius that is unsuitable when stacking
+    vertically.
+  * `lefter` and `righter` factor out some repeated class definitions. The
+    goal is to move these items for better visual alignment in the center in
+    the vertical layout, but to restore it for horizontal layout. Unfortunately
+    the correct padding to restore is between padding 2 and 3... oh well.
+  * `disabled` is for items in the paginator that aren't actionable. We show
+    them when there is space, but hide them on screens below small, and also for
+    the screen readers. The ellipsis (...) entries seem to mostly make sense
+    visually, and are also hidden from the accessibility tree.
+  * text-center is mostly for the vertical case to center the text.
+  * &nbsp; is a non-breaking space that avoids an arrow wrapping separately
+    from the label.
+{% endcomment %}
+    <style>
+        @media (max-width: 575px) {
+            .page-item:first-child .page-link { border-radius: 0 }
+            .page-item:last-child .page-link { border-radius: 0 }
+        }
+    </style>
+    {% with lefter='class="page-link pe-4 pe-sm-3"' righter='class="page-link ps-4 ps-sm-3"' %}
+    {% with disabled='class="page-item disabled d-none d-sm-block" aria-hidden="true"' %}
+    <ul class="pagination flex-wrap justify-content-center text-center list-group list-group-horizontal-sm px-5 px-sm-0">
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a {{ lefter }} href="?{{ url_params }}&page=1">&laquo;&nbsp;{% trans "Start" %}</a></li>
+            <li class="page-item"><a {{ lefter }} href="?{{ url_params }}&page={{ page_obj.previous_page_number }}">&lsaquo;&nbsp;{% trans "Previous" %}</a></li>
+        {% else %}
+            <li {{ disabled }}><span {{ lefter }}>&laquo;&nbsp;{% trans "First" %}</span></li>
+            <li {{ disabled }}><span {{ lefter }}>&lsaquo;&nbsp;{% trans "Previous" %}</span></li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <li class="page-item active"><a aria-current="page" class="page-link" href="#">{{ num }}</a></li>
+            {% elif num > page_obj.number|add:-3 and num < page_obj.number|add:3 %}
+                <li class="page-item"><a class="page-link" href="?{{ url_params }}&page={{ num }}">{{ num }}</a></li>
+            {% elif num == page_obj.number|add:-4 or num == page_obj.number|add:4 %}
+                <li class="page-item"><span aria-hidden="true" class="page-link">...</span></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="page-item"><a {{ righter }} href="?{{ url_params }}&page={{ page_obj.next_page_number }}" preload>{% trans "Next" %}&nbsp;&rsaquo;</a></li>
+            <li class="page-item"><a {{ righter }} href="?{{ url_params }}&page={{ page_obj.paginator.num_pages }}">{% trans "Last" %}&nbsp;&raquo;</a></li>
+        {% else %}
+            <li {{ disabled }}><span {{ righter }}>{% trans "Next" %}&nbsp;&rsaquo;</span></li>
+            <li {{ disabled }}><span {{ righter }}>{% trans "Last" %}&nbsp;&raquo;</span></li>
+        {% endif %}
+    </ul>
+    {% endwith %}
+    {% endwith %}
+</nav>
+{% endif %}
+{% endspaceless %}

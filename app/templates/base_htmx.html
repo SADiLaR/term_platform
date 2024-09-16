@@ -1,0 +1,37 @@
+{% load i18n %}
+{% spaceless %}
+<html lang="en">{# Required for HTMX title swapping to work #}
+<head>
+    <title>{% block title %}{% trans "LwimiLinks" %}{% endblock %}</title>
+</head>
+
+{% comment %}
+Some elements outside of <main> might need to be updated.
+ - Navbar with indication of active/current page.
+ - Error messages
+These use hx-swap-oob so that they are swapped in from the HTMX response. The
+document title is automatically swapped by HTMX.
+{% endcomment %}
+
+{% include "app/_navbar_items.html" %}
+
+{% block error %}
+    {% if show_error %}
+        <h1 id="error-title" class="card-title" hx-swap-oob="true">{% block error_title %}{% endblock %}</h1>
+        <p id="error-message" class="card-text" hx-swap-oob="true">{% block error_message %}{% endblock %}</p>
+    {% endif %}
+{% endblock %}
+
+{% endspaceless %}
+<main id="main" tabindex="-1" autofocus aria-labelledby="main-heading">
+{% block content %}{# See notes in base.html #}{% endblock content %}
+</main>
+{% spaceless %}
+
+{% if debug_toolbar %}
+<script>
+    {% include "app/js/debug-toolbar-handler.js" %}
+</script>
+{% endif %}
+
+{% endspaceless %}

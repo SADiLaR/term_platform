@@ -1,0 +1,55 @@
+{% extends BASE_TEMPLATE %}
+{% load static %}
+{% load i18n %}
+{% load bs_icons %}
+
+{% block title %}{% trans "Institutions" %}{% endblock %}
+
+{% block content %}
+{% spaceless %}
+<h1 id="main-heading" class="visually-hidden">{% trans "Overview of institutions" %}</h1>
+<div class="w-100 row row-cols-1 row-cols-lg-2 m-0 p-2">{# row has unwanted margin #}
+    {% for institution in institutions %}
+    <div class="all-cards col p-2">
+        <div class="card">
+            <div class="row row-cols-auto row-cols-md-2 p-3" style="min-height: 160px;">
+                <div class="col">
+                    <h2 class="fs-5">
+                        <a href="{% url 'institution_detail' institution.id %}">{{ institution.name }}</a>
+                    </h2>
+                    <p>{{ institution.abbreviation }}</p>
+                    {% if institution.project_count %}
+                    <p>
+                        {% icon "project" %}
+                        {% blocktrans count project_count=institution.project_count trimmed %}
+                            {{ project_count }} project
+                        {% plural %}
+                            {{ project_count }} projects
+                        {% endblocktrans %}
+                    </p>
+                    {% endif %}
+                    {% if institution.document_count %}
+                    <p>
+                        {% icon "document" %}
+                        {% blocktrans count document_count=institution.document_count trimmed %}
+                            {{ document_count }} document
+                        {% plural %}
+                            {{ document_count }} documents
+                        {% endblocktrans %}
+                    </p>
+                    {% endif %}
+                </div>
+		{% if institution.logo %}
+                <div class="col">
+                    <img src="{{ institution.logo.url }}" class="logo100" style="max-height: 65px"
+                         alt="" {# name already mentioned elsewhere #}
+                    >
+                </div>
+	        {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endspaceless %}
+{% endblock content %}

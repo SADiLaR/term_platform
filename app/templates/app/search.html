@@ -1,0 +1,122 @@
+{% extends BASE_TEMPLATE %}
+{% comment %}
+
+This page is bigger due to forms, etc. "{% spaceless %}" reduces unnecessary
+spaces in a few places, but there are places where it can't be used. The spaces
+in the headline can be relevant, e.g. <b>term1</b> <b>term2</b>.
+
+The spaceless tags are kept on the left since they don't take part in the HTML
+structure.
+{% endcomment %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{{ request.GET.search }} - {% trans "Search" %}{% endblock %}
+
+{% block content %}
+{% spaceless %}
+<div class="text-break card m-3 p-2">
+    <h1 id="main-heading" class="visually-hidden">{% trans "Search and filter for information" %}</h1>
+    <form action="{% url 'search' %}" class="card-body row" hx-target="#search-main" hx-select="#search-main">
+        <div id="search-main" class="col-md-8">
+
+            {# Search #}
+            <section aria-label="{% trans 'Search form' %}" class="limit-text-width mb-3"
+                     hx-target="#search-main" hx-select="#search-main"
+            >
+                <div id="search" class="col-auto">{# Target for link at bottom #}
+                    <h2 class="fs-5 card-title mt-2">{% trans "Search a term" %}</h2>
+                </div>
+                <div class="col mb-2">
+                    <input type="search" name="{{ filter.form.search.name }}"
+                           placeholder="{% trans 'Search...' %}"
+                           class="form-control"
+                           value="{{ request.GET.search }}">
+                </div>
+                <div class="col-auto">
+                    <input type="submit" class="btn btn-primary me-4">
+                    <a href="{% url 'search' %}" hx-target="#main" hx-select="#main" class="btn btn-secondary">{% trans 'Reset' %}</a>
+                </div>
+                {% if page_obj.paginator.num_pages > 1 %}
+                <div class="mt-2">
+                    <a href="#filters" class="d-md-none">{% trans "Filter results below" %}</a>
+                </div>
+                {% endif %}
+            </section>
+{% endspaceless %}
+
+            {# Results #}
+            <section aria-label="{% trans 'Search results' %}" hx-target="#main" hx-select="#main"
+                {% if request.htmx.target == 'search-main' %}tabindex="-1" autofocus{% endif %}
+            >
+                {% for result in page_obj %}
+{% spaceless %}
+                <div class="row">
+                    <div class="col limit-text-width">
+                        <h3>
+                            <a class="text-decoration-none" href="{% url result.view result.id %}">
+                                {{ result.heading }}
+                            </a>
+                        </h3>
+
+                        {% if result.associated_url %}
+                        <a href="{{ result.associated_url }}" target="_blank"
+                           title="{% trans 'External link' %}">
+                            {{ result.associated_url }}
+                        </a>
+                        {% endif %}
+
+                        {% if result.extra %}
+                        <p>{{ result.extra|truncatewords:20 }}</p>
+                        {% endif %}
+{% endspaceless %}
+                        {% if result.search_headline.strip %}
+                        <blockquote aria-label="{% trans 'Excerpt' %}" class="text-secondary mx-lg-5">
+                            <p>…&nbsp;{{ result.search_headline|safe }}&nbsp;…</p>
+                        </blockquote>
+                        {% endif %}
+                        {% comment "Left for debugging of search ranking" %}
+                            <p>{{ result.rank }}</p>
+                        {% endcomment %}
+                    </div>
+                    {% if result.logo_url %}
+                    <div class="d-none d-sm-block col-auto mb-4">
+                        <img src="/media/{{ result.logo_url }}" alt="" {# Name already mentioned elsewhere #}
+                             class="logo100">
+                    </div>
+                    {% endif %}
+                </div>
+                {% empty %}
+                    <p>{% trans "No results." %}</p>
+                {% endfor %}
+            </section>
+
+            {# Pagination #}
+            {% include "app/_pagination.html" %}
+
+        </div>
+
+        {# Filters #}
+{% spaceless %}
+        {% if request.htmx.target != "search-main" %}
+        <section id="filters" aria-labelledby="filter-heading" class="col-md-4 ps-md-4">{# target for link at the top #}
+            <h2 id="filter-heading" class="fs-5 card-title">{% trans "Filters" %}</h2>
+            <div class="row mb-2">
+                {% with form=filter.form %}
+                {% include "app/_search_filter.html" with field=form.institution summary=_("Filter by institution") %}
+                {% include "app/_search_filter.html" with field=form.subjects summary=_("Filter by subject") %}
+                {% include "app/_search_filter.html" with field=form.languages summary=_("Filter by language") %}
+                {% endwith %}
+                <div class="mt-2">
+                    <a href="#search" class="d-md-none">{% trans "Alter search terms above" %}</a>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-primary me-4">
+            <a href="{% url 'search' %}" hx-target="#main" hx-select="#main" class="btn btn-secondary">{% trans 'Reset' %}</a>
+        </section>
+        {% endif %}
+
+    </form>
+</div>
+{% endspaceless %}
+{% endblock content %}

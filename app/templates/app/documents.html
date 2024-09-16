@@ -1,0 +1,53 @@
+{% extends BASE_TEMPLATE %}
+{% load static %}
+{% load i18n %}
+{% load bs_icons %}
+
+{% block title %}{% trans "Documents" %}{% endblock %}
+
+{% block content %}
+{% spaceless %}
+<div class="text-break m-4">
+    <h1 id="main-heading">{% trans "Documents" %}</h1>
+
+    {% include "app/_subj_lang_institution_filter.html" with view="documents"%}
+
+    {% for item in documents %}
+        <div class="mt-4">{# additional indent simplifies comparison with projects.html #}
+            <h2>
+                <a href="{% url 'document_detail' item.document.id %}" class="text-decoration-none">
+                    {{ item.document.title }}
+                </a>
+            </h2>
+            {% if item.document.url %}
+            <div>
+                <a href="{{ item.document.url }}" target="_blank"
+                   title="{% trans 'External link' %}">
+                    {{ item.document.url }}
+                </a>
+            </div>
+            {% endif %}
+            <div class="fs-5">
+                {{ item.institution_name }}
+            </div>
+            <p class="limit-text-width">
+                {{ item.description|truncatewords:30 }}
+                <a href="{% url 'document_detail' item.document.id %}">{% trans "Read more" %}</a>
+            </p>
+
+            {% if item.languages %}
+                <div>{% icon "language" %} {{ item.languages }}</div>
+            {% endif %}
+
+            {% if item.subjects %}
+                <div>{% icon "subject" %} {{ item.subjects }}</div>
+            {% endif %}
+        </div>
+    <hr>
+    {% endfor %}
+
+    {% include "app/_pagination.html" %}
+
+</div>
+{% endspaceless %}
+{% endblock content %}

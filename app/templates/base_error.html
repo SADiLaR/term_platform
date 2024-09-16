@@ -1,0 +1,11 @@
+{% extends BASE_TEMPLATE|default:"base.html" %}
+{# BASE_TEMPLATE can be undefined in certain error conditions, therefore `default` #}
+{% load i18n %}
+
+{% block title %}{% trans "Error" %}{% endblock %}
+
+{% block error %}
+{% with show_error=True%}
+    {{ block.super }}
+{% endwith %}
+{% endblock %}

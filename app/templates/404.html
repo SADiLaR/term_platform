@@ -1,0 +1,5 @@
+{% extends "base_error.html" %}
+{% load i18n %}
+
+{% block error_title %}{% trans "Not found (404)" %}{% endblock %}
+{% block error_message %}{% trans "The requested page was not found on this server." %}{% endblock %}

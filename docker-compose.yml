@@ -1,0 +1,48 @@
+# This is  meant for local development, but should give an idea of what you
+# can consider in production.
+
+services:
+  db:
+    image: postgres:16
+    container_name: sadilar-terminology-db
+    environment:
+      - POSTGRES_DB=term_db
+      - POSTGRES_USER=sadilar
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - .:/app
+    ports:
+      - "5432:5432"
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    container_name: sadilar-terminology-web
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./app:/app
+      - ./logging:/logging
+      - ./pdf_uploads:/pdf_uploads
+      - ./pdf_upload_completed:/pdf_upload_completed
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=True
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=term_db  # see POSTGRES_DB above
+      - DB_USER=sadilar  # see POSTGRES_USER above
+      - DB_PASSWORD=${DB_PASSWORD} # see POSTGRES_PASSWORD above
+      - TESTING_DIR=/app/general/tests/files/
+      - FEATURE_FLAG=search_feature
+      - EMAIL_HOST=${EMAIL_HOST-}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER-}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD-"none"}
+      - EMAIL_PORT=${EMAIL_PORT-"none"}
+      - EMAIL_BACKEND_CONSOLE=${EMAIL_BACKEND_CONSOLE:-True}
+      - EMAIL_USE_TLS=${EMAIL_USE_TLS:-True}

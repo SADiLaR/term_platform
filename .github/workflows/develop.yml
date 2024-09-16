@@ -1,5 +1,5 @@
 # https://docs.docker.com/build/ci/github-actions/push-multi-registries/
-name: docker_push
+name: docker_push_deploy_test
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ on:
       - "develop"
 
 jobs:
-  docker:
+  deploy_test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,4 +34,4 @@ jobs:
         with:
           url: https://api.bitbucket.org/2.0/repositories/team_sadilar/ansible/pipelines/
           headers: '{"Authorization": "Bearer ${{ secrets.BITBUCKET_PIPELINE_SECRET }}"}'
-          body: '{"target": {"ref_type": "branch", "type": "pipeline_ref_target", "ref_name": "master", "selector": {"type": "custom", "pattern": "deploy_term_platform" }   }}'
+          body: '{"target": {"ref_type": "branch", "type": "pipeline_ref_target", "ref_name": "master", "selector": {"type": "custom", "pattern": "deploy_term_platform_test" }   }}'

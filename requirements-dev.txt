@@ -1,0 +1,6 @@
+-r requirements.txt
+django-debug-toolbar
+django-extensions
+faker
+pygraphviz
+ruff

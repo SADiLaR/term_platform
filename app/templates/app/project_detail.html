@@ -1,0 +1,87 @@
+{% extends BASE_TEMPLATE %}
+{% load static %}
+{% load i18n %}
+{% load bs_icons %}
+
+{% block title %}{{ project.name }}{% endblock %}
+
+{% block content %}
+{% spaceless %}
+<div class="text-break m-4">
+    <p><a href="{% url 'projects' %}">{% trans "Projects" %}</a> > {{ project.name }}</p>
+
+    <div class="mb-3 row">
+      {# incorrect indent facilitates comparison with document_detail.html #}
+      <div class="{% if logo %}col-md-6{% else %}col-md-12{% endif %}">
+        <h1 id="main-heading">{{ project.name }}</h1>
+        {% if project.url %}
+        <div class="mb-2">
+            <a href="{{ project.url }}" target="_blank"
+               title="{% trans 'External link' %}">
+                {{ project.url }}
+            </a>
+        </div>
+        {% endif %}
+        <div class="limit-text-width">
+          {{ project.description | linebreaks }}
+        </div>
+
+        <p>
+            <a href="{% url 'institution_detail' project.institution.id %}">
+                {{ project.institution.name }}
+            </a>
+        </p>
+
+        <div class="row">
+          <p class="col-lg-6">
+              {% icon "date" %}
+              {% trans "Start Date:" %} {{ project.start_date|date:"Y-m-d" }}
+          </p>
+
+          <p class="col-lg-6">
+              {% icon "date" %}
+              {% trans "End Date:" %} {{ project.end_date|date:"Y-m-d" }}
+          </p>
+        </div>
+
+      </div>
+
+      <div class="col-md-6">
+        {% if logo %}
+        <img src="{{ logo.url }}" class="logo100"
+             alt="" {# name already mentioned elsewhere #}
+        >
+        {% endif %}
+      </div>
+
+    </div>
+
+    <div class="row">
+        {% if subjects %}
+        <div class="col-md-6">
+            <h2>{% trans "Subjects" %}</h2>
+            <ul class="list-unstyled">
+                {% for subject in subjects %}
+                <li class="m-2">{% icon "subject" %}{{ subject.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if languages %}
+        <div class="col-md-6">
+            <h2>{% trans "Languages" %}</h2>
+            <ul class="list-unstyled">
+                {% for language in languages %}
+                <li class="m-2">{% icon "language" %}{{ language.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endspaceless %}
+{% endblock content %}

@@ -1,0 +1,92 @@
+/*{% comment %}
+NOTE: this is a Django template that renders a CSS file that is inlined
+in the base template. This way it can easily be edited as a CSS file, and keeps
+the base template simple.
+
+Django template comments are used to reduce the payload.
+{% endcomment %}*/
+:root {
+   --primary: #1a2f69;
+   --sdlr-red: #d11f26;
+   --bs-primary: var(--primary);
+   --bs-primary-rgb: 26, 47, 105; {# identical to --primary #}
+   --bs-blue: var(--primary);
+}
+.btn-primary {
+    --bs-btn-bg: var(--primary);
+    --bs-btn-border-color: var(--primary);
+    --bs-btn-disabled-bg: var(--primary);
+}
+.card {
+   --bs-card-border-color: var(--sdlr-red);
+}
+.nav-pills {
+    --bs-nav-pills-link-active-bg: var(--bs-primary);
+    --bs-navbar-active-color: #fff;
+}
+
+.limit-text-width {
+    max-width: 44rem;
+}
+
+.logo100 {
+    max-height: 100px;
+    max-width: 100%;
+    aspect-ratio: auto;
+}
+/*{# Avoids content shift when icon comes late: #}*/
+.icon {
+    width: 1.5em;
+    display: inline-block;
+}
+
+.checkbox-container {
+    max-height: 250px;
+    max-width: 600px;
+    overflow-y: auto;
+}
+/*{# Bootstrap 5.3's .invalid-feedback named for Django form error messages #}*/
+.errorlist {
+  width: 100%;
+  margin-top: .25rem;
+  font-size: .875em;
+  color: var(--bs-form-invalid-color);
+}
+/*{# start after 40%/3s: quick responses will be done already #}*/
+.htmx-indicator{
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    width: 100%;
+    height: 5px;
+    background:
+        linear-gradient(90deg,
+            #fff0 40%,
+            rgba(var(--bs-primary-rgb), 0.06) 55%,
+            rgba(var(--bs-primary-rgb), 0.3) 70%,
+            rgba(var(--bs-primary-rgb), 0.06) 85%
+	)
+        #fff;
+    background-size: 300% 100%;
+    animation: l1 3s infinite linear;
+}
+@keyframes l1 {
+  0% {background-position: right}
+}
+.htmx-request .htmx-indicator{
+    display: block;
+}
+.htmx-request.htmx-indicator{
+    display: block;
+}
+
+/*{# The following two are needed for correct footer placement #}*/
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+footer {
+    margin-top: auto;
+}

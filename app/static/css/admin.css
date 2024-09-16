@@ -1,0 +1,72 @@
+/*
+    Django admin styles
+    extended from https://github.com/django/django/blob/main/django/contrib/admin/static/admin/css/base.css
+    Remember to sync colours with front-end CSS.
+*/
+
+/* VARIABLE DEFINITIONS */
+html[data-theme="light"],
+:root {
+    --primary: #1a2f69;
+    --secondary: #b0b4d9;
+    --primary-light: #8288bc;
+    --primary-black: #000000;
+    --primary-white: #fff;
+
+    --header-color: var(--primary-white);
+    --header-branding-color: var(--primary-light);
+    --header-bg: var(--primary);
+    --header-link-color: #000000;
+
+    --breadcrumbs-bg: var(--primary);
+
+    --link-fg: var(--primary);
+    --link-selected-fg: var(--primary);
+
+    --message-success-bg: #9fadd1;
+    --message-warning-bg: var(--primary-light);
+
+    --selected-row: var(--secondary);
+
+    --button-bg: var(--primary);
+    --button-hover-bg: #485D95;
+    --default-button-bg:#485D95;
+    --default-button-hover-bg: var(--primary);
+}
+
+/* LINKS */
+a.section:link, a.section:visited {
+    color: #ffffff;
+}
+
+/* HEADER */
+#header {
+  padding: 3px 15px 0 10px;
+  background: #ffffff;
+  color: #000;
+}
+
+#header a:link, #header a:visited, #logout-form button {
+    color: var(--link-fg);
+}
+
+.theme-toggle svg.theme-icon-when-auto,
+.theme-toggle svg.theme-icon-when-dark,
+.theme-toggle svg.theme-icon-when-light {
+    fill: var(--primary-black);
+    color: var(--primary-white);
+}
+
+.header-title {
+    margin: 10px 2px;
+}
+
+.main-logo {
+    width: 140px;;
+    height: 73px;
+}
+
+
+.module h2, .module caption, .inline-group h2 {
+    color: var(--primary-white);
+}

@@ -1,0 +1,65 @@
+{% extends BASE_TEMPLATE %}
+{% load static %}
+{% load i18n %}
+{% load bs_icons %}
+
+{% block title %}{% trans "Subjects" %}{% endblock %}
+
+{% block content %}
+{% spaceless %}
+<div class="text-break m-4 text-decoration-none">
+    <h1 id="main-heading">{% trans "Information by subject" %}</h1>
+    <div class="row">
+        {% for item in subject_data %}
+        <h2>{{ item.subject.name }}</h2>
+        <div class="col-md-6">
+            {% if item.documents.exists %}
+            <h3 class="fs-4">{% trans "Documents" %}</h3>
+            <div class="documents">
+                <ul class="list-unstyled">
+                    {% for document in item.documents %}
+                    <li class="mb-2">
+                        {% icon "document" %}
+                        <a href="{% url 'document_detail' document.id %}">{{ document.title }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% else %}
+                {# Only show this in two-column mode to ensure consistent layout and placement #}
+                <div aria-hidden="true" class="d-none d-md-block">
+                    <h3 class="fs-4">{% trans "Documents" %}</h3>
+                    <p>{% trans "No documents available for this subject." %}</p>
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            {% if item.projects.exists %}
+            <h3 class="fs-4">{% trans "Projects" %}</h3>
+            <div class="projects">
+                <ul class="list-unstyled">
+                    {% for project in item.projects %}
+                    <li class="mb-2">
+                        {% icon "project" %}
+                        <a href="{% url 'project_detail' project.id %}">{{ project.name }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% else %}
+                {# Only show this in two-column mode to ensure consistent layout and placement #}
+                <div aria-hidden="true" class="d-none d-md-block">
+                    <h3 class="fs-4">{% trans "Projects" %}</h3>
+                    <p>{% trans "No projects available for this subject." %}</p>
+                </div>
+            {% endif %}
+        </div>
+        <hr>
+        {% endfor %}
+    </div>
+
+    {% include "app/_pagination.html" %}
+
+</div>
+{% endspaceless %}
+{% endblock content %}

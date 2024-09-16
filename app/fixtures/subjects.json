@@ -1,0 +1,1010 @@
+[
+    {
+        "model": "general.Subject",
+        "pk": 1,
+        "fields": {
+            "name": "Accounting"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 2,
+        "fields": {
+            "name": "Agricultural management"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 3,
+        "fields": {
+            "name": "Agricultural science"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 4,
+        "fields": {
+            "name": "Agronomy"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 5,
+        "fields": {
+            "name": "Anaesthesiology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 6,
+        "fields": {
+            "name": "Anatomy"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 7,
+        "fields": {
+            "name": "Ancient history"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 8,
+        "fields": {
+            "name": "Ancient Near Eastern studies"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 9,
+        "fields": {
+            "name": "Animal health"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 10,
+        "fields": {
+            "name": "Anthropology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 11,
+        "fields": {
+            "name": "Applied information science"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 12,
+        "fields": {
+            "name": "Applied mathematics"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 13,
+        "fields": {
+            "name": "Archaeology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 14,
+        "fields": {
+            "name": "Archives and records management"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 15,
+        "fields": {
+            "name": "Art history"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 16,
+        "fields": {
+            "name": "Astronomy"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 17,
+        "fields": {
+            "name": "Auditing"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 18,
+        "fields": {
+            "name": "Banking and finance"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 19,
+        "fields": {
+            "name": "Biblical archaeology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 20,
+        "fields": {
+            "name": "Biochemistry"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 21,
+        "fields": {
+            "name": "Biology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 22,
+        "fields": {
+            "name": "Biomedical science"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 23,
+        "fields": {
+            "name": "Biotechnology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 24,
+        "fields": {
+            "name": "Botany"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 25,
+        "fields": {
+            "name": "Business management"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 26,
+        "fields": {
+            "name": "Chemical engineering"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 27,
+        "fields": {
+            "name": "Chemistry"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 28,
+        "fields": {
+            "name": "Christian leadership"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 29,
+        "fields": {
+            "name": "Christian spirituality"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 30,
+        "fields": {
+            "name": "Church history"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 31,
+        "fields": {
+            "name": "Civil engineering"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 32,
+        "fields": {
+            "name": "Classical culture"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 33,
+        "fields": {
+            "name": "Classical studies"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 34,
+        "fields": {
+            "name": "Communication science"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 35,
+        "fields": {
+            "name": "Communication studies"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 36,
+        "fields": {
+            "name": "Community health"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 37,
+        "fields": {
+            "name": "Composition studies"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 38,
+        "fields": {
+            "name": "Computer science"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 39,
+        "fields": {
+            "name": "Consumer science"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 40,
+        "fields": {
+            "name": "Corrections management"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 41,
+        "fields": {
+            "name": "Credit management"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 42,
+        "fields": {
+            "name": "Criminology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 43,
+        "fields": {
+            "name": "Curriculum and instructional studies"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 44,
+        "fields": {
+            "name": "Decoloniality"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 45,
+        "fields": {
+            "name": "Development studies"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 46,
+        "fields": {
+            "name": "Early childhood education"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 47,
+        "fields": {
+            "name": "Economics"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 48,
+        "fields": {
+            "name": "Educational foundations"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 49,
+        "fields": {
+            "name": "Educational leadership and managment"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 50,
+        "fields": {
+            "name": "Electrical engineering"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 51,
+        "fields": {
+            "name": "Entrepreneurship"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 52,
+        "fields": {
+            "name": "Environmental sciences"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 53,
+        "fields": {
+            "name": "Epidemiology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 54,
+        "fields": {
+            "name": "Financial accounting"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 55,
+        "fields": {
+            "name": "Financial governance"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 56,
+        "fields": {
+            "name": "Financial intelligence"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 57,
+        "fields": {
+            "name": "Food service management"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 58,
+        "fields": {
+            "name": "Forensic auditing"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 59,
+        "fields": {
+            "name": "Forensic investigation"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 60,
+        "fields": {
+            "name": "Gender studies"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 61,
+        "fields": {
+            "name": "Genetics"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 62,
+        "fields": {
+            "name": "Geography"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 63,
+        "fields": {
+            "name": "Health sciences education"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 64,
+        "fields": {
+            "name": "Health services management"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 65,
+        "fields": {
+            "name": "Health studies"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 66,
+        "fields": {
+            "name": "History"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 67,
+        "fields": {
+            "name": "Horticulture"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 68,
+        "fields": {
+            "name": "Hospitality management"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 69,
+        "fields": {
+            "name": "Human resource management"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 70,
+        "fields": {
+            "name": "Inclusive education"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 71,
+        "fields": {
+            "name": "Industrial and organisational psychology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 72,
+        "fields": {
+            "name": "Information resource management"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 73,
+        "fields": {
+            "name": "Information science"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 74,
+        "fields": {
+            "name": "Information systems"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 75,
+        "fields": {
+            "name": "Information technology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 76,
+        "fields": {
+            "name": "Insurance"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 77,
+        "fields": {
+            "name": "Internal auditing"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 78,
+        "fields": {
+            "name": "International politics"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 79,
+        "fields": {
+            "name": "Investment"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 80,
+        "fields": {
+            "name": "Islamic studies"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 81,
+        "fields": {
+            "name": "Language education"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 82,
+        "fields": {
+            "name": "Law"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 83,
+        "fields": {
+            "name": "Life and consumer sciences"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 84,
+        "fields": {
+            "name": "Linguistics"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 85,
+        "fields": {
+            "name": "Management accounting"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 86,
+        "fields": {
+            "name": "Marketing and retail management"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 87,
+        "fields": {
+            "name": "Mathematics"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 88,
+        "fields": {
+            "name": "Mathematics education"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 89,
+        "fields": {
+            "name": "Mechanical and industrial engineering"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 90,
+        "fields": {
+            "name": "Microbiology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 91,
+        "fields": {
+            "name": "Midwifery"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 92,
+        "fields": {
+            "name": "Mine engineering"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 93,
+        "fields": {
+            "name": "Ministry"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 94,
+        "fields": {
+            "name": "Missiology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 95,
+        "fields": {
+            "name": "Music"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 96,
+        "fields": {
+            "name": "Nature conservation"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 97,
+        "fields": {
+            "name": "Neurology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 98,
+        "fields": {
+            "name": "New Testament"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 99,
+        "fields": {
+            "name": "Nursing"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 100,
+        "fields": {
+            "name": "Nutrition"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 101,
+        "fields": {
+            "name": "Obstetrics"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 102,
+        "fields": {
+            "name": "Occupational therapy"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 103,
+        "fields": {
+            "name": "Oenology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 104,
+        "fields": {
+            "name": "Old Testament"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 105,
+        "fields": {
+            "name": "Operations management"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 106,
+        "fields": {
+            "name": "Orthodontics"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 107,
+        "fields": {
+            "name": "Paediatrics"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 108,
+        "fields": {
+            "name": "Pathology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 109,
+        "fields": {
+            "name": "Pharmacology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 110,
+        "fields": {
+            "name": "Philosophy"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 111,
+        "fields": {
+            "name": "Physics"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 112,
+        "fields": {
+            "name": "Physiology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 113,
+        "fields": {
+            "name": "Policing"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 114,
+        "fields": {
+            "name": "Politics"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 115,
+        "fields": {
+            "name": "Practical theology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 116,
+        "fields": {
+            "name": "Private law"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 117,
+        "fields": {
+            "name": "Psychology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 118,
+        "fields": {
+            "name": "Psychiatry"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 119,
+        "fields": {
+            "name": "Public administration"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 120,
+        "fields": {
+            "name": "Public health"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 121,
+        "fields": {
+            "name": "Public relations"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 122,
+        "fields": {
+            "name": "Radiology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 123,
+        "fields": {
+            "name": "Religious studies"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 124,
+        "fields": {
+            "name": "Risk management"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 125,
+        "fields": {
+            "name": "Safety management"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 126,
+        "fields": {
+            "name": "Science and technology education"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 127,
+        "fields": {
+            "name": "Security management"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 128,
+        "fields": {
+            "name": "Social sciences"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 129,
+        "fields": {
+            "name": "Social work"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 130,
+        "fields": {
+            "name": "Sociology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 131,
+        "fields": {
+            "name": "Statistics"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 132,
+        "fields": {
+            "name": "Supply chain management"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 133,
+        "fields": {
+            "name": "Systematic theology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 134,
+        "fields": {
+            "name": "Taxation"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 135,
+        "fields": {
+            "name": "Theological ethics"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 136,
+        "fields": {
+            "name": "Theology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 137,
+        "fields": {
+            "name": "Theory of literature"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 138,
+        "fields": {
+            "name": "Tourism management"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 139,
+        "fields": {
+            "name": "Transport economics and logistics"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 140,
+        "fields": {
+            "name": "Urology"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 141,
+        "fields": {
+            "name": "Veterinary medicine"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 142,
+        "fields": {
+            "name": "Viticulture"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 143,
+        "fields": {
+            "name": "Visual arts"
+        }
+    },
+    {
+        "model": "general.Subject",
+        "pk": 144,
+        "fields": {
+            "name": "Zoology"
+        }
+    }
+]
