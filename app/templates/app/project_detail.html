@@ -35,12 +35,24 @@
         <div class="row">
           <p class="col-lg-6">
               {% icon "date" %}
-              {% trans "Start Date:" %} {{ project.start_date|date:"Y-m-d" }}
+              {% trans "Start Date:" %}
+
+              {% if project.start_date %}
+              {{ project.start_date|date:"Y-m-d" }}
+              {% else %}
+              <span class="text-muted">{% trans "unspecified" %}</span>
+              {% endif %}
           </p>
 
           <p class="col-lg-6">
               {% icon "date" %}
-              {% trans "End Date:" %} {{ project.end_date|date:"Y-m-d" }}
+              {% trans "End Date:" %}
+              
+              {% if project.end_date %}
+              {{ project.end_date|date:"Y-m-d"|default:"" }}
+              {% else %}
+              <span class="text-muted">{% trans "ongoing" %}</span>
+              {% endif %}
           </p>
         </div>
 
