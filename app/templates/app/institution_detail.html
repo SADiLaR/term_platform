@@ -8,7 +8,12 @@
 {% block content %}
 {% spaceless %}
 <div class="text-break m-4">
-    <p><a href="{% url 'institutions' %}">{% trans "Institutions" %}</a> > {{ institution.name }}</p>
+    <nav aria-label="{% trans 'Breadcrumb' %}">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'institutions' %}">{% trans "Institutions" %}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ institution.name }}</li>
+        </ol>
+    </nav>
 
     <div class="mb-3 row">
         <div class="{% if institution.logo %}col-md-6{% else %}col-md-12{% endif %}">

@@ -8,7 +8,12 @@
 {% block content %}
 {% spaceless %}
 <div class="text-break m-4">
-    <p><a href="{% url 'projects' %}">{% trans "Projects" %}</a> > {{ project.name }}</p>
+    <nav aria-label="{% trans 'Breadcrumb' %}">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'projects' %}">{% trans "Projects" %}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ project.name }}</li>
+        </ol>
+    </nav>
 
     <div class="mb-3 row">
       {# incorrect indent facilitates comparison with document_detail.html #}
