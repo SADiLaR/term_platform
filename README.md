@@ -45,7 +45,7 @@ To generate a new secret key, you can use the following command:
 
 1. Clone the repository
 2. Run `make build` to build the docker image
-3. Run `make run` to run the docker container
+3. Run `make up` to run the docker container
 4. Run `make stop` to stop the docker container
 
 ---
