@@ -2,61 +2,61 @@
 {% load static %}
 {% load i18n %}
 {% load bs_icons %}
-
 {% block title %}{{ institution.name }}{% endblock %}
-
 {% block content %}
-{% spaceless %}
-<div class="text-break m-4">
-    <p><a href="{% url 'institutions' %}">{% trans "Institutions" %}</a> > {{ institution.name }}</p>
-
-    <div class="mb-3 row">
-        <div class="{% if institution.logo %}col-md-6{% else %}col-md-12{% endif %}">
-            <h1 id="main-heading">{{ institution.name }} ({{ institution.abbreviation }})</h1>
-            {% if institution.url %}
-                <p><a href="{{ institution.url }}">{{ institution.url }}</a></p>
-            {% endif %}
-            {% if institution.email %}
-                <p><a href="mailto:{{ institution.email }}">{{ institution.email }}</a></p>
-            {% endif %}
+    {% spaceless %}
+        <div class="text-break m-4">
+            <p>
+                <a href="{% url 'institutions' %}">{% trans "Institutions" %}</a> > {{ institution.name }}
+            </p>
+            <div class="mb-3 row">
+                <div class="{% if institution.logo %}col-md-6{% else %}col-md-12{% endif %}">
+                    <h1 id="main-heading">{{ institution.name }} ({{ institution.abbreviation }})</h1>
+                    {% if institution.url %}
+                        <p>
+                            <a href="{{ institution.url }}">{{ institution.url }}</a>
+                        </p>
+                    {% endif %}
+                    {% if institution.email %}
+                        <p>
+                            <a href="mailto:{{ institution.email }}">{{ institution.email }}</a>
+                        </p>
+                    {% endif %}
+                </div>
+                {% if institution.logo %}
+                    <div class="col-md-6">
+                        <img src="{{ institution.logo.url }}" alt="" class="logo100">
+                    </div>
+                {% endif %}
+            </div>
+            <div class="mb-3 row">
+                {% if projects %}
+                    <div class="col-md-6">
+                        <h2>{% trans "Projects" %}</h2>
+                        <ul class="list-unstyled">
+                            {% for project in projects %}
+                                <li class="m-2">
+                                    {% icon "project" %}
+                                    <a href="{% url 'project_detail' project.id %}">{{ project.name }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                {% if documents %}
+                    <div class="col-md-6">
+                        <h2>{% trans "Documents" %}</h2>
+                        <ul class="list-unstyled">
+                            {% for document in documents %}
+                                <li class="m-2">
+                                    {% icon "document" %}
+                                    <a href="{% url 'document_detail' document.id %}">{{ document.title }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
         </div>
-
-        {% if institution.logo %}
-        <div class="col-md-6">
-            <img src="{{ institution.logo.url }}" alt="" class="logo100">
-        </div>
-        {% endif %}
-    </div>
-
-    <div class="mb-3 row">
-        {% if projects %}
-        <div class="col-md-6">
-            <h2>{% trans "Projects" %}</h2>
-            <ul class="list-unstyled">
-              {% for project in projects %}
-                  <li class="m-2">
-                      {% icon "project" %}
-                      <a href="{% url 'project_detail' project.id %}">{{ project.name }}</a>
-                  </li>
-              {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-        {% if documents %}
-        <div class="col-md-6">
-            <h2>{% trans "Documents" %}</h2>
-            <ul class="list-unstyled">
-                {% for document in documents %}
-                    <li class="m-2">
-                        {% icon "document" %}
-                        <a href="{% url 'document_detail' document.id %}">{{ document.title }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-    </div>
-</div>
-
-{% endspaceless %}
+    {% endspaceless %}
 {% endblock content %}

@@ -10,25 +10,26 @@ When upgrading Django, compare the changes in the above, to work out what
 should be incorporated here, and update the links above that serve as the point
 of comparison.
 {% endcomment %}
-
 {% load static %}
 {% load i18n %}
-
-{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
-
-{% block extrastyle %}
-  <link rel="stylesheet" href="{% static 'css/admin.css' %}">
-  <link rel="stylesheet" href="{% static 'css/dark_mode_override.css' %}">
-  <link rel="icon" href="{% static 'img/favicon.png' %}" sizes="32x32">
+{% block title %}
+    {% if subtitle %}{{ subtitle }} |{% endif %}
+    {{ title }} | {{ site_title|default:_("Django site admin") }}
 {% endblock %}
-
+{% block extrastyle %}
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dark_mode_override.css' %}">
+    <link rel="icon" href="{% static 'img/favicon.png' %}" sizes="32x32">
+{% endblock %}
 {% block branding %}
-        <h1 class="header-title">
-            <a href="{% url 'home' %}">
-                <img src="{% static 'img/lwimilinks.svg' %}" class="main-logo" alt="{% trans 'LwimiLinks' %}">
-            </a>
-        </h1>
-{% if user.is_anonymous %}
-  {% include "admin/color_theme_toggle.html" %}
-{% endif %}
+    <h1 class="header-title">
+        <a href="{% url 'home' %}">
+            <img src="{% static 'img/lwimilinks.svg' %}"
+                 class="main-logo"
+                 alt="{% trans 'LwimiLinks' %}">
+        </a>
+    </h1>
+    {% if user.is_anonymous %}
+        {% include "admin/color_theme_toggle.html" %}
+    {% endif %}
 {% endblock %}

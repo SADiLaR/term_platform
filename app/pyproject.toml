@@ -8,3 +8,6 @@ select = [
     "I",
     "W"
 ]
+
+[tool.djlint]
+profile = "django"

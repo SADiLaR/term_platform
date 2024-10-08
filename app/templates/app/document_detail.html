@@ -2,76 +2,62 @@
 {% load static %}
 {% load i18n %}
 {% load bs_icons %}
-
 {% block title %}{{ document.title }}{% endblock %}
-
 {% block content %}
-{% spaceless %}
-<div class="text-break m-4">
-    <p><a href="{% url 'documents' %}">{% trans "Documents" %}</a> > {{ document.title }}</p>
-
-    <div>
-        <h1 id="main-heading">{{ document.title }}</h1>
-        {% if document.url %}
-        <div class="mb-2">
-            <a href="{{ document.url }}" target="_blank"
-               title="{% trans 'External link' %}">
-                {{ document.url }}
-            </a>
+    {% spaceless %}
+        <div class="text-break m-4">
+            <p>
+                <a href="{% url 'documents' %}">{% trans "Documents" %}</a> > {{ document.title }}
+            </p>
+            <div>
+                <h1 id="main-heading">{{ document.title }}</h1>
+                {% if document.url %}
+                    <div class="mb-2">
+                        <a href="{{ document.url }}"
+                           target="_blank"
+                           title="{% trans 'External link' %}">{{ document.url }}</a>
+                    </div>
+                {% endif %}
+                {% if document.uploaded_file %}
+                    <div class="mb-3">
+                        <a href="{{ document.uploaded_file.url }}" target="_blank" download>
+                            <button class="btn btn-primary" type="submit">{% icon "download" %}{% trans "Download File" %}</button>
+                        </a>
+                    </div>
+                {% endif %}
+                <div class="limit-text-width">{{ document.description | linebreaks }}</div>
+                <p>
+                    <a href="{% url 'institution_detail' document.institution.id %}">{{ document.institution.name }}</a>
+                </p>
+                <p>
+                    <strong>{% trans "License:" %}</strong> {{ document.license }}
+                </p>
+                <p>
+                    <strong>{% trans "Category:" %}</strong> {{ document.document_type }}
+                </p>
+            </div>
+            <div class="row">
+                {% if document.subjects.all %}
+                    <div class="col-md-6">
+                        <h2>{% trans "Subjects" %}</h2>
+                        <ul class="list-unstyled">
+                            {% for subject in document.subjects.all %}
+                                <li class="m-2">{% icon "subject" %}{{ subject.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                {% if document.languages.all %}
+                    <div class="col-md-6">
+                        <h2>{% trans "Languages" %}</h2>
+                        <ul class="list-unstyled">
+                            {% for language in document.languages.all %}
+                                <li class="m-2">{% icon "language" %}{{ language.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
         </div>
-        {% endif %}
-
-        {% if document.uploaded_file %}
-        <div class="mb-3">
-            <a href="{{ document.uploaded_file.url }}" target="_blank" download>
-            <button class="btn btn-primary" type="submit">
-                {% icon "download" %}{% trans "Download File" %}
-            </button>
-            </a>
-        </div>
-        {% endif %}
-
-        <div class="limit-text-width">
-            {{ document.description | linebreaks}}
-        </div>
-
-        <p>
-            <a href="{% url 'institution_detail' document.institution.id %}">
-                {{ document.institution.name }}
-            </a>
-        </p>
-
-        <p><strong>{% trans "License:" %}</strong> {{ document.license }}</p>
-        <p><strong>{% trans "Category:" %}</strong> {{ document.document_type }}</p>
-    </div>
-
-
-    <div class="row">
-        {% if document.subjects.all %}
-        <div class="col-md-6">
-            <h2>{% trans "Subjects" %}</h2>
-            <ul class="list-unstyled">
-                {% for subject in document.subjects.all %}
-                <li class="m-2">{% icon "subject" %}{{ subject.name }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-
-        {% if document.languages.all %}
-        <div class="col-md-6">
-            <h2>{% trans "Languages" %}</h2>
-            <ul class="list-unstyled">
-                {% for language in document.languages.all %}
-                <li class="m-2">{% icon "language" %}{{ language.name }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-
-    </div>
-
-</div>
-
-{% endspaceless %}
+    {% endspaceless %}
 {% endblock content %}
