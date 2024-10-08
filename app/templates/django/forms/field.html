@@ -6,16 +6,16 @@ for some small customisations:
  - bootstrap classes
 {% endcomment %}
 {% spaceless %}
-<div class="mb-3">
-{% if field.use_fieldset %}
-  <fieldset>
-  {% if field.label %}{{ field.legend_tag }}{% endif %}
-{% else %}
-  {% if field.label %}{{ field.label_tag }}{% endif %}
-{% endif %}
-{{ field.errors }}
-{{ field }}
-{% if field.help_text %}<div class="text-muted"{% if field.auto_id %} id="{{ field.auto_id }}_helptext"{% endif %}>{{ field.help_text|safe }}</div>{% endif %}
-{% if field.use_fieldset %}</fieldset>{% endif %}
-</div>
+  <div class="mb-3">
+    {% if field.use_fieldset %}
+      <fieldset>
+        {% if field.label %}{{ field.legend_tag }}{% endif %}
+    {% else %}
+      {% if field.label %}{{ field.label_tag }}{% endif %}
+    {% endif %}
+    {{ field.errors }}
+    {{ field }}
+    {% if field.help_text %}<div class="text-muted"{% if field.auto_id %} id="{{ field.auto_id }}_helptext"{% endif %}>{{ field.help_text|safe }}</div>{% endif %}
+    {% if field.use_fieldset %}</fieldset>{% endif %}
+  </div>
 {% endspaceless %}

@@ -4,17 +4,17 @@
 {% block title %}{% trans "Log In" %}{% endblock %}
 
 {% block account_content %}
-<h1 id="main-heading">{% trans "Log In" %}</h1>
-<form method="post" hx-disable>
-    {% csrf_token %}
-    {{ form }}
-    <a href="{% url 'password_reset' %}" class="d-block mb-2">{% trans "Forgot Password?" %}</a>
-    <button type="submit" class="btn btn-primary">{% trans "Log In" %}</button>
-</form>
+    <h1 id="main-heading">{% trans "Log In" %}</h1>
+    <form method="post" hx-disable>
+        {% csrf_token %}
+        {{ form }}
+        <a href="{% url 'password_reset' %}" class="d-block mb-2">{% trans "Forgot Password?" %}</a>
+        <button type="submit" class="btn btn-primary">{% trans "Log In" %}</button>
+    </form>
 
-<hr>
-<p>
-    {% trans "Don’t have an account?" %}
-    <a href="{% url 'accounts_register' %}">{% trans "Create one" %}</a>
-</p>
+    <hr>
+    <p>
+        {% trans "Don’t have an account?" %}
+        <a href="{% url 'accounts_register' %}">{% trans "Create one" %}</a>
+    </p>
 {% endblock %}

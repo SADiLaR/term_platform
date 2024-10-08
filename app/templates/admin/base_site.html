@@ -23,12 +23,12 @@ of comparison.
 {% endblock %}
 
 {% block branding %}
-        <h1 class="header-title">
-            <a href="{% url 'home' %}">
-                <img src="{% static 'img/lwimilinks.svg' %}" class="main-logo" alt="{% trans 'LwimiLinks' %}">
-            </a>
-        </h1>
-{% if user.is_anonymous %}
-  {% include "admin/color_theme_toggle.html" %}
-{% endif %}
+  <h1 class="header-title">
+    <a href="{% url 'home' %}">
+      <img src="{% static 'img/lwimilinks.svg' %}" class="main-logo" alt="{% trans 'LwimiLinks' %}">
+    </a>
+  </h1>
+  {% if user.is_anonymous %}
+    {% include "admin/color_theme_toggle.html" %}
+  {% endif %}
 {% endblock %}

@@ -5,7 +5,7 @@
 {% block title %}{% trans "Error" %}{% endblock %}
 
 {% block error %}
-{% with show_error=True%}
-    {{ block.super }}
-{% endwith %}
+    {% with show_error=True%}
+        {{ block.super }}
+    {% endwith %}
 {% endblock %}

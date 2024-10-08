@@ -4,10 +4,10 @@
 {% block title %}{% trans "Register" %}{% endblock %}
 
 {% block account_content %}
-<h1 id="main-heading">{% trans "Register" %}</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" class="btn btn-primary" value="{% trans 'Register' %}">
-</form>
+    <h1 id="main-heading">{% trans "Register" %}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" class="btn btn-primary" value="{% trans 'Register' %}">
+    </form>
 {% endblock %}

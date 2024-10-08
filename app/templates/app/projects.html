@@ -6,67 +6,67 @@
 {% block title %}{% trans "Projects" %}{% endblock %}
 
 {% block content %}
-{% spaceless %}
-<div class="text-break m-4">
-    <h1 id="main-heading">{% trans "Projects" %}</h1>
+    {% spaceless %}
+        <div class="text-break m-4">
+            <h1 id="main-heading">{% trans "Projects" %}</h1>
 
-    {% include "app/_subj_lang_institution_filter.html" with view="projects" %}
+            {% include "app/_subj_lang_institution_filter.html" with view="projects" %}
 
-    {% for item in projects %}
-    <div class="container-fluid mt-4 mb-5 p-0">{# container adds unwanted padding #}
+            {% for item in projects %}
+                <div class="container-fluid mt-4 mb-5 p-0">{# container adds unwanted padding #}
 
-        <div class="row" style="max-width: 1024px;">
-          <div class="col-md-8">{# "wrong" indent simplifies comparison with documents.html #}
-            <h2>
-                <a href="{% url 'project_detail' item.project.id %}" class="text-decoration-none">
-                    {{ item.project.name }}
-                </a>
-            </h2>
-            {% if item.project.url %}
-            <div>
-                <a href="{{ item.project.url }}" target="_blank"
-                   title="{% trans 'External link' %}">
-                    {{ item.project.url }}
-                </a>
-            </div>
-            {% endif %}
-            <div class="fs-5">
-                {{ item.institution_name }}
-            </div>
+                    <div class="row" style="max-width: 1024px;">
+                        <div class="col-md-8">{# "wrong" indent simplifies comparison with documents.html #}
+                            <h2>
+                                <a href="{% url 'project_detail' item.project.id %}" class="text-decoration-none">
+                                    {{ item.project.name }}
+                                </a>
+                            </h2>
+                            {% if item.project.url %}
+                                <div>
+                                    <a href="{{ item.project.url }}" target="_blank"
+                                       title="{% trans 'External link' %}">
+                                        {{ item.project.url }}
+                                    </a>
+                                </div>
+                            {% endif %}
+                            <div class="fs-5">
+                                {{ item.institution_name }}
+                            </div>
 
-          </div>
-          <div class="col-md-4">
-              {% if item.logo %}
-              <img src="{{ item.logo.url }}" class="logo100"
-                   alt=""{# name already mentioned elsewhere #}
-              >
-              {% endif %}
-          </div>
+                        </div>
+                        <div class="col-md-4">
+                            {% if item.logo %}
+                                <img src="{{ item.logo.url }}" class="logo100"
+                                     alt=""{# name already mentioned elsewhere #}
+                                >
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="limit-text-width">
+                            {{ item.description|truncatewords:30 }}
+                            <a href="{% url 'project_detail' item.project.id %}">{% trans "Read more" %}</a>
+                        </p>
+
+                        {% if item.languages %}
+                            <div>{% icon "language" %} {{ item.languages }}</div>
+                        {% endif %}
+
+                        {% if item.subjects %}
+                            <div>{% icon "subject" %} {{ item.subjects }}</div>
+                        {% endif %}
+
+                        {% if item.date %}
+                            <div>{% icon "date" %} {{ item.date }}</div>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+            {% endfor %}
+
         </div>
-
-        <div>
-            <p class="limit-text-width">
-                {{ item.description|truncatewords:30 }}
-                <a href="{% url 'project_detail' item.project.id %}">{% trans "Read more" %}</a>
-            </p>
-
-            {% if item.languages %}
-                <div>{% icon "language" %} {{ item.languages }}</div>
-            {% endif %}
-
-            {% if item.subjects %}
-                <div>{% icon "subject" %} {{ item.subjects }}</div>
-            {% endif %}
-
-            {% if item.date %}
-                <div>{% icon "date" %} {{ item.date }}</div>
-            {% endif %}
-
-        </div>
-
-    </div>
-    {% endfor %}
-
-</div>
-{% endspaceless %}
+    {% endspaceless %}
 {% endblock content %}
