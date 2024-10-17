@@ -12,7 +12,7 @@ SHELL ["/bin/bash", "-c"]
 WORKDIR /app
 
 # Install dependencies
-COPY requirements.txt requirements-dev.txt /app/
+COPY requirements.txt requirements-test.txt requirements-dev.txt /app/
 
 RUN <<EOF
   set -exo pipefail
