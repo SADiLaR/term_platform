@@ -3,7 +3,7 @@ let env = process.env;
 module.exports = {
     ci: {
         collect: {
-            startServerCommand: `DATABASE_URL=${env.DATABASE_URL} DJANGO_SETTINGS_MODULE=${env.DJANGO_SETTINGS_MODULE} `
+            startServerCommand: `DB_NAME=term_db DB_USER=sadilar DB_PASSWORD=sadilar`
                 + "python manage.py runserver localhost:3000",
             url: [
                 "http://localhost:3000",
