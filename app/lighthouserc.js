@@ -1,16 +1,18 @@
 module.exports = {
+    scripts: {
+        "lchi:server": "python manage.py runserver localhost:3000"
+    },
     ci: {
         collect: {
-            startServerCommand: "python manage.py runserver localhost:3000",
-                url: [
-                    "http://localhost:3000",
-                    "http://localhost:3000/search/",
-                    "http://localhost:3000/institutions/",
-                    "http://localhost:3000/projects/",
-                    "http://localhost:3000/documents/",
-                    "http://localhost:3000/languages/",
-                    "http://localhost:3000/subjects/"
-                ]
+            url: [
+                "http://localhost:3000",
+                "http://localhost:3000/search/",
+                "http://localhost:3000/institutions/",
+                "http://localhost:3000/projects/",
+                "http://localhost:3000/documents/",
+                "http://localhost:3000/languages/",
+                "http://localhost:3000/subjects/"
+            ]
         },
         assert: {
             "preset": "lighthouse:recommended",
