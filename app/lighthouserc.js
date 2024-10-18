@@ -3,7 +3,7 @@ let env = process.env;
 module.exports = {
     ci: {
         collect: {
-            startServerCommand: `DB_NAME=term_db DB_USER=sadilar DB_PASSWORD=sadilar`
+            startServerCommand: `DB_NAME=test_db_1 DB_USER=sadilar DB_PASSWORD=sadilar`
                 + "python manage.py runserver localhost:3000",
             url: [
                 "http://localhost:3000",

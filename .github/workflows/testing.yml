@@ -62,9 +62,6 @@ jobs:
       - name: Run Lighthouse
         run: |
             cd app/
-            DB_NAME=term_db DB_USER=sadilar DB_PASSWORD=sadilar python manage.py migrate
+            DB_NAME=test_db_1 DB_USER=sadilar DB_PASSWORD=sadilar python manage.py migrate
             echo done migrations
             lhci autorun
-        env:
-          DJANGO_SETTINGS_MODULE: app.settings
-          DATABASE_URL: postgres://sadilar:sadilar@localhost:5432/test_db
