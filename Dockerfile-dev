@@ -12,13 +12,13 @@ SHELL ["/bin/bash", "-c"]
 WORKDIR /app
 
 # Install dependencies
-COPY requirements.txt requirements-dev.txt /app/
+COPY requirements.txt requirements-test.txt requirements-dev.txt /app/
 
 RUN <<EOF
   set -exo pipefail
   apt-get update
   apt-get -y upgrade
-  apt-get install -y --no-install-recommends libmagic1 gettext graphviz graphviz-dev
+  apt-get install -y --no-install-recommends libmagic1 gettext graphviz graphviz-dev chromium
   pip install --upgrade pip
   pip install -r requirements-dev.txt
 EOF
