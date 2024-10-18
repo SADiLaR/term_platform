@@ -63,3 +63,6 @@ jobs:
         run: |
             cd app/
             lhci autorun
+        env:
+          DJANGO_SETTINGS_MODULE: app.settings
+          DATABASE_URL: postgres://sadilar:sadilar@localhost:5432/test_db
