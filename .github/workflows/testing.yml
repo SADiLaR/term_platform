@@ -62,7 +62,7 @@ jobs:
       - name: Run Lighthouse
         run: |
             cd app/
-            python manage.py migrate
+            DB_NAME=term_db DB_USER=sadilar DB_PASSWORD=sadilar python manage.py migrate
             echo done migrations
             lhci autorun
         env:
