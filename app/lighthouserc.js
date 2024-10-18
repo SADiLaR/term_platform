@@ -24,3 +24,5 @@ module.exports = {
         }
     }
 }
+
+console.log(module.exports.ci.collect.startServerCommand)

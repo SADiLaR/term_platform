@@ -62,6 +62,7 @@ jobs:
       - name: Run Lighthouse
         run: |
             cd app/
+            python manage.py migrate
             lhci autorun
         env:
           DJANGO_SETTINGS_MODULE: app.settings
