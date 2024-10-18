@@ -1,9 +1,10 @@
+let env = process.env;
+
 module.exports = {
-    scripts: {
-        "lchi:server": "python manage.py runserver localhost:3000"
-    },
     ci: {
         collect: {
+            startServerCommand: `DATABASE_URL=${env.DATABASE_URL} DJANGO_SETTINGS_MODULE=${env.DJANGO_SETTINGS_MODULE} `
+                `python manage.py runserver localhost:3000`,
             url: [
                 "http://localhost:3000",
                 "http://localhost:3000/search/",
