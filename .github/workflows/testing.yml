@@ -22,8 +22,10 @@ jobs:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
@@ -63,3 +65,52 @@ jobs:
         run: |
           cd app/
           python manage.py check
+  lighthouse:
+    runs-on: ubuntu-latest # operating system your code will run on
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: sadilar
+          POSTGRES_PASSWORD: sadilar
+          POSTGRES_DB: term_db
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-test.txt
+          sudo apt-get install -y gettext
+          npm install -g @lhci/cli@0.14.x
+      - name: Create folders
+        run: |
+          cp .env.lhci app/.env
+          cp entrypoint.sh app/
+          sudo chmod +x app/entrypoint.sh
+      - name: Run Lighthouse
+        run: cd app && lhci autorun
+        env:
+          DJANGO_SETTINGS_MODULE: app.settings
+          DATABASE_URL: postgres://sadilar:sadilar@localhost:5432/term_db
+      - name: Archive Lighthouse results
+        if: always() # Ensure results are uploaded on failure too
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: app/.lighthouseci/
+          include-hidden-files: true
+      - name: Archive Django logs
+        if: always() # Ensure logs are uploaded on failure too
+        uses: actions/upload-artifact@v4
+        with:
+          name: django-logs
+          path: app/debug.log
