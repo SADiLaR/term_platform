@@ -93,6 +93,15 @@ jobs:
           npm install -g @lhci/cli@0.14.x
       - name: Setup LHCI env
         run: cp .env.lhci app/.env
+      - name: Run Django fixtures
+        run: |
+          cd app
+          python manage.py migrate --no-input
+          python manage.py loaddata fixtures/institution.json
+          python manage.py loaddata fixtures/language.json
+          python manage.py loaddata fixtures/projects.json
+          python manage.py loaddata fixtures/subjects.json
+          python manage.py import_documents general/tests/files/
       - name: Run Lighthouse
         run: cd app && lhci autorun
       - name: Archive Lighthouse results
