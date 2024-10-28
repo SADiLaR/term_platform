@@ -96,8 +96,8 @@ dev-quick-install:
 	echo "Creating superuser"
 	@make create-super-user
 
-dev-mass-pdf-upload:
-	@docker compose run --rm web python manage.py dev_pdf_mass_upload
+dev-import-documents:
+	@docker compose run --rm web python manage.py import_documents general/tests/files/
 
 dev_update_vector_search:
 	@docker compose run --rm web python manage.py dev_update_vector_search
