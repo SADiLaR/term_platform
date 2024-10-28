@@ -99,6 +99,9 @@ dev-quick-install:
 dev-import-documents:
 	@docker compose run --rm web python manage.py import_documents general/tests/files/
 
+lighthouse:
+	@docker compose run --rm web lhci autorun
+
 dev_update_vector_search:
 	@docker compose run --rm web python manage.py dev_update_vector_search
 
