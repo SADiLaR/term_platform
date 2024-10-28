@@ -18,10 +18,14 @@ RUN <<EOF
   set -exo pipefail
   apt-get update
   apt-get -y upgrade
-  apt-get install -y --no-install-recommends libmagic1 gettext graphviz graphviz-dev chromium
+  apt-get install -y --no-install-recommends libmagic1 gettext graphviz graphviz-dev chromium npm
+  npm install -g @lhci/cli@0.14.x
   pip install --upgrade pip
   pip install -r requirements-dev.txt
 EOF
+
+# Used in LHCI
+COPY entrypoint.sh /
 
 # Copy project
 COPY ./app /app/

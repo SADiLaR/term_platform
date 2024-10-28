@@ -11,7 +11,7 @@ import magic
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
 
-from general.models import Document
+from general.models import Document, Language
 from general.service.extract_text import GetTextError, pdf_to_text
 
 
@@ -49,6 +49,8 @@ class Command(BaseCommand):
                 document_type="Glossary",
                 institution_id=random.randint(1, 20),
             )
+            instance.save()
+            instance.languages.set(Language.objects.all())
             instance.save()
         except GetTextError as e:
             print(f"Error: {e}")

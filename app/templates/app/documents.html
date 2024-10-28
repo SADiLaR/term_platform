@@ -32,7 +32,7 @@
             </div>
             <p class="limit-text-width">
                 {{ item.description|truncatewords:30 }}
-                <a href="{% url 'document_detail' item.document.id %}">{% trans "Read more" %}</a>
+                <a href="{% url 'document_detail' item.document.id %}">{% trans "More about the document" %}</a>
             </p>
 
             {% if item.languages %}

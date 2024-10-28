@@ -39,3 +39,6 @@ app/media/
 /logging/
 /pdf_uploads/
 /pdf_upload_completed/
+
+# Generated Lighthouse CI artifacts
+.lighthouseci/

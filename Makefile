@@ -82,9 +82,9 @@ ruff-fix:
 	@docker compose run --rm web ruff check --fix .
 
 load-fixtures:
+	@docker compose run --rm web python manage.py loaddata fixtures/language.json
 	@docker compose run --rm web python manage.py loaddata fixtures/institution.json
 	@docker compose run --rm web python manage.py loaddata fixtures/projects.json
-	@docker compose run --rm web python manage.py loaddata fixtures/language.json
 	@docker compose run --rm web python manage.py loaddata fixtures/subjects.json
 
 pre-commit-install:
@@ -96,8 +96,11 @@ dev-quick-install:
 	echo "Creating superuser"
 	@make create-super-user
 
-dev-mass-pdf-upload:
-	@docker compose run --rm web python manage.py dev_pdf_mass_upload
+dev-import-documents:
+	@docker compose run --rm web python manage.py import_documents general/tests/files/
+
+lighthouse:
+	@docker compose run --rm web lhci autorun
 
 dev_update_vector_search:
 	@docker compose run --rm web python manage.py dev_update_vector_search
