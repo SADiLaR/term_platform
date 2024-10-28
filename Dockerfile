@@ -23,8 +23,8 @@ RUN <<EOF
 EOF
 
 # Copy project
-COPY ./app /app/
 COPY ./entrypoint.sh /
+COPY ./app /app/
 
 # Run the application
 ENTRYPOINT ["bash", "/entrypoint.sh"]
