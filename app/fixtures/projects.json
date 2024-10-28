@@ -20,7 +20,8 @@
       "logo": "",
       "start_date": "2020-01-01",
       "end_date": "2020-01-01",
-      "institution": 2
+      "institution": 2,
+      "languages": [1, 2, 3]
     }
   }
 ]
