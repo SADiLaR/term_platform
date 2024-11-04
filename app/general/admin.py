@@ -39,8 +39,15 @@ class DocumentForm(ModelForm):
             limit = 10 * 1024 * 1024
             if uploaded_file.size and uploaded_file.size > limit:
                 self.add_error("uploaded_file", _("File size must not exceed 10MB."))
-            if not self.has_error("uploaded_file"):
-                # Don't parse if validation above failed
+            if len(self.errors) == 0:
+                # Don't parse if validation above failed, or if there are any other errors
+                # We want to delay doing the PDF -> text conversion until there are no other errors with the form,
+                # because it is quite costly. This is compounded by the fact that Django has included a hard-coded
+                # `novalidate` attribute on admin forms for editing (for at least 8 years
+                # https://code.djangoproject.com/ticket/26982). Therefore, the fast clientside validation simply does
+                # not run, which means we need to optimise the server-side validation as much as we can to get a good
+                # experience.
+
                 try:
                     cleaned_data["document_data"] = pdf_to_text(uploaded_file)
                 except GetTextError:
