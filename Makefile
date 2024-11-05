@@ -1,3 +1,8 @@
+.PHONY: list up upd build stop down restart make-migrations migrate collectstatic shell logs create-super-user \
+        docker-stop-all create-schema test ruff-check ruff-fix ruff-format load-fixtures pre-commit-install \
+        dev-import-documents dev-quick-install lighthouse dev_update_vector_search docker-shell check make-messages \
+        compile-messages
+
 list:
 	@echo "Available commands:"
 	@echo "up - Start the project"
