@@ -135,7 +135,13 @@ class Document(models.Model):
     document_type = models.CharField(
         max_length=200, choices=document_type_choices, verbose_name=_("document category")
     )
-    document_data = models.TextField(blank=True, verbose_name=_("document data"))
+    document_data = models.TextField(
+        blank=True,
+        verbose_name=_("Searchable content"),
+        help_text=_(
+            "The searchable text extracted from the document where possible, but it can also be edited."
+        ),
+    )
     institution = models.ForeignKey(
         "Institution", on_delete=models.CASCADE, verbose_name=_("institution")
     )
@@ -166,6 +172,8 @@ class Document(models.Model):
         indexes = [
             GinIndex(fields=["search_vector"]),
         ]
+
+        permissions = [("can_edit_fulltext", "Can edit document fulltext (used for search)")]
 
     def __str__(self):
         return self.title
