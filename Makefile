@@ -70,7 +70,7 @@ create-schema:
 	@docker compose run --rm web python manage.py graph_models -a -o schema/schema.png
 
 test:
-	@docker compose run --rm web python manage.py test
+	@docker compose run --rm web python manage.py test $(module)
 
 ruff-check:
 	@docker compose run --rm web ruff check .
