@@ -20,6 +20,10 @@ class TestDocumentForm(unittest.TestCase):
             pdf_file = f.read()
 
         self.file_mock = SimpleUploadedFile("test.pdf", pdf_file, content_type="application/pdf")
+        self.test_institution = Institution.objects.create(name="Test Institution for Document tests")
+
+    def tearDown(self):
+        self.test_institution.delete()
 
     def test_clean_without_url_and_file(self):
         tests_form = {
@@ -27,7 +31,7 @@ class TestDocumentForm(unittest.TestCase):
             "license": "MIT",
             "document_type": "Glossary",
             "mime_type": "pdf",
-            "institution": Institution.objects.create(name="Test Institution"),
+            "institution": self.test_institution,
             "url": "",
             "uploaded_file": "",
             "description": "Test description",
@@ -46,7 +50,7 @@ class TestDocumentForm(unittest.TestCase):
             "license": "(c)",
             "document_type": "Glossary",
             "mime_type": "pdf",
-            "institution": Institution.objects.create(name="Test Institution 2"),
+            "institution": self.test_institution,
             "url": "www.example.com",
             "uploaded_file": "",
             "document_data": "",
@@ -63,7 +67,7 @@ class TestDocumentForm(unittest.TestCase):
             "license": "CC0",
             "document_type": "Glossary",
             "mime_type": "pdf",
-            "institution": Institution.objects.create(name="Test Institution 3"),
+            "institution": self.test_institution,
             "url": "",
             "uploaded_file": self.file_mock,
             "document_data": "",
@@ -81,7 +85,7 @@ class TestDocumentForm(unittest.TestCase):
             "license": "MIT",
             "document_type": "Glossary",
             "mime_type": "pdf",
-            "institution": Institution.objects.create(name="Test Institution 4"),
+            "institution": self.test_institution,
             "url": "",
             "uploaded_file": self.file_mock,
             "description": "Test description",
