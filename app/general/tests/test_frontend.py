@@ -1,9 +1,8 @@
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.common import TimeoutException
-from selenium.webdriver.chrome.webdriver import WebDriver, Options
+from selenium.webdriver.chrome.webdriver import Options, WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
-
 
 # Wait timeout in seconds
 WAIT_TIMEOUT = 5

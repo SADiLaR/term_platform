@@ -23,6 +23,8 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: 3.12
@@ -34,7 +36,8 @@ jobs:
       - name: Run linting tools
         run: |
           cd app/
-          ruff format .
+          ruff format --diff .
+          ruff check --diff .
       - name: Create logging folder
         run: |
           sudo  mkdir -p /logging
@@ -79,6 +82,8 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: 3.12
@@ -125,6 +130,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: false
       - name: Get all commits on current main
         run: git fetch origin main
       - name: Log all commits we will analyse

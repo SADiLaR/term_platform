@@ -97,3 +97,17 @@ Docker Volumes for production:
 .env file
 
 * EMAIL_BACKEND_CONSOLE=False
+
+## Notes to Developers
+
+- When setting up the app (from scratch or from a wipe), the following commands should be run:
+  - (Optional) `make build`
+  - `make up` - wait for the database to start, then hit Control-C
+  - `make migrate`
+  - `make up` - runs the app
+- To wipe the database, use `make down`
+- The Django admin interface is at `/admin/`
+  - An admin user can be created through `make create-super-user`
+- To run a single module of tests, you can pass the Makefile `module` variable on the command line. For instance, to run
+  only tests defined in [`test_document_admin.py`](./app/general/tests/test_document_admin.py), run
+  `make test module=general.tests.test_document_admin`
