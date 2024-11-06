@@ -69,7 +69,13 @@ jobs:
           cd app/
           python manage.py check
   selenium:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser-and-os:
+          - [firefox, ubuntu-latest]
+          - [chrome, ubuntu-latest]
+        js: [js-enabled, js-disabled]
+    runs-on: ${{ matrix.browser-and-os[1] }}
     services:
       postgres:
         image: postgres:16
@@ -101,7 +107,7 @@ jobs:
           cp .env.testing app/.env
           cd app/
           mkdir -p static_files
-          python manage.py test --tag=selenium
+          BROWSER=${{ matrix.browser-and-os[0] }} ENABLE_JS=${{ matrix.js }} python manage.py test --tag=selenium
         env:
           DJANGO_SETTINGS_MODULE: app.settings
           DATABASE_URL: postgres://sadilar:sadilar@localhost:5432/test_db
