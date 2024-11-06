@@ -1,4 +1,5 @@
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.test import tag
 from selenium.common import TimeoutException
 from selenium.webdriver.chrome.webdriver import Options, WebDriver
 from selenium.webdriver.common.by import By
@@ -8,6 +9,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 WAIT_TIMEOUT = 5
 
 
+@tag("selenium")
 class TestFrontend(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
