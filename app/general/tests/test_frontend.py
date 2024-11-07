@@ -78,9 +78,10 @@ class TestFrontend(StaticLiveServerTestCase):
         # Sanity check in case we ever change the 404 title
         self.driver.get(f"{self.live_server_url}/blabla404")
         print(self.driver.title)
-        assert self.driver.title.startswith(
-            "Error"
-        ), f"Actual title was {self.driver.title}. Page: {self.driver.page_source}"
+        self.assertTrue(
+            self.driver.title.startswith("Error"),
+            f"Actual title was {self.driver.title}. Page: {self.driver.page_source}",
+        )
 
         # Check main page does not 404
         self.driver.get(self.live_server_url)
@@ -98,15 +99,22 @@ class TestFrontend(StaticLiveServerTestCase):
             wait = WebDriverWait(self.driver, timeout=WAIT_TIMEOUT)
             wait.until(lambda d: link_text in self.driver.title)
         except TimeoutException:
-            assert link_text in self.driver.title, (
-                f"Expected title for page {link_text} to have {link_text};"
-                f" was {self.driver.title}"
+            self.assertIn(
+                link_text,
+                self.driver.title,
+                (
+                    f"Expected title for page {link_text} to have {link_text};"
+                    f" was {self.driver.title}"
+                ),
             )
         self.assert_current_page_not_error()
 
     def assert_current_page_not_error(self):
-        assert not self.driver.title.startswith("Error"), f"Actual title was {self.driver.title}"
-        assert not self.driver.title.startswith(
-            "ProgrammingError"
-        ), f"Actual title was {self.driver.title}"
-        assert not self.driver.find_element(By.ID, "error-block").is_displayed()
+        self.assertFalse(
+            self.driver.title.startswith("Error"), f"Actual title was {self.driver.title}"
+        )
+        self.assertFalse(
+            self.driver.title.startswith("ProgrammingError"),
+            f"Actual title was {self.driver.title}",
+        )
+        self.assertFalse(self.driver.find_element(By.ID, "error-block").is_displayed())

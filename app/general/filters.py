@@ -7,10 +7,10 @@ from django.contrib.postgres.search import (
     SearchVector,
 )
 from django.db.models import F, Value
-from django.db.models.functions import Greatest, Left
+from django.db.models.functions import Left
 from django.db.models.query import EmptyQuerySet
 from django.utils.translation import gettext_lazy as _
-from django_filters import ModelMultipleChoiceFilter, MultipleChoiceFilter
+from django_filters import ModelMultipleChoiceFilter
 
 from general.models import Document, Institution, Language, Project, Subject
 

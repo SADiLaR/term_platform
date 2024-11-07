@@ -1,4 +1,3 @@
-from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.views import LoginView as _LoginView
 from django.contrib.auth.views import PasswordChangeView as _PasswordChangeView

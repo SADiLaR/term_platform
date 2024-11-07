@@ -49,7 +49,7 @@ class ProjectDetailViewTests(TestCase):
 
     def test_project_detail_view_num_queries(self):
         with self.assertNumQueries(3):
-            response = self.client.get(reverse("project_detail", args=[self.project.id]))
+            self.client.get(reverse("project_detail", args=[self.project.id]))
 
     def test_project_detail_view_invalid_id(self):
         invalid_project_id = self.project.id + 1
