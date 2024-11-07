@@ -6,6 +6,8 @@ on:
     tags:
       - v**
 
+permissions: read-all
+
 jobs:
   docker_push:
     runs-on: ubuntu-latest
