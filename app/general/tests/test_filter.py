@@ -48,23 +48,23 @@ class TestSearchFilter(TestCase):
 
     def test_institution_filter(self):
         data = {"institution": [self.institution1.id]}
-        filter = DocumentFilter(data=data)
-        qs = filter.qs
+        doc_filter = DocumentFilter(data=data)
+        qs = doc_filter.qs
         self.assertEqual(len(qs), 2)
         # TODO: ordering between documents and projects are not yet defined
         self.assertEqual(qs[0]["id"], self.project1.id)
 
     def test_subjects_filter(self):
         data = {"subjects": [self.subject1.id]}
-        filter = DocumentFilter(data=data)
-        qs = filter.qs
+        doc_filter = DocumentFilter(data=data)
+        qs = doc_filter.qs
         self.assertEqual(len(qs), 1)
         self.assertEqual(qs[0]["id"], self.doc1.id)
 
     def test_languages_filter(self):
         data = {"languages": [self.language1.id]}
-        filter = DocumentFilter(data=data)
-        qs = filter.qs
+        doc_filter = DocumentFilter(data=data)
+        qs = doc_filter.qs
         self.assertEqual(len(qs), 1)
         self.assertEqual(qs[0]["id"], self.doc1.id)
 
@@ -74,35 +74,35 @@ class TestSearchFilter(TestCase):
             "subjects": [self.subject1.id],
             "languages": [self.language1.id],
         }
-        filter = DocumentFilter(data=data)
-        qs = filter.qs
+        doc_filter = DocumentFilter(data=data)
+        qs = doc_filter.qs
         self.assertEqual(len(qs), 1)
         self.assertEqual(qs[0]["id"], self.doc1.id)
 
     def test_search_filter_documents(self):
         data = {"search": "Document"}
-        filter = DocumentFilter(data=data)
-        qs = filter.qs
+        doc_filter = DocumentFilter(data=data)
+        qs = doc_filter.qs
         self.assertEqual(len(qs), 2)
         self.assertCountEqual([qs[0]["id"], qs[1]["id"]], [self.doc1.id, self.doc2.id])
 
         data = {"search": "Document 1"}
-        filter = DocumentFilter(data=data)
-        qs = filter.qs
+        doc_filter = DocumentFilter(data=data)
+        qs = doc_filter.qs
         self.assertEqual(len(qs), 1)
         self.assertEqual(qs[0]["id"], self.doc1.id)
 
     def test_search_filter_projects(self):
         data = {"search": "Project 1"}
-        filter = DocumentFilter(data=data)
-        qs = filter.qs
+        doc_filter = DocumentFilter(data=data)
+        qs = doc_filter.qs
         self.assertEqual(len(qs), 1)
         self.assertEqual(qs[0]["id"], self.project1.id)
 
     def test_search_filter_combined(self):
         data = {"search": "1"}
-        filter = DocumentFilter(data=data)
-        qs_ids = [x["id"] for x in filter.qs]
+        doc_filter = DocumentFilter(data=data)
+        qs_ids = [x["id"] for x in doc_filter.qs]
         expected_ids = [self.doc1.id, self.project1.id, self.institution1.id]
         self.assertCountEqual(qs_ids, expected_ids)
         # TODO: test properly instead of relying on randomly agreeing IDs

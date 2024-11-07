@@ -41,13 +41,13 @@ class TestHandleFile(unittest.TestCase):
         command = Command()
         # Create some Institutions instances for testing
         for i in range(1, 21):
-            id = random.randint(1, 1000)
+            institution_id = random.randint(1, 1000)  # noqa: S311 - this is only for testing
             Institution.objects.create(
                 id=i,
-                name=f"{id}_{self.fake.company()}",
-                abbreviation=f"{id}_{self.fake.company_suffix()}",
-                url=f"{id}_{self.fake.url()}",
-                email=f"{id}_{self.fake.company_email()}",
+                name=f"{institution_id}_{self.fake.company()}",
+                abbreviation=f"{institution_id}_{self.fake.company_suffix()}",
+                url=f"{institution_id}_{self.fake.url()}",
+                email=f"{institution_id}_{self.fake.company_email()}",
                 logo="",
             )
 

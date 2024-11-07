@@ -47,7 +47,7 @@ class Command(BaseCommand):
                 document_data=pdf_to_text(file_path),
                 uploaded_file=content_file,
                 document_type="Glossary",
-                institution_id=random.randint(1, 20),
+                institution_id=random.randint(1, 20),  # noqa: S311 - this is a fixture; security isn't important
             )
             instance.save()
             instance.languages.set(Language.objects.all())

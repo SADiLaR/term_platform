@@ -3,8 +3,11 @@ line-length = 100
 exclude = ["migrations", ".venv"]
 
 [tool.ruff.lint]
-select = [
-    "DJ",
-    "I",
-    "W"
+extend-select = [
+    "DJ", # Django - flake-8-django - https://docs.astral.sh/ruff/rules/#flake8-django-dj
+    "I", # Imports - isort - https://docs.astral.sh/ruff/rules/#isort-i
+    "W", # General - pycodestyle - https://docs.astral.sh/ruff/rules/#pycodestyle-e-w
+    "S", # Security - flake-8-bandit https://docs.astral.sh/ruff/rules/#flake8-bandit-s
+    "F", # General - Pyflakes - https://docs.astral.sh/ruff/rules/#pyflakes-f
+    "A", # Shadowing of builtins - flake-8-builtins - https://docs.astral.sh/ruff/rules/#flake8-builtins-a
 ]
