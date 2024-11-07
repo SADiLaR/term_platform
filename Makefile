@@ -53,7 +53,7 @@ make-migrations:
 	@docker compose run --rm web python manage.py makemigrations
 
 migrate:
-	@docker compose run --rm web python manage.py migrate
+	@docker compose run --rm web python manage.py migrate $(migration_args)
 
 collectstatic:
 	@docker compose run --rm web python manage.py collectstatic --noinput

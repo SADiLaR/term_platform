@@ -9,7 +9,7 @@ from general.admin import DocumentForm, DocumentFormWithFulltext
 from general.models import Document, Institution
 
 
-class TestDocumentForm(unittest.TestCase):
+class TestDocumentForm(TestCase):
     def __init__(self, methodName: str = "runTest"):
         super().__init__(methodName)
         self.form = None
