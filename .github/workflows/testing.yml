@@ -8,6 +8,8 @@ on:
       - develop
   pull_request:
 
+permissions: read-all
+
 jobs:
   test_project:
     runs-on: ubuntu-latest # operating system your code will run on
