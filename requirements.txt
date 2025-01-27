@@ -8,4 +8,4 @@ pillow==11.1.0
 psycopg2-binary==2.9.10
 pypdf==5.2.0
 python-magic==0.4.27
-whitenoise==6.8.2
+whitenoise[brotli]==6.8.2
