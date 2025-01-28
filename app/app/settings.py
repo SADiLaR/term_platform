@@ -8,6 +8,9 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
+
+For the deployment checklist, see:
+https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 """
 
 import os
@@ -21,9 +24,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Take environment variables from .env file
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 SECRET_KEY = os.environ["SECRET_KEY"]
 
@@ -210,17 +210,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
-
-LANGUAGE_CODE = "en-us"
-
-TIME_ZONE = "Africa/Johannesburg"
-
-USE_I18N = True
-
-USE_TZ = True
-
 # Media files (uploads)
 
 MEDIA_ROOT = BASE_DIR / "media"
@@ -255,28 +244,31 @@ STORAGES = {
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGGING_DIR = Path("/logging")
-
 # Internationalization
+# https://docs.djangoproject.com/en/5.0/topics/i18n/
+
+TIME_ZONE = "Africa/Johannesburg"
+USE_TZ = True
 
 USE_I18N = True
 
+LANGUAGE_CODE = "en"
 LANGUAGES = [
     ("af", "Afrikaans"),
     ("en", "English"),
 ]
-
-LANGUAGE_CODE = "en"
-
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, "locale"),
 ]
 
-# Check if the application is under testing
+# Check if the application is under testing. This needs to happen after static
+# file configuration.
 if "test" in sys.argv:
     DEBUG = False
 
 # Logging configuration
+LOGGING_DIR = Path("/logging")
+
 if DEBUG:
     LOGGING = {
         "version": 1,
