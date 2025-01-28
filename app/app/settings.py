@@ -251,6 +251,7 @@ TIME_ZONE = "Africa/Johannesburg"
 USE_TZ = True
 
 USE_I18N = True
+USE_LANGUAGE_SWITCHER = False
 
 LANGUAGE_CODE = "en"
 LANGUAGES = [
