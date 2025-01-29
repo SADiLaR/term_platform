@@ -5,4 +5,5 @@ def template_vars(request):
     return {
         "debug_toolbar": settings.DEBUG and settings.DEBUG_TOOLBAR,
         "BASE_TEMPLATE": "base_htmx.html" if request.htmx else "base.html",
+        "USE_LANGUAGE_SWITCHER": settings.USE_LANGUAGE_SWITCHER,
     }

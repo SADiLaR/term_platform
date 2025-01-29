@@ -16,3 +16,13 @@ class CustomTests(TestCase):
 
         self.assertEqual(response.status_code, 404)
         self.assertTemplateUsed(response, "404.html")
+
+    def test_language_switcher(self):
+        with self.settings(USE_LANGUAGE_SWITCHER=False):
+            response = self.client.get("/")
+            self.assertIn("USE_LANGUAGE_SWITCHER", response.context, "Value not passed in context")
+            self.assertNotIn(b'id="ui-language"', response.content, "Language switcher in page")
+        with self.settings(USE_LANGUAGE_SWITCHER=True):
+            response = self.client.get("/")
+            self.assertIn("USE_LANGUAGE_SWITCHER", response.context, "Value not passed in context")
+            self.assertIn(b'id="ui-language"', response.content, "Language switcher not in page")
