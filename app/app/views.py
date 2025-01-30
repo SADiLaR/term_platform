@@ -23,9 +23,9 @@ def home(request):
     return render(request, template_name=template, context=context)
 
 
-def contact(request):
-    template = "app/contact.html"
-    context = {"current_page": "contact"}
+def about(request):
+    template = "app/about.html"
+    context = {"current_page": "about"}
 
     return render(request, template_name=template, context=context)
 
