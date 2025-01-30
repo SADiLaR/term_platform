@@ -5,6 +5,18 @@
 {% block content %}
 {% spaceless %}
 
+<script>
+    {# Try to prevent a _little_ bit of spam by not just dangling the email in the HTML for all to see #}
+    window.addEventListener("DOMContentLoaded", () => {
+        let name = "lwimilinks";
+        let domain = "sadilar.org";
+        let email = name + "@" + domain;
+        let emailElt = document.getElementById("email");
+        emailElt.innerText = email;
+        emailElt.href=`${email}?subject=LwimiLinks+query`;
+    })
+</script>
+    
 <div class="m-4 d-flex flex-column gap-4">
     <h1 id="main-heading" class="card-title">{% trans "About" %}</h1>
 
@@ -56,8 +68,13 @@
                     {% trans "Dr Michelle Goosen" %}
                 </p>
 
+                {# This is loaded in by JS to try avoid some simple spam scrapers #}
                 <p>
-                    <a href="mailto:lwimilinks@sadilar.org?subject=LwimiLinks+query">lwimilinks@sadilar.org</a>
+                    <a id="email">
+                        <noscript>
+                            {% trans "Please enable JavaScript to view the email address (this is to avoid spammers)" %}
+                        </noscript>
+                    </a>
                 </p>
             </div>
 
