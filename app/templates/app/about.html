@@ -1,0 +1,112 @@
+{% extends BASE_TEMPLATE %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+{% spaceless %}
+
+<script>
+    {# Try to prevent a _little_ bit of spam by not just dangling the email in the HTML for all to see #}
+    function showEmail() {
+        let name = "lwimilinks";
+        let domain = "sadilar.org";
+        let email = name + "@" + domain;
+        let emailElt = document.getElementById("lwimilinks-email");
+        emailElt.innerText = email;
+        emailElt.href = `${email}?subject=LwimiLinks+query`;
+    }
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/Document/DOMContentLoaded_event#checking_whether_loading_is_already_complete
+    if (document.readyState === "loading") {
+        window.addEventListener("DOMContentLoaded", showEmail)
+    } else {
+        showEmail()
+    }
+</script>
+
+<div class="m-4 d-flex flex-column gap-3">
+    <h1 id="main-heading" class="card-title">{% trans "About" %}</h1>
+
+    <div class="card row p-3">
+        <h2 class="card-title">{% trans "What is LwimiLinks?" %}</h2>
+
+        <div class="card-body limit-text-width">
+            <p>
+                {% blocktrans trimmed %}
+                    LwimiLinks is a place for multilingual terminology and other useful language resources.
+                    We encourage institutions to upload their resources and register information on related projects.
+                    These resources can then be disseminated through the site to students, language practicioners, academics,
+                    linguists, lexicographers, and other users.
+                {% endblocktrans %}
+            </p>
+        </div>
+    </div>
+
+    <div class="card row p-3">
+        <h2 class="card-title">{% trans "Background information" %}</h2>
+
+        <div class="card-body limit-text-width">
+            <p>
+                {% blocktrans trimmed %}
+                    The South African Centre for Digital Language Resources (SADiLaR) is a national research infrastructure
+                    that aims to ensure a digital future for our official languages. It supports researchers in the fields
+                    of digital humanities and social sciences and also assists institutions in their language implementation
+                    plans.
+                {% endblocktrans %}
+                <a href="https://sadilar.org">{% trans "Read more about SADiLaR." %}</a>
+            </p>
+
+            <p>
+                {% blocktrans trimmed %}
+                    SADiLaR conducted an audit at South African public higher education institutions that highlighted areas
+                    that require attention.
+                {% endblocktrans %}
+                <a href="https://sadilar.org/usaf_report_2023">{% trans "Read the report." %}</a>
+            </p>
+
+            <p>
+                {% blocktrans trimmed %}
+                    LwimiLinks, developed by SADiLaR, is a platform which highlights previous and current work at
+                    institutions to encourage collaboration and disseminate resources.
+                {% endblocktrans %}
+            </p>
+        </div>
+    </div>
+
+    <div class="card p-3 row">
+        <h2 class="card-title">{% trans "Contact" %}</h2>
+        <div class="row gx-lg-5">
+            <div class="col-md-auto contact-info">
+                <p>
+                    {% trans "Dr Michelle Goosen" %}
+                </p>
+
+                {# This is loaded in by JS to try avoid some simple spam scrapers #}
+                <p>
+                    <a id="lwimilinks-email">
+                        <noscript>
+                            {% trans "Please enable JavaScript to view the email address (this is to avoid spammers)" %}
+                        </noscript>
+                    </a>
+                </p>
+            </div>
+
+            {# Display an hr only when the md (medium breakpoint [1]) is reached. #}
+            {# This makes it clear that Dr Goosen's contact details are separate from SADiLaR's #}
+            {# [1]: https://getbootstrap.com/docs/5.2/layout/breakpoints/ #}
+            <hr class="d-md-none"/>
+
+            <div class="col-md-auto contact-info">
+                <p>
+                    {% trans "South African Centre for Digital Language Resources (SADiLaR)" %}
+                </p>
+
+                <p>
+                    <a href="https://sadilar.org/en/contact-us/">{% trans "Contact SADiLaR" %}</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endspaceless %}
+{% endblock content %}
