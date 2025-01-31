@@ -62,9 +62,6 @@ jobs:
           cd app/
           mkdir -p static_files
           python manage.py test --exclude-tag=selenium
-        env:
-          DJANGO_SETTINGS_MODULE: app.settings
-          DATABASE_URL: postgres://sadilar:sadilar@localhost:5432/test_db
       - name: Manager Check
         run: |
           cd app/
@@ -109,9 +106,6 @@ jobs:
           cd app/
           mkdir -p static_files
           BROWSER=${{ matrix.browser-and-os[0] }} ENABLE_JS=${{ matrix.js }} python manage.py test --tag=selenium
-        env:
-          DJANGO_SETTINGS_MODULE: app.settings
-          DATABASE_URL: postgres://sadilar:sadilar@localhost:5432/test_db
   lighthouse:
     runs-on: ubuntu-latest # operating system your code will run on
     services:
