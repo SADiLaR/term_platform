@@ -73,7 +73,7 @@ class TestProjects(TestCase):
         self.assertEqual(self.project.history.first().institution, self.institution)
 
     def test_view_basics(self):
-        with self.assertNumQueries(7):
+        with self.assertNumQueries(6):
             response = self.client.get(reverse("projects"))
 
         self.assertEqual(response.status_code, 200)
