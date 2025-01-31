@@ -100,9 +100,10 @@ jobs:
         run: |
           sudo  mkdir -p /logging
           sudo chown runner:runner /logging
+      - name: Install .env.testing
+        run: cp .env.testing app/.env
       - name: Run Selenium Tests
         run: |
-          cp .env.testing app/.env
           cd app/
           mkdir -p static_files
           BROWSER=${{ matrix.browser-and-os[0] }} ENABLE_JS=${{ matrix.js }} python manage.py test --tag=selenium
@@ -134,7 +135,7 @@ jobs:
           pip install -r requirements-test.txt
           sudo apt-get install -y gettext
           npm install -g @lhci/cli@0.14.x
-      - name: Setup LHCI env
+      - name: Install .env.lhci
         run: cp .env.lhci app/.env
       - name: Run Django fixtures
         run: |
