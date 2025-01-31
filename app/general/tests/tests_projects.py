@@ -2,6 +2,7 @@ import unittest
 from datetime import datetime
 
 from django.test import TestCase
+from django.urls import reverse
 
 from general.models import Institution, Language, Project, Subject
 
@@ -10,6 +11,7 @@ class TestProjects(TestCase):
     def setUp(self):
         self.institution = Institution.objects.create(name="Test Institution")
         self.subject = Subject.objects.create(name="Test Subject")
+        self.unused_subject = Subject.objects.create(name="Unused subject")
         self.language = Language.objects.create(name="Test Language", iso_code="TL")
         self.project = Project.objects.create(
             name="Test Project",
@@ -69,6 +71,16 @@ class TestProjects(TestCase):
         self.assertEqual(self.project.history.first().start_date.strftime("%Y-%m-%d"), "2023-01-01")
         self.assertEqual(self.project.history.first().end_date.strftime("%Y-%m-%d"), "2023-12-31")
         self.assertEqual(self.project.history.first().institution, self.institution)
+
+    def test_view_basics(self):
+        with self.assertNumQueries(6):
+            response = self.client.get(reverse("projects"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'id="main-heading"')
+        self.assertContains(response, self.subject.name)
+        self.assertNotContains(response, self.unused_subject.name)
+        self.assertIn("projects", response.context)
 
 
 if __name__ == "__main__":

@@ -97,7 +97,7 @@ def projects(request):
     if institution_id := request.GET.get("institution"):
         projects = projects.filter(institution__id=institution_id)
 
-    subjects = Subject.objects.order_by("name")
+    subjects = Subject.objects.get_used_subjects().order_by("name")
     languages = Language.objects.order_by("name")
     institutions = Institution.objects.order_by("name")
 
@@ -191,7 +191,7 @@ def documents(request):
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    subjects = Subject.objects.order_by("name")
+    subjects = Subject.objects.get_used_subjects().order_by("name")
     languages = Language.objects.order_by("name")
     institutions = Institution.objects.order_by("name")
 
