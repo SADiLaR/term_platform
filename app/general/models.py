@@ -104,7 +104,11 @@ class Document(models.Model):
           More information about Creative Commons licenses.
         </a>"""
     )
-    document_type_choices = [("Glossary", _("Glossary")), ("Policy", _("Policy"))]
+    document_type_choices = [
+        ("Glossary", _("Glossary")),
+        ("Policy", _("Policy")),
+        ("Term list", _("Term list")),
+    ]
 
     file_type = "pdf"
 
