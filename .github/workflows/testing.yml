@@ -44,22 +44,21 @@ jobs:
         run: |
           sudo  mkdir -p /logging
           sudo chown runner:runner /logging
+      - name: Install .env.testing
+        run: cp .env.testing app/.env
       - name: Compile Translation Messages
         run: |
-          cp .env.testing app/.env
           cd app/
           python manage.py makemessages --all
           python manage.py compilemessages
       - name: Run validate_templates
         run: |
           export DJANGO_TEST_PROCESSES=1
-          cp .env.testing app/.env
           cd app/
           mkdir -p static_files
           python manage.py validate_templates --ignore-app django_filters
       - name: Run Tests
         run: |
-          cp .env.testing app/.env
           cd app/
           mkdir -p static_files
           python manage.py test --exclude-tag=selenium
