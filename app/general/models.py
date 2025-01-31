@@ -2,6 +2,7 @@ from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchVector, SearchVectorField
 from django.core.validators import FileExtensionValidator
 from django.db import models
+from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from simple_history.models import HistoricalRecords
 
@@ -68,11 +69,18 @@ class Language(models.Model):
         return self.name
 
 
+class SubjectManager(models.Manager):
+    def get_used_subjects(self):
+        """Returns only the subjects that have documents or projects associated with them"""
+        return self.filter(Q(document__isnull=False) | Q(project__isnull=False)).distinct()
+
+
 class Subject(models.Model):
     name = models.CharField(max_length=150, unique=True, verbose_name=_("name"))
 
     # added simple historical records to the model
     history = HistoricalRecords()
+    objects = SubjectManager()
 
     class Meta:
         verbose_name = _("Subject")
