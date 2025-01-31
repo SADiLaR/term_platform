@@ -1,7 +1,7 @@
 .PHONY: list up upd build stop down restart make-migrations migrate collectstatic shell logs create-super-user \
         docker-stop-all create-schema test ruff-check ruff-fix ruff-format load-fixtures pre-commit-install \
         dev-import-documents dev-quick-install lighthouse dev_update_vector_search docker-shell check make-messages \
-        compile-messages fmt lint
+        compile-messages fmt lint fix
 
 list:
 	@echo "Available commands:"
@@ -89,6 +89,8 @@ fmt: ruff-format
 
 ruff-fix:
 	@docker compose run --rm web ruff check --fix .
+
+fix: ruff-fix fmt
 
 load-fixtures:
 	@docker compose run --rm web python manage.py loaddata fixtures/language.json
