@@ -7,7 +7,7 @@ from general.models import Document, Institution, Language, Subject
 class DocumentViewTests(TestCase):
     def setUp(self):
         self.subject1 = Subject.objects.create(name="Subject 1")
-        self.subject2 = Subject.objects.create(name="Subject 2")
+        self.unused_subject = Subject.objects.create(name="Unused subject")
         self.language1 = Language.objects.create(name="Language 1", iso_code="lang1")
         self.language2 = Language.objects.create(name="Language 2", iso_code="lang2")
         self.language3 = Language.objects.create(name="Language 3", iso_code="lang3")
@@ -39,6 +39,8 @@ class DocumentViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'id="main-heading"')
+        self.assertContains(response, self.subject1.name)
+        self.assertNotContains(response, self.unused_subject.name)
         self.assertIn("documents", response.context)
 
     def test_with_filters(self):
