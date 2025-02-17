@@ -37,7 +37,7 @@ Notes:
     {% with disabled='class="page-item disabled d-none d-sm-block" aria-hidden="true"' %}
     <ul class="pagination flex-wrap justify-content-center text-center list-group list-group-horizontal-sm px-5 px-sm-0">
         {% if page_obj.has_previous %}
-            <li class="page-item"><a {{ lefter }} href="?{{ url_params }}&page=1">&laquo;&nbsp;{% trans "Start" %}</a></li>
+            <li class="page-item"><a {{ lefter }} href="?{{ url_params }}">&laquo;&nbsp;{% trans "Start" %}</a></li>
             <li class="page-item"><a {{ lefter }} href="?{{ url_params }}&page={{ page_obj.previous_page_number }}">&lsaquo;&nbsp;{% trans "Previous" %}</a></li>
         {% else %}
             <li {{ disabled }}><span {{ lefter }}>&laquo;&nbsp;{% trans "First" %}</span></li>
