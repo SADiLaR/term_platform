@@ -9,7 +9,7 @@ Django template comments are used to reduce the payload.
    --primary: #1a2f69;
    --sdlr-red: #d11f26;
    --bs-primary: var(--primary);
-   --bs-primary-rgb: 26, 47, 105; {# identical to --primary #}
+   --bs-primary-rgb: 26, 47, 105; /*{# identical to --primary #}*/
    --bs-blue: var(--primary);
 }
 .btn-primary {
