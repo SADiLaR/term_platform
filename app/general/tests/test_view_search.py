@@ -19,6 +19,7 @@ class SearchViewTest(TestCase):
         # Create subjects
         self.subject1 = Subject.objects.create(name="Science")
         self.subject2 = Subject.objects.create(name="Math")
+        self.unused_subject = Subject.objects.create(name="Unused subject")
 
         # Create documents
         for i in range(10):
@@ -36,6 +37,8 @@ class SearchViewTest(TestCase):
             response = self.client.get(reverse("search"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'id="main-heading"')
+        self.assertContains(response, self.subject1.name)
+        self.assertNotContains(response, self.unused_subject.name)
 
     def test_search_pagination(self):
         response = self.client.get(reverse("search"), {"page": "1"})

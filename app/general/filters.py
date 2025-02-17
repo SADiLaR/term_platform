@@ -25,7 +25,7 @@ class DocumentFilter(django_filters.FilterSet):
     )
     subjects = ModelMultipleChoiceFilter(
         label=_("Subjects"),
-        queryset=Subject.objects.all().order_by("name"),
+        queryset=Subject.objects.get_used_subjects().order_by("name"),
         widget=forms.CheckboxSelectMultiple(attrs={"class": "form-check-input"}),
     )
     languages = ModelMultipleChoiceFilter(
