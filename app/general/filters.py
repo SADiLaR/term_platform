@@ -25,7 +25,7 @@ class DocumentFilter(django_filters.FilterSet):
     )
     subjects = ModelMultipleChoiceFilter(
         label=_("Subjects"),
-        queryset=Subject.objects.all().order_by("name"),
+        queryset=Subject.objects.get_used_subjects().order_by("name"),
         widget=forms.CheckboxSelectMultiple(attrs={"class": "form-check-input"}),
     )
     languages = ModelMultipleChoiceFilter(
@@ -158,7 +158,9 @@ class DocumentFilter(django_filters.FilterSet):
         queryset = queryset.values(*fields)
         project_query = project_query.values(*fields)
         institution_query = institution_query.values(*fields)
-        return queryset.union(project_query, institution_query, all=True).order_by("-rank")
+        return queryset.union(project_query, institution_query, all=True).order_by(
+            "-rank", "heading"
+        )
 
     def ignore(self, queryset, name, value):
         # All fields are handled in `.filter_queryset()`

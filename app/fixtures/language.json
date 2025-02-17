@@ -19,7 +19,7 @@
     "model": "general.Language",
     "pk": 3,
     "fields": {
-      "name": "Ndebele",
+      "name": "isiNdebele",
       "iso_code": "nr"
     }
   },
@@ -27,7 +27,7 @@
     "model": "general.Language",
     "pk": 4,
     "fields": {
-      "name": "Northern Sotho",
+      "name": "Sesotho sa Leboa",
       "iso_code": "nso"
     }
   },
@@ -35,7 +35,7 @@
     "model": "general.Language",
     "pk": 5,
     "fields": {
-      "name": "Sotho",
+      "name": "Sesotho",
       "iso_code": "st"
     }
   },
@@ -51,7 +51,7 @@
     "model": "general.Language",
     "pk": 7,
     "fields": {
-      "name": "Swati",
+      "name": "Siswati",
       "iso_code": "ss"
     }
   },
@@ -59,7 +59,7 @@
     "model": "general.Language",
     "pk": 8,
     "fields": {
-      "name": "Tsonga",
+      "name": "Xitsonga",
       "iso_code": "ts"
     }
   },
@@ -67,7 +67,7 @@
     "model": "general.Language",
     "pk": 9,
     "fields": {
-      "name": "Tswana",
+      "name": "Setswana",
       "iso_code": "tn"
     }
   },
@@ -75,7 +75,7 @@
     "model": "general.Language",
     "pk": 10,
     "fields": {
-      "name": "Venda",
+      "name": "Tshivenda",
       "iso_code": "ve"
     }
   },
@@ -83,7 +83,7 @@
     "model": "general.Language",
     "pk": 11,
     "fields": {
-      "name": "Xhosa",
+      "name": "isiXhosa",
       "iso_code": "xh"
     }
   },
@@ -91,7 +91,7 @@
     "model": "general.Language",
     "pk": 12,
     "fields": {
-      "name": "Zulu",
+      "name": "isiZulu",
       "iso_code": "zu"
     }
   }
