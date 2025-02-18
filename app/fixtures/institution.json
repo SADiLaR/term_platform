@@ -124,7 +124,7 @@
     "model": "general.Institution",
     "pk": 12,
     "fields": {
-      "name": "Nelson Mandela Metropolitan University",
+      "name": "Nelson Mandela University",
       "abbreviation": "NMU",
       "url": "https://www.mandela.ac.za/",
       "email": "",
