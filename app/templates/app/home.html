@@ -11,17 +11,20 @@
         <p>
             {% blocktrans trimmed %}
                 LwimiLinks is a place for multilingual terminology and other useful language
-                resources. We encourage institutions to upload their resources, and to register
-                information on related projects.
+                resources. Use the search box below to discover resources on the site.
             {% endblocktrans %}
+             <a href="{% url 'about' %}#contact">{% trans "If you have something to upload, please contact us." %}</a>
         </p>
-        <form method="get" action="{% url 'search' %}">
+        <form method="get" action="{% url 'search' %}" class="pb-1">
             <input type="search" name="search" placeholder="{% trans 'Search term...' %}"
-                   class="form-control search-input">
+                   class="form-control search-input" aria-label="{% trans 'Search for a term' %}">
             <input type="submit" value="{% trans 'Search' %}" class="btn btn-primary mt-2">
         </form>
-        <p class="pt-3">
-            {% trans "Browse through the available information by one of the following categories:" %}
+
+        <hr class="mt-4 mb-4">
+
+        <p>
+            {% trans "Or, you can browse through the available information by one of the following categories:" %}
         </p>
         <ul class="list-unstyled d-md-flex flex-md-row">
             <li class="m-2">
