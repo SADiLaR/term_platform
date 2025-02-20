@@ -5,6 +5,12 @@
 
 {% block account_content %}
 <h1 id="main-heading">{% trans "Register" %}</h1>
+<p class="alert alert-info">
+    {% blocktrans trimmed %}
+    Note: Accounts are only needed for staff who maintain the information on the website.
+    All information is publicly available without an account.
+    {% endblocktrans %}
+</p>
 <form method="post">
     {% csrf_token %}
     {{ form }}
