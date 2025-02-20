@@ -119,7 +119,7 @@ class ProjectAdmin(SimpleHistoryAdmin):
 
 class InstitutionAdmin(SimpleHistoryAdmin):
     ordering = ["name"]
-    search_fields = ["name"]
+    search_fields = ["name", "abbreviation"]
     list_display = ["name"]
     history_list_display = ["name", "abbreviation"]
 
