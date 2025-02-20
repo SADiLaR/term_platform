@@ -11,6 +11,7 @@
     <h1 id="main-heading">{% trans "Information by subject" %}</h1>
     <div class="row">
         {% for item in subject_data %}
+        <hr>
         <h2>{{ item.subject.name }}</h2>
         <div class="col-md-6">
             {% if item.documents.exists %}
@@ -54,7 +55,6 @@
                 </div>
             {% endif %}
         </div>
-        <hr>
         {% endfor %}
     </div>
 
