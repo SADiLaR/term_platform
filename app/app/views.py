@@ -4,9 +4,12 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.utils.http import urlencode
 from django.utils.translation import gettext as _
+from django.views.decorators.cache import cache_control
 
 from general.filters import DocumentFilter
 from general.models import Document, Institution, Language, Project, Subject
+
+MINUTE = 60
 
 
 def health(request):
@@ -16,6 +19,7 @@ def health(request):
     return HttpResponse("OK", content_type="text/plain")
 
 
+@cache_control(max_age=MINUTE)
 def home(request):
     template = "app/home.html"
     context = {"current_page": "home"}
@@ -23,6 +27,7 @@ def home(request):
     return render(request, template_name=template, context=context)
 
 
+@cache_control(max_age=MINUTE)
 def about(request):
     template = "app/about.html"
     context = {"current_page": "about"}
@@ -30,6 +35,7 @@ def about(request):
     return render(request, template_name=template, context=context)
 
 
+@cache_control(max_age=MINUTE)
 def legal_notices(request):
     template = "app/legal_notices.html"
     context = {"current_page": "legal_notices"}
@@ -81,6 +87,7 @@ def get_subjects(subjects):
     return subjects_data
 
 
+@cache_control(max_age=MINUTE)
 def projects(request):
     template = "app/projects.html"
 
@@ -128,6 +135,7 @@ def projects(request):
     return render(request, template_name=template, context=context)
 
 
+@cache_control(max_age=MINUTE)
 def project_detail(request, project_id):
     template = "app/project_detail.html"
 
@@ -149,6 +157,7 @@ def project_detail(request, project_id):
     return render(request, template_name=template, context=context)
 
 
+@cache_control(max_age=MINUTE)
 def institution_detail(request, institution_id):
     template = "app/institution_detail.html"
 
@@ -167,6 +176,7 @@ def institution_detail(request, institution_id):
     return render(request, template_name=template, context=context)
 
 
+@cache_control(max_age=MINUTE)
 def documents(request):
     template = "app/documents.html"
 
@@ -223,6 +233,7 @@ def documents(request):
     return render(request, template_name=template, context=context)
 
 
+@cache_control(max_age=MINUTE)
 def document_detail(request, document_id):
     template = "app/document_detail.html"
 
@@ -241,6 +252,7 @@ def document_detail(request, document_id):
     return render(request, template_name=template, context=context)
 
 
+@cache_control(max_age=MINUTE)
 def languages(request):
     template = "app/languages.html"
 
@@ -278,6 +290,7 @@ def languages(request):
     return render(request, template_name=template, context=context)
 
 
+@cache_control(max_age=MINUTE)
 def subjects(request):
     template = "app/subjects.html"
 
@@ -322,6 +335,7 @@ def subjects(request):
     return render(request, template_name=template, context=context)
 
 
+@cache_control(max_age=MINUTE)
 def institutions(request):
     template = "app/institutions.html"
     context = {}
@@ -369,6 +383,7 @@ def institutions(request):
     return render(request, template_name=template, context=context)
 
 
+@cache_control(max_age=MINUTE)
 def search(request):
     f = DocumentFilter(request.GET, queryset=Document.objects.all())
 
