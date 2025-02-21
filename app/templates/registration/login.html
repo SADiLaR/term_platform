@@ -5,6 +5,13 @@
 
 {% block account_content %}
 <h1 id="main-heading">{% trans "Log In" %}</h1>
+<p class="alert alert-info">
+{% blocktrans trimmed %}
+    Note: Logging in is only needed for staff who maintain the information on the website.
+    All information is publicly available without an account.
+{% endblocktrans %}
+</p>
+
 <form method="post" hx-disable>
     {% csrf_token %}
     {{ form }}

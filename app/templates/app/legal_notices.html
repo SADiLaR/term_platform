@@ -28,6 +28,11 @@
                 credit to the origin of the material.
             {% endblocktrans %}
         </p>
+        <p>
+            {% blocktrans with url="https://github.com/SADiLaR/term_platform/" trimmed %}
+                The code of this web platform is available on <a href="{{ url }}">GitHub</a>.
+            {% endblocktrans %}
+        </p>
         <h3 class="card-title">{% trans "Disclaimer" %}</h3>
         <p>
             {% blocktrans trimmed %}
@@ -38,12 +43,16 @@
                 copyright matters with the rightful owner immediately.
             {% endblocktrans %}
         </p>
-        <h2 class="card-title">{% trans "Privacy Policy and Privacy Statement" %}</h2>
+        <h2 class="card-title">{% trans "Privacy" %}</h2>
         <p>
             {% blocktrans trimmed %}
-                Please find the privacy policy and privacy statement for the SADiLaR website and services here.
+                The privacy policy and privacy statement for SADiLaR apply to LwimiLinks.
             {% endblocktrans %}
         </p>
+        <ul>
+            <li><a href="https://sadilar.org/en/privacy-policy/">{% trans "The SADiLaR privacy policy" %}</a>
+            <li><a href="https://sadilar.org/en/privacy-statement/">{% trans "The SADiLaR privacy statement" %}</a>
+        </ul>
         <h3 class="card-title">{% trans "Protection of Personal Information" %}</h3>
         <p>
             {% blocktrans with url="https://www.nwu.ac.za/POPIA_Policy_NWU" trimmed %}
@@ -70,13 +79,6 @@
                 By using the SADiLaR website, you consent to our use of cookies and storage thereof on
                 your device. Should you not accept our use of cookies (or your browser is set to block all
                 cookies), your ability to access all functions on this website might be impaired.
-            {% endblocktrans %}
-        </p>
-        <h3 class="card-title">{% trans "User support" %}</h3>
-        <p>
-            {% blocktrans with address="info@sadilar.org" trimmed %}
-                Any questions concerning the website or services offered via the website can be addressed
-                to SADiLaR via email to <a href="mailto:{{ address }}">{{ address }}</a>.
             {% endblocktrans %}
         </p>
     </div></div>
