@@ -14,11 +14,14 @@
     <link rel="icon" href="{% static 'img/favicon.png' %}" sizes="32x32">
     {# htmx JS at the end of body seems to create problems when navigating through browser history #}
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.2/dist/htmx.min.js" integrity="sha256-4XRtl1nsDUPFwoRFIzOjELtf1yheusSy3Jv0TXK1qIc=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/htmx-ext-preload@2.1.1/preload.min.js" integrity="sha256-QByyxo/UgY908xgYQSzeALN+13ICSAfCFC6Mymzr0B4=" crossorigin="anonymous"></script>
     <meta name="htmx-config" content='{% include "app/htmx-config.json" %}'>
     <style>{% include "app/css/local.css" %}</style>
 </head>
 
-<body hx-boost="true" hx-target="#main" hx-select="#main" hx-swap="outerHTML show:window:top" hx-push-url="true" hx-indicator="#loader">
+<body hx-boost="true" hx-target="#main" hx-select="#main" hx-swap="outerHTML show:window:top" hx-push-url="true" hx-indicator="#loader"
+ hx-ext="preload" preload preload-images="true"
+>
 <header>
 {% block header %}
     <div id="loader" class="htmx-indicator" role="status" ><span id="loader-text" class="visually-hidden"></span></div>
