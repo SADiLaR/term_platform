@@ -68,7 +68,7 @@
         style="--bs-link-color-rgb: 255, 255, 255; --bs-link-color:#fff; --bs-btn-color:#fff;">
     <div class="row text-center">
 
-        <div class="col col-sm-8 col-md-6 offset-md-3">
+        <div class="col {% if USE_LANGUAGE_SWITCHER %}col-sm-8 {% endif %}col-md-6 offset-md-3">
             <p>
                 <a href="{% url 'about' %}" title="{% trans 'About LwimiLinks'%}">
                     {% trans "About LwimiLinks" %}
