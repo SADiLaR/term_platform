@@ -17,7 +17,7 @@ structure.
 {% spaceless %}
 <div class="text-break card m-3 p-2">
     <h1 id="main-heading" class="visually-hidden">{% trans "Search and filter for information" %}</h1>
-    <form action="{% url 'search' %}" class="card-body row" hx-target="#search-main" hx-select="#search-main">
+    <form action="{% url 'search' %}" class="card-body row" hx-target="#search-main" hx-select="#search-main" preload>
         <div id="search-main" class="col-md-8">
 
             {# Search #}

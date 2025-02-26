@@ -23,7 +23,7 @@ document title is automatically swapped by HTMX.
 {% endblock %}
 
 {% endspaceless %}
-<main id="main" tabindex="-1" autofocus aria-labelledby="main-heading">
+<main id="main" tabindex="-1" autofocus aria-labelledby="main-heading" preload>
 {% block content %}{# See notes in base.html #}{% endblock content %}
 </main>
 {% spaceless %}
