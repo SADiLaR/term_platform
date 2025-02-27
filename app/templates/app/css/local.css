@@ -95,3 +95,11 @@ footer {
 .card-body:not(.row) > :last-child {
     margin-bottom: 0;
 }
+
+/*{# bootstrap uses .collapsed and JS instead of [open] #}*/
+details.accordion-item[open] .accordion-button::after {
+  transform:var(--bs-accordion-btn-icon-transform)
+}
+summary.accordion-button::-webkit-details-marker {
+  display:none
+}
