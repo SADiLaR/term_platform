@@ -8,7 +8,6 @@ in the headline can be relevant, e.g. <b>term1</b> <b>term2</b>.
 The spaceless tags are kept on the left since they don't take part in the HTML
 structure.
 {% endcomment %}
-{% load static %}
 {% load i18n %}
 
 {% block title %}{{ request.GET.search }} - {% trans "Search" %}{% endblock %}
