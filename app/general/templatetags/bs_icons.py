@@ -15,6 +15,7 @@ register = template.Library()
 _icons = {
     "date": "calendar3",
     "document": "file-earmark",
+    "documents": "files",
     "download": "file-earmark-arrow-down-fill",
     "language": "vector-pen",
     "project": "clipboard2",
