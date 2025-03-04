@@ -1,0 +1,40 @@
+{% load bs_icons %}
+{% load i18n %}
+
+<h3 class="fs-4">{% trans "Documents" %}</h3>
+
+{% comment %}
+    Instead of showing a long list to the user, include a long list in a closed
+    `<details>` (styled as Bootstrap accordion) to make the page easier to
+    navigate.
+{% endcomment %}
+
+{% if item.documents|length > 10 %}
+<div class="accordion">
+    <details class="mb-2 accordion-item">
+        <summary class="accordion-button collapsed">
+            {% comment %}
+                The singular case won't happen, but proper plural handling is
+                needed to allow other languages to handle all cases correctly.
+            {% endcomment %}
+            {% blocktranslate trimmed count docs=item.documents|length %}
+                One document
+            {% plural %}
+                {{ docs }} documents
+            {% endblocktranslate %}
+        </summary>
+{% endif %}
+
+    <ul class="list-unstyled mt-2">
+        {% for document in item.documents %}
+        <li class="mb-2">
+            {% icon "document" %}
+            <a href="{% url 'document_detail' document.id %}">{{ document.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+{% if item.documents|length > 10 %}
+    </details>
+</div>
+{% endif %}
