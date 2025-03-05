@@ -110,7 +110,7 @@ jobs:
         run: |
           cd app/
           mkdir -p static_files
-          BROWSER=${{ matrix.browser-and-os[0] }} ENABLE_JS=${{ matrix.js }} python manage.py test --tag=selenium
+          BROWSER=${{ matrix.browser-and-os[0] }} JS_ENABLE=${{ matrix.js }} python manage.py test --tag=selenium
   lighthouse:
     runs-on: ubuntu-latest
     services:
