@@ -3,6 +3,7 @@ import os
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import tag
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -19,14 +20,14 @@ DEFAULT_DIMENSIONS = DESKTOP_DIMENSIONS
 class TestFrontend(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
-        browser = os.environ.get("BROWSER", "chrome").lower()
+        cls.browser = os.environ.get("BROWSER", "chrome").lower()
         cls.js_enabled = os.environ.get("JS_ENABLED", "js-enabled") == "js-enabled"
 
         print(
-            f"Running Selenium tests on {browser}. JS is {'enabled' if cls.js_enabled else 'disabled'}."
+            f"Running Selenium tests on {cls.browser}. JS is {'enabled' if cls.js_enabled else 'disabled'}."
         )
 
-        if browser == "chrome":
+        if cls.browser == "chrome":
             from selenium.webdriver.chrome.webdriver import Options, WebDriver
 
             opts = Options()
@@ -46,7 +47,7 @@ class TestFrontend(StaticLiveServerTestCase):
                 opts.add_argument("--disable-javascript")
 
             cls.driver = WebDriver(opts)
-        elif browser == "firefox":
+        elif cls.browser == "firefox":
             from selenium.webdriver.firefox.webdriver import Options, WebDriver
 
             options = Options()
@@ -81,6 +82,30 @@ class TestFrontend(StaticLiveServerTestCase):
             len(self.driver.find_elements(By.ID, "js-enabled")), 1 if self.js_enabled else 0
         )
 
+    # A few bugs encountered when using browser history
+    def test_history(self):
+        with self.mobile_window_size():
+            # TODO: bootstrap hamburger doesn't work without JS :-(
+            if self.js_enabled:
+                self.driver.get(self.live_server_url)
+                menu_button = self.driver.find_element(By.CLASS_NAME, "navbar-toggler")
+                menu = self.driver.find_element(By.ID, "navbarPills")
+                self.assertFalse(menu.is_displayed())
+                menu_button.click()
+                self.wait_until_displayed(menu)
+                language_link = self.driver.find_element(By.LINK_TEXT, "Languages")
+                self.move_to(language_link)
+                language_link.click()
+                self.wait_for_title("Languages")
+                self.driver.back()
+                self.wait_for_title("LwimiLinks")
+                menu_button = self.driver.find_element(By.CLASS_NAME, "navbar-toggler")
+                menu = self.driver.find_element(By.ID, "navbarPills")
+                self.move_to(menu_button)
+                self.wait_until_displayed(menu)
+                menu_button.click()
+                self.wait_until_not_displayed(menu)
+
     def test_no_404s(self):
         # Sanity check in case we ever change the 404 title
         self.driver.get(f"{self.live_server_url}/blabla404")
@@ -106,6 +131,22 @@ class TestFrontend(StaticLiveServerTestCase):
 
     def wait_for_title(self, text):
         WebDriverWait(self.driver, WAIT_TIMEOUT).until(EC.title_contains(text))
+
+    def wait_until_displayed(self, element):
+        WebDriverWait(self.driver, WAIT_TIMEOUT).until(EC.visibility_of(element))
+
+    def wait_until_not_displayed(self, element):
+        WebDriverWait(self.driver, WAIT_TIMEOUT).until(EC.invisibility_of_element(element))
+
+    def move_to(self, element):
+        # .move_to_element() doesn't seem to do what is needed on Firefox.
+        # Common advice is a script like this:
+        # self.driver.execute_script("arguments[0].scrollIntoView();", element)
+        actions = ActionChains(self.driver)
+        actions.scroll_to_element(element)
+        actions.pause(0.1)  # Without some delay, element is not always (yet) in view
+        actions.move_to_element(element)
+        actions.perform()
 
     def assert_current_page_not_error(self):
         self.assertFalse(
