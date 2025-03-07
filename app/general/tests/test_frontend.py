@@ -3,19 +3,7 @@ import os
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import tag
 from selenium.common import TimeoutException
-from selenium.webdriver.chrome.webdriver import (
-    Options as ChromeOptions,
-)
-from selenium.webdriver.chrome.webdriver import (
-    WebDriver as ChromeWebDriver,
-)
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.webdriver import (
-    Options as FirefoxOptions,
-)
-from selenium.webdriver.firefox.webdriver import (
-    WebDriver as FirefoxWebDriver,
-)
 from selenium.webdriver.support.wait import WebDriverWait
 
 # Wait timeout in seconds
@@ -34,7 +22,9 @@ class TestFrontend(StaticLiveServerTestCase):
         )
 
         if browser == "chrome":
-            opts = ChromeOptions()
+            from selenium.webdriver.chrome.webdriver import Options, WebDriver
+
+            opts = Options()
             opts.add_argument("--headless=new")
             opts.add_argument("--no-sandbox")
             opts.add_argument("--disable-dev-shm-usage")
@@ -50,12 +40,14 @@ class TestFrontend(StaticLiveServerTestCase):
                 opts.add_experimental_option("prefs", prefs)
                 opts.add_argument("--disable-javascript")
 
-            cls.driver = ChromeWebDriver(opts)
+            cls.driver = WebDriver(opts)
         elif browser == "firefox":
-            options = FirefoxOptions()
+            from selenium.webdriver.firefox.webdriver import Options, WebDriver
+
+            options = Options()
             options.add_argument("-headless")
             options.set_preference("javascript.enabled", cls.js_enabled)
-            cls.driver = FirefoxWebDriver(options=options)
+            cls.driver = WebDriver(options=options)
 
         cls.driver.implicitly_wait(WAIT_TIMEOUT)
 
