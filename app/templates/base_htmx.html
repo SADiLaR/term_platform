@@ -29,7 +29,7 @@ document title is automatically swapped by HTMX.
 {% spaceless %}
 
 {% if debug_toolbar %}
-<script>
+<script defer>
     {% include "app/js/debug-toolbar-handler.js" %}
 </script>
 {% endif %}

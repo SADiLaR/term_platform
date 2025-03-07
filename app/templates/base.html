@@ -120,6 +120,7 @@
 </footer>
 {% endspaceless %}
 
+<script defer>
 {% include "app/js/page-status.js" %}
 </script>
 {% if debug %}
@@ -127,7 +128,7 @@
     {% django_htmx_script %}
 {% endif %}
 {% if debug_toolbar %}
-<script>
+<script defer>
     {% include "app/js/debug-toolbar-handler.js" %}
 </script>
 {% endif %}
