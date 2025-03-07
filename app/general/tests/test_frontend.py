@@ -4,6 +4,7 @@ import os
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import tag
 from selenium.common import TimeoutException
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -81,6 +82,30 @@ class TestFrontend(StaticLiveServerTestCase):
             len(self.driver.find_elements(By.ID, "js-enabled")), 1 if self.js_enabled else 0
         )
 
+    # A few bugs encountered when using browser history
+    def test_history(self):
+        with self.mobile_window_size():
+            self.driver.get(self.live_server_url)
+            menu_button = self.driver.find_element(By.CLASS_NAME, "navbar-toggler")
+            menu = self.driver.find_element(By.ID, "navbarPills")
+            self.assertFalse(menu.is_displayed())
+            menu_button.click()
+            # TODO: bootstrap hamburger doesn't work without JS :-(
+            if self.js_enabled:
+                self.wait_until_displayed(menu)
+            language_link = self.driver.find_element(By.LINK_TEXT, "Languages")
+            # Move Languages link into view (useful with JS disabled)
+            self.move_to(language_link)
+            language_link.click()
+            self.wait_for_title("Languages")
+            self.driver.back()
+            self.wait_for_title("LwimiLinks")
+            if self.js_enabled:
+                menu = self.driver.find_element(By.ID, "navbarPills")
+                menu_button = self.driver.find_element(By.CLASS_NAME, "navbar-toggler")
+                menu_button.click()
+                self.wait_until_not_displayed(menu)
+
     def test_no_404s(self):
         # Sanity check in case we ever change the 404 title
         self.driver.get(f"{self.live_server_url}/blabla404")
@@ -117,6 +142,25 @@ class TestFrontend(StaticLiveServerTestCase):
                     f" was {self.driver.title}"
                 ),
             )
+
+    def wait_until_displayed(self, element):
+        try:
+            wait = WebDriverWait(self.driver, timeout=WAIT_TIMEOUT)
+            wait.until(lambda driver: element.is_displayed())
+        except TimeoutException:
+            self.assertTrue(element.is_displayed(), f"{element} not displayed before timeout")
+
+    def wait_until_not_displayed(self, element):
+        try:
+            wait = WebDriverWait(self.driver, timeout=WAIT_TIMEOUT)
+            wait.until(lambda driver: not element.is_displayed())
+        except TimeoutException:
+            self.assertFalse(element.is_displayed(), f"{element} still displayed by timeout")
+
+    def move_to(self, element):
+        # _ = element.location_once_scrolled_into_view  # needed for Firefox?
+        # self.driver.scroll_to_element(element)
+        ActionChains(self.driver).scroll_to_element(element).move_to_element(element).perform()
 
     def assert_current_page_not_error(self):
         self.assertFalse(
