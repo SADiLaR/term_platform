@@ -123,9 +123,10 @@ class TestFrontend(StaticLiveServerTestCase):
                 self.wait_for_title("Languages")
                 self.driver.back()
                 self.wait_for_title("LwimiLinks")
-                menu = self.driver.find_element(By.ID, "navbarPills")
                 menu_button = self.driver.find_element(By.CLASS_NAME, "navbar-toggler")
+                menu = self.driver.find_element(By.ID, "navbarPills")
                 self.move_to(menu_button)
+                self.wait_until_displayed(menu)
                 menu_button.click()
                 self.wait_until_not_displayed(menu)
 
