@@ -1,3 +1,4 @@
+import contextlib
 import os
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
@@ -8,6 +9,10 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 # Wait timeout in seconds
 WAIT_TIMEOUT = 5
+
+DESKTOP_DIMENSIONS = (1920, 1080)
+MOBILE_DIMENSIONS = (375, 667)  # iPhone SE 2nd gen
+DEFAULT_DIMENSIONS = DESKTOP_DIMENSIONS
 
 
 @tag("selenium")
@@ -49,6 +54,7 @@ class TestFrontend(StaticLiveServerTestCase):
             options.set_preference("javascript.enabled", cls.js_enabled)
             cls.driver = WebDriver(options=options)
 
+        cls.driver.set_window_size(*DEFAULT_DIMENSIONS)
         cls.driver.implicitly_wait(WAIT_TIMEOUT)
 
         super().setUpClass()
@@ -57,6 +63,15 @@ class TestFrontend(StaticLiveServerTestCase):
     def tearDownClass(cls):
         cls.driver.quit()
         super().tearDownClass()
+
+    @classmethod
+    @contextlib.contextmanager
+    def mobile_window_size(cls):
+        try:
+            cls.driver.set_window_size(*MOBILE_DIMENSIONS)
+            yield
+        finally:
+            cls.driver.set_window_size(*DEFAULT_DIMENSIONS)
 
     # Checks that JS is properly disabled if passed through env var, else check if enabled
     def test_js_enabled_or_disabled(self):
