@@ -20,14 +20,14 @@ DEFAULT_DIMENSIONS = DESKTOP_DIMENSIONS
 class TestFrontend(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
-        browser = os.environ.get("BROWSER", "chrome").lower()
+        cls.browser = os.environ.get("BROWSER", "chrome").lower()
         cls.js_enabled = os.environ.get("JS_ENABLED", "js-enabled") == "js-enabled"
 
         print(
-            f"Running Selenium tests on {browser}. JS is {'enabled' if cls.js_enabled else 'disabled'}."
+            f"Running Selenium tests on {cls.browser}. JS is {'enabled' if cls.js_enabled else 'disabled'}."
         )
 
-        if browser == "chrome":
+        if cls.browser == "chrome":
             from selenium.webdriver.chrome.webdriver import Options, WebDriver
 
             opts = Options()
@@ -47,7 +47,7 @@ class TestFrontend(StaticLiveServerTestCase):
                 opts.add_argument("--disable-javascript")
 
             cls.driver = WebDriver(opts)
-        elif browser == "firefox":
+        elif cls.browser == "firefox":
             from selenium.webdriver.firefox.webdriver import Options, WebDriver
 
             options = Options()
@@ -183,9 +183,11 @@ class TestFrontend(StaticLiveServerTestCase):
     def move_to(self, element):
         # _ = element.location_once_scrolled_into_view  # needed for Firefox?
         # self.driver.scroll_to_element(element)
-        self.driver.execute_script("arguments[0].scrollIntoView();", element)
-        self.wait_until_displayed(element)
-        ActionChains(self.driver).scroll_to_element(element).move_to_element(element).perform()
+        if self.browser == "firefox":
+            self.driver.execute_script("arguments[0].scrollIntoView();", element)
+            # self.wait_until_displayed(element)
+        else:
+            ActionChains(self.driver).scroll_to_element(element).move_to_element(element).perform()
 
     def assert_current_page_not_error(self):
         self.assertFalse(
