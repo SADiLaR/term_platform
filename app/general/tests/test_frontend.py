@@ -2,8 +2,8 @@ import os
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import tag
-from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 # Wait timeout in seconds
@@ -69,7 +69,6 @@ class TestFrontend(StaticLiveServerTestCase):
     def test_no_404s(self):
         # Sanity check in case we ever change the 404 title
         self.driver.get(f"{self.live_server_url}/blabla404")
-        print(self.driver.title)
         self.assertTrue(
             self.driver.title.startswith("Error"),
             f"Actual title was {self.driver.title}. Page: {self.driver.page_source}",
@@ -87,19 +86,11 @@ class TestFrontend(StaticLiveServerTestCase):
         self.driver.find_element(By.PARTIAL_LINK_TEXT, link_text).click()
 
         # We use 'in' to do a more permissive match (for instance 'Search' is usually '<search query> - Search'
-        try:
-            wait = WebDriverWait(self.driver, timeout=WAIT_TIMEOUT)
-            wait.until(lambda d: link_text in self.driver.title)
-        except TimeoutException:
-            self.assertIn(
-                link_text,
-                self.driver.title,
-                (
-                    f"Expected title for page {link_text} to have {link_text};"
-                    f" was {self.driver.title}"
-                ),
-            )
+        self.wait_for_title(link_text)
         self.assert_current_page_not_error()
+
+    def wait_for_title(self, text):
+        WebDriverWait(self.driver, WAIT_TIMEOUT).until(EC.title_contains(text))
 
     def assert_current_page_not_error(self):
         self.assertFalse(
