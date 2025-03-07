@@ -103,6 +103,7 @@ class TestFrontend(StaticLiveServerTestCase):
             if self.js_enabled:
                 menu = self.driver.find_element(By.ID, "navbarPills")
                 menu_button = self.driver.find_element(By.CLASS_NAME, "navbar-toggler")
+                self.move_to(menu_button)
                 menu_button.click()
                 self.wait_until_not_displayed(menu)
 
