@@ -1,40 +1,36 @@
+import contextlib
 import os
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import tag
 from selenium.common import TimeoutException
-from selenium.webdriver.chrome.webdriver import (
-    Options as ChromeOptions,
-)
-from selenium.webdriver.chrome.webdriver import (
-    WebDriver as ChromeWebDriver,
-)
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.webdriver import (
-    Options as FirefoxOptions,
-)
-from selenium.webdriver.firefox.webdriver import (
-    WebDriver as FirefoxWebDriver,
-)
 from selenium.webdriver.support.wait import WebDriverWait
 
 # Wait timeout in seconds
 WAIT_TIMEOUT = 5
+
+DESKTOP_DIMENSIONS = (1920, 1080)
+MOBILE_DIMENSIONS = (375, 667)  # iPhone SE 2nd gen
+DEFAULT_DIMENSIONS = DESKTOP_DIMENSIONS
 
 
 @tag("selenium")
 class TestFrontend(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
-        browser = os.environ.get("BROWSER", "chrome").lower()
+        cls.browser = os.environ.get("BROWSER", "chrome").lower()
         cls.js_enabled = os.environ.get("JS_ENABLED", "js-enabled") == "js-enabled"
 
         print(
-            f"Running Selenium tests on {browser}. JS is {'enabled' if cls.js_enabled else 'disabled'}."
+            f"Running Selenium tests on {cls.browser}. JS is {'enabled' if cls.js_enabled else 'disabled'}."
         )
 
-        if browser == "chrome":
-            opts = ChromeOptions()
+        if cls.browser == "chrome":
+            from selenium.webdriver.chrome.webdriver import Options, WebDriver
+
+            opts = Options()
             opts.add_argument("--headless=new")
             opts.add_argument("--no-sandbox")
             opts.add_argument("--disable-dev-shm-usage")
@@ -50,13 +46,16 @@ class TestFrontend(StaticLiveServerTestCase):
                 opts.add_experimental_option("prefs", prefs)
                 opts.add_argument("--disable-javascript")
 
-            cls.driver = ChromeWebDriver(opts)
-        elif browser == "firefox":
-            options = FirefoxOptions()
+            cls.driver = WebDriver(opts)
+        elif cls.browser == "firefox":
+            from selenium.webdriver.firefox.webdriver import Options, WebDriver
+
+            options = Options()
             options.add_argument("-headless")
             options.set_preference("javascript.enabled", cls.js_enabled)
-            cls.driver = FirefoxWebDriver(options=options)
+            cls.driver = WebDriver(options=options)
 
+        cls.driver.set_window_size(*DEFAULT_DIMENSIONS)
         cls.driver.implicitly_wait(WAIT_TIMEOUT)
 
         super().setUpClass()
@@ -66,6 +65,15 @@ class TestFrontend(StaticLiveServerTestCase):
         cls.driver.quit()
         super().tearDownClass()
 
+    @classmethod
+    @contextlib.contextmanager
+    def mobile_window_size(cls):
+        try:
+            cls.driver.set_window_size(*MOBILE_DIMENSIONS)
+            yield
+        finally:
+            cls.driver.set_window_size(*DEFAULT_DIMENSIONS)
+
     # Checks that JS is properly disabled if passed through env var, else check if enabled
     def test_js_enabled_or_disabled(self):
         test_dir = os.getenv("TESTING_DIR", "/app/general/tests/files")
@@ -74,10 +82,57 @@ class TestFrontend(StaticLiveServerTestCase):
             len(self.driver.find_elements(By.ID, "js-enabled")), 1 if self.js_enabled else 0
         )
 
+    # A few bugs encountered when using browser history
+    def xtest_history(self):
+        with self.mobile_window_size():
+            self.driver.get(self.live_server_url)
+            menu_button = self.driver.find_element(By.CLASS_NAME, "navbar-toggler")
+            menu = self.driver.find_element(By.ID, "navbarPills")
+            self.assertFalse(menu.is_displayed())
+            menu_button.click()
+            # TODO: bootstrap hamburger doesn't work without JS :-(
+            if self.js_enabled:
+                self.wait_until_displayed(menu)
+            language_link = self.driver.find_element(By.LINK_TEXT, "Languages")
+            # Move Languages link into view (useful with JS disabled)
+            self.move_to(language_link)
+            language_link.click()
+            self.wait_for_title("Languages")
+            self.driver.back()
+            self.wait_for_title("LwimiLinks")
+            if self.js_enabled:
+                menu = self.driver.find_element(By.ID, "navbarPills")
+                menu_button = self.driver.find_element(By.CLASS_NAME, "navbar-toggler")
+                self.move_to(menu_button)
+                menu_button.click()
+                self.wait_until_not_displayed(menu)
+
+    def test_history(self):
+        with self.mobile_window_size():
+            # TODO: bootstrap hamburger doesn't work without JS :-(
+            if self.js_enabled:
+                self.driver.get(self.live_server_url)
+                menu_button = self.driver.find_element(By.CLASS_NAME, "navbar-toggler")
+                menu = self.driver.find_element(By.ID, "navbarPills")
+                self.assertFalse(menu.is_displayed())
+                menu_button.click()
+                self.wait_until_displayed(menu)
+                language_link = self.driver.find_element(By.LINK_TEXT, "Languages")
+                self.move_to(language_link)
+                language_link.click()
+                self.wait_for_title("Languages")
+                self.driver.back()
+                self.wait_for_title("LwimiLinks")
+                menu_button = self.driver.find_element(By.CLASS_NAME, "navbar-toggler")
+                menu = self.driver.find_element(By.ID, "navbarPills")
+                self.wait_until_displayed(menu)
+                self.move_to(menu_button)
+                menu_button.click()
+                self.wait_until_not_displayed(menu)
+
     def test_no_404s(self):
         # Sanity check in case we ever change the 404 title
         self.driver.get(f"{self.live_server_url}/blabla404")
-        print(self.driver.title)
         self.assertTrue(
             self.driver.title.startswith("Error"),
             f"Actual title was {self.driver.title}. Page: {self.driver.page_source}",
@@ -95,9 +150,13 @@ class TestFrontend(StaticLiveServerTestCase):
         self.driver.find_element(By.PARTIAL_LINK_TEXT, link_text).click()
 
         # We use 'in' to do a more permissive match (for instance 'Search' is usually '<search query> - Search'
+        self.wait_for_title(link_text)
+        self.assert_current_page_not_error()
+
+    def wait_for_title(self, link_text):
         try:
             wait = WebDriverWait(self.driver, timeout=WAIT_TIMEOUT)
-            wait.until(lambda d: link_text in self.driver.title)
+            wait.until(lambda driver: link_text in driver.title)
         except TimeoutException:
             self.assertIn(
                 link_text,
@@ -107,7 +166,29 @@ class TestFrontend(StaticLiveServerTestCase):
                     f" was {self.driver.title}"
                 ),
             )
-        self.assert_current_page_not_error()
+
+    def wait_until_displayed(self, element):
+        try:
+            wait = WebDriverWait(self.driver, timeout=WAIT_TIMEOUT)
+            wait.until(lambda driver: element.is_displayed())
+        except TimeoutException:
+            self.assertTrue(element.is_displayed(), f"{element} not displayed before timeout")
+
+    def wait_until_not_displayed(self, element):
+        try:
+            wait = WebDriverWait(self.driver, timeout=WAIT_TIMEOUT)
+            wait.until(lambda driver: not element.is_displayed())
+        except TimeoutException:
+            self.assertFalse(element.is_displayed(), f"{element} still displayed by timeout")
+
+    def move_to(self, element):
+        # _ = element.location_once_scrolled_into_view  # needed for Firefox?
+        # self.driver.scroll_to_element(element)
+        if self.browser == "firefox":
+            self.driver.execute_script("arguments[0].scrollIntoView();", element)
+            # self.wait_until_displayed(element)
+        else:
+            ActionChains(self.driver).move_to_element(element).perform()
 
     def assert_current_page_not_error(self):
         self.assertFalse(
