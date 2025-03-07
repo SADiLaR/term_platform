@@ -162,6 +162,7 @@ class TestFrontend(StaticLiveServerTestCase):
         # _ = element.location_once_scrolled_into_view  # needed for Firefox?
         # self.driver.scroll_to_element(element)
         self.driver.execute_script("arguments[0].scrollIntoView();", element)
+        self.wait_until_displayed(element)
         ActionChains(self.driver).scroll_to_element(element).move_to_element(element).perform()
 
     def assert_current_page_not_error(self):
