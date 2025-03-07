@@ -69,7 +69,6 @@ class TestFrontend(StaticLiveServerTestCase):
     def test_no_404s(self):
         # Sanity check in case we ever change the 404 title
         self.driver.get(f"{self.live_server_url}/blabla404")
-        print(self.driver.title)
         self.assertTrue(
             self.driver.title.startswith("Error"),
             f"Actual title was {self.driver.title}. Page: {self.driver.page_source}",
@@ -87,9 +86,13 @@ class TestFrontend(StaticLiveServerTestCase):
         self.driver.find_element(By.PARTIAL_LINK_TEXT, link_text).click()
 
         # We use 'in' to do a more permissive match (for instance 'Search' is usually '<search query> - Search'
+        self.wait_for_title(link_text)
+        self.assert_current_page_not_error()
+
+    def wait_for_title(self, link_text):
         try:
             wait = WebDriverWait(self.driver, timeout=WAIT_TIMEOUT)
-            wait.until(lambda d: link_text in self.driver.title)
+            wait.until(lambda driver: link_text in driver.title)
         except TimeoutException:
             self.assertIn(
                 link_text,
@@ -99,7 +102,6 @@ class TestFrontend(StaticLiveServerTestCase):
                     f" was {self.driver.title}"
                 ),
             )
-        self.assert_current_page_not_error()
 
     def assert_current_page_not_error(self):
         self.assertFalse(
