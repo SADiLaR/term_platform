@@ -142,9 +142,9 @@ class TestFrontend(StaticLiveServerTestCase):
     def move_to(self, element):
         if self.browser == "firefox":
             self.driver.execute_script("arguments[0].scrollIntoView();", element)
-            sleep(0.2)  # Without some delay, element is not always (yet) in view
         else:
             ActionChains(self.driver).scroll_to_element(element).move_to_element(element).perform()
+        sleep(0.2)  # Without some delay, element is not always (yet) in view
 
     def assert_current_page_not_error(self):
         self.assertFalse(
