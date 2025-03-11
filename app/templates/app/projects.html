@@ -38,6 +38,7 @@
               {% if item.logo %}
               <img src="{{ item.logo.url }}" class="logo100"
                    alt=""{# name already mentioned elsewhere #}
+                   {% if forloop.counter > 5 %}loading="lazy"{% endif %}
               >
               {% endif %}
           </div>
