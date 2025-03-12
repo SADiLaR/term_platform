@@ -59,7 +59,5 @@ function handleBeforeRequest(evt) {
     }, 1000)
 }
 
-if (typeof htmx !== "undefined") {
-    htmx.on("htmx:beforeRequest", handleBeforeRequest);
-    htmx.on("htmx:afterRequest", handleAfterRequest);
-}
+document.body.addEventListener("htmx:beforeRequest", handleBeforeRequest);
+document.body.addEventListener("htmx:afterRequest", handleAfterRequest);
