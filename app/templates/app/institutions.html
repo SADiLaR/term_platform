@@ -42,6 +42,7 @@
                 <div class="col">
                     <img src="{{ institution.logo.url }}" class="logo100" style="max-height: 65px"
                          alt="" {# name already mentioned elsewhere #}
+                         {% if forloop.counter > 10 %}loading="lazy"{% endif %}
                     >
                 </div>
 	        {% endif %}
