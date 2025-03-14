@@ -1,19 +1,27 @@
 {% load bs_icons %}
 {% load i18n %}
 
-<div class="accordion">
-    <details class="mb-2 accordion-item" {% if item.documents|length < 10 %} open {% endif %}>
-        <summary class="accordion-button accordion-header">
-            <h3 class="fs-4 mb-0">{% trans "Documents" %}</h3>
-        </summary>
-
-        <ul class="list-unstyled mt-2 mb-0 accordion-body">
-            {% for document in item.documents %}
-            <li class="mb-2">
-                {% icon "document" %}
-                <a href="{% url 'document_detail' document.id %}">{{ document.title }}</a>
-            </li>
-            {% endfor %}
-        </ul>
-    </details>
-</div>
+{% if item.documents.exists %}
+    <div class="accordion">
+        <details class="mb-2 accordion-item" {% if item.documents|length < 10 %} open {% endif %}>
+            <summary class="accordion-button accordion-header">
+                <h3 class="fs-4 mb-0">{% trans "Documents" %}</h3>
+            </summary>
+    
+            <ul class="list-unstyled mt-2 mb-0 accordion-body">
+                {% for document in item.documents %}
+                <li class="mb-2">
+                    {% icon "document" %}
+                    <a href="{% url 'document_detail' document.id %}">{{ document.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </details>
+    </div>
+{% else %}
+    {# Only show this in two-column mode to ensure consistent layout and placement #}
+    <div aria-hidden="true" class="d-none d-md-block">
+        <h3 class="fs-4">{% trans "Documents" %}</h3>
+        <p>{{ no_documents }}</p>
+    </div>
+{% endif %}

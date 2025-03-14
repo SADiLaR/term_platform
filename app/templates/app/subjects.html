@@ -13,27 +13,10 @@
         <hr>
         <h2>{{ item.subject.name }}</h2>
         <div class="col-md-6">
-            {% if item.documents.exists %}
-                {% include "app/_documents.html" %}
-            {% else %}
-                {# Only show this in two-column mode to ensure consistent layout and placement #}
-                <div aria-hidden="true" class="d-none d-md-block">
-                    <h3 class="fs-4">{% trans "Documents" %}</h3>
-                    <p>{% trans "No documents available for this subject." %}</p>
-                </div>
-            {% endif %}
+            {% include "app/_documents.html" with no_documents=_("No documents available for this subject.") %}
         </div>
         <div class="col-md-6">
-            {% if item.projects.exists %}
-            <h3 class="fs-4">{% trans "Projects" %}</h3>
-                {% include "app/_projects.html" %}
-            {% else %}
-                {# Only show this in two-column mode to ensure consistent layout and placement #}
-                <div aria-hidden="true" class="d-none d-md-block">
-                    <h3 class="fs-4">{% trans "Projects" %}</h3>
-                    <p>{% trans "No projects available for this subject." %}</p>
-                </div>
-            {% endif %}
+            {% include "app/_projects.html" with no_projects=_("No projects available for this subject.") %}
         </div>
         {% endfor %}
     </div>
