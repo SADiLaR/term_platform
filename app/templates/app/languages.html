@@ -25,15 +25,7 @@
         </div>
         <div class="col-md-6">
             {% if item.projects.exists %}
-            <h3 class="fs-4">{% trans "Projects" %}</h3>
-            <ul class="list-unstyled">
-                {% for project in item.projects %}
-                <li class="mb-2">
-                    {% icon "project" %}
-                    <a href="{% url 'project_detail' project.id %}">{{ project.name }}</a>
-                </li>
-                {% endfor %}
-            </ul>
+                {% include "app/_projects.html" %}
             {% else %}
                 {# Only show this in two-column mode to ensure consistent layout and placement #}
                 <div aria-hidden="true" class="d-none d-md-block">
