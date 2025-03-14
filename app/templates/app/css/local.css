@@ -69,7 +69,7 @@ Django template comments are used to reduce the payload.
 	)
         #fff0;
     background-size: 300% 100%;
-    animation: 3s linear 0s infinite l1;
+    animation: 3s linear 1s infinite l1;
 }
 @keyframes l1 {
   0% {background-position: right}
