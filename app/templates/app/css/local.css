@@ -96,10 +96,34 @@ footer {
     margin-bottom: 0;
 }
 
-/*{# bootstrap uses .collapsed and JS instead of [open] #}*/
-details.accordion-item[open] .accordion-button::after {
-  transform:var(--bs-accordion-btn-icon-transform)
+/*{# bootstrap uses .collapsed and JS instead of [open] - see https://stackoverflow.com/a/76155428 by isherwood #}*/
+details.accordion-item:not([open]) .accordion-button {
+    background-color: var(--bs-accordion-bg);
 }
-summary.accordion-button::-webkit-details-marker {
-  display:none
+
+details.accordion-item:not([open]) .accordion-button::after {
+    background-image: var(--bs-accordion-btn-active-icon);
+    transform: unset;
+}
+
+details.accordion-item[open] .accordion-button::after {
+    background-image: var(--bs-accordion-btn-icon);
+    transform: var(--bs-accordion-btn-icon-transform);
+}
+
+/*{# Disable extra box-shadow "border" at the bottom
+    There is an exception for focus box-shadow is used to show if the element is focused #}*/
+summary.accordion-header:not(:focus) {
+    box-shadow: none !important;
+}
+
+/*{# Make sure that the inside background doesn't escape the accordion border #}*/
+summary.accordion-header {
+    border-radius: var(--bs-accordion-inner-border-radius);
+}
+
+/*{# When open, don't round bottom border #}*/
+details[open] summary.accordion-header {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
