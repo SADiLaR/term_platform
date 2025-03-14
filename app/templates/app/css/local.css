@@ -98,8 +98,34 @@ footer {
 
 /*{# bootstrap uses .collapsed and JS instead of [open] #}*/
 details.accordion-item[open] .accordion-button::after {
-  transform:var(--bs-accordion-btn-icon-transform)
+    transform: var(--bs-accordion-btn-icon-transform);
 }
+
+/*{# Keep background always white - default changes its colour #}*/
+details.accordion-item .accordion-button {
+    background-color: var(--bs-accordion-bg);
+}
+
+/*{# Disable details marker on Epiphany (potentially other webkit-based browsers too)#}*/
 summary.accordion-button::-webkit-details-marker {
-  display:none
+  display: none;
+}
+
+/*{# Disable extra box-shadow "border" at the bottom
+    There is an exception for focus box-shadow is used to show if the element is focused #}*/
+summary.accordion-header:not(:focus) {
+    box-shadow: none !important;
+}
+
+/*{# Make sure that the inside background doesn't escape the accordion border #}*/
+summary.accordion-header {
+    border-radius: var(--bs-accordion-inner-border-radius);
+    border-bottom: none var(--bs-accordion-border-color); /*{# This is needed to prevent animating through black #}*/
+}
+
+/*{# Set up bottom border when open #}*/
+details[open] summary.accordion-header {
+    border-bottom: 1px solid var(--bs-accordion-border-color);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
