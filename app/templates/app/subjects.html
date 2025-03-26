@@ -13,10 +13,10 @@
         <hr>
         <h2>{{ item.subject.name }}</h2>
         <div class="col-md-6">
-            {% include "app/_documents.html" with no_documents=_("No documents available for this subject.") %}
+            {% include "app/_projects.html" with no_projects=_("No projects available for this subject.") %}
         </div>
         <div class="col-md-6">
-            {% include "app/_projects.html" with no_projects=_("No projects available for this subject.") %}
+            {% include "app/_documents.html" with no_documents=_("No documents available for this subject.") %}
         </div>
         {% endfor %}
     </div>
