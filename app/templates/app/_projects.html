@@ -3,7 +3,7 @@
 
 {% if item.projects.exists %}
     <div class="accordion">
-        <details class="mb-2 accordion-item" {% if item.documents|length < 10 %} open {% endif %}>
+        <details class="mb-2 accordion-item" {% if item.projects|length < 10 %} open {% endif %}>
             <summary class="accordion-button accordion-header">
                 <h3 class="fs-4 mb-0">{% trans "Projects" %}</h3>
             </summary>
