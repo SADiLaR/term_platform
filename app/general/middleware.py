@@ -12,6 +12,6 @@ class ExtraVaryMiddleware:
 
     def __call__(self, request):
         response = self.get_response(request)
-        if "text/html" in response.headers["Content-Type"]:
+        if "text/html" in response.headers.get("Content-Type", ""):
             patch_vary_headers(response, ["HX-Request"])
         return response
