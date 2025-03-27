@@ -52,7 +52,7 @@ Django template comments are used to reduce the payload.
   font-size: .875em;
   color: var(--bs-form-invalid-color);
 }
-/*{# start after 40%/3s: quick responses will be done already #}*/
+/*{# delayed by 1s: quick responses will be done already #}*/
 .htmx-indicator{
     display: none;
     position: fixed;
@@ -63,13 +63,13 @@ Django template comments are used to reduce the payload.
     background:
         linear-gradient(90deg,
             #fff0 40%,
-            rgba(var(--bs-primary-rgb), 0.06) 55%,
-            rgba(var(--bs-primary-rgb), 0.3) 70%,
-            rgba(var(--bs-primary-rgb), 0.06) 85%
+            rgba(var(--bs-primary-rgb), .1) 55%,
+            rgba(var(--bs-primary-rgb), .4) 70%,
+            rgba(var(--bs-primary-rgb), .1) 85%
 	)
-        #fff;
+        #fff0;
     background-size: 300% 100%;
-    animation: l1 3s infinite linear;
+    animation: 3s linear 1s infinite l1;
 }
 @keyframes l1 {
   0% {background-position: right}
