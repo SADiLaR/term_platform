@@ -101,6 +101,10 @@ details.accordion-item[open] .accordion-button::after {
     transform: var(--bs-accordion-btn-icon-transform);
 }
 
+details.accordion-item:not([open]) .accordion-button::after {
+    transform: unset;
+}
+
 /*{# Keep background always white - default changes its colour #}*/
 details.accordion-item .accordion-button {
     background-color: var(--bs-accordion-bg);
