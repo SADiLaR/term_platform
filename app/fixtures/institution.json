@@ -235,7 +235,7 @@
     "pk": 22,
     "fields": {
       "name": "University of Venda",
-      "abbreviation": "Venda",
+      "abbreviation": "Univen",
       "url": "https://www.univen.ac.za/",
       "email": "",
       "logo": ""
@@ -257,7 +257,7 @@
     "pk": 24,
     "fields": {
       "name": "Sefako Makgatho Health Sciences University",
-      "abbreviation": "FMHSU",
+      "abbreviation": "SMU",
       "url": "https://www.smu.ac.za/",
       "email": "",
       "logo": ""
