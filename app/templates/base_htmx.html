@@ -13,7 +13,7 @@ These use hx-swap-oob so that they are swapped in from the HTMX response. The
 document title is automatically swapped by HTMX.
 {% endcomment %}
 
-{% include "app/_navbar_items.html" %}
+{% include "app/_navbar_items.html" with oob_attribute=True %}
 
 {% block error %}
     {% if show_error %}
