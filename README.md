@@ -6,7 +6,8 @@ enriching data with metadata and links between relevant role players.
 "Lwimi" refers to language in the Nguni languages, and "Links" emphasises the
 goal of linking relevant pieces of information.
 
-The software is implemented in Python on the Django framework.
+The software is implemented in Python on the Django framework. You can see it in
+action at https://lwimilinks.sadilar.org
 
 ---
 
@@ -14,7 +15,10 @@ The software is implemented in Python on the Django framework.
 
 - Docker
 - Docker-compose
-- Makefile reader installed on device
+- A make implementation will give access to useful shortcuts in the Makefile
+
+Alternatively you can run it directly with locally installed Python and the
+dependencies mentioned in the requirements files.
 
 ---
 
@@ -41,7 +45,7 @@ To generate a new secret key, you can use the following command:
 
 ---
 
-### Using Makefile
+### Using make
 
 1. Clone the repository
 2. Run `make build` to build the docker image
@@ -60,8 +64,8 @@ To generate a new secret key, you can use the following command:
 * EMAIL_PORT='2525'
 * EMAIL_BACKEND_CONSOLE=True
 
-By default, the email backend is set to console, so you can see the email in the console.
-To send an email, you need to set the EMAIL_BACKEND_CONSOLE to False.
+By default, the email backend is set to console, so you can see the email in the
+console.  To send an email, you need to set the EMAIL_BACKEND_CONSOLE to False.
 
 ### Plugins installed
 
@@ -79,28 +83,29 @@ To send an email, you need to set the EMAIL_BACKEND_CONSOLE to False.
 
 #### Basic setup for production
 
-### environment variables
+### Environment variables
 
-please use .env.example as example
+Look at .env.example as example
 
-## Production Information
+## Production information
 
-Docker Volumes for production:
+Docker volumes for production:
 
 * /media
 * /logging
 * /pdf_uploads
 * /pdf_upload_completed
 
-### Email Settings in Production
+### Email Settings in production
 
 .env file
 
 * EMAIL_BACKEND_CONSOLE=False
 
-## Notes to Developers
+## Notes to developers
 
-- When setting up the app (from scratch or from a wipe), the following commands should be run:
+- When setting up the app (from scratch or from a wipe), the following commands
+  should be run:
   - (Optional) `make build`
   - `make up` - wait for the database to start, then hit Control-C
   - `make migrate`
@@ -108,6 +113,7 @@ Docker Volumes for production:
 - To wipe the database, use `make down`
 - The Django admin interface is at `/admin/`
   - An admin user can be created through `make create-super-user`
-- To run a single module of tests, you can pass the Makefile `module` variable on the command line. For instance, to run
-  only tests defined in [`test_document_admin.py`](./app/general/tests/test_document_admin.py), run
-  `make test module=general.tests.test_document_admin`
+- To run a single module of tests, you can pass the Makefile `module` variable
+  on the command line. For instance, to run only tests defined in
+[`test_document_admin.py`](./app/general/tests/test_document_admin.py), run
+`make test module=general.tests.test_document_admin`
