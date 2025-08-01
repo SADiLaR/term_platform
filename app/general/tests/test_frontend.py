@@ -153,7 +153,7 @@ class TestFrontend(StaticLiveServerTestCase):
         for url, title in [
             ("/about/", "LwimiLinks"),  # review title
             ("/accounts/register/", "Register"),
-            ("/accounts/login/", "Log In"),
+            ("/accounts/login/", "Log in"),
             ("/accounts/password_reset/", "Password reset"),
             ("/accounts/reset/done/", "Password reset complete"),
             ("/accounts/reset/x/x/", "Password reset unsuccessful"),
