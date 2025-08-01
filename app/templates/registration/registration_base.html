@@ -1,6 +1,17 @@
 {% extends BASE_TEMPLATE %}
+{% load i18n %}
 
 {% spaceless %}
+
+{% comment %}
+Django has more elaborate error detection in their templates in
+    django/contrib/admin/templates/registration/
+for example checking for errors on specific fields. This version below seems to
+work well and avoids the need for a title block in most of the registration
+templates.
+{% endcomment %}
+{% block title %}{% if form.errors %}{% translate "Error:" %} {% endif %}{{ title }}{% endblock %}
+
 {% block content %}
 <div class="container limit-text-width">
     <div class="card">
