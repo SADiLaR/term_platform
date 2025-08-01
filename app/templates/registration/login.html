@@ -2,10 +2,10 @@
 {% load i18n %}
 
 {% comment %}The template variable `title` is not passed to the login view {% endcomment %}
-{% block title %}{% trans "Log In" %}{% endblock %}
+{% block title %}{% trans "Log in" %}{% endblock %}
 
 {% block account_content %}
-<h1 id="main-heading">{% trans "Log In" %}</h1>
+<h1 id="main-heading">{% trans "Log in" %}</h1>
 <p class="alert alert-info">
 {% blocktrans trimmed %}
     Note: Logging in is only needed for staff who maintain the information on the website.
@@ -16,8 +16,8 @@
 <form method="post" hx-disable>
     {% csrf_token %}
     {{ form }}
-    <a href="{% url 'password_reset' %}" class="d-block mb-2">{% trans "Forgot Password?" %}</a>
-    <button type="submit" class="btn btn-primary">{% trans "Log In" %}</button>
+    <a href="{% url 'password_reset' %}" class="d-block mb-2">{% trans "Forgot your password?" %}</a>
+    <button type="submit" class="btn btn-primary">{% trans "Log in" %}</button>
 </form>
 
 <hr>
