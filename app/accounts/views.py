@@ -6,6 +6,7 @@ from django.contrib.auth.views import (
 )
 from django.contrib.auth.views import PasswordResetView as _PasswordResetView
 from django.shortcuts import redirect, render
+from django.utils.translation import gettext as _
 
 from .forms import (
     AuthenticationForm,
@@ -27,7 +28,7 @@ def register(request):
             return redirect("home")
     else:
         form = UserCreationForm()
-    return render(request, "registration/register.html", {"form": form})
+    return render(request, "registration/register.html", {"form": form, "title": _("Register")})
 
 
 # We subclass the builtin views where we want to supply our own forms. We
