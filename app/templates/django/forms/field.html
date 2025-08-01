@@ -1,6 +1,6 @@
 {% comment %}
 Based on
-https://github.com/django/django/blob/stable/5.0.x/django/forms/templates/django/forms/field.html
+https://github.com/django/django/blob/stable/5.2.x/django/forms/templates/django/forms/field.html
 for some small customisations:
  - helptext below field
  - bootstrap classes
@@ -8,7 +8,7 @@ for some small customisations:
 {% spaceless %}
 <div class="mb-3">
 {% if field.use_fieldset %}
-  <fieldset>
+  <fieldset{% if field.aria_describedby %} aria-describedby="{{ field.aria_describedby }}"{% endif %}>
   {% if field.label %}{{ field.legend_tag }}{% endif %}
 {% else %}
   {% if field.label %}{{ field.label_tag }}{% endif %}
