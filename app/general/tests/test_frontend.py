@@ -1,5 +1,6 @@
 import contextlib
 import os
+import time
 
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
@@ -152,12 +153,15 @@ class TestFrontend(StaticLiveServerTestCase):
         WebDriverWait(self.driver, WAIT_TIMEOUT).until(EC.invisibility_of_element(element))
 
     def move_to(self, element):
-        # .move_to_element() doesn't seem to do what is needed on Firefox.
-        # Common advice is a script like this:
-        # self.driver.execute_script("arguments[0].scrollIntoView();", element)
+        if self.browser == "firefox":
+            # .move_to_element() doesn't seem to do what is needed on Firefox.
+            # Common advice is a script like this:
+            self.driver.execute_script("arguments[0].scrollIntoView();", element)
+            # Since scrolling (above) happens asynchronously, we have to wait
+            # to be sure the scrolling is done:
+            time.sleep(1)
         actions = ActionChains(self.driver)
         actions.scroll_to_element(element)
-        actions.pause(0.1)  # Without some delay, element is not always (yet) in view
         actions.move_to_element(element)
         try:
             actions.perform()
