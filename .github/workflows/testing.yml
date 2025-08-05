@@ -100,10 +100,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-test.txt
           sudo apt-get install -y gettext
-      - name: Create logging folder
+      - name: Create directories
         run: |
-          sudo  mkdir -p /logging
-          sudo chown runner:runner /logging
+          sudo  mkdir -p /logging app/selenium-screenshots
+          sudo chown runner:runner /logging app/selenium-screenshots
       - name: Install .env.testing
         run: cp .env.testing app/.env
       - name: Run Selenium Tests
@@ -111,6 +111,12 @@ jobs:
           cd app/
           mkdir -p static_files
           BROWSER=${{ matrix.browser-and-os[0] }} JS_ENABLED=${{ matrix.js }} python manage.py test --tag=selenium
+      - name: Archive Selenium screenshots
+        if: always() # Ensure results are uploaded on failure too
+        uses: actions/upload-artifact@v4
+        with:
+          name: selenium-screenshots
+          path: app/selenium-screenshots/
   lighthouse:
     runs-on: ubuntu-latest
     services:

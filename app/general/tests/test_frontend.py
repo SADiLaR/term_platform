@@ -1,8 +1,10 @@
 import contextlib
 import os
 
+from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import tag
+from selenium.common.exceptions import MoveTargetOutOfBoundsException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -65,14 +67,25 @@ class TestFrontend(StaticLiveServerTestCase):
         cls.driver.quit()
         super().tearDownClass()
 
-    @classmethod
+    def set_window_size(self, x, y):
+        self.driver.set_window_size(x, y)
+        print(
+            f"Asked for window size {(x, y)}, got {tuple(self.driver.get_window_size().values())}"
+        )
+        self.print_viewport()
+
     @contextlib.contextmanager
-    def mobile_window_size(cls):
+    def mobile_window_size(self):
         try:
-            cls.driver.set_window_size(*MOBILE_DIMENSIONS)
+            self.set_window_size(*MOBILE_DIMENSIONS)
             yield
         finally:
-            cls.driver.set_window_size(*DEFAULT_DIMENSIONS)
+            self.set_window_size(*DEFAULT_DIMENSIONS)
+
+    def print_viewport(self):
+        w = self.driver.execute_script("return document.documentElement.clientWidth")
+        h = self.driver.execute_script("return document.documentElement.clientHeight")
+        print(f"Viewport: ({w}, {h})")
 
     # Checks that JS is properly disabled if passed through env var, else check if enabled
     def test_js_enabled_or_disabled(self):
@@ -146,7 +159,19 @@ class TestFrontend(StaticLiveServerTestCase):
         actions.scroll_to_element(element)
         actions.pause(0.1)  # Without some delay, element is not always (yet) in view
         actions.move_to_element(element)
-        actions.perform()
+        try:
+            actions.perform()
+        except MoveTargetOutOfBoundsException as e:
+            print(e)
+            self.print_viewport()
+            print("Element information:", element.rect)
+            print("Font:", element.value_of_css_property("font-size"))
+            name = f"{id(element)}-{element.tag_name}"
+            self.driver.save_screenshot(f"{settings.BASE_DIR}/selenium-screenshots/{name}.png")
+            self.driver.save_full_page_screenshot(
+                f"{settings.BASE_DIR}/selenium-screenshots/fs-{name}.png"
+            )
+            raise
 
     def assert_current_page_not_error(self):
         self.assertFalse(
