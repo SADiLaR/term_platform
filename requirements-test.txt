@@ -3,4 +3,4 @@ django-debug-toolbar
 django-extensions
 faker
 ruff
-selenium==4.27.1
+selenium==4.34.2

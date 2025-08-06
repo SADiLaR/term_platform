@@ -1,8 +1,11 @@
 import contextlib
 import os
+import time
 
+from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import tag
+from selenium.common.exceptions import MoveTargetOutOfBoundsException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -65,14 +68,25 @@ class TestFrontend(StaticLiveServerTestCase):
         cls.driver.quit()
         super().tearDownClass()
 
-    @classmethod
+    def set_window_size(self, x, y):
+        self.driver.set_window_size(x, y)
+        print(
+            f"Asked for window size {(x, y)}, got {tuple(self.driver.get_window_size().values())}"
+        )
+        self.print_viewport()
+
     @contextlib.contextmanager
-    def mobile_window_size(cls):
+    def mobile_window_size(self):
         try:
-            cls.driver.set_window_size(*MOBILE_DIMENSIONS)
+            self.set_window_size(*MOBILE_DIMENSIONS)
             yield
         finally:
-            cls.driver.set_window_size(*DEFAULT_DIMENSIONS)
+            self.set_window_size(*DEFAULT_DIMENSIONS)
+
+    def print_viewport(self):
+        w = self.driver.execute_script("return document.documentElement.clientWidth")
+        h = self.driver.execute_script("return document.documentElement.clientHeight")
+        print(f"Viewport: ({w}, {h})")
 
     # Checks that JS is properly disabled if passed through env var, else check if enabled
     def test_js_enabled_or_disabled(self):
@@ -93,7 +107,18 @@ class TestFrontend(StaticLiveServerTestCase):
                 self.assertFalse(menu.is_displayed())
                 menu_button.click()
                 self.wait_until_displayed(menu)
-                language_link = self.driver.find_element(By.LINK_TEXT, "Languages")
+                # The menu animation could still move things down, resulting in
+                # visible elements moving out of the view part after moving to
+                # them. This was a source of shaky Firefox tests on GitHub.
+                # Let's sleep for the length of the animation:
+                time.sleep(0.35)
+                language_link = self.driver.find_element(
+                    By.XPATH,
+                    '//header//a[@href="/languages/"]',
+                )
+                # Similar link further down on the page that would exhibit the
+                # problems with repositioning mentioned above:
+                # language_link = self.driver.find_element(By.XPATH, '//main//a[@href="/languages/"]')
                 self.move_to(language_link)
                 language_link.click()
                 self.wait_for_title("Languages")
@@ -139,14 +164,29 @@ class TestFrontend(StaticLiveServerTestCase):
         WebDriverWait(self.driver, WAIT_TIMEOUT).until(EC.invisibility_of_element(element))
 
     def move_to(self, element):
-        # .move_to_element() doesn't seem to do what is needed on Firefox.
-        # Common advice is a script like this:
-        # self.driver.execute_script("arguments[0].scrollIntoView();", element)
+        if self.browser == "firefox":
+            # .move_to_element() doesn't seem to do what is needed on Firefox.
+            # Common advice is a script like this:
+            self.driver.execute_script("arguments[0].scrollIntoView();", element)
+            # Since scrolling (above) happens asynchronously, we have to wait
+            # to be sure the scrolling is done:
+            time.sleep(1)
         actions = ActionChains(self.driver)
         actions.scroll_to_element(element)
-        actions.pause(0.1)  # Without some delay, element is not always (yet) in view
         actions.move_to_element(element)
-        actions.perform()
+        try:
+            actions.perform()
+        except MoveTargetOutOfBoundsException as e:
+            print(e)
+            self.print_viewport()
+            print("Element information:", element.rect)
+            print("Font:", element.value_of_css_property("font-size"))
+            name = f"{id(element)}-{element.tag_name}"
+            self.driver.save_screenshot(f"{settings.BASE_DIR}/selenium-screenshots/{name}.png")
+            self.driver.save_full_page_screenshot(
+                f"{settings.BASE_DIR}/selenium-screenshots/fs-{name}.png"
+            )
+            raise
 
     def assert_current_page_not_error(self):
         self.assertFalse(
