@@ -107,7 +107,18 @@ class TestFrontend(StaticLiveServerTestCase):
                 self.assertFalse(menu.is_displayed())
                 menu_button.click()
                 self.wait_until_displayed(menu)
-                language_link = self.driver.find_element(By.LINK_TEXT, "Languages")
+                # The menu animation could still move things down, resulting in
+                # visible elements moving out of the view part after moving to
+                # them. This was a source of shaky Firefox tests on GitHub.
+                # Let's sleep for the length of the animation:
+                time.sleep(0.35)
+                language_link = self.driver.find_element(
+                    By.XPATH,
+                    '//header//a[@href="/languages/"]',
+                )
+                # Similar link further down on the page that would exhibit the
+                # problems with repositioning mentioned above:
+                # language_link = self.driver.find_element(By.XPATH, '//main//a[@href="/languages/"]')
                 self.move_to(language_link)
                 language_link.click()
                 self.wait_for_title("Languages")
