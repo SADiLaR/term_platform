@@ -1,10 +1,8 @@
 {% extends "registration/registration_base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Register" %}{% endblock %}
-
 {% block account_content %}
-<h1 id="main-heading">{% trans "Register" %}</h1>
+<h1 id="main-heading">{{ title }}</h1>
 <p class="alert alert-info">
     {% blocktrans trimmed %}
     Note: Accounts are only needed for staff who maintain the information on the website.

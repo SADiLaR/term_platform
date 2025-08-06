@@ -20,11 +20,13 @@ deployments.
 Python dependencies
 -------------------
 Review `requirements.txt` and related files. We should still move to transitive
-pinning with something like poetry in future. We upgrade Django aggressively
-until we reach version 5.2 (LTS), and after that we will likely stay on LTS
-releases.
+pinning with something like poetry in future. We will likely stay on LTS relases
+of Django since version 5.2.
 
 Look up each package at https://pypi.org/
+
+During major Django upgrades, review the Django templates that we override, e.g.
+in the admin and the registration templates.
 
 CSS
 ---

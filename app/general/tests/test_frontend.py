@@ -147,6 +147,22 @@ class TestFrontend(StaticLiveServerTestCase):
         for item in ["Search", "Institutions", "Projects", "Documents", "Languages", "Subjects"]:
             self.check_nav_item(item)
 
+        # These URLs are available without loging in. This basic test just
+        # ensures that they load cleanly and the titles are updated in all
+        # tested configurations.
+        for url, title in [
+            ("/about/", "LwimiLinks"),  # review title
+            ("/accounts/register/", "Register"),
+            ("/accounts/login/", "Log in"),
+            ("/accounts/password_reset/", "Password reset"),
+            ("/accounts/reset/done/", "Password reset complete"),
+            ("/accounts/reset/x/x/", "Password reset unsuccessful"),
+            ("/legal_notices/", "LwimiLinks"),  # review title
+        ]:
+            self.driver.get(f"{self.live_server_url}{url}")
+            self.assert_current_page_not_error()
+            self.wait_for_title(title)
+
     def check_nav_item(self, link_text):
         self.driver.find_element(By.PARTIAL_LINK_TEXT, link_text).click()
 
