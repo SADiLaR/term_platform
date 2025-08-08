@@ -9,6 +9,11 @@ comments are used to hide Django code from syntax highlighting. Note the use of
 the `escapejs` filter when we create JS strings for correct escaping. Check
 that wording corresponds to the error templates in 404.html, etc.
 
+This is mostly about error handling when HTMX is active, to ensure:
+ * That server errors are swapped in correctly if they can.
+ * That proxy errors that can't be swapped in, are not swapped in.
+ * That network errors are handled, since the browser won't show an error.
+
 This requires care to test well. Scenarios:
  * Fresh load of pages 200 / 404.
  * From freshly loaded 200 click on 404.
@@ -18,6 +23,7 @@ This requires care to test well. Scenarios:
  * Error page from a proxy inbetween that doesn't contain the HTMX target, e.g.
    a 502 or 429 error raised by Apache. This can be emulated by removing our
    custom 404.html template temporarily and causing a 404. See handleBeforeSwap.
+ * With/without DEBUG, since DEBUG error pages are different from our own.
 In each case the error box should appear/disappear as necessary. Screen readers
 should announce the error as an alert. Support is (as of 2024) not consistently
 great.
@@ -26,12 +32,14 @@ Furthermore:
  - Test with JS disabled.
  - Test with HTMX not (yet) loaded.
 
- If an HTMX event takes too long, #loader gives a visual indication and we set
- the text for accessibility purposes. This will be quite chatty if done on
- every request, so we only add the text if it takes longer than a timeout. If
- things are working well, the new content should be announced (and announced in
- good time), so the loader is only needed to confirm that the request is
- submitted if things are taking long enough that the user might have doubts.
+If an HTMX event takes too long, #loader gives a visual indication and we set
+the text for accessibility purposes. This will be quite chatty if done on
+every request, so we only add the text if it takes longer than a timeout. If
+things are working well, the new content should be announced (and announced in
+good time), so the loader is only needed to confirm that the request is
+submitted if things are taking long enough that the user might have doubts.
+
+We avoid the HTMX API, since this could execute before that is available.
 
  Below we translate a few strings by Django, so we don't need the JavaScript
  i18n infrastructure.
@@ -42,7 +50,7 @@ Furthermore:
 {% trans 'Loading...' as loading %}
 {% trans "Error" as error %}
 {% trans "Network error" as network_title %}
-{% trans 'Couldn’t load the page. Check your network connection and try to refresh the page.' as message %}
+{% trans 'Couldn’t load the page. Check your network connection and try to refresh the page.' as network_message %}
 {% trans "Something unexpected prevented the server from fulfilling the request." as server_message %}
 */
 
@@ -64,8 +72,9 @@ function handleAfterRequest(evt) {
     } else {
         if (typeof evt.detail.failed === "undefined") {
             //{# Not an error page. Probably network problems. #}
-            eTitle.innerText = "{{ title | escapejs }}";
-            eMessage.innerText = "{{ message | escapejs }}";
+            /*{# Not an error page. Probably network problems. #}*/
+            eTitle.innerText = "{{ network_title | escapejs }}";
+            eMessage.innerText = "{{ network_message | escapejs }}";
         }
         eBlock.removeAttribute("hidden");
         eBlock.scrollIntoView();
