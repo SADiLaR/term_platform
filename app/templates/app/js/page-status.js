@@ -6,7 +6,8 @@ the base template simple.
 
 Django template comments are used to reduce the payload. Furthermore JavaScript
 comments are used to hide Django code from syntax highlighting. Note the use of
-the `escapejs` filter when we create JS strings for correct escaping.
+the `escapejs` filter when we create JS strings for correct escaping. Check
+that wording corresponds to the error templates in 404.html, etc.
 
 This requires care to test well. Scenarios:
  * Fresh load of pages 200 / 404.
@@ -35,10 +36,14 @@ Furthermore:
  Below we translate a few strings by Django, so we don't need the JavaScript
  i18n infrastructure.
 {% endcomment %}
+{% trans "Too many requests" as e429 %}
+{% trans "Upstream server error" as e502 %}
+{% trans "Upstream server timeout" as e504 %}
 {% trans 'Loading...' as loading %}
 {% trans "Error" as error %}
-{% trans "Network error" as title %}
+{% trans "Network error" as network_title %}
 {% trans 'Couldn’t load the page. Check your network connection and try to refresh the page.' as message %}
+{% trans "Something unexpected prevented the server from fulfilling the request." as server_message %}
 */
 
 get = document.getElementById.bind(document);
@@ -46,6 +51,11 @@ eBlock = get("error-block");
 eTitle = get("error-title");
 eMessage = get("error-message");
 loader = get("loader-text");
+messages = {
+    429: "{{ e429 | escapejs }}",
+    502: "{{ e502 | escapejs }}",
+    504: "{{ e504 | escapejs }}"
+ };
 
 function handleAfterRequest(evt) {
     if (evt.detail.successful) {
@@ -74,9 +84,10 @@ function handleBeforeSwap(evt) {
     if (!detail.successful && detail.xhr.responseText.indexOf('id="main"') < 0) {
         detail.shouldSwap = false;
         detail.isError = true;
-        document.title = "{{ error | escapejs }}";
-        eTitle.innerText = "{{ error | escapejs }}";
-        eMessage.innerText = detail.xhr.statusText;
+        e = messages[detail.xhr.status] || "{{ error | escapejs }}";
+        document.title = e;
+        eTitle.innerText = e + " (" + detail.xhr.status + ")";
+        eMessage.innerText = "{{ server_message | escapejs }}";
     }
 }
 
