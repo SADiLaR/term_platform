@@ -213,3 +213,5 @@ class TestFrontend(StaticLiveServerTestCase):
             f"Actual title was {self.driver.title}",
         )
         self.assertFalse(self.driver.find_element(By.ID, "error-block").is_displayed())
+        # Every page must have #main as it is our default htmx target
+        self.assertTrue(self.driver.find_element(By.ID, "main"))

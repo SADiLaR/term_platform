@@ -14,6 +14,9 @@ This requires care to test well. Scenarios:
  * From freshly loaded 404 click on 200.
  * From a 200 page, click on anything while server is down.
  * From a 404 page, click on anything while server is down.
+ * Error page from a proxy inbetween that doesn't contain the HTMX target, e.g.
+   a 502 or 429 error raised by Apache. This can be emulated by removing our
+   custom 404.html template temporarily and causing a 404. See handleBeforeSwap.
 In each case the error box should appear/disappear as necessary. Screen readers
 should announce the error as an alert. Support is (as of 2024) not consistently
 great.
@@ -33,6 +36,7 @@ Furthermore:
  i18n infrastructure.
 {% endcomment %}
 {% trans 'Loading...' as loading %}
+{% trans "Error" as error %}
 {% trans "Network error" as title %}
 {% trans 'Couldn’t load the page. Check your network connection and try to refresh the page.' as message %}
 */
@@ -59,5 +63,16 @@ function handleBeforeRequest(evt) {
     }, 1000)
 }
 
+function handleBeforeSwap(evt) {
+    if (!evt.detail.successful && evt.detail.xhr.responseText.indexOf('id="main"') < 0) {
+        evt.detail.shouldSwap = false;
+        evt.detail.isError = true;
+        document.title = "{{ error | escapejs }}";
+        document.getElementById("error-title").innerText = "{{ error | escapejs }}";
+        document.getElementById("error-message").innerText = evt.detail.xhr.statusText;
+    }
+}
+
 document.body.addEventListener("htmx:beforeRequest", handleBeforeRequest);
 document.body.addEventListener("htmx:afterRequest", handleAfterRequest);
+document.body.addEventListener("htmx:beforeSwap", handleBeforeSwap);
