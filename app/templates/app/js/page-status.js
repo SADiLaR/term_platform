@@ -40,36 +40,43 @@ Furthermore:
 {% trans "Network error" as title %}
 {% trans 'Couldn’t load the page. Check your network connection and try to refresh the page.' as message %}
 */
+
+get = document.getElementById.bind(document);
+eBlock = get("error-block");
+eTitle = get("error-title");
+eMessage = get("error-message");
+loader = get("loader-text");
+
 function handleAfterRequest(evt) {
     if (evt.detail.successful) {
         clearTimeout(timeoutID);
-        document.getElementById("loader-text").innerText = "";
+        loader.innerText = "";
     } else {
         if (typeof evt.detail.failed === "undefined") {
             //{# Not an error page. Probably network problems. #}
-            document.getElementById("error-title").innerText = "{{ title | escapejs }}";
-            document.getElementById("error-message").innerText = "{{ message | escapejs }}";
+            eTitle.innerText = "{{ title | escapejs }}";
+            eMessage.innerText = "{{ message | escapejs }}";
         }
-        const errorBlock = document.getElementById("error-block");
-        errorBlock.removeAttribute("hidden");
-        errorBlock.scrollIntoView();
+        eBlock.removeAttribute("hidden");
+        eBlock.scrollIntoView();
    }
 }
 
 function handleBeforeRequest(evt) {
-    document.getElementById("error-block").setAttribute("hidden", "");
+    eBlock.setAttribute("hidden", "");
     timeoutID = setTimeout(function () {
-        document.getElementById("loader-text").innerText = "{{ loading | escapejs }}";
+        loader.innerText = "{{ loading | escapejs }}";
     }, 1000)
 }
 
 function handleBeforeSwap(evt) {
-    if (!evt.detail.successful && evt.detail.xhr.responseText.indexOf('id="main"') < 0) {
-        evt.detail.shouldSwap = false;
-        evt.detail.isError = true;
+    detail = evt.detail;
+    if (!detail.successful && detail.xhr.responseText.indexOf('id="main"') < 0) {
+        detail.shouldSwap = false;
+        detail.isError = true;
         document.title = "{{ error | escapejs }}";
-        document.getElementById("error-title").innerText = "{{ error | escapejs }}";
-        document.getElementById("error-message").innerText = evt.detail.xhr.statusText;
+        eTitle.innerText = "{{ error | escapejs }}";
+        eMessage.innerText = detail.xhr.statusText;
     }
 }
 
