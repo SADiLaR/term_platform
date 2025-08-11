@@ -46,6 +46,7 @@ We avoid the HTMX API, since this could execute before that is available.
 {% endcomment %}
 {% trans "Too many requests" as e429 %}
 {% trans "Upstream server error" as e502 %}
+{% trans "Service unavailable" as e503 %}
 {% trans "Upstream server timeout" as e504 %}
 {% trans 'Loading...' as loading %}
 {% trans "Error" as error %}
@@ -62,6 +63,7 @@ loader = get("loader-text");
 messages = {
     429: "{{ e429 | escapejs }}",
     502: "{{ e502 | escapejs }}",
+    503: "{{ e503 | escapejs }}",
     504: "{{ e504 | escapejs }}"
  };
 
@@ -71,7 +73,6 @@ function handleAfterRequest(evt) {
         loader.innerText = "";
     } else {
         if (typeof evt.detail.failed === "undefined") {
-            //{# Not an error page. Probably network problems. #}
             /*{# Not an error page. Probably network problems. #}*/
             eTitle.innerText = "{{ network_title | escapejs }}";
             eMessage.innerText = "{{ network_message | escapejs }}";
