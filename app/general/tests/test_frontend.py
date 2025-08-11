@@ -90,8 +90,7 @@ class TestFrontend(StaticLiveServerTestCase):
 
     # Checks that JS is properly disabled if passed through env var, else check if enabled
     def test_js_enabled_or_disabled(self):
-        test_dir = os.getenv("TESTING_DIR", "/app/general/tests/files")
-        self.driver.get(f"file://{test_dir}/test_js.html")
+        self.driver.get(f"file://{settings.TESTING_DIR}/test_js.html")
         self.assertEqual(
             len(self.driver.find_elements(By.ID, "js-enabled")), 1 if self.js_enabled else 0
         )

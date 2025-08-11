@@ -262,6 +262,8 @@ LOCALE_PATHS = [
     os.path.join(BASE_DIR, "locale"),
 ]
 
+TESTING_DIR = os.getenv("TESTING_DIR", BASE_DIR / "general/tests/files")
+
 # Check if the application is under testing. This needs to happen after static
 # file configuration.
 if "test" in sys.argv:

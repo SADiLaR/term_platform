@@ -3,6 +3,7 @@ import random
 import unittest
 from unittest.mock import MagicMock, patch
 
+from django.conf import settings
 from faker import Faker
 
 from general.management.commands.import_documents import Command
@@ -13,8 +14,7 @@ class TestHandleFile(unittest.TestCase):
     def setUp(self):
         self.command = Command()
         self.command.save_data = MagicMock()
-        self.test_dir = os.getenv("TESTING_DIR", "/app/general/tests/files")
-        self.test_file = self.test_dir + "Lorem.pdf"
+        self.test_file = os.path.join(settings.TESTING_DIR, "Lorem.pdf")
         self.name = "Test file"
         self.fake = Faker()
 
