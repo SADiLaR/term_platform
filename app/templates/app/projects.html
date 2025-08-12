@@ -50,12 +50,12 @@
                 <a href="{% url 'project_detail' item.project.id %}">{% trans "More about the project" %}</a>
             </p>
 
-            {% if item.languages %}
-                <div>{% icon "language" %} {{ item.languages }}</div>
-            {% endif %}
-
             {% if item.subjects %}
                 <div>{% icon "subject" %} {{ item.subjects }}</div>
+            {% endif %}
+
+            {% if item.languages %}
+                <div>{% icon "language" %} {{ item.languages }}</div>
             {% endif %}
 
             {% if item.date %}
