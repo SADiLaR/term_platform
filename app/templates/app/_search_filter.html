@@ -1,7 +1,7 @@
 {% spaceless %}
 <fieldset class="checkbox-container form-control mb-4">
     <legend>{{ field.label }}</legend>
-    <details {% if field.value %}open{% endif%}>{# open if currently filtering on this field #}
+    <details {% if field.value %}open{% endif %}>{# open if currently filtering on this field #}
         <summary>{{ summary }}</summary>
     {% for checkbox in field %}
     <div class="form-check">

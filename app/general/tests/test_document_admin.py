@@ -1,6 +1,6 @@
-import os
 import unittest
 
+from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from django.urls import reverse
@@ -15,7 +15,7 @@ class TestDocumentForm(TestCase):
         self.form = None
 
     def setUp(self):
-        test_dir = os.getenv("TESTING_DIR", "/app/general/tests/files")
+        test_dir = settings.TESTING_DIR
         test_file = test_dir + "/Lorem.pdf"
 
         with open(test_file, "rb") as f:

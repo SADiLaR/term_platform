@@ -58,6 +58,10 @@ class TestFrontend(StaticLiveServerTestCase):
             options.set_preference("javascript.enabled", cls.js_enabled)
             cls.driver = WebDriver(options=options)
 
+        else:
+            print("Unrecognised web browerser. Exiting.")
+            exit(1)
+
         cls.driver.set_window_size(*DEFAULT_DIMENSIONS)
         cls.driver.implicitly_wait(WAIT_TIMEOUT)
 
@@ -90,8 +94,7 @@ class TestFrontend(StaticLiveServerTestCase):
 
     # Checks that JS is properly disabled if passed through env var, else check if enabled
     def test_js_enabled_or_disabled(self):
-        test_dir = os.getenv("TESTING_DIR", "/app/general/tests/files")
-        self.driver.get(f"file://{test_dir}/test_js.html")
+        self.driver.get(f"file://{settings.TESTING_DIR}/test_js.html")
         self.assertEqual(
             len(self.driver.find_elements(By.ID, "js-enabled")), 1 if self.js_enabled else 0
         )
@@ -171,13 +174,22 @@ class TestFrontend(StaticLiveServerTestCase):
         self.assert_current_page_not_error()
 
     def wait_for_title(self, text):
-        WebDriverWait(self.driver, WAIT_TIMEOUT).until(EC.title_contains(text))
+        WebDriverWait(self.driver, WAIT_TIMEOUT).until(
+            EC.title_contains(text),
+            f"Didn't see title `{text}`. Seeing `{self.driver.title}`",
+        )
 
     def wait_until_displayed(self, element):
-        WebDriverWait(self.driver, WAIT_TIMEOUT).until(EC.visibility_of(element))
+        WebDriverWait(self.driver, WAIT_TIMEOUT).until(
+            EC.visibility_of(element),
+            f"`{element}` didn't appear",
+        )
 
     def wait_until_not_displayed(self, element):
-        WebDriverWait(self.driver, WAIT_TIMEOUT).until(EC.invisibility_of_element(element))
+        WebDriverWait(self.driver, WAIT_TIMEOUT).until(
+            EC.invisibility_of_element(element),
+            f"{element} didn't hide",
+        )
 
     def move_to(self, element):
         if self.browser == "firefox":

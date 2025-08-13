@@ -1,12 +1,14 @@
 import os
 import unittest
 
+from django.conf import settings
+
 from general.service.extract_text import pdf_to_text
 
 
 class TestExtractTextService(unittest.TestCase):
     def setUp(self):
-        test_dir = os.getenv("TESTING_DIR", "/app/general/tests/files")
+        test_dir = settings.TESTING_DIR
         self.file_name = os.path.join(test_dir, "Lorem.pdf")
 
     def test_text_extraction(self):
