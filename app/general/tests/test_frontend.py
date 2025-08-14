@@ -33,11 +33,11 @@ class TestFrontend(StaticLiveServerTestCase):
         if cls.browser == "chrome":
             from selenium.webdriver.chrome.webdriver import Options, WebDriver
 
-            opts = Options()
-            opts.add_argument("--headless=new")
-            opts.add_argument("--no-sandbox")
-            opts.add_argument("--disable-dev-shm-usage")
-            opts.add_argument("--window-size=1920,1080")
+            options = Options()
+            options.add_argument("--headless=new")
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
+            options.add_argument("--window-size=1920,1080")
 
             if not cls.js_enabled:
                 # Taken from https://stackoverflow.com/a/73961818
@@ -46,31 +46,31 @@ class TestFrontend(StaticLiveServerTestCase):
                 prefs["profile.content_settings.exceptions.javascript.*.setting"] = 2
                 prefs["profile.default_content_setting_values.javascript"] = 2
                 prefs["profile.managed_default_content_settings.javascript"] = 2
-                opts.add_experimental_option("prefs", prefs)
-                opts.add_argument("--disable-javascript")
+                options.add_experimental_option("prefs", prefs)
+                options.add_argument("--disable-javascript")
 
-            cls.driver = WebDriver(opts)
         elif cls.browser == "firefox":
             from selenium.webdriver.firefox.webdriver import Options, WebDriver
 
             options = Options()
             options.add_argument("-headless")
             options.set_preference("javascript.enabled", cls.js_enabled)
-            cls.driver = WebDriver(options=options)
 
         else:
-            print("Unrecognised web browerser. Exiting.")
+            print("Unrecognised web browser. Exiting.")
             exit(1)
 
-        cls.driver.set_window_size(*DEFAULT_DIMENSIONS)
-        cls.driver.implicitly_wait(WAIT_TIMEOUT)
-
+        cls._options = options
+        cls._WebDriver = WebDriver
         super().setUpClass()
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.driver.quit()
-        super().tearDownClass()
+    def setUp(self):
+        self.driver = self._WebDriver(options=self._options)
+        self.driver.set_window_size(*DEFAULT_DIMENSIONS)
+        self.driver.implicitly_wait(WAIT_TIMEOUT)
+
+    def tearDown(self):
+        self.driver.quit()
 
     def set_window_size(self, x, y):
         self.driver.set_window_size(x, y)
