@@ -26,9 +26,8 @@ class TestFrontend(StaticLiveServerTestCase):
         cls.browser = os.environ.get("BROWSER", "chrome").lower()
         cls.js_enabled = os.environ.get("JS_ENABLED", "js-enabled") == "js-enabled"
 
-        print(
-            f"Running Selenium tests on {cls.browser}. JS is {'enabled' if cls.js_enabled else 'disabled'}."
-        )
+        print(f"Running Selenium tests on {cls.browser}.")
+        print(f"JS is {'enabled' if cls.js_enabled else 'disabled'}.")
 
         if cls.browser == "chrome":
             from selenium.webdriver.chrome.webdriver import Options, WebDriver
@@ -182,13 +181,13 @@ class TestFrontend(StaticLiveServerTestCase):
     def wait_until_displayed(self, element):
         WebDriverWait(self.driver, WAIT_TIMEOUT).until(
             EC.visibility_of(element),
-            f"`{element}` didn't appear",
+            f"`{element.tag_name}#{element.get_attribute('id')}` didn't appear",
         )
 
     def wait_until_not_displayed(self, element):
         WebDriverWait(self.driver, WAIT_TIMEOUT).until(
             EC.invisibility_of_element(element),
-            f"{element} didn't hide",
+            f"`{element.tag_name}#{element.get_attribute('id')}` didn't hide",
         )
 
     def move_to(self, element):
