@@ -66,10 +66,9 @@ messages = {
  };
 
 function handleAfterRequest(evt) {
-    if (evt.detail.successful) {
-        clearTimeout(timeoutID);
-        loader.innerText = "";
-    } else {
+    clearTimeout(timeoutID);
+    loader.innerText = "";
+    if (!evt.detail.successful) {
         if (typeof evt.detail.failed === "undefined") {
             /*{# Not an error page. Probably network problems. #}*/
             get("error-title").innerText = "{{ network_title | escapejs }}";
