@@ -49,6 +49,7 @@
         <h1 id="error-title" class="card-title">{% block error_title %}Error{% endblock %}</h1>
         <p id="error-message" class="card-text">{% block error_message %}An error occurred{% endblock %}</p>
     </div>
+    {% if show_error %}<div hx-history="false"></div>{% endif %}
 </section>
 {% endblock error %}
 
@@ -74,6 +75,12 @@
                 <a href="{% url 'about' %}" title="{% trans 'About LwimiLinks'%}">
                     {% trans "About LwimiLinks" %}
                 </a>
+                {% if debug or False %}
+                    Test error handling manually:
+                    <a href="/_test/404/" class="btn btn-link p-0 m-2">404</a>
+                    <a href="/_test/partial_500/" class="btn btn-link p-0 m-2">Partial 500</a>
+                    <a href="/_test/full_500/" class="btn btn-link p-0 m-2">Full 500</a>
+                {% endif %}
             </p>
             <div class="d-md-flex justify-content-center">
                 <div class="px-2">

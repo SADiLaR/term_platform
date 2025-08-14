@@ -135,13 +135,41 @@ class TestFrontend(StaticLiveServerTestCase):
                 menu_button.click()
                 self.wait_until_not_displayed(menu)
 
+    def test_error_history(self):
+        # Go through a number of different error conditions and see if
+        # titles, main elements and history keep up.
+
+        # Load a page to (possibly) set up HTMX:
+        self.driver.get(self.live_server_url)
+
+        history = [
+            # (path, title, content, success)
+            ("/about/", "LwimiLinks", "What is LwimiLinks", True),
+            ("/_test/partial_500/", "Error", "(500)", False),
+            ("/_test/partial-404/", TITLE_404, "(404)", False),
+            ("/", "LwimiLinks", "Explore", True),
+            ("/_test/full_500/", "Error", "Something unexpected", False),
+        ]
+        # create history by browsing forward:
+        for path, title, content, success in history:
+            self.navigate(path)
+            self.wait_for_page(title, content, success=success)
+            self.assert_at_path(path)
+        # move backwards to start of history:
+        for path, title, content, success in reversed(history):
+            self.assert_at_path(path)
+            self.wait_for_page(title, content, success=success)
+            self.driver.back()
+        # move forward to tip of history:
+        for path, title, content, success in history:
+            self.driver.forward()
+            self.wait_for_page(title, content, success=success)
+            self.assert_at_path(path)
+
     def test_no_404s(self):
         # Sanity check in case we ever change the 404 title
         self.driver.get(f"{self.live_server_url}/blabla404")
-        self.assertTrue(
-            self.driver.title.startswith(TITLE_404),
-            f"Actual title was {self.driver.title}. Page: {self.driver.page_source}",
-        )
+        self.wait_for_page(TITLE_404, success=False)
 
         # Check all nav items
         for item in ["Search", "Institutions", "Projects", "Documents", "Languages", "Subjects"]:
@@ -213,7 +241,19 @@ class TestFrontend(StaticLiveServerTestCase):
             )
             raise
 
-    def wait_for_page(self, title, success=True):
+    def navigate(self, path):
+        """Navigate to path using HTMX if JS is enabled."""
+        if self.js_enabled:
+            self.driver.execute_script(f'htmx.ajax("GET", "{path}", "#main")')
+            # Some stabilisation time seems to be needed:
+            time.sleep(0.35)
+        else:
+            self.driver.get(f"{self.live_server_url}{path}")
+
+    def assert_at_path(self, path):
+        self.assertEqual(f"{self.live_server_url}{path}", self.driver.current_url)
+
+    def wait_for_page(self, title, content="", success=True):
         id_ = ""
         try:
             self.wait_for_title(title)
@@ -221,6 +261,8 @@ class TestFrontend(StaticLiveServerTestCase):
                 self.driver.title.startswith("ProgrammingError"),
                 f"Actual title was {self.driver.title}",
             )
+            source = self.driver.page_source
+            self.assertIn(content, source)
             # Every page must have #main as it is our default htmx target
             id_ = "main"
             self.assertTrue(self.driver.find_element(By.ID, "main"))
@@ -238,7 +280,7 @@ class TestFrontend(StaticLiveServerTestCase):
         except NoSuchElementException as e:
             print(e)
             print(f"...while looking for id `{id_}`.")
-            print(self.driver.page_source)
+            print(source)
             raise
         except AssertionError as e:
             print(e)

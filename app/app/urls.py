@@ -43,6 +43,9 @@ urlpatterns = [
     path("search/", views.search, name="search"),
     path("i18n/", include("django.conf.urls.i18n")),
     path("accounts/", include("accounts.urls")),
+    # Useful for tests, but tests disable DEBUG, so they need to be here:
+    path("_test/full_500/", views.test_full_500),
+    path("_test/partial_500/", views.test_partial_500),
 ]
 
 if settings.DEBUG:
