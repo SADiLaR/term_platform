@@ -5,11 +5,13 @@ import time
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import tag
-from selenium.common.exceptions import MoveTargetOutOfBoundsException
+from selenium.common.exceptions import MoveTargetOutOfBoundsException, NoSuchElementException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+
+TITLE_404 = "Error"
 
 # Wait timeout in seconds
 WAIT_TIMEOUT = 5
@@ -137,13 +139,9 @@ class TestFrontend(StaticLiveServerTestCase):
         # Sanity check in case we ever change the 404 title
         self.driver.get(f"{self.live_server_url}/blabla404")
         self.assertTrue(
-            self.driver.title.startswith("Error"),
+            self.driver.title.startswith(TITLE_404),
             f"Actual title was {self.driver.title}. Page: {self.driver.page_source}",
         )
-
-        # Check main page does not 404
-        self.driver.get(self.live_server_url)
-        self.assert_current_page_not_error()
 
         # Check all nav items
         for item in ["Search", "Institutions", "Projects", "Documents", "Languages", "Subjects"]:
@@ -153,6 +151,7 @@ class TestFrontend(StaticLiveServerTestCase):
         # ensures that they load cleanly and the titles are updated in all
         # tested configurations.
         for url, title in [
+            ("/", "LwimiLinks"),
             ("/about/", "LwimiLinks"),  # review title
             ("/accounts/register/", "Register"),
             ("/accounts/login/", "Log in"),
@@ -162,17 +161,16 @@ class TestFrontend(StaticLiveServerTestCase):
             ("/legal_notices/", "LwimiLinks"),  # review title
         ]:
             self.driver.get(f"{self.live_server_url}{url}")
-            self.assert_current_page_not_error()
-            self.wait_for_title(title)
+            self.wait_for_page(title)
 
     def check_nav_item(self, link_text):
         self.driver.find_element(By.PARTIAL_LINK_TEXT, link_text).click()
-
-        # We use 'in' to do a more permissive match (for instance 'Search' is usually '<search query> - Search'
-        self.wait_for_title(link_text)
-        self.assert_current_page_not_error()
+        self.wait_for_page(link_text)
 
     def wait_for_title(self, text):
+        if self.browser == "firefox":
+            # Seem to stabilise some tests regardless of timeout below :-/
+            time.sleep(0.35)
         WebDriverWait(self.driver, WAIT_TIMEOUT).until(
             EC.title_contains(text),
             f"Didn't see title `{text}`. Seeing `{self.driver.title}`",
@@ -215,14 +213,35 @@ class TestFrontend(StaticLiveServerTestCase):
             )
             raise
 
-    def assert_current_page_not_error(self):
-        self.assertFalse(
-            self.driver.title.startswith("Error"), f"Actual title was {self.driver.title}"
-        )
-        self.assertFalse(
-            self.driver.title.startswith("ProgrammingError"),
-            f"Actual title was {self.driver.title}",
-        )
-        self.assertFalse(self.driver.find_element(By.ID, "error-block").is_displayed())
-        # Every page must have #main as it is our default htmx target
-        self.assertTrue(self.driver.find_element(By.ID, "main"))
+    def wait_for_page(self, title, success=True):
+        id_ = ""
+        try:
+            self.wait_for_title(title)
+            self.assertFalse(
+                self.driver.title.startswith("ProgrammingError"),
+                f"Actual title was {self.driver.title}",
+            )
+            # Every page must have #main as it is our default htmx target
+            id_ = "main"
+            self.assertTrue(self.driver.find_element(By.ID, "main"))
+            # Every page must have #main-heading, since it is referred to in the
+            # `aria-labelledby` of the `main` tag. For now that is not yet in
+            # place on error pages.
+            if success:
+                id_ = "main-heading"
+                self.assertTrue(self.driver.find_element(By.ID, "main-heading"))
+                assertion = self.wait_until_not_displayed
+            else:
+                assertion = self.wait_until_displayed
+            id_ = "error-block"
+            assertion(self.driver.find_element(By.ID, "error-block"))
+        except NoSuchElementException as e:
+            print(e)
+            print(f"...while looking for id `{id_}`.")
+            print(self.driver.page_source)
+            raise
+        except AssertionError as e:
+            print(e)
+            name = f"error-visibility-id={id_}"
+            self.driver.save_screenshot(f"{settings.BASE_DIR}/selenium-screenshots/{name}.png")
+            raise
