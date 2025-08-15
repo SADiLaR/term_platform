@@ -5,11 +5,13 @@ import time
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import tag
-from selenium.common.exceptions import MoveTargetOutOfBoundsException
+from selenium.common.exceptions import MoveTargetOutOfBoundsException, NoSuchElementException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+
+TITLE_404 = "Error"
 
 # Wait timeout in seconds
 WAIT_TIMEOUT = 5
@@ -26,18 +28,17 @@ class TestFrontend(StaticLiveServerTestCase):
         cls.browser = os.environ.get("BROWSER", "chrome").lower()
         cls.js_enabled = os.environ.get("JS_ENABLED", "js-enabled") == "js-enabled"
 
-        print(
-            f"Running Selenium tests on {cls.browser}. JS is {'enabled' if cls.js_enabled else 'disabled'}."
-        )
+        print(f"Running Selenium tests on {cls.browser}.")
+        print(f"JS is {'enabled' if cls.js_enabled else 'disabled'}.")
 
         if cls.browser == "chrome":
             from selenium.webdriver.chrome.webdriver import Options, WebDriver
 
-            opts = Options()
-            opts.add_argument("--headless=new")
-            opts.add_argument("--no-sandbox")
-            opts.add_argument("--disable-dev-shm-usage")
-            opts.add_argument("--window-size=1920,1080")
+            options = Options()
+            options.add_argument("--headless=new")
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
+            options.add_argument("--window-size=1920,1080")
 
             if not cls.js_enabled:
                 # Taken from https://stackoverflow.com/a/73961818
@@ -46,31 +47,31 @@ class TestFrontend(StaticLiveServerTestCase):
                 prefs["profile.content_settings.exceptions.javascript.*.setting"] = 2
                 prefs["profile.default_content_setting_values.javascript"] = 2
                 prefs["profile.managed_default_content_settings.javascript"] = 2
-                opts.add_experimental_option("prefs", prefs)
-                opts.add_argument("--disable-javascript")
+                options.add_experimental_option("prefs", prefs)
+                options.add_argument("--disable-javascript")
 
-            cls.driver = WebDriver(opts)
         elif cls.browser == "firefox":
             from selenium.webdriver.firefox.webdriver import Options, WebDriver
 
             options = Options()
             options.add_argument("-headless")
             options.set_preference("javascript.enabled", cls.js_enabled)
-            cls.driver = WebDriver(options=options)
 
         else:
-            print("Unrecognised web browerser. Exiting.")
+            print("Unrecognised web browser. Exiting.")
             exit(1)
 
-        cls.driver.set_window_size(*DEFAULT_DIMENSIONS)
-        cls.driver.implicitly_wait(WAIT_TIMEOUT)
-
+        cls._options = options
+        cls._WebDriver = WebDriver
         super().setUpClass()
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.driver.quit()
-        super().tearDownClass()
+    def setUp(self):
+        self.driver = self._WebDriver(options=self._options)
+        self.driver.set_window_size(*DEFAULT_DIMENSIONS)
+        self.driver.implicitly_wait(WAIT_TIMEOUT)
+
+    def tearDown(self):
+        self.driver.quit()
 
     def set_window_size(self, x, y):
         self.driver.set_window_size(x, y)
@@ -134,17 +135,41 @@ class TestFrontend(StaticLiveServerTestCase):
                 menu_button.click()
                 self.wait_until_not_displayed(menu)
 
+    def test_error_history(self):
+        # Go through a number of different error conditions and see if
+        # titles, main elements and history keep up.
+
+        # Load a page to (possibly) set up HTMX:
+        self.driver.get(self.live_server_url)
+
+        history = [
+            # (path, title, content, success)
+            ("/about/", "LwimiLinks", "What is LwimiLinks", True),
+            ("/_test/partial_500/", "Error", "(500)", False),
+            ("/_test/partial-404/", TITLE_404, "(404)", False),
+            ("/", "LwimiLinks", "Explore", True),
+            ("/_test/full_500/", "Error", "Something unexpected", False),
+        ]
+        # create history by browsing forward:
+        for path, title, content, success in history:
+            self.navigate(path)
+            self.wait_for_page(title, content, success=success)
+            self.assert_at_path(path)
+        # move backwards to start of history:
+        for path, title, content, success in reversed(history):
+            self.assert_at_path(path)
+            self.wait_for_page(title, content, success=success)
+            self.driver.back()
+        # move forward to tip of history:
+        for path, title, content, success in history:
+            self.driver.forward()
+            self.wait_for_page(title, content, success=success)
+            self.assert_at_path(path)
+
     def test_no_404s(self):
         # Sanity check in case we ever change the 404 title
         self.driver.get(f"{self.live_server_url}/blabla404")
-        self.assertTrue(
-            self.driver.title.startswith("Error"),
-            f"Actual title was {self.driver.title}. Page: {self.driver.page_source}",
-        )
-
-        # Check main page does not 404
-        self.driver.get(self.live_server_url)
-        self.assert_current_page_not_error()
+        self.wait_for_page(TITLE_404, success=False)
 
         # Check all nav items
         for item in ["Search", "Institutions", "Projects", "Documents", "Languages", "Subjects"]:
@@ -154,6 +179,7 @@ class TestFrontend(StaticLiveServerTestCase):
         # ensures that they load cleanly and the titles are updated in all
         # tested configurations.
         for url, title in [
+            ("/", "LwimiLinks"),
             ("/about/", "LwimiLinks"),  # review title
             ("/accounts/register/", "Register"),
             ("/accounts/login/", "Log in"),
@@ -163,17 +189,16 @@ class TestFrontend(StaticLiveServerTestCase):
             ("/legal_notices/", "LwimiLinks"),  # review title
         ]:
             self.driver.get(f"{self.live_server_url}{url}")
-            self.assert_current_page_not_error()
-            self.wait_for_title(title)
+            self.wait_for_page(title)
 
     def check_nav_item(self, link_text):
         self.driver.find_element(By.PARTIAL_LINK_TEXT, link_text).click()
-
-        # We use 'in' to do a more permissive match (for instance 'Search' is usually '<search query> - Search'
-        self.wait_for_title(link_text)
-        self.assert_current_page_not_error()
+        self.wait_for_page(link_text)
 
     def wait_for_title(self, text):
+        if self.browser == "firefox":
+            # Seem to stabilise some tests regardless of timeout below :-/
+            time.sleep(0.35)
         WebDriverWait(self.driver, WAIT_TIMEOUT).until(
             EC.title_contains(text),
             f"Didn't see title `{text}`. Seeing `{self.driver.title}`",
@@ -182,13 +207,13 @@ class TestFrontend(StaticLiveServerTestCase):
     def wait_until_displayed(self, element):
         WebDriverWait(self.driver, WAIT_TIMEOUT).until(
             EC.visibility_of(element),
-            f"`{element}` didn't appear",
+            f"`{element.tag_name}#{element.get_attribute('id')}` didn't appear",
         )
 
     def wait_until_not_displayed(self, element):
         WebDriverWait(self.driver, WAIT_TIMEOUT).until(
             EC.invisibility_of_element(element),
-            f"{element} didn't hide",
+            f"`{element.tag_name}#{element.get_attribute('id')}` didn't hide",
         )
 
     def move_to(self, element):
@@ -216,14 +241,49 @@ class TestFrontend(StaticLiveServerTestCase):
             )
             raise
 
-    def assert_current_page_not_error(self):
-        self.assertFalse(
-            self.driver.title.startswith("Error"), f"Actual title was {self.driver.title}"
-        )
-        self.assertFalse(
-            self.driver.title.startswith("ProgrammingError"),
-            f"Actual title was {self.driver.title}",
-        )
-        self.assertFalse(self.driver.find_element(By.ID, "error-block").is_displayed())
-        # Every page must have #main as it is our default htmx target
-        self.assertTrue(self.driver.find_element(By.ID, "main"))
+    def navigate(self, path):
+        """Navigate to path using HTMX if JS is enabled."""
+        if self.js_enabled:
+            self.driver.execute_script(f'htmx.ajax("GET", "{path}", "#main")')
+            # Some stabilisation time seems to be needed:
+            time.sleep(0.35)
+        else:
+            self.driver.get(f"{self.live_server_url}{path}")
+
+    def assert_at_path(self, path):
+        self.assertEqual(f"{self.live_server_url}{path}", self.driver.current_url)
+
+    def wait_for_page(self, title, content="", success=True):
+        id_ = ""
+        try:
+            self.wait_for_title(title)
+            self.assertFalse(
+                self.driver.title.startswith("ProgrammingError"),
+                f"Actual title was {self.driver.title}",
+            )
+            source = self.driver.page_source
+            self.assertIn(content, source)
+            # Every page must have #main as it is our default htmx target
+            id_ = "main"
+            self.assertTrue(self.driver.find_element(By.ID, "main"))
+            # Every page must have #main-heading, since it is referred to in the
+            # `aria-labelledby` of the `main` tag. For now that is not yet in
+            # place on error pages.
+            if success:
+                id_ = "main-heading"
+                self.assertTrue(self.driver.find_element(By.ID, "main-heading"))
+                assertion = self.wait_until_not_displayed
+            else:
+                assertion = self.wait_until_displayed
+            id_ = "error-block"
+            assertion(self.driver.find_element(By.ID, "error-block"))
+        except NoSuchElementException as e:
+            print(e)
+            print(f"...while looking for id `{id_}`.")
+            print(source)
+            raise
+        except AssertionError as e:
+            print(e)
+            name = f"error-visibility-id={id_}"
+            self.driver.save_screenshot(f"{settings.BASE_DIR}/selenium-screenshots/{name}.png")
+            raise

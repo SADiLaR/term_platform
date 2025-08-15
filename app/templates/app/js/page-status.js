@@ -13,6 +13,7 @@ This is mostly about error handling when HTMX is active, to ensure:
  * That server errors are swapped in correctly if they can.
  * That proxy errors that can't be swapped in, are not swapped in.
  * That network errors are handled, since the browser won't show an error.
+ * That all of the above works when navigating through history.
 
 This requires care to test well. Scenarios:
  * Fresh load of pages 200 / 404.
@@ -56,9 +57,6 @@ We avoid the HTMX API, since this could execute before that is available.
 */
 
 get = document.getElementById.bind(document);
-eBlock = get("error-block");
-eTitle = get("error-title");
-eMessage = get("error-message");
 loader = get("loader-text");
 messages = {
     429: "{{ e429 | escapejs }}",
@@ -68,22 +66,22 @@ messages = {
  };
 
 function handleAfterRequest(evt) {
-    if (evt.detail.successful) {
-        clearTimeout(timeoutID);
-        loader.innerText = "";
-    } else {
+    clearTimeout(timeoutID);
+    loader.innerText = "";
+    if (!evt.detail.successful) {
         if (typeof evt.detail.failed === "undefined") {
             /*{# Not an error page. Probably network problems. #}*/
-            eTitle.innerText = "{{ network_title | escapejs }}";
-            eMessage.innerText = "{{ network_message | escapejs }}";
+            get("error-title").innerText = "{{ network_title | escapejs }}";
+            get("error-message").innerText = "{{ network_message | escapejs }}";
         }
+        eBlock = get("error-block");
         eBlock.removeAttribute("hidden");
         eBlock.scrollIntoView();
    }
 }
 
 function handleBeforeRequest(evt) {
-    eBlock.setAttribute("hidden", "");
+    get("error-block").setAttribute("hidden", "");
     timeoutID = setTimeout(function () {
         loader.innerText = "{{ loading | escapejs }}";
     }, 1000)
@@ -91,13 +89,31 @@ function handleBeforeRequest(evt) {
 
 function handleBeforeSwap(evt) {
     detail = evt.detail;
-    if (!detail.successful && detail.xhr.responseText.indexOf('id="main"') < 0) {
-        detail.shouldSwap = false;
-        detail.isError = true;
-        e = messages[detail.xhr.status] || "{{ error | escapejs }}";
-        document.title = e;
-        eTitle.innerText = e + " (" + detail.xhr.status + ")";
-        eMessage.innerText = "{{ server_message | escapejs }}";
+    if (detail.isError) {
+        xhr = detail.xhr;
+        if (!xhr.responseText.includes('id="main"')) {
+            detail.shouldSwap = false;
+            e = messages[xhr.status] || "{{ error | escapejs }}";
+            document.title = e;
+            get("error-title").innerText = e + " (" + xhr.status + ")";
+            get("error-message").innerText = "{{ server_message | escapejs }}";
+        } else if (xhr.responseText.includes('id="error-block"')) {
+            /*{% comment %}
+               Very rare case where a full page is returned instead of a
+               partial. See Emulate this with something like `assert False` in a
+               view. This causes the error bits (title/message) to not be marked
+               with hx-swap-oob, and then they are not updated. We should only
+               go this route if the full error-block is present, otherwise the
+               normal error swapping should work. In this case, #main is not
+               swapped out, and will persist on the error page, so we hide it
+               (after a timeout, to avoid the snapshot in history having no
+               content in #main).
+              {% endcomment %}
+            */
+            detail.selectOverride = "#error-block";
+            detail.target = get("error-block");
+            setTimeout(function() {get("main").innerHTML = "";}, 100);
+        }
     }
 }
 

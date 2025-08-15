@@ -9,3 +9,11 @@
     {{ block.super }}
 {% endwith %}
 {% endblock %}
+
+{% block content %}
+{% comment %}
+This keeps the error pages out of history, and with `refreshOnHistoryMiss`
+ensures that error pages are always fetched anew from the server.
+{% endcomment %}
+<div hx-history="false"></div>
+{% endblock %}

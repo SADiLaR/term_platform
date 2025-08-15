@@ -16,6 +16,17 @@ def health(request):
     return HttpResponse("OK", content_type="text/plain")
 
 
+def test_full_500(request):
+    """Cause a full-blown error page, regardless of HX-request."""
+    print("Traceback to follow (intended for this view)")
+    assert False
+
+
+def test_partial_500(request):
+    """Cause a partial in case of an HX-Request."""
+    return render(request, template_name="500.html", status=500)
+
+
 def home(request):
     template = "app/home.html"
     context = {"current_page": "home"}

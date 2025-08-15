@@ -10,6 +10,7 @@ Django template comments are used to reduce the payload.
 
 Consider e.g. `"timeout": 2000` for testing network error handling
 {% endcomment %}{
+  "refreshOnHistoryMiss": true,{# see base_error.html #}
   "responseHandling": [{# https://htmx.org/docs/#requests #}
     {"code":"[23]..", "swap": true},
     {"code":"[45]..", "swap": true, "error":true}{# swap so that error pages show #}
