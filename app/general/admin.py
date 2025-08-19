@@ -79,9 +79,9 @@ class DocumentFormWithFulltext(DocumentForm):
 
 class DocumentAdmin(SimpleHistoryAdmin):
     ordering = ["title"]
-    list_display = ["title", "license", "document_type", "available"]
+    list_display = ["title", "license", "document_type", "verified", "standardised", "available"]
     search_fields = ["title"]
-    list_filter = ["institution", "license", "document_type"]
+    list_filter = ["institution", "license", "document_type", "verified", "standardised"]
     form = DocumentForm
     history_list_display = ["title", "license", "document_type", "available"]
 

@@ -130,6 +130,10 @@ class Document(models.Model):
         help_text=_("PDF files up to 10MB are allowed."),
         verbose_name=_("uploaded file"),
     )
+    verified = models.BooleanField(default=False, verbose_name=_("verified"))
+    standardised = models.BooleanField(
+        default=False, verbose_name=_("authenticated and standardised")
+    )
     available = models.BooleanField(default=True, verbose_name=_("available"))
     license = models.CharField(
         max_length=200,
