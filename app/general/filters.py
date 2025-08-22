@@ -6,7 +6,7 @@ from django.contrib.postgres.search import (
     SearchRank,
     SearchVector,
 )
-from django.db.models import F, Value
+from django.db.models import Case, F, Value, When
 from django.db.models.functions import Left
 from django.db.models.query import EmptyQuerySet
 from django.utils.translation import gettext_lazy as _
@@ -119,7 +119,12 @@ class DocumentFilter(django_filters.FilterSet):
             view=Value("document_detail"),
             logo_url=Value(""),
             associated_url=F("url"),
-            boost=Value(0.01),
+            boost=Case(
+                # We boost verified/standardised documents a bit more:
+                When(verified=True, then=Value(0.015)),
+                When(standardised=True, then=Value(0.015)),
+                default=Value(0.01),
+            ),
             rank=F("boost"),
         )
         if search:

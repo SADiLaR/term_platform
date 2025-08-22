@@ -11,13 +11,6 @@ repos:
       - id: ruff-format
         args: [ --diff ]
 
-  # Automatically sort python imports
-  - repo: https://github.com/PyCQA/isort
-    rev: 5.13.2
-    hooks:
-      - id: isort
-        args: [ --profile, black ]
-
   # Lint: YAML
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.35.1
