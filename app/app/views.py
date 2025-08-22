@@ -165,7 +165,11 @@ def institution_detail(request, institution_id):
 
     institution = get_object_or_404(Institution, id=institution_id)
     projects = Project.objects.filter(institution=institution).order_by("name")
-    documents = Document.objects.filter(institution=institution).order_by("title")
+    documents = (
+        Document.objects.filter(institution=institution)
+        .defer("description", "document_data", "search_vector")
+        .order_by("title")
+    )
 
     context = {
         "current_page": "institution_detail",
@@ -183,6 +187,7 @@ def documents(request):
 
     documents = (
         Document.objects.select_related("institution")
+        .defer("document_data", "search_vector")
         .prefetch_related("subjects", "languages")
         .order_by("title")
     )
@@ -215,10 +220,6 @@ def documents(request):
                 "document": document,
                 "subjects": get_subjects(document_subjects),
                 "languages": get_languages(document_languages),
-                "institution_name": document.institution.name,
-                "description": document.description,
-                "url": document.url,
-                "category": document.document_type,
             }
         )
 
@@ -238,7 +239,9 @@ def document_detail(request, document_id):
     template = "app/document_detail.html"
 
     document = get_object_or_404(
-        Document.objects.select_related("institution").prefetch_related(
+        Document.objects.defer("document_data", "search_vector")
+        .select_related("institution")
+        .prefetch_related(
             Prefetch("subjects", queryset=Subject.objects.order_by("name")),
             Prefetch("languages", queryset=Language.objects.order_by("name")),
         ),
