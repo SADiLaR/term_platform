@@ -27,10 +27,10 @@
             </div>
             {% endif %}
             <div class="fs-5">
-                {{ item.institution_name }}
+                {{ item.document.institution.name }}
             </div>
             <p class="limit-text-width">
-                {{ item.description|truncatewords:30 }}
+                {{ item.document.description|truncatewords:30 }}
                 <a href="{% url 'document_detail' item.document.id %}">{% trans "More about the document" %}</a>
             </p>
 

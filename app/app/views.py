@@ -215,10 +215,6 @@ def documents(request):
                 "document": document,
                 "subjects": get_subjects(document_subjects),
                 "languages": get_languages(document_languages),
-                "institution_name": document.institution.name,
-                "description": document.description,
-                "url": document.url,
-                "category": document.document_type,
             }
         )
 
