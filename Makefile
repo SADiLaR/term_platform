@@ -1,7 +1,7 @@
 .PHONY: list up upd build stop down restart make-migrations migrate collectstatic shell logs create-super-user \
         docker-stop-all create-schema test ruff-check ruff-fix ruff-format load-fixtures pre-commit-install \
         dev-import-documents dev-quick-install lighthouse dev_update_vector_search docker-shell check make-messages \
-        compile-messages fmt lint fix
+        compile-messages fmt lint fix validate-urls
 
 list:
 	@echo "Available commands:"
@@ -30,6 +30,7 @@ list:
 	@echo "compile-messages - Run command to ensure translation .mo files are created"
 	@echo "docker-shell - Access the container shell"
 	@echo "check - Run the Django check command"
+	@echo "validate-urls - Validate stored URLs for Projects, Documents and Institutions"
 
 up:
 	@docker compose up
@@ -127,3 +128,6 @@ make-messages:
 
 compile-messages:
 	@docker compose run --rm web python manage.py compilemessages
+
+validate-urls:
+	@docker compose run --rm web python manage.py validate_urls
