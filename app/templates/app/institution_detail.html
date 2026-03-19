@@ -32,18 +32,20 @@
         {% endif %}
     </div>
 
-    <section aria-label="{% trans 'Search form' %}" class="mb-4 limit-text-width">
-        <form method="get" action="{% url 'search' %}">
-            <input type="hidden" name="institution" value="{{ institution.pk }}">
-            <label for="institution-search" class="form-label">{% trans "Search through the resources below" %}</label>
-            <input type="search"
-                   id="institution-search"
-                   name="search"
-                   placeholder="{% trans 'Search term...' %}"
-                   class="form-control search-input">
-            <input type="submit" value="{% trans 'Search' %}" class="btn btn-primary mt-2">
-        </form>
-    </section>
+    {% if projects or documents %}
+        <section aria-label="{% trans 'Search form' %}" class="mb-4 limit-text-width">
+            <form method="get" action="{% url 'search' %}">
+                <input type="hidden" name="institution" value="{{ institution.pk }}">
+                <label for="institution-search" class="form-label">{% trans "Search through the resources below" %}</label>
+                <input type="search"
+                    id="institution-search"
+                    name="search"
+                    placeholder="{% trans 'Search term...' %}"
+                    class="form-control search-input">
+                <input type="submit" value="{% trans 'Search' %}" class="btn btn-primary mt-2">
+            </form>
+        </section>
+    {% endif %}
 
     <div class="mb-3 row">
         {% if projects %}
