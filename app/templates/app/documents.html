@@ -34,12 +34,12 @@
                 <a href="{% url 'document_detail' item.document.id %}">{% trans "More about the document" %}</a>
             </p>
 
-            {% if item.languages %}
-                <div>{% icon "language" %} {{ item.languages }}</div>
-            {% endif %}
-
             {% if item.subjects %}
                 <div>{% icon "subject" %} {{ item.subjects }}</div>
+            {% endif %}
+
+            {% if item.languages %}
+                <div>{% icon "language" %} {{ item.languages }}</div>
             {% endif %}
         </div>
     <hr>
