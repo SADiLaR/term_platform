@@ -17,10 +17,10 @@ RUN <<EOF
   set -exo pipefail
   apt-get update
   apt-get -y upgrade
-  apt-get install -y --no-install-recommends libmagic1 gettext gcc libmagic-dev
+  apt-get install -y --no-install-recommends libmagic1 gettext build-essential libmagic-dev
   pip install --upgrade pip
   pip install -r requirements.txt
-  apt-get remove gcc libmagic-dev
+  apt-get remove -y build-essential libmagic-dev
   rm -rf /var/lib/apt/lists/*
 EOF
 

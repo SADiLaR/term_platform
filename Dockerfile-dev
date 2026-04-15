@@ -18,11 +18,11 @@ RUN <<EOF
   set -exo pipefail
   apt-get update
   apt-get -y upgrade
-  apt-get install -y --no-install-recommends libmagic1 gettext graphviz graphviz-dev chromium npm gcc libmagic-dev
+  apt-get install -y --no-install-recommends libmagic1 gettext graphviz graphviz-dev chromium npm build-essential libmagic-dev
   npm install -g @lhci/cli@0.14.x
   pip install --upgrade pip
   pip install -r requirements-dev.txt
-  apt-get remove gcc libmagic-dev
+  apt-get remove -y build-essential libmagic-dev
   rm -rf /var/lib/apt/lists/*
 EOF
 
