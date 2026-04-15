@@ -1,6 +1,6 @@
 # A development image with extras for development.
 # Don't use in production.
-FROM python:3.12
+FROM python:3.12-slim
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -18,10 +18,12 @@ RUN <<EOF
   set -exo pipefail
   apt-get update
   apt-get -y upgrade
-  apt-get install -y --no-install-recommends libmagic1 gettext graphviz graphviz-dev chromium npm
+  apt-get install -y --no-install-recommends libmagic1 gettext graphviz graphviz-dev chromium npm gcc libmagic-dev
   npm install -g @lhci/cli@0.14.x
   pip install --upgrade pip
   pip install -r requirements-dev.txt
+  apt-get remove gcc libmagic-dev
+  rm -rf /var/lib/apt/lists/*
 EOF
 
 # Used in LHCI
