@@ -4,9 +4,11 @@ from django.forms import HiddenInput, ModelForm
 from django.utils.translation import gettext as _
 from simple_history.admin import SimpleHistoryAdmin
 
-from general.service.extract_text import GetTextError, pdf_to_text
+from general.service.extract_text import GetTextError, excel_to_text, pdf_to_text
 
 from .models import Document, Institution, Language, Project, Subject
+
+XLSX_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
 
 class DocumentForm(ModelForm):
@@ -39,8 +41,12 @@ class DocumentForm(ModelForm):
         )
         if uploaded_file and override_existing_fulltext:
             file_type = magic.from_buffer(uploaded_file.read(), mime=True)
-            if file_type != "application/pdf":
-                self.add_error("uploaded_file", _("Only PDF files are allowed."))
+            uploaded_file.seek(0)
+            if file_type not in [
+                "application/pdf",
+                XLSX_MIME_TYPE,
+            ]:
+                self.add_error("uploaded_file", _("Only PDF and XLSX files are allowed."))
             cleaned_data["mime_type"] = file_type
 
             limit = 10 * 1024 * 1024
@@ -56,7 +62,10 @@ class DocumentForm(ModelForm):
                 # experience.
 
                 try:
-                    cleaned_data["document_data"] = pdf_to_text(uploaded_file)
+                    if file_type == "application/pdf":
+                        cleaned_data["document_data"] = pdf_to_text(uploaded_file)
+                    elif file_type == XLSX_MIME_TYPE:
+                        cleaned_data["document_data"] = excel_to_text(uploaded_file)
                 except GetTextError:
                     return self.add_error(
                         "uploaded_file",

@@ -4,6 +4,7 @@ django-htmx==1.27.0
 django-simple-history==3.11.0
 django==5.2.13
 gunicorn==25.3.0
+openpyxl==3.1.5
 pillow==12.2.0
 psycopg2-binary==2.9.11
 pypdf==6.9.2

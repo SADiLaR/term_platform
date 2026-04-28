@@ -91,7 +91,8 @@ class Subject(models.Model):
 
 
 class Document(models.Model):
-    file_validators = [FileExtensionValidator(["pdf"])]
+    file_types = ["pdf", "xlsx"]
+    file_validators = [FileExtensionValidator(file_types)]
 
     # names and abbreviations based on
     # https://en.wikipedia.org/wiki/Creative_Commons_license#Six_regularly_used_licenses
@@ -118,8 +119,6 @@ class Document(models.Model):
         ("Term list", _("Term list")),
     ]
 
-    file_type = "pdf"
-
     title = models.CharField(max_length=200, verbose_name=_("title"))
     description = models.TextField(blank=True, verbose_name=_("description"))
     url = models.URLField(max_length=200, blank=True, verbose_name=_("URL"))
@@ -127,7 +126,7 @@ class Document(models.Model):
         upload_to="documents/",
         validators=file_validators,
         blank=True,
-        help_text=_("PDF files up to 10MB are allowed."),
+        help_text=_("PDF and XLSX files up to 10MB are allowed."),
         verbose_name=_("uploaded file"),
     )
     verified = models.BooleanField(default=False, verbose_name=_("verified"))

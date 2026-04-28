@@ -22,6 +22,13 @@ class TestDocumentForm(TestCase):
             pdf_file = f.read()
 
         self.file_mock = SimpleUploadedFile("test.pdf", pdf_file, content_type="application/pdf")
+        with open(test_dir + "/example.xlsx", "rb") as f:
+            xlsx_file = f.read()
+        self.xlsx_file = SimpleUploadedFile(
+            "test.xlsx",
+            xlsx_file,
+            content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        )
         self.test_institution = Institution.objects.create(
             name="Test Institution for Document tests"
         )
@@ -80,6 +87,26 @@ class TestDocumentForm(TestCase):
 
         form = DocumentForm(tests_form, files={"uploaded_file": self.file_mock})
         self.assertTrue(form.is_valid())
+
+    def test_clean_with_xlsx_file(self):
+        tests_form = {
+            "title": "Test",
+            "license": "CC0",
+            "document_type": "Glossary",
+            "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "institution": self.test_institution,
+            "url": "",
+            "uploaded_file": self.xlsx_file,
+            "document_data": "",
+            "description": "Test description",
+        }
+
+        form = DocumentForm(tests_form, files={"uploaded_file": self.xlsx_file})
+
+        self.assertTrue(form.is_valid())
+        self.assertIn("ikati", form.cleaned_data["document_data"])
+        self.assertIn("café", form.cleaned_data["document_data"])
+        self.assertIn("ɪŋoma", form.cleaned_data["document_data"])
 
     def test_clean_with_large_file(self):
         self.file_mock.size = 15728640
