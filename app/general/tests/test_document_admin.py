@@ -21,7 +21,7 @@ class TestDocumentForm(TestCase):
         with open(test_file, "rb") as f:
             pdf_file = f.read()
 
-        self.file_mock = SimpleUploadedFile("test.pdf", pdf_file, content_type="application/pdf")
+        self.pdf_file = SimpleUploadedFile("test.pdf", pdf_file, content_type="application/pdf")
         with open(test_dir + "/example.xlsx", "rb") as f:
             xlsx_file = f.read()
         self.xlsx_file = SimpleUploadedFile(
@@ -80,12 +80,12 @@ class TestDocumentForm(TestCase):
             "mime_type": "pdf",
             "institution": self.test_institution,
             "url": "",
-            "uploaded_file": self.file_mock,
+            "uploaded_file": self.pdf_file,
             "document_data": "",
             "description": "Test description",
         }
 
-        form = DocumentForm(tests_form, files={"uploaded_file": self.file_mock})
+        form = DocumentForm(tests_form, files={"uploaded_file": self.pdf_file})
         self.assertTrue(form.is_valid())
 
     def test_clean_with_xlsx_file(self):
@@ -109,7 +109,7 @@ class TestDocumentForm(TestCase):
         self.assertIn("ɪŋoma", form.cleaned_data["document_data"])
 
     def test_clean_with_large_file(self):
-        self.file_mock.size = 15728640
+        self.pdf_file.size = 15728640
 
         tests_form = {
             "title": "Test",
@@ -118,11 +118,11 @@ class TestDocumentForm(TestCase):
             "mime_type": "pdf",
             "institution": self.test_institution,
             "url": "",
-            "uploaded_file": self.file_mock,
+            "uploaded_file": self.pdf_file,
             "description": "Test description",
         }
 
-        form = DocumentForm(tests_form, files={"uploaded_file": self.file_mock})
+        form = DocumentForm(tests_form, files={"uploaded_file": self.pdf_file})
         self.assertFalse(form.is_valid())
         self.assertIn("uploaded_file", form.errors)
         self.assertEqual(form.errors["uploaded_file"], ["File size must not exceed 10MB."])
@@ -135,14 +135,14 @@ class TestDocumentForm(TestCase):
             "mime_type": "pdf",
             "institution": self.test_institution,
             "url": "",
-            "uploaded_file": self.file_mock,
+            "uploaded_file": self.pdf_file,
             "document_data": "",
             "description": "Test description",
         }
 
         # Test both kinds of forms - both can have edited PDFs and unedited fulltext
         for FormType in [DocumentForm, DocumentFormWithFulltext]:
-            form = FormType(tests_form, files={"uploaded_file": self.file_mock})
+            form = FormType(tests_form, files={"uploaded_file": self.pdf_file})
             self.assertTrue(form.is_valid())
             self.assertNotEqual(form.cleaned_data["document_data"], "")
 
@@ -155,13 +155,13 @@ class TestDocumentForm(TestCase):
             "mime_type": "pdf",
             "institution": self.test_institution,
             "url": "",
-            "uploaded_file": self.file_mock,
+            "uploaded_file": self.pdf_file,
             "document_data": custom_data,
             "description": "Test description",
         }
 
         # We only test the DocumentFormWithFulltext because this is the only one that can have edited fulltext
-        form = DocumentFormWithFulltext(tests_form, files={"uploaded_file": self.file_mock})
+        form = DocumentFormWithFulltext(tests_form, files={"uploaded_file": self.pdf_file})
         self.assertTrue(form.is_valid())
         self.assertEqual(form.cleaned_data["document_data"], custom_data)
 
@@ -176,13 +176,13 @@ class TestDocumentForm(TestCase):
             "mime_type": "pdf",
             "institution": self.test_institution,
             "url": "",
-            "uploaded_file": self.file_mock,
+            "uploaded_file": self.pdf_file,
             "document_data": "",
             "description": "Test description",
         }
 
         # Upload the form with the PDF fulltext extracted
-        form = DocumentForm(original_form, files={"uploaded_file": self.file_mock})
+        form = DocumentForm(original_form, files={"uploaded_file": self.pdf_file})
         self.assertTrue(form.is_valid())
         doc = form.save()
         orig_fulltext = doc.document_data
@@ -196,7 +196,7 @@ class TestDocumentForm(TestCase):
         # Now, upload a copy with edited fulltext
         edit_form = {**original_form, "document_data": custom_data, "id": doc.id}
         form = DocumentFormWithFulltext(
-            edit_form, files={"uploaded_file": self.file_mock}, instance=doc
+            edit_form, files={"uploaded_file": self.pdf_file}, instance=doc
         )
         self.assertTrue(form.is_valid())
         doc = form.save()
