@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from general.models import Institution
+from general.models import Institution, Project
 
 
 class InstitutionDetailViewTests(TestCase):
@@ -27,7 +27,10 @@ class InstitutionDetailViewTests(TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_institution_detail_search_form(self):
-        response = self.client.get(reverse("institution_detail", args=[self.institution.pk]))
+        Project.objects.create(name="Sample Project", institution=self.institution)
+
+        with self.assertNumQueries(3):
+            response = self.client.get(reverse("institution_detail", args=[self.institution.pk]))
         self.assertEqual(response.status_code, 200)
         self.assertContains(
             response, f'<input type="hidden" name="institution" value="{self.institution.pk}">'
@@ -35,3 +38,13 @@ class InstitutionDetailViewTests(TestCase):
         self.assertContains(response, 'id="institution-search"')
         self.assertContains(response, 'name="search"')
         self.assertContains(response, 'type="submit"')
+
+    def test_search_form_hidden_without_content(self):
+        with self.assertNumQueries(3):
+            response = self.client.get(reverse("institution_detail", args=[self.institution.pk]))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertNotContains(response, 'id="institution-search"')
+        self.assertNotContains(
+            response, f'<input type="hidden" name="institution" value="{self.institution.pk}">'
+        )
