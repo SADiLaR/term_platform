@@ -1,6 +1,6 @@
 -r requirements.txt
-django-debug-toolbar
-django-extensions
-faker
-ruff
-selenium==4.41.0
+django-debug-toolbar==6.3.0
+django-extensions==4.1
+faker==40.15.0
+ruff==0.15.12
+selenium==4.43.0
