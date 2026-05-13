@@ -6,7 +6,7 @@ django==5.2.14
 gunicorn==25.3.0
 openpyxl==3.1.5
 pillow==12.2.0
-psycopg2-binary==2.9.12
+psycopg[binary]==3.3.4
 pypdf==6.10.2
 python-magic==0.4.27
 whitenoise[brotli]==6.12.0
