@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load bs_icons %}
 
-{% block title %}{{ document.title }}{% endblock %}
+{% block title %}{{ document.name }}{% endblock %}
 
 {% block content %}
 {% spaceless %}
@@ -10,12 +10,12 @@
     <nav aria-label="{% trans 'Breadcrumb' %}">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'documents' %}">{% trans "Documents" %}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ document.title }}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ document.name }}</li>
         </ol>
     </nav>
 
     <div>
-        <h1 id="main-heading">{{ document.title }}</h1>
+        <h1 id="main-heading">{{ document.name }}</h1>
         {% if document.url %}
         <div class="mb-2">
             <a href="{{ document.url }}" target="_blank"

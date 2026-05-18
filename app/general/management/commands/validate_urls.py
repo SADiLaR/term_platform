@@ -43,8 +43,7 @@ class Command(BaseCommand):
 
         success, reason = self._check_url(url_value)
         if not success:
-            # Document uses 'title', others use 'name'
-            display_name = getattr(instance, "title", None) or getattr(instance, "name", "")
+            display_name = instance.name
             admin_url = self._build_admin_url(instance)
             failures.append(
                 f'{model_name} id={instance.pk} name="{display_name}": {url_value} -> {reason} (admin: {admin_url})'

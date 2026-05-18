@@ -21,7 +21,7 @@ class TestSearchFilter(TestCase):
 
         # Create Documents
         self.doc1 = Document.objects.create(
-            title="Document 1",
+            name="Document 1",
             document_data="Document 1 content",
             institution=self.institution1,
             document_type="glossary",
@@ -30,7 +30,7 @@ class TestSearchFilter(TestCase):
         self.doc1.languages.add(self.language1)
 
         self.doc2 = Document.objects.create(
-            title="Document 2",
+            name="Document 2",
             document_data="Document 2 content",
             institution=self.institution2,
             document_type="glossary",

@@ -87,12 +87,12 @@ class DocumentFormWithFulltext(DocumentForm):
 
 
 class DocumentAdmin(SimpleHistoryAdmin):
-    ordering = ["title"]
-    list_display = ["title", "license", "document_type", "verified", "standardised", "available"]
-    search_fields = ["title"]
+    ordering = ["name"]
+    list_display = ["name", "license", "document_type", "verified", "standardised", "available"]
+    search_fields = ["name"]
     list_filter = ["institution", "license", "document_type", "verified", "standardised"]
     form = DocumentForm
-    history_list_display = ["title", "license", "document_type", "available"]
+    history_list_display = ["name", "license", "document_type", "available"]
 
     def get_form(self, request, *args, **kwargs):
         # Show the fulltext field if the user has the requisite permission

@@ -24,7 +24,7 @@ class SearchViewTest(TestCase):
         # Create documents
         for i in range(10):
             doc = Document.objects.create(
-                title=f"Document {i + 1}",
+                name=f"Document {i + 1}",
                 institution=self.institution1 if i % 2 == 0 else self.institution2,
                 document_type="report" if i % 2 == 0 else "article",
                 document_data="Document {i + 1} content",
