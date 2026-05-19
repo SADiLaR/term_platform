@@ -14,8 +14,8 @@
     {% for item in documents %}
         <div class="mt-4">{# additional indent simplifies comparison with projects.html #}
             <h2>
-                <a href="{% url 'document_detail' item.document.id %}" class="text-decoration-none">
-                    {{ item.document.title }}
+                <a href="{% url 'document_detail' item.document.pk %}" class="text-decoration-none">
+                    {{ item.document.name }}
                 </a>
             </h2>
             {% if item.document.url %}
@@ -31,7 +31,7 @@
             </div>
             <p class="limit-text-width">
                 {{ item.document.description|truncatewords:30 }}
-                <a href="{% url 'document_detail' item.document.id %}">{% trans "More about the document" %}</a>
+                <a href="{% url 'document_detail' item.document.pk %}">{% trans "More about the document" %}</a>
             </p>
 
             {% if item.languages %}

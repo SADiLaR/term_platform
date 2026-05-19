@@ -43,7 +43,7 @@ class Command(BaseCommand):
 
         try:
             instance = Document(
-                title=file_name,
+                name=file_name,
                 document_data=pdf_to_text(file_path),
                 uploaded_file=content_file,
                 document_type="Glossary",

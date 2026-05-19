@@ -168,7 +168,7 @@ def institution_detail(request, institution_id):
     documents = (
         Document.objects.filter(institution=institution)
         .defer("description", "document_data", "search_vector")
-        .order_by("title")
+        .order_by("name")
     )
 
     context = {
@@ -189,7 +189,7 @@ def documents(request):
         Document.objects.select_related("institution")
         .defer("document_data", "search_vector")
         .prefetch_related("subjects", "languages")
-        .order_by("title")
+        .order_by("name")
     )
 
     url_params = {}
@@ -263,7 +263,7 @@ def languages(request):
         .prefetch_related(
             Prefetch(
                 "document_set",
-                queryset=Document.objects.only("id", "title", "languages").order_by("title"),
+                queryset=Document.objects.only("id", "name", "languages").order_by("name"),
             ),
             Prefetch(
                 "project_set",
@@ -300,7 +300,7 @@ def subjects(request):
         .prefetch_related(
             Prefetch(
                 "document_set",
-                queryset=Document.objects.only("id", "title", "subjects").order_by("title"),
+                queryset=Document.objects.only("id", "name", "subjects").order_by("name"),
             ),
             Prefetch(
                 "project_set",

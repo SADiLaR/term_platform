@@ -19,8 +19,8 @@ class InstitutionsViewTestCase(TestCase):
 
         Project.objects.create(name="Test Project 1", institution=inst1)
         Project.objects.create(name="Test Project 2", institution=inst1)
-        Document.objects.create(title="Test document 1", institution=inst1)
-        Document.objects.create(title="Test document 2", institution=inst1)
+        Document.objects.create(name="Test document 1", institution=inst1)
+        Document.objects.create(name="Test document 2", institution=inst1)
 
         self.url = reverse("institutions")
 

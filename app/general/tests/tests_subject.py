@@ -17,12 +17,12 @@ class TestSubjects(TestCase):
         self.subject2 = Subject.objects.create(name="Science")
 
         self.document1 = Document.objects.create(
-            title="Document 1", institution=self.institution, document_type="report"
+            name="Document 1", institution=self.institution, document_type="report"
         )
         self.document1.subjects.add(self.subject1)
 
         self.document2 = Document.objects.create(
-            title="Document 2", institution=self.institution, document_type="report"
+            name="Document 2", institution=self.institution, document_type="report"
         )
         self.document2.subjects.add(self.subject2)
 

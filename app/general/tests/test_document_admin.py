@@ -38,7 +38,7 @@ class TestDocumentForm(TestCase):
 
     def test_clean_without_url_and_file(self):
         tests_form = {
-            "title": "Test",
+            "name": "Test",
             "license": "MIT",
             "document_type": "Glossary",
             "mime_type": "pdf",
@@ -57,7 +57,7 @@ class TestDocumentForm(TestCase):
 
     def test_clean_without_file(self):
         tests_form = {
-            "title": "Test",
+            "name": "Test",
             "license": "(c)",
             "document_type": "Glossary",
             "mime_type": "pdf",
@@ -74,7 +74,7 @@ class TestDocumentForm(TestCase):
     #
     def test_clean_without_url(self):
         tests_form = {
-            "title": "Test",
+            "name": "Test",
             "license": "CC0",
             "document_type": "Glossary",
             "mime_type": "pdf",
@@ -90,7 +90,7 @@ class TestDocumentForm(TestCase):
 
     def test_clean_with_xlsx_file(self):
         tests_form = {
-            "title": "Test",
+            "name": "Test",
             "license": "CC0",
             "document_type": "Glossary",
             "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -112,7 +112,7 @@ class TestDocumentForm(TestCase):
         self.pdf_file.size = 15728640
 
         tests_form = {
-            "title": "Test",
+            "name": "Test",
             "license": "MIT",
             "document_type": "Glossary",
             "mime_type": "pdf",
@@ -129,7 +129,7 @@ class TestDocumentForm(TestCase):
 
     def test_edited_pdf_takes_priority_over_unedited_fulltext(self):
         tests_form = {
-            "title": "Test",
+            "name": "Test",
             "license": "CC0",
             "document_type": "Glossary",
             "mime_type": "pdf",
@@ -149,7 +149,7 @@ class TestDocumentForm(TestCase):
     def test_edited_fulltext_takes_priority_over_edited_pdf(self):
         custom_data = "testingstringthatisnotinsidelorem.pdf"
         tests_form = {
-            "title": "Test",
+            "name": "Test",
             "license": "CC0",
             "document_type": "Glossary",
             "mime_type": "pdf",
@@ -166,11 +166,11 @@ class TestDocumentForm(TestCase):
         self.assertEqual(form.cleaned_data["document_data"], custom_data)
 
     def test_edited_fulltext_reflects_in_database_and_search(self):
-        title = "Test document with edited fulltext"
+        name = "Test document with edited fulltext"
         custom_data = "testingstringthatisnotinsidelorem.pdf"
 
         original_form = {
-            "title": title,
+            "name": name,
             "license": "CC0",
             "document_type": "Glossary",
             "mime_type": "pdf",
@@ -191,7 +191,7 @@ class TestDocumentForm(TestCase):
         # Check we can search by PDF content
         response = self.client.get(reverse("search"), {"search": orig_fulltext})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["page_obj"][0]["heading"], title)
+        self.assertEqual(response.context["page_obj"][0]["heading"], name)
 
         # Now, upload a copy with edited fulltext
         edit_form = {**original_form, "document_data": custom_data, "id": doc.id}
@@ -202,13 +202,13 @@ class TestDocumentForm(TestCase):
         doc = form.save()
         self.assertEqual(doc.document_data, custom_data)
 
-        # Check that: 1. we only have one document with this title, and 2. it has the correct fulltext
-        self.assertEqual(Document.objects.get(title=title).document_data, custom_data)
+        # Check that: 1. we only have one document with this name, and 2. it has the correct fulltext
+        self.assertEqual(Document.objects.get(name=name).document_data, custom_data)
 
         # Check we can search by the new content too
         response = self.client.get(reverse("search"), {"search": custom_data})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["page_obj"][0]["heading"], title)
+        self.assertEqual(response.context["page_obj"][0]["heading"], name)
 
         # Check that we CANNOT search by the old content anymore
         response = self.client.get(reverse("search"), {"search": orig_fulltext})

@@ -12,7 +12,7 @@ class DocumentTest(TestCase):
         self.language = Language.objects.create(name="Test Language", iso_code="TL")
         self.institution = Institution.objects.create(name="Test Institution")
 
-        self.title = "Some document"
+        self.name = "Some document"
         self.url = "https://example.com"
         self.uploaded_file = SimpleUploadedFile(
             "example.pdf", b"file_content", content_type="application/pdf"
@@ -23,7 +23,7 @@ class DocumentTest(TestCase):
         self.institution = self.institution
 
         self.document = Document.objects.create(
-            title=self.title,
+            name=self.name,
             url=self.url,
             uploaded_file=self.uploaded_file,
             license=self.license,
@@ -36,17 +36,17 @@ class DocumentTest(TestCase):
 
     def test_document_creation(self):
         self.assertEqual(Document.objects.count(), 1)
-        self.assertEqual(Document.objects.get().title, self.title)
+        self.assertEqual(Document.objects.get().name, self.name)
 
     def test_document_str_representation(self):  # Test __str__ method
-        self.assertEqual(str(self.document), self.title)
+        self.assertEqual(str(self.document), self.name)
 
     def test_document_available_by_default(self):  # Test default value
         self.assertTrue(self.document.available)
 
     def test_history_records_creation(self):
         self.assertEqual(self.document.history.count(), 1)
-        self.assertEqual(self.document.history.first().title, "Some document")
+        self.assertEqual(self.document.history.first().name, "Some document")
         self.assertEqual(self.document.history.first().url, "https://example.com")
         self.assertEqual(self.document.history.first().uploaded_file, "documents/example.pdf")
         self.assertEqual(self.document.history.first().license, "MIT")

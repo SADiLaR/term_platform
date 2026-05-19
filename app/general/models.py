@@ -119,7 +119,7 @@ class Document(models.Model):
         ("Term list", _("Term list")),
     ]
 
-    title = models.CharField(max_length=200, verbose_name=_("title"))
+    name = models.CharField(max_length=200, verbose_name=_("name"))
     description = models.TextField(blank=True, verbose_name=_("description"))
     url = models.URLField(max_length=200, blank=True, verbose_name=_("URL"))
     uploaded_file = models.FileField(
@@ -167,7 +167,7 @@ class Document(models.Model):
     # immutable, otherwise the migration to the GeneratedField fails.
     search_vector = models.GeneratedField(
         expression=(
-            SearchVector("title", config="english", weight="A")
+            SearchVector("name", config="english", weight="A")
             + SearchVector("description", config="english", weight="B")
             + SearchVector("document_data", config="english", weight="C")
         ),
@@ -191,4 +191,4 @@ class Document(models.Model):
         permissions = [("can_edit_fulltext", "Can edit document fulltext (used for search)")]
 
     def __str__(self):
-        return self.title
+        return self.name

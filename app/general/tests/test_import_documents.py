@@ -20,7 +20,7 @@ class TestHandleFile(unittest.TestCase):
 
     def tearDown(self):
         try:
-            document_file = Document.objects.get(title=self.name)
+            document_file = Document.objects.get(name=self.name)
             path = document_file.uploaded_file.path
             if os.path.isfile(path):
                 os.remove(path)
@@ -52,6 +52,6 @@ class TestHandleFile(unittest.TestCase):
             )
 
         command.save_data(self.test_file, self.name)
-        document_file = Document.objects.get(title=self.name)
-        self.assertEqual(document_file.title, self.name)
+        document_file = Document.objects.get(name=self.name)
+        self.assertEqual(document_file.name, self.name)
         self.assertIn("Lorem ipsum dolor", document_file.document_data)

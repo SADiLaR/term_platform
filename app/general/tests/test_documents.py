@@ -17,14 +17,14 @@ class DocumentViewTests(TestCase):
         )
 
         self.document5 = Document.objects.create(
-            title="Document 5",
+            name="Document 5",
             institution=self.institution,
         )
         self.document5.subjects.add(self.subject1)
         self.document5.languages.add(self.language1)
 
         self.document6 = Document.objects.create(
-            title="Document 6",
+            name="Document 6",
             institution=self.institution,
         )
         self.document6.subjects.add(self.subject1)
@@ -47,4 +47,4 @@ class DocumentViewTests(TestCase):
         response = self.client.get(reverse("documents"), {"language": self.language3.id})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context["documents"]), 1)
-        self.assertEqual(response.context["documents"][0]["document"].title, "Document 6")
+        self.assertEqual(response.context["documents"][0]["document"].name, "Document 6")

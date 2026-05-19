@@ -114,7 +114,7 @@ class DocumentFilter(django_filters.FilterSet):
             Left("document_data", 20_000), query, max_words=15, min_words=10
         )
         queryset = queryset.annotate(
-            heading=F("title"),
+            heading=F("name"),
             extra=F("description"),
             view=Value("document_detail"),
             logo_url=Value(""),

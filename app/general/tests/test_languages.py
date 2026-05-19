@@ -17,12 +17,12 @@ class LanguagesViewTest(TestCase):
         self.language2 = Language.objects.create(name="Spanish", iso_code="lang2")
 
         self.document1 = Document.objects.create(
-            title="Document 1", institution=self.institution, document_type="report"
+            name="Document 1", institution=self.institution, document_type="report"
         )
         self.document1.languages.add(self.language1)
 
         self.document2 = Document.objects.create(
-            title="Document 2", institution=self.institution, document_type="report"
+            name="Document 2", institution=self.institution, document_type="report"
         )
         self.document2.languages.add(self.language2)
 

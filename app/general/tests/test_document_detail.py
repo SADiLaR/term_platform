@@ -15,7 +15,7 @@ class DocumentDetailViewTest(TestCase):
         self.language2 = Language.objects.create(name="English", iso_code="en")
 
         self.document = Document.objects.create(
-            title="Afrikaans_HL_P1_Feb-March_2011",
+            name="Afrikaans_HL_P1_Feb-March_2011",
             description="This is a description of the document.",
             url="https://externaldocumentrepository.com/document1",
             uploaded_file="path/to/document.pdf",
@@ -36,7 +36,7 @@ class DocumentDetailViewTest(TestCase):
             response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'id="main-heading"')
-        self.assertContains(response, self.document.title)
+        self.assertContains(response, self.document.name)
         self.assertContains(response, self.institution.name)
         self.assertContains(response, self.subject1.name)
         self.assertContains(response, self.language1.name)

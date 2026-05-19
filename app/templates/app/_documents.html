@@ -12,7 +12,7 @@
                 {% for document in item.documents %}
                 <li class="mb-2">
                     {% icon "document" %}
-                    <a href="{% url 'document_detail' document.id %}">{{ document.title }}</a>
+                    <a href="{% url 'document_detail' document.pk %}">{{ document.name }}</a>
                 </li>
                 {% endfor %}
             </ul>
