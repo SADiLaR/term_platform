@@ -18,7 +18,8 @@
         <div class="{% if institution.logo %}col-md-6{% else %}col-md-12{% endif %}">
             <h1 id="main-heading">{{ institution.name }} ({{ institution.abbreviation }})</h1>
             {% if institution.url %}
-                <p><a href="{{ institution.url }}">{{ institution.url }}</a></p>
+                <p><a href="{{ institution.url }}" target="_blank" rel="noopener noreferrer"
+                      title="{% trans 'External link' %}">{{ institution.url }}</a></p>
             {% endif %}
             {% if institution.email %}
                 <p><a href="mailto:{{ institution.email }}">{{ institution.email }}</a></p>
