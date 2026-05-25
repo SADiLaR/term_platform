@@ -403,9 +403,23 @@ def search(request):
         "filter": f,
         "page_obj": page_obj,
         "url_params": pagination_url(request),
+        "single_institution": get_single_institution(f.form),
     }
 
     return render(request, template_name=template, context=context)
+
+
+def get_single_institution(form):
+    institutions = form.cleaned_data.get("institution")
+    subjects = form.cleaned_data.get("subjects")
+    languages = form.cleaned_data.get("languages")
+
+    # Only show the nav link when institution is the sole active filter. Showing
+    # it with other filters could imply the results belong only to that institution.
+    if institutions and len(institutions) == 1 and not subjects and not languages:
+        return institutions[0]
+
+    return None
 
 
 def pagination_url(request):

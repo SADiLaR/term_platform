@@ -30,9 +30,20 @@ structure.
                            class="form-control"
                            value="{{ request.GET.search }}">
                 </div>
-                <div class="col-auto">
-                    <input type="submit" class="btn btn-primary me-4">
+                <div class="col-auto d-flex flex-wrap align-items-center gap-2">
+                    <input type="submit" class="btn btn-primary">
                     <a href="{% url 'search' %}" hx-target="#main" hx-select="#main" class="btn btn-secondary">{% trans 'Reset' %}</a>
+                    {% if single_institution %}
+                    <a href="{% url 'institution_detail' single_institution.pk %}"
+                       hx-target="#main" hx-select="#main"
+                       class="btn btn-secondary">
+                        {% if single_institution.abbreviation %}
+                            {% blocktrans with institution_name=single_institution.abbreviation %}Go to {{ institution_name }}{% endblocktrans %}
+                        {% else %}
+                            {% trans "Go to institution" %}
+                        {% endif %}
+                    </a>
+                    {% endif %}
                 </div>
                 {% if page_obj.paginator.num_pages > 1 %}
                 <div class="mt-2">

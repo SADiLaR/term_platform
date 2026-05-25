@@ -9,8 +9,8 @@ from general.models import Document, Institution, Language, Subject
 class SearchViewTest(TestCase):
     def setUp(self):
         # Create institutions
-        self.institution1 = Institution.objects.create(name="Institution 1")
-        self.institution2 = Institution.objects.create(name="Institution 2")
+        self.institution1 = Institution.objects.create(name="Institution 1", abbreviation="I1")
+        self.institution2 = Institution.objects.create(name="Institution 2", abbreviation="I2")
 
         # Create languages
         self.language1 = Language.objects.create(name="English", iso_code="EN")
@@ -56,6 +56,33 @@ class SearchViewTest(TestCase):
         response = self.client.get(reverse("search"), {"search": "Document 1"})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["page_obj"][0]["heading"], "Document 1")
+
+    def test_institution_filter_shows_nav_link(self):
+        response = self.client.get(reverse("search"), {"institution": self.institution1.pk})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(
+            response,
+            f"""
+            <a href="{reverse("institution_detail", args=[self.institution1.pk])}"
+               hx-target="#main" hx-select="#main"
+               class="btn btn-secondary">
+                Go to {self.institution1.abbreviation}
+            </a>
+            """,
+            html=True,
+        )
+        self.assertNotContains(
+            response, f'href="{reverse("search")}?institution={self.institution1.pk}"'
+        )
+
+    def test_search_with_many_filters_hides_nav_link(self):
+        response = self.client.get(
+            reverse("search"),
+            {"institution": self.institution1.pk, "subjects": self.subject1.pk},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertNotContains(response, f"Go to {self.institution1.abbreviation}")
 
     def test_invalid_page_number(self):
         response = self.client.get(reverse("search"), {"page": "invalid"})
