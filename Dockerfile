@@ -20,7 +20,7 @@ RUN <<EOF
   apt-get install -y --no-install-recommends libmagic1 gettext build-essential libmagic-dev
   pip install --upgrade pip
   pip install -r requirements.txt
-  apt-get remove -y build-essential libmagic-dev
+  apt-get remove --autoremove -y build-essential libmagic-dev
   rm -rf /var/lib/apt/lists/*
 EOF
 
