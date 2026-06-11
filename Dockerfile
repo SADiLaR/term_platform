@@ -17,7 +17,7 @@ RUN <<EOF
   set -exo pipefail
   apt-get update
   apt-get -y upgrade
-  apt-get install -y --no-install-recommends libmagic1 gettext build-essential libmagic-dev
+  apt-get install -y --no-install-recommends libmagic1 build-essential libmagic-dev
   pip install --upgrade pip
   pip install -r requirements.txt
   apt-get remove --autoremove -y build-essential libmagic-dev
@@ -27,6 +27,17 @@ EOF
 # Copy project
 COPY ./entrypoint.sh /
 COPY ./app /app/
+
+# Compile translations at build time without keeping gettext in the runtime image.
+RUN <<EOF
+  set -exo pipefail
+  apt-get update
+  apt-get install -y --no-install-recommends gettext
+  mkdir -p /logging
+  SECRET_KEY=build-only-secret-key python manage.py compilemessages
+  apt-get purge --autoremove -y gettext
+  rm -rf /var/lib/apt/lists/*
+EOF
 
 # Run the application
 ENTRYPOINT ["bash", "/entrypoint.sh"]
