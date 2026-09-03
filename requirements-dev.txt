@@ -1,2 +1,2 @@
 -r requirements-test.txt
-pygraphviz==1.14
+pygraphviz==2.0.1
