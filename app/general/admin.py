@@ -98,7 +98,7 @@ class DocumentAdmin(SimpleHistoryAdmin):
         # Show the fulltext field if the user has the requisite permission
         if request.user.has_perm("general.can_edit_fulltext"):
             kwargs["form"] = DocumentFormWithFulltext
-        return super(DocumentAdmin, self).get_form(request, *args, **kwargs)
+        return super().get_form(request, *args, **kwargs)
 
 
 class SubjectAdmin(SimpleHistoryAdmin):
