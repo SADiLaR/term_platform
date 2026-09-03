@@ -141,7 +141,7 @@ jobs:
         with:
           node-version: 20
       - name: Install Dependencies
-        run: |
+        run: | # zizmor: ignore[adhoc-packages]
           python -m pip install --upgrade pip
           pip install -r requirements-test.txt
           sudo apt-get install -y gettext
