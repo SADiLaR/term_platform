@@ -21,7 +21,6 @@ class TestLanguage(TestCase):
         with self.assertRaises(Exception):
             Language.objects.create(name="English")
 
-    #
     def test_history_records_creation(self):
         self.assertEqual(self.language.history.count(), 1)
         self.assertEqual(self.language.history.first().name, "English")

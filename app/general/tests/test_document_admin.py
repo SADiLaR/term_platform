@@ -71,7 +71,6 @@ class TestDocumentForm(TestCase):
         form = DocumentForm(tests_form)
         self.assertTrue(form.is_valid())
 
-    #
     def test_clean_without_url(self):
         tests_form = {
             "name": "Test",
