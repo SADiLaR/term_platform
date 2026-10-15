@@ -68,7 +68,7 @@
             <ul class="list-unstyled">
                 {% for document in documents %}
                     <li class="m-2">
-                        {% icon "document" %}
+                        {% doc_icon document %}
                         <a href="{% url 'document_detail' document.pk %}">{{ document.name }}</a>
                     </li>
                 {% endfor %}

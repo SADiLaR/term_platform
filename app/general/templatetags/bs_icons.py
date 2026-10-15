@@ -15,6 +15,8 @@ register = template.Library()
 _icons = {
     "date": "calendar3",
     "document": "file-earmark",
+    "document-standardised": "file-earmark-check",
+    "document-verified": "file-earmark-medical",
     "documents": "files",
     "download": "file-earmark-arrow-down-fill",
     "language": "vector-pen",
@@ -40,3 +42,14 @@ def icon(name):
     # code in the templates doesn't matter. Beware of using {% spaceless %}
     # which will negate this. A pure CSS solution escaped me thus far, since a
     # space will take additional space in addition to a margin.
+
+
+@register.simple_tag
+def doc_icon(document):
+    """The icon for the document based on its attributes."""
+    # TODO: handle case where both are true
+    if document.standardised:
+        return icon("document-standardised")
+    if document.verified:
+        return icon("document-verified")
+    return icon("document")

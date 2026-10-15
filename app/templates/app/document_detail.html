@@ -45,6 +45,12 @@
             </a>
         </p>
 
+        {% if document.standardised %}
+            <p><strong>{% doc_icon document %}{% trans "Authenticated and standardised" %}</strong></p>
+        {% endif %}
+        {% if document.verified %}
+            <p><strong>{% doc_icon document %}{% trans "Verified" %}</strong></p>
+        {% endif %}
         <p><strong>{% trans "License:" %}</strong> {{ document.license }}</p>
         <p><strong>{% trans "Category:" %}</strong> {{ document.document_type }}</p>
     </div>
