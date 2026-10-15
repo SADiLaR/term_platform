@@ -258,12 +258,13 @@ def document_detail(request, document_id):
 def languages(request):
     template = "app/languages.html"
 
+    document_fields = ("id", "name", "languages", "standardised", "verified")
     languages = (
         Language.objects.all()
         .prefetch_related(
             Prefetch(
                 "document_set",
-                queryset=Document.objects.only("id", "name", "languages").order_by("name"),
+                queryset=Document.objects.only(*document_fields).order_by("name"),
             ),
             Prefetch(
                 "project_set",
@@ -295,12 +296,13 @@ def languages(request):
 def subjects(request):
     template = "app/subjects.html"
 
+    document_fields = ("id", "name", "languages", "standardised", "verified")
     subjects = (
         Subject.objects.all()
         .prefetch_related(
             Prefetch(
                 "document_set",
-                queryset=Document.objects.only("id", "name", "subjects").order_by("name"),
+                queryset=Document.objects.only(*document_fields).order_by("name"),
             ),
             Prefetch(
                 "project_set",
