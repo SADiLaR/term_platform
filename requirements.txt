@@ -5,8 +5,8 @@ django-simple-history==3.13.0
 django==5.2.18
 gunicorn==26.2.0
 openpyxl==3.1.5
-pillow==12.3.0
+pillow==13.0.0
 psycopg[binary]==3.3.6
-pypdf==6.20.1
+pypdf==6.21.4
 python-magic==0.4.27
 whitenoise[brotli]==6.12.0
