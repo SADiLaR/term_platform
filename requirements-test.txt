@@ -1,6 +1,6 @@
 -r requirements.txt
 django-debug-toolbar==8.0.0
 django-extensions==4.1
-faker==40.43.0
-ruff==0.17.1
-selenium==4.51.0
+faker==40.44.0
+ruff==0.17.3
+selenium==4.52.0
