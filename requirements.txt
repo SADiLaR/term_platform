@@ -2,11 +2,11 @@ django-environ==0.14.0
 django-filter==26.2
 django-htmx==1.29.0
 django-simple-history==3.13.0
-django==5.2.18
+django==5.2.19
 gunicorn==26.2.0
 openpyxl==3.1.5
 pillow==13.0.0
-psycopg[binary]==3.3.6
+psycopg[binary]==3.3.8
 pypdf==6.21.4
 python-magic==0.4.27
 whitenoise[brotli]==6.12.0
