@@ -7,6 +7,6 @@ gunicorn==27.0.1
 openpyxl==3.1.5
 pillow==13.0.0
 psycopg[binary]==3.3.9
-pypdf==7.0.1
+pypdf==7.1.1
 python-magic==0.4.27
 whitenoise[brotli]==6.12.0
