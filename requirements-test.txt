@@ -2,5 +2,5 @@
 django-debug-toolbar==8.0.0
 django-extensions==4.1
 faker==40.54.0
-ruff==0.17.4
-selenium==4.52.0
+ruff==0.17.5
+selenium==4.53.0
